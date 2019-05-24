@@ -1,0 +1,33 @@
+.ui-autocomplete { 
+	height: 200px; 
+	overflow-y: scroll; 
+	overflow-x: hidden;
+}
+.custom-combobox {
+	position: relative;
+	display: inline-block;
+	width: 90% !important;
+}
+.custom-combobox-toggle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin-left: -1px;
+	padding: 0;
+	background: #ffffff;
+	width: 10%;
+	height: 36px;
+	border: 1px solid #c5c5c5;
+	cursor: pointer;
+	text-align: center;
+}
+.custom-combobox-toggle > i {
+	margin-top: 8px;
+	color: #495057;
+}
+.custom-combobox-input {
+	margin: 0;
+	padding: 5px 10px;
+	width: 100% !important;
+	background: #ffffff;
+}

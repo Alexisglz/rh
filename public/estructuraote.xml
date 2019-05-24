@@ -1,0 +1,40 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ven="http://venturessoft.ws.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ven:ProcesaIncidencias>
+         <!--Zero or more repetitions:-->
+         <incidencia>
+            <concepto>206</concepto>
+            <empleado>2638</empleado>
+            <turno></turno>
+            <!--Optional:-->
+            <fecha></fecha>
+            <vt1></vt1>
+            <vt2></vt2>
+            <vt3></vt3>
+            <vt4></vt4>
+            <zona>29</zona>
+            <!--Optional:-->
+            <area></area>
+            <!--Optional:-->
+            <centro></centro>
+            <!--Optional:-->
+            <linea></linea>
+            <factor></factor>
+            <importe>100</importe>
+            <!--Optional:-->
+            <puesto></puesto>
+            <!--Optional:-->
+            <gral_cpto></gral_cpto>
+            <cia>677</cia>
+            <proceso>065</proceso>
+            <!--Optional:-->
+            <lote>lote1_1</lote>
+         </incidencia>
+         <!--Optional:-->
+         <usuario>rhindeplo1</usuario>
+         <!--Optional:-->
+         <password>Password02</password>
+      </ven:ProcesaIncidencias>
+   </soapenv:Body>
+</soapenv:Envelope>

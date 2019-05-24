@@ -137,12 +137,13 @@ class IncidenciasController extends Controller
                     $incidencia->fecha_inicio = $request->fecha_i;
                     $incidencia->fecha_fin    = $request->fecha_f;
 
-                    /*$f1 = new DateTime($request->fecha_i); // Calculo de monto en base a fechas
+                    $f1 = new DateTime($request->fecha_i); // Calculo de monto en base a fechas
                     $f2 = new DateTime($request->fecha_f);
                     $dias = $f1->diff($f2);
                     $total_dias = $dias->d+1; // Obtener dias en base a las fechas sumarle un dia para compensar el primer dia
                                               // que el formulario omite
-                    if ($empleado->getMovimientoSueldo){ //buscar el sueldo del empleado
+                    $incidencia->dias = $total_dias;
+                    /*if ($empleado->getMovimientoSueldo){ //buscar el sueldo del empleado
                         $sueldo_diario = $empleado->getMovimientoSueldo->sueldo_diario;
                         $total = $sueldo_diario * $total_dias;
                         $incidencia->monto        = $total;

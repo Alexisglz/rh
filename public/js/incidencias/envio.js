@@ -197,16 +197,16 @@ function ciclo(idIncidencia, idEmpleado, monto, motivo) {
 
 let nombrelote = '';
 
-function validaArreglo(id, empleado, monto, motivo, fecha) {
+function validaArreglo(id, empleado, monto, motivo, fecha, vt1) {
     let arregloids = {};
     arregloids.id = id;
     arregloids.concepto = motivo;
-    arregloids.empleado = 2638; //empleado;  ------- se cambia para efectos de pruebas ya que manda ERR. Error en incidencia 1 : El empleado 6
+    arregloids.empleado = empleado; //empleado;  ------- se cambia para efectos de pruebas ya que manda ERR. Error en incidencia 1 : El empleado 6
     //no existe en esta compañía, ni como alta, ni como baja. . Error en incidencia 2 : El empleado 2 no existe en esta compañía, ni como alta, ni como baja. .
-    arregloids.importe = monto;
+    arregloids.importe = monto==null?"":monto;
     arregloids.turno = '';
-    arregloids.fecha = ''//fecha;
-    arregloids.vt1 = '';
+    arregloids.fecha = fecha==null?"":fecha;//fecha;
+    arregloids.vt1 = vt1==null?"":vt1;
     arregloids.vt2 = '';
     arregloids.vt3 = '';
     arregloids.vt4 = '';
@@ -256,7 +256,7 @@ function EjecutarLote() {
             let datas = [];
             for (i in rows_selected){
                 var item = rows_selected[i];
-                datas = validaArreglo(item.id, item.emp_id, item.monto, item.id_tipo, item.fecha_inicio);
+                datas = validaArreglo(item.id, item.emp_id, item.monto, item.id_tipo, item.fecha_inicio,item.duracion);
             }
             if (datas.length == 0) {
                 console.log('no hay datos seleccionados');

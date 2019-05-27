@@ -20,6 +20,7 @@ Route::group(["prefix" => "altas", "middleware" => ["auth"]], function() {
     Route::get('/update_solicitud/{id}', 'AltasController@updateSolicitud')->name('altas.update_solicitud');
     Route::post('/agendar_cita_firma', 'AltasController@AgendarCitaFirma')->name('altas.agendar_cita_firma');
     Route::get('/get_citas_firma', 'AltasController@getCitasFirma')->name('altas.get_citas_firma');
+    Route::get('/get_coordinadores', 'AltasController@getCoordinadores')->name('altas.get_coordinadores');
 });
 
 Route::group(["prefix" => "asignacion", "middleware" => ["auth"]], function() {

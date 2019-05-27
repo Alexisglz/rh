@@ -14,6 +14,7 @@ use App\Mail\AuthDireccion;
 use App\Mail\AuthRH;
 use App\Mail\SolicitudAlta;
 use App\Models\Area;
+use App\Models\CatalogoCoordinadores;
 use App\Models\Puesto;
 use App\Solicitudes;
 use App\SolicitudesAltasAuth;
@@ -864,5 +865,26 @@ class AltasController extends Controller
                 'correo_cita',
                 'detalles_cita'])
             ->make(true);
+    }
+
+    public function getCoordinadores(Request $request){
+        $coords = CatalogoCoordinadores::query();
+        $coords_nokia = DB::table('incore.catalogo_coordinadores_nokia_indeplo')
+            ->select('coordinador_nokia_id')->get();
+        $array = [];
+        foreach ($coords_nokia as $item){
+            $array[] = $item->coordinador_nokia_id;
+        }
+        if ($request->cliente == 'NOK'){
+            $coords->whereIn('id',$array);
+        }
+        $coords->where('id','!=',269);/* Harcodeo para quitar a los coordinadores repetidos en este caso enrique macedo */
+        $coords->where('id','!=',273);/* Otra vez enrique macedo validado contra la tabala movimientos recursos */
+        $coords->where('estatus','=','1')->orderBy('nombre', 'asc');
+        $coords = $coords->get();
+        return response()->json([
+            'ok' => true,
+            'data' => $coords
+        ]);
     }
 }

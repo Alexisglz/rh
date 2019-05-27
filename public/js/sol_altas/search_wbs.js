@@ -255,3 +255,28 @@ $(".select_wbss").on('change', function () {
     }
 });
 
+$('#cliente').on('change', function () {
+    console.log($(this).val());
+    var cliente = $(this);
+    $.ajax({
+        url: '/altas/get_coordinadores',
+        type: 'GET',
+        datType: 'JSON',
+        data:{
+            cliente: cliente.val()
+        },
+        success:function (data) {
+            if (data.ok == true){
+                var coord = $('#coordinador_id');
+                var options = data.data;
+                coord.empty();
+                for (i in options){
+                    coord.append($('<option>', {
+                        value: options[i].id,
+                        text : options[i].nombre
+                    }));
+                }
+            }
+        }
+    });
+});

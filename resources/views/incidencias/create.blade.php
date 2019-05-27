@@ -69,17 +69,14 @@
                     {!! Form::file('vobo') !!}
 
                     <br>
-                    {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso rango']) !!}
-                    {!! Form::date('fecha_i', \Carbon\Carbon::now(), ['class'=>'lapso rango form-control','required']) !!}
+                    {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso']) !!}
+                    {!! Form::date('fecha_i', \Carbon\Carbon::now(), ['class'=>'lapso form-control','required']) !!}
 
-                    {!! Form::label('fecha_f', 'Fecha de fin', ['class'=>'rango']) !!}
-                    {!! Form::date('fecha_f', \Carbon\Carbon::now(), ['class'=>'rango form-control', 'required']) !!}
-
-                    {!! Form::label('dias', 'duracion en dias', ['class'=>'lapso']) !!}
-                    {!! Form::number('dias', null, ['class'=>'lapso form-control','step'=>'.5','min'=>'.5']) !!}
+                    {!! Form::label('dias', 'Numero de dias', ['class'=>'dias']) !!}
+                    {!! Form::number('dias', null, ['class'=>'dias form-control','min'=>'1']) !!}
 
                     {!! Form::label('monto', 'monto', ['class'=>'monto']) !!}
-                    {!! Form::number('monto', 0, ['class'=>'monto form-control','required']) !!}
+                    {!! Form::number('monto', 0, ['class'=>'monto form-control','required','step'=>"any"]) !!}
                     <br>
 
                     {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}

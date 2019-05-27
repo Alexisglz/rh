@@ -2,7 +2,7 @@
 # {{ __("Se registro una nueva incidencia") }}
 
 Incidencia: <br>
-<strong>{{$tipo->alias}}</strong>
+<strong>{{$tipo->alias}}</strong><br>
 Para el recurso: <br><strong>{{ $emp }}</strong>
 
 @component('mail::button', ['url' => url('/autorizar'), 'color' => 'green'])

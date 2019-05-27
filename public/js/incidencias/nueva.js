@@ -1,6 +1,6 @@
  var monto 	 = $('.monto');
  var lapso 	 = $('.lapso');
- var rango   = $('.rango');
+ var rango   = $('.dias');
  var div_inc = $('#div_incidencia');
  var div_esq = $('#div_esquema');
 
@@ -89,20 +89,20 @@ $("#incidencia").on('change',function(){
 	var tratamiento = e.find(":selected").attr('tratamiento');
 	$(".tratement").val(tratamiento);
 	switch(tratamiento) {
-	    case "monto":
+	    case "MONTO":
 	        $('.lapso').fadeOut();
-			$('.rango').fadeOut();
+			$('.dias').fadeOut();
 			$('.monto').fadeIn();
 	    break; 
-	    case "lapso":
+	    case "LAPSO":
 	        $('.monto').fadeOut();
-			$('.rango').fadeOut();
+			$('.dias').fadeIn();
 			$('.lapso').fadeIn();
 	    break;
-	    case "rango":
+	    case "DIAS":
 	        $('.monto').fadeOut();
 			$('.lapso').fadeOut();
-			$('.rango').fadeIn();
+			$('.dias').fadeIn();
 	    break;
 	    default:
 			Swal.fire({

@@ -81,32 +81,32 @@ class IncidenciasController extends Controller
                 $fecha_max = date('Y-m-28');
             }
             switch ($request->tratamiento) {
-                case 'lapso':
+                case 'LAPSO':
                     $reglas = [
                         'vobo'        => 'required',
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
                         'fecha_i'     => "required|after_or_equal:$fecha_min|before_or_equal:$fecha_max",
-                        'dias'        => 'required'
+                        'dias'        => 'required|integer|min:1'
                     ];
                     break;
-                case 'monto':
-                    $reglas = [
-                        'vobo'        => 'required',
-                        'id_empleado' => 'required',
-                        'tipo'        => 'required',
-                        'motivo'      => 'required|max:255'
-                    ];
-                    break;
-                case 'rango':
+                case 'MONTO':
                     $reglas = [
                         'vobo'        => 'required',
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
-                        'fecha_i'     => "required|after_or_equal:$fecha_min|before_or_equal:$fecha_max",
-                        'fecha_f'     => "required|after_or_equal:fecha_i|before_or_equal:$fecha_max"
+                        'monto'       => 'required|numeric|min:0'
+                    ];
+                    break;
+                case 'DIAS':
+                    $reglas = [
+                        'vobo'        => 'required',
+                        'id_empleado' => 'required',
+                        'tipo'        => 'required',
+                        'motivo'      => 'required|max:255',
+                        'dias'        => 'required|integer|min:1'
                     ];
                     break;
 
@@ -126,24 +126,23 @@ class IncidenciasController extends Controller
             $empleado = Empleados::find($request->id_empleado);
             $tipo_incidencia = IncidenciasCatalogo::find($request->incidencia);
             switch ($tipo_incidencia->tratamiento) {
-                case 'lapso':
+                case 'LAPSO':
                     $incidencia->fecha_inicio = $request->fecha_i;
                     $incidencia->dias         = $request->dias;
                     break;
-                case 'monto':
+                case 'MONTO':
                     $incidencia->monto        = $request->monto;
                     break;
-                case 'rango':
-                    $incidencia->fecha_inicio = $request->fecha_i;
-                    $incidencia->fecha_fin    = $request->fecha_f;
+                case 'DIAS':
+                    $incidencia->dias         = $request->dias;
 
-                    $f1 = new DateTime($request->fecha_i); // Calculo de monto en base a fechas
+                    /*$f1 = new DateTime($request->fecha_i); // Calculo de monto en base a fechas
                     $f2 = new DateTime($request->fecha_f);
                     $dias = $f1->diff($f2);
                     $total_dias = $dias->d+1; // Obtener dias en base a las fechas sumarle un dia para compensar el primer dia
                                               // que el formulario omite
                     $incidencia->dias = $total_dias;
-                    /*if ($empleado->getMovimientoSueldo){ //buscar el sueldo del empleado
+                    if ($empleado->getMovimientoSueldo){ //buscar el sueldo del empleado
                         $sueldo_diario = $empleado->getMovimientoSueldo->sueldo_diario;
                         $total = $sueldo_diario * $total_dias;
                         $incidencia->monto        = $total;

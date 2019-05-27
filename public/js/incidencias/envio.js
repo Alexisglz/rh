@@ -197,7 +197,7 @@ function ciclo(idIncidencia, idEmpleado, monto, motivo) {
 
 let nombrelote = '';
 
-function validaArreglo(id, empleado, monto, motivo, fecha, vt1) {
+function validaArreglo(id,cia, empleado, monto, motivo, fecha, vt1) {
     let arregloids = {};
     arregloids.id = id;
     arregloids.concepto = motivo;
@@ -217,7 +217,7 @@ function validaArreglo(id, empleado, monto, motivo, fecha, vt1) {
     arregloids.factor = '';
     arregloids.puesto = '';
     arregloids.gral_cpto = '';
-    arregloids.cia = '677';
+    arregloids.cia = '677';//cia;
     arregloids.proceso = '065';
     arregloids.lote = nombrelote;
     arregloids2.push(arregloids);
@@ -256,7 +256,7 @@ function EjecutarLote() {
             let datas = [];
             for (i in rows_selected){
                 var item = rows_selected[i];
-                datas = validaArreglo(item.id, item.emp_id, item.monto, item.id_tipo, item.fecha_inicio,item.duracion);
+                datas = validaArreglo(item.id, item.capital_id, item.emp_id, item.monto, item.id_tipo, item.fecha_inicio,item.duracion);
             }
             if (datas.length == 0) {
                 console.log('no hay datos seleccionados');

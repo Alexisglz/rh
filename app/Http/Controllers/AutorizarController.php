@@ -89,21 +89,23 @@ class AutorizarController extends Controller
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
-        if ($usuario->listarTodo == null) {
+        /*if ($usuario->listarTodo == null) {
             if ($usuario->getCoordinador) {
                 $this->recursivoCoordinadores($usuario->id_usuario);
                 $this->coords[] = $usuario->getCoordinador->id;
                 $coords         = array_values(array_unique($this->coords));
                 $incidencias->whereIn('coordinador_id', $coords);
             }
-        }
-        if($area != 'ADMIN'){
-            if ($inc_s_v == 1)
-                $incidencias->where('venta','=',0);
-            if ($inc_c_v == 1)
-                $incidencias->where('venta','>',0);
-            if ($inc_ded == 1)
-                $incidencias->where('tipo_incidencia','=','DEDUCCION');
+        }*/
+        if ($usuario->listarTodo == null) {
+            if ($area != 'ADMIN') {
+                if ($inc_s_v == 1)
+                    $incidencias->where('venta', '=', 0);
+                if ($inc_c_v == 1)
+                    $incidencias->where('venta', '>', 0);
+                if ($inc_ded == 1)
+                    $incidencias->where('tipo_incidencia', '=', 'DEDUCCION');
+            }
         }
         switch ($area){
             case 'ESP':

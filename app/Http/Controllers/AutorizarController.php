@@ -98,16 +98,6 @@ class AutorizarController extends Controller
                 $incidencias->whereIn('coordinador_id', $coords);
             }
         }*/
-        if ($usuario->listarTodo == 0) {
-            if ($area != 'ADMIN') {
-                if ($inc_s_v == 1)
-                    $incidencias->where('venta', '=', 0);
-                if ($inc_c_v == 1)
-                    $incidencias->where('venta', '>', 0);
-                if ($inc_ded == 1)
-                    $incidencias->where('tipo_incidencia', '=', 'DEDUCCION');
-            }
-        }
         switch ($area){
             case 'ESP':
                 if ($id == 'envio')
@@ -166,6 +156,16 @@ class AutorizarController extends Controller
                 break;
         }
         $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
+        if ($usuario->listarTodo == 0) {
+            if ($area != 'ADMIN') {
+                if ($inc_s_v == 1)
+                    $incidencias->where('venta', '=', 0);
+                if ($inc_c_v == 1)
+                    $incidencias->where('venta', '>', 0);
+                if ($inc_ded == 1)
+                    $incidencias->where('tipo_incidencia', '=', 'DEDUCCION');
+            }
+        }
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
              'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])

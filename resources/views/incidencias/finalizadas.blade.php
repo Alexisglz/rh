@@ -40,7 +40,7 @@
                                 <thead>
                                 <tr>
                                     <th>{{__('Id')}}</th>
-                                    <th>{{__('Enviar')}}</th>
+                                    <th>{{__('Enviada')}}</th>
                                     <th>{{__('Empleado')}}</th>
                                     <th>{{__('Empleado id')}}</th>
                                     <th>{{__('Incidencia')}}</th>

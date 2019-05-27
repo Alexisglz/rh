@@ -6,6 +6,7 @@ use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Incidencias;
 use App\Models\CatalogoCoordinadores;
+use App\Models\IncidenciaPeriodo;
 use App\Models\IncidenciasCatalogo;
 use App\Models\VistaIncidenciasPeriodo;
 use App\User;
@@ -83,6 +84,8 @@ class AutorizarController extends Controller
         $usuario = auth()->user();
         $area    = $usuario->getRol->Rol;
         $incidencias = VistaIncidenciasSinLote::query();
+        $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+            ->where('fecha_fin','>=', $this->date)->first();
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
@@ -159,6 +162,7 @@ class AutorizarController extends Controller
                         ->select();
                 break;
         }
+        $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
              'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])

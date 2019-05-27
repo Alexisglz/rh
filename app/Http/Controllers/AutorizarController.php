@@ -42,7 +42,7 @@ class AutorizarController extends Controller
             if ($usuario->getCoordinador){
                 $movs = $usuario->getCoordinador->getMovimientos;
                 foreach ($movs as $item){
-                    if (!isset($item->getEmpleado->empleado_id) || $item->getEmpleado->empleado_id == null)
+                    if ($item->getEmpleado->empleado_id == null)
                         continue;
                     $user = User::where('empleado_id', '=', $item->empleado_id)->first();
                     if ($user == null){
@@ -89,15 +89,22 @@ class AutorizarController extends Controller
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
-        $todo    = auth()->user()->can('access',[\App\User::class,'listar_todos'])? 1:0;
-        /*if ($usuario->listarTodo == null) {
+        if ($usuario->listarTodo == null) {
             if ($usuario->getCoordinador) {
                 $this->recursivoCoordinadores($usuario->id_usuario);
                 $this->coords[] = $usuario->getCoordinador->id;
                 $coords         = array_values(array_unique($this->coords));
                 $incidencias->whereIn('coordinador_id', $coords);
             }
-        }*/
+        }
+        if($area != 'ADMIN'){
+            if ($inc_s_v == 1)
+                $incidencias->where('venta','=',0);
+            if ($inc_c_v == 1)
+                $incidencias->where('venta','>',0);
+            if ($inc_ded == 1)
+                $incidencias->where('tipo_incidencia','=','DEDUCCION');
+        }
         switch ($area){
             case 'ESP':
                 if ($id == 'envio')
@@ -156,16 +163,6 @@ class AutorizarController extends Controller
                 break;
         }
         $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
-        if ($usuario->listarTodo == 0) {
-            if ($area != 'ADMIN') {
-                if ($inc_s_v == 1)
-                    $incidencias->where('venta', '=', 0);
-                if ($inc_c_v == 1)
-                    $incidencias->where('venta', '>', 0);
-                if ($inc_ded == 1)
-                    $incidencias->where('tipo_incidencia', '=', 'DEDUCCION');
-            }
-        }
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
              'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])

@@ -24,12 +24,11 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
         {data: 'pedido', name: 'pedido'},
         {data: 'solicitante', name: 'solicitante'},
         {data: 'monto', name: 'monto'},
-        {data: 'motivo', name: 'motivo'},
+        {data: 'duracion', name: 'duracion'},
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
-        {data: 'fecha_fin', name: 'fecha_fin'},
-        {data: 'duracion', name: 'duracion'},
-        {data: 'id_lote', name: 'id_lote'}
+        {data: 'motivo', name: 'motivo'},
+        {data: 'id_lote', name: 'id_lote'},
     ],
     language: {
         "lengthMenu": "Mostrando _MENU_ registros por página",

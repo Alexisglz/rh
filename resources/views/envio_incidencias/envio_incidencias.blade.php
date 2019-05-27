@@ -43,23 +43,22 @@
                                    style="font-size:12px;text-align: center; width: 100%" id="Incidencias_Enviar-table">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Enviar</th>
-                                    <th>Vobo Venta</th>
-                                    <th>Empleado</th>
-                                    <th>Empleado id</th>
-                                    <th>Incidencia</th>
-                                    <th>Tipo de incidencia</th>
-                                    <th>Venta</th>
-                                    <th>RO</th>
-                                    <th>Solicitante</th>
-                                    <th>Monto</th>
-                                    <th>Motivo</th>
-                                    <th>Fecha de solicitud</th>
-                                    <th>Fecha de inicio</th>
-                                    <th>Fecha de fin</th>
-                                    <th>Duracion</th>
-                                    <th>Lote</th>
+                                    <th>{{__('Id')}}</th>
+                                    <th>{{__('Enviar')}}</th>
+                                    <th>{{__('Vobo Venta')}}</th>
+                                    <th>{{__('Empleado')}}</th>
+                                    <th>{{__('Empleado id')}}</th>
+                                    <th>{{__('Incidencia')}}</th>
+                                    <th>{{__('Tipo de incidencia')}}</th>
+                                    <th>{{__('Venta')}}</th>
+                                    <th>{{__('RO')}}</th>
+                                    <th>{{__('Solicitante')}}</th>
+                                    <th>{{__('Monto')}}</th>
+                                    <th>{{__('Duracion(Días)')}}</th>
+                                    <th>{{__('Fecha de solicitud')}}</th>
+                                    <th>{{__('Fecha de inicio')}}</th>
+                                    <th>{{__('Motivo')}}</th>
+                                    <th>{{__('Lote')}}</th>
                                 </tr>
                                 </thead>
                             </table>

@@ -19,23 +19,22 @@
                         @endcan
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-active" id="incidencias-table" style="width: 100%">
+                        <table class="table table-active text-center" id="incidencias-table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Bitacora</th>
-                                <th>Vobo Jefe</th>
-                                <th>Empleado</th>
-                                <th>Tipo de incidencia</th>
-                                <th>Fecha de solicitud</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha fin</th>
-                                <th>Duracion</th>
-                                <th>Monto</th>
-                                <th>RO</th>
-                                <th>Solicitante</th>
-                                <th>Motivo</th>
-                                <th>Lote</th>
+                                <th>{{__('Id')}}</th>
+                                <th>{{__('Bitacora')}}</th>
+                                <th>{{__('Vobo Jefe')}}</th>
+                                <th>{{__('Empleado')}}</th>
+                                <th>{{__('Tipo de incidencia')}}</th>
+                                <th>{{__('Fecha de solicitud')}}</th>
+                                <th>{{__('Fecha inicio')}}</th>
+                                <th>{{__('Duracion (Días)')}}</th>
+                                <th>{{__('Monto')}}</th>
+                                <th>{{__('RO')}}</th>
+                                <th>{{__('Solicitante')}}</th>
+                                <th>{{__('Motivo')}}</th>
+                                <th>{{__('Lote')}}</th>
                             </tr>
                             </thead>
                         </table>

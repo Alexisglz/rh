@@ -13,7 +13,6 @@ var table = $('#incidencias-table').DataTable({
         {data: 'tipo_incidencia', name: 'tipo_incidencia'},
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
-        {data: 'fecha_fin', name: 'fecha_fin'},
         {data: 'duracion', name: 'duracion'},
         {data: 'monto', name: 'monto'},
         {data: 'pedido', name: 'pedido'},

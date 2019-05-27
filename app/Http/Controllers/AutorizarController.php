@@ -89,6 +89,7 @@ class AutorizarController extends Controller
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        $todo    = auth()->user()->can('access',[\App\User::class,'listar_todos'])? 1:0;
         /*if ($usuario->listarTodo == null) {
             if ($usuario->getCoordinador) {
                 $this->recursivoCoordinadores($usuario->id_usuario);
@@ -97,7 +98,7 @@ class AutorizarController extends Controller
                 $incidencias->whereIn('coordinador_id', $coords);
             }
         }*/
-        if ($usuario->listarTodo == null) {
+        if ($usuario->listarTodo == 0) {
             if ($area != 'ADMIN') {
                 if ($inc_s_v == 1)
                     $incidencias->where('venta', '=', 0);

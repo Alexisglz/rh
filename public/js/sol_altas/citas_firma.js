@@ -84,55 +84,71 @@ $('#ModalDataEmpleado').on('hidden.bs.modal', function() {
 $('#ModalDataEmpleado').on('show.bs.modal', function (event) {
     // Obtener la lista de coordinadores
     $('#coordinador').empty();
-    var id_solicitud = data['id'];
-    $.get("/empleados/get_coordinadores", {},
-        function (coordinadores) {
-            var coordinadores_temp = JSON.parse(coordinadores);
-            var select = document.getElementById('coordinador');
-            for (value in coordinadores_temp) {
-                var option   = document.createElement("option");
-                option.text  = coordinadores_temp[value];
-                option.value = value;
-                select.add(option)
+    var id_solicitud = data.id;
+    var cliente      = data.cliente;
+    $.ajax({
+        url:'/empleados/get_coordinadores',
+        type: 'GET',
+        dataType:'JSON',
+        data:{
+            cliente: cliente
+        },
+        success: function (data) {
+            if (data.ok == true) {
+                var options = data.data;
+                var select = $('#coordinador');
+                for (i in options) {
+                    select.append($('<option>', {
+                        value: options[i].id,
+                        text: options[i].nombre
+                    }));
+                }
             }
-            ordenarSelect('coordinador');
         }
-    );
+    });
 
     // Obterner los datos de la solicitud del posible empleado
-    $.post("/altas/get_solicitud/" + id_solicitud,{_token: CSRF_TOKEN},
-        function (data_solicitud) {
-            var solicitud = JSON.parse(data_solicitud);
-            console.log(solicitud);
-            document.getElementById("servicio").innerHTML   = solicitud.servicio;
-            document.getElementById("cliente").innerHTML    = solicitud.cliente;
-            document.getElementById("region").innerHTML     = solicitud.region;
-            document.getElementById("tecnologia").innerHTML = solicitud.tecnologia;
-            document.getElementById("grupo").innerHTML      = solicitud.grupo;
-            $("#nombre").val(solicitud.nombre);
-            $("#apaterno").val(solicitud.apaterno);
-            $("#amaterno").val(solicitud.amaterno);
-            if (solicitud.correo_cita != null && solicitud.correo_cita != undefined) {
-                $("#email").val(solicitud.correo_cita)
+    $.ajax({
+        url:'/altas/get_solicitud',
+        type: 'POST',
+        dataType:'JSON',
+        data:{
+            _token: CSRF_TOKEN,
+            id: id_solicitud
+        },
+        success: function (data) {
+            if (data.ok == true){
+                var solicitud = data.data;
+                $("#servicio").html(solicitud.servicio);
+                $("#cliente").html(solicitud.cliente);
+                $("#region").html(solicitud.region);
+                $("#tecnologia").html(solicitud.tecnologia);
+                $("#grupo").html(solicitud.grupo);
+                $("#nombre").val(solicitud.nombre);
+                $("#apaterno").val(solicitud.apaterno);
+                $("#amaterno").val(solicitud.amaterno);
+                if (solicitud.correo_cita != null && solicitud.correo_cita != undefined) {
+                    $("#email").val(solicitud.correo_cita)
+                }
+                $("#fecha_ingreso").val(solicitud.fecha_inicio);
+                if (solicitud.puesto != null && solicitud.puesto != undefined) {
+                    $("#puesto").val(solicitud.puesto)
+                }
+                if (solicitud.sueldo_imss != null && solicitud.sueldo_imss != undefined) {
+                    $("#sueldo_imss").val(solicitud.sueldo_imss)
+                }
+                if (solicitud.sueldo_variable != null && solicitud.sueldo_variable != undefined) {
+                    $("#sueldo_variable").val(solicitud.sueldo_variable)
+                }
+                if (solicitud.esquema != null && solicitud.esquema != undefined) {
+                    $("#esquema").val(solicitud.esquema)
+                }
+                $("#coordinador").val(solicitud.coordinador_id);
+                $("#area").val(solicitud.area);
+                $("#ind_alcatel").val(solicitud.ind);
             }
-            document.getElementById("fecha_ingreso").valueAsDate = new Date(solicitud.fecha_inicio);
-            if (solicitud.puesto != null && solicitud.puesto != undefined) {
-                $("#puesto").val(solicitud.puesto)
-            }
-            if (solicitud.sueldo_imss != null && solicitud.sueldo_imss != undefined) {
-                $("#sueldo_imss").val(solicitud.sueldo_imss)
-            }
-            if (solicitud.sueldo_variable != null && solicitud.sueldo_variable != undefined) {
-                $("#sueldo_variable").val(solicitud.sueldo_variable)
-            }
-            if (solicitud.esquema != null && solicitud.esquema != undefined) {
-                $("#esquema").val(solicitud.esquema)
-            }
-            $("#coordinador").val(solicitud.coordinador_id);
-            $("#area").val(solicitud.area);
-            $("#ind_alcatel").val(solicitud.ind);
         }
-    )
+    });
 });
 
 function saveEmpleado() {

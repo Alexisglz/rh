@@ -11,7 +11,7 @@ Route::group(["prefix" => "altas", "middleware" => ["auth"]], function() {
     Route::get('/', 'AltasController@index')->name('altas.index');
     Route::get('/create', 'AltasController@create')->name('altas.create');
     Route::get('/dar_baja', 'AltasController@darBaja')->name('altas.dar_baja');
-    Route::post('/get_solicitud/{id}', 'AltasController@getSolicitud')->name('altas.get_solicitud');
+    Route::post('/get_solicitud', 'AltasController@getSolicitud')->name('altas.get_solicitud');
     Route::post('/store', 'AltasController@store')->name('altas.store');
     Route::post('/autorizar_solicitud', 'AltasController@AutorizarSolicitud')->name('altas.autorizar_solicitud');
     Route::get('/get_bitacora_alta', 'AltasController@getBitacoraAlta')->name('altas.get_bitacora_alta');

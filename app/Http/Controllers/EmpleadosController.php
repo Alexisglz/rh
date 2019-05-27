@@ -203,8 +203,24 @@ class EmpleadosController extends Controller
 
     public function getCoordinadores(Request $request)
     {
-        $coordinadores = Coordinadores::getCoordinadores();
-        return json_encode($coordinadores, JSON_FORCE_OBJECT);
+        $coords = CatalogoCoordinadores::query();
+        $coords_nokia = DB::table('incore.catalogo_coordinadores_nokia_indeplo')
+            ->select('coordinador_nokia_id')->get();
+        $array = [];
+        foreach ($coords_nokia as $item){
+            $array[] = $item->coordinador_nokia_id;
+        }
+        if ($request->cliente == 'NOK'){
+            $coords->whereIn('id',$array);
+        }
+        $coords->where('id','!=',269);/* Harcodeo para quitar a los coordinadores repetidos en este caso enrique macedo */
+        $coords->where('id','!=',273);/* Otra vez enrique macedo validado contra la tabala movimientos recursos */
+        $coords->where('estatus','=','1')->orderBy('nombre', 'asc');
+        $coords = $coords->get();
+        return response()->json([
+            'ok' => true,
+            'data' => $coords
+        ]);
     }
 
     public function getHerramientasEmpleado(Request $request)

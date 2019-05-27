@@ -110,10 +110,11 @@ class AltasController extends Controller
 
     public function getSolicitud(Request $request)
     {
-        $solicitud      = new solicitudes;
-        $solicitud_temp = $solicitud::find($request->id);
-        $data           = json_decode($solicitud_temp);
-        return json_encode($data, JSON_FORCE_OBJECT);
+        $solicitud      = Solicitudes::find($request->id);
+        return response()->json([
+            'ok' => true,
+            'data' => $solicitud
+        ]);
     }
 
     public function getIndIncore(){

@@ -24,9 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /*$schedule->command('queue:work')
+        $schedule->command('queue:work')
             ->cron('* * * * *')
-            ->withoutOverlapping(); Desactivado por que el server de pruebas esta muy limitado */
+            ->withoutOverlapping(); /*Desactivado por que el server de pruebas esta muy limitado */
     }
 
     /**

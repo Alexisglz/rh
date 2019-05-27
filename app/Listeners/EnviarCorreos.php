@@ -13,7 +13,7 @@ use Mail;
 
 /* Para habilitar la cola de correos agregar a la clase  implements ShouldQueue y habilitar el cron  */
 
-class EnviarCorreos
+class EnviarCorreos implements ShouldQueue
 {
     /**
      * Create the event listener.

@@ -8,11 +8,10 @@ use App\Mail\NuevaIncidencia;
 use App\Models\IncidenciasCatalogo;
 use DB;
 use Exception;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
-class EnviarCorreosInci
+class EnviarCorreosInci Implements ShouldQueue
 {
     /**
      * Create the event listener.

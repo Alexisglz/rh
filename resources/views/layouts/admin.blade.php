@@ -303,9 +303,17 @@ to get the desired effect
                                 <li class="nav-item">
                                     <a href="{!! route('envio_incidencias.index') !!}" class="nav-link">
                                         <i class="fa fa-th-list nav-icon iconMenu"></i>
-                                        <p class="labelMenu">{{__('Lote de incidencias')}}</p>
+                                        <p class="labelMenu">{{__('Envio de incidencias')}}</p>
                                     </a>
                                 </li>
+                                @endcan
+                                @can('access',[\App\User::class,'listado_finalizadas'])
+                                    <li class="nav-item">
+                                        <a href="{!! route('envio_incidencias.finalizadas') !!}" class="nav-link">
+                                            <i class="fa fa-th-list nav-icon iconMenu"></i>
+                                            <p class="labelMenu">{{__('Incidencias Finalizadas')}}</p>
+                                        </a>
+                                    </li>
                                 @endcan
                             </ul>
                         </li>

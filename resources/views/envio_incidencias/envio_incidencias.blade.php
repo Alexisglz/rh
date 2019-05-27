@@ -1,7 +1,3 @@
-{{-- 
-    MOD:Erick Diaz modificaciones para el Envio de incidencias.
-    14-11-18
---}}
 @extends('layouts.admin')
 
 @section('contenido')
@@ -50,10 +46,7 @@
                                     <th>{{__('Empleado id')}}</th>
                                     <th>{{__('Incidencia')}}</th>
                                     <th>{{__('Tipo de incidencia')}}</th>
-                                    <th>{{__('Venta')}}</th>
-                                    <th>{{__('RO')}}</th>
                                     <th>{{__('Solicitante')}}</th>
-                                    <th>{{__('Monto')}}</th>
                                     <th>{{__('Duracion(Días)')}}</th>
                                     <th>{{__('Fecha de solicitud')}}</th>
                                     <th>{{__('Fecha de inicio')}}</th>

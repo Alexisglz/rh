@@ -66,22 +66,18 @@ var table = $('#incidencias-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (row.estatus == 'CANCELAR') {
-                    view += '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
+                    return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
                 }
-                if (row.estatus == 'POR ENVIAR') {
-                    return '<i class="fas fa-check" style="color:limegreen;font-size:20px"></i>';
+                if (row.estatus == 'POR ENVIAR' || row.estatus == 'ENVIADO') {
+                    return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
                     if (row.tipo_incidencia == "DEDUCCION" && inc_ded == 1){
-                        if (data != null && data != undefined)
-                            view += '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
-                        else{
-                            view += "<button class='auth_rh btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
-                            view += "<button class='cancel_rh btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
-                        }
+                        view += "<button class='auth_rh btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
+                        view += "<button class='cancel_rh btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
                     }
                     else
-                        view += '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
                 }
                 return view;
             },
@@ -92,22 +88,18 @@ var table = $('#incidencias-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (row.estatus == 'CANCELAR') {
-                    view += '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
+                    return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
                 }
-                if (row.estatus == 'POR ENVIAR') {
-                    return '<i class="fas fa-check" style="color:limegreen;font-size:20px"></i>';
+                if (row.estatus == 'POR ENVIAR' || row.estatus == 'ENVIADO') {
+                    return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
                     if (row.venta > 0 && inc_c_v == 1){
-                        if (row.auth_venta != null && row.auth_venta != undefined)
-                            view += '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
-                        else{
-                            view += "<button class='auth_cv btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
-                            view += "<button class='cancel_cv btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
-                        }
+                        view += "<button class='auth_cv btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
+                        view += "<button class='cancel_cv btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
                     }
                     else
-                        view += '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
                 }
                 return view;
             },
@@ -123,15 +115,15 @@ var table = $('#incidencias-table').DataTable({
                 if (row.estatus == 'CANCELAR') {
                     return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
                 }
-                if (row.estatus == 'POR ENVIAR') {
-                    return '<i class="fas fa-check" style="color:limegreen;font-size:20px"></i>';
+                if (row.estatus == 'POR ENVIAR' || row.estatus == 'ENVIADO') {
+                    return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 } else {
                     if (row.venta == 0 && row.tipo_incidencia == "PERCEPCION" && inc_s_v == 1){
                         view += "<button class='auth_sv btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
                         view += "<button class='cancel_sv btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
                     }
                     else
-                        view += '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
                     return view;
                 }
             },

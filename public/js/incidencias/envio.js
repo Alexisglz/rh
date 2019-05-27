@@ -6,7 +6,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
     responsive: true,
     order: [[0, "desc"]],
     ajax: {
-        url: '/autorizar/get_incidencias',
+        url: '/autorizar/get_incidencias_periodo',
         type: 'GET',
         data: function (data) {
             data.tipo = envio
@@ -20,10 +20,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
         {data: 'emp_id', name: 'emp_id'},
         {data: 'incidencia', name: 'incidencia'},
         {data: 'tipo_incidencia', name: 'tipo_incidencia'},
-        {data: 'venta', name: 'venta'},
-        {data: 'pedido', name: 'pedido'},
         {data: 'solicitante', name: 'solicitante'},
-        {data: 'monto', name: 'monto'},
         {data: 'duracion', name: 'duracion'},
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
@@ -81,24 +78,6 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
                 return view;
             }
         },
-        {
-            "targets": 7,
-            "data": null,
-            "className": "text-center",
-            "render": function (data, type, row) {
-                var view = '';
-                if (row.tipo_incidencia == "DEDUCCION"){
-                    view = '<span style="font-weight: bold">No aplica</span>';
-                }
-                else {
-                    if (row.venta == null || row.venta == 0)
-                        view = '<span style="color: red;font-weight: bold">0</span>';
-                    else
-                        view = '<span style="color: #007bff;font-weight: bold">'+row.venta+'</span>';
-                }
-                return view;
-            }
-        }
     ],
 });
 

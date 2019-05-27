@@ -7,6 +7,7 @@ use App\Helpers\Upload;
 use App\Incidencias;
 use App\Models\CatalogoCoordinadores;
 use App\Models\IncidenciasCatalogo;
+use App\Models\VistaIncidenciasPeriodo;
 use App\User;
 use App\VistaIncidenciasSinLote;
 use DB;
@@ -65,6 +66,12 @@ class AutorizarController extends Controller
         return view($vistaName);
     }
 
+    public function finalizadas()
+    {
+        $this->authorize('access',[User::class, 'listado_finalizadas']);
+        return view('incidencias.finalizadas');
+    }
+
     /**
      * @param Request $request
      * @return mixed
@@ -99,7 +106,6 @@ class AutorizarController extends Controller
             case 'ESP':
                 if ($id == 'envio')
                     $incidencias
-                        ->where('estatus','=','POR ENVIAR')
                         ->orWhere('estatus','=','ENVIADO')->select();
                 else
                     $incidencias->select();
@@ -108,7 +114,6 @@ class AutorizarController extends Controller
                 if ($id == 'envio')
                     $incidencias
                         ->where('area_solicitante','<>','Especial')
-                        ->where('estatus','=','POR ENVIAR')
                         ->orWhere('estatus','=','ENVIADO')->select();
                 else
                     $incidencias
@@ -119,7 +124,6 @@ class AutorizarController extends Controller
                 if ($id == 'envio')
                     $incidencias
                         ->where('area_solicitante','<>','Especial')
-                        ->where('estatus','=','POR ENVIAR')
                         ->orWhere('estatus','=','ENVIADO')->select();
                 else
                     $incidencias
@@ -129,7 +133,6 @@ class AutorizarController extends Controller
             case 'ADMIN':
                 if ($id == 'envio')
                     $incidencias
-                        ->where('estatus','=','POR ENVIAR')
                         ->orWhere('estatus','=','ENVIADO')
                         ->select();
                 else
@@ -139,7 +142,6 @@ class AutorizarController extends Controller
                 if ($id == 'envio')
                     $incidencias
                         ->where('area_solicitante','<>','Especial')
-                        ->where('estatus','=','POR ENVIAR')
                         ->orWhere('estatus','=','ENVIADO')->select();
                 else
                     $incidencias
@@ -150,7 +152,6 @@ class AutorizarController extends Controller
                 if ($id == 'envio')
                     $incidencias
                         ->where('id_solicitante','=',auth()->user()->id_usuario)
-                        ->where('estatus','=','POR ENVIAR')
                         ->orWhere('estatus','=','ENVIADO')->select();
                 else
                     $incidencias
@@ -161,6 +162,104 @@ class AutorizarController extends Controller
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
              'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
+    public function getIncidenciasFinalizadas(Request $request)
+    {
+        $usuario = auth()->user();
+        $area    = $usuario->getRol->Rol;
+        $incidencias = VistaIncidenciasSinLote::query();
+        if ($usuario->listarTodo == null) {
+            if ($usuario->getCoordinador) {
+                $this->recursivoCoordinadores($usuario->id_usuario);
+                $this->coords[] = $usuario->getCoordinador->id;
+                $coords         = array_values(array_unique($this->coords));
+                $incidencias->whereIn('coordinador_id', $coords);
+            }
+        }
+        switch ($area){
+            case 'ESP':
+                break;
+            case 'RH':
+                    $incidencias
+                        ->where('area_solicitante','<>','Especial');
+                break;
+            case 'DIR':
+                    $incidencias
+                        ->where('area_solicitante','<>','Especial');
+                break;
+            case 'ADMIN':
+                break;
+            case 'ENTR':
+                    $incidencias
+                        ->where('area_solicitante','<>','Especial');
+                break;
+            default:
+                    $incidencias
+                        ->where('id_solicitante','=',auth()->user()->id_usuario);
+                break;
+        }
+        $incidencias
+            ->orWhere('estatus','=','ENVIADO')->select()
+            ->orWhere('estatus','=','CANCELAR')->select();
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
+    public function getIncidenciasPeriodo(Request $request){
+        $usuario = auth()->user();
+        $area    = $usuario->getRol->Rol;
+        $incidencias = VistaIncidenciasPeriodo::query();
+        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
+        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
+        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        if ($usuario->listarTodo == null) {
+            if ($usuario->getCoordinador) {
+                $this->recursivoCoordinadores($usuario->id_usuario);
+                $this->coords[] = $usuario->getCoordinador->id;
+                $coords         = array_values(array_unique($this->coords));
+                $incidencias->whereIn('coordinador_id', $coords);
+            }
+        }
+        if($area != 'ADMIN'){
+            if ($inc_s_v == 1)
+                $incidencias->where('venta','=',0);
+            if ($inc_c_v == 1)
+                $incidencias->where('venta','>',0);
+            if ($inc_ded == 1)
+                $incidencias->where('tipo_incidencia','=','DEDUCCION');
+        }
+        switch ($area){
+            case 'ESP':
+                    $incidencias->where('estatus','=','POR ENVIAR')->select();
+                break;
+            case 'RH':
+                $incidencias->where('area_solicitante','<>','Especial')
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+            case 'DIR':
+                $incidencias->where('area_solicitante','<>','Especial')
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+            case 'ADMIN':
+                $incidencias->where('estatus','=','POR ENVIAR')
+                    ->select();
+                break;
+            case 'ENTR':
+                $incidencias->where('area_solicitante','<>','Especial')
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+            default:
+                $incidencias->where('id_solicitante','=',auth()->user()->id_usuario)
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+        }
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
             ->make(true);
     }
 

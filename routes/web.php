@@ -37,10 +37,13 @@ Route::group(["prefix" => "autorizacion", "middleware" => ["auth"]], function() 
 Route::group(["prefix" => "autorizar", "middleware" => ["auth"]], function() {
     Route::get('/', 'AutorizarController@index')->name('autorizar.index');
     Route::get('/get_incidencias/', 'AutorizarController@getIncidencias')->name('autorizar.get_incidencias');
+    Route::get('/get_incidencias_finalizadas/', 'AutorizarController@getIncidenciasFinalizadas')->name('autorizar.get_incidencias_finalizadas');
+    Route::get('/get_incidencias_periodo/', 'AutorizarController@getIncidenciasPeriodo')->name('autorizar.get_incidencias_periodo');
     Route::get('/get_incidencias_lote', 'AutorizarController@getIncidenciasLote')->name('autorizar.get_incidencias_lote');
     Route::get('/get_bitacora_incidentes', 'AutorizarController@getBitacoraIncidentes')->name('autorizar.get_bitacora_incidentes');
     Route::post('/auth_incidencia', 'AutorizarController@AuthIncidencia')->name('autorizar.auth_incidencia');
     Route::post('/vobo_final', 'AutorizarController@voboFinal')->name('autorizar.vobo_final');
+    Route::get('/finalizadas', 'AutorizarController@finalizadas')->name('envio_incidencias.finalizadas');
 });
 
 Route::group(["prefix" => "bajas", "middleware" => ["auth"]], function() {

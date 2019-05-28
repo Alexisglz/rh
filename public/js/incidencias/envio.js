@@ -4,6 +4,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
+    pageLength: 50,
     order: [[0, "desc"]],
     ajax: {
         url: '/datatables/get_incidencias_periodo',
@@ -12,6 +13,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
             data.tipo = envio
         },
     },
+    dom: '<"top"f>rt<"bottom"lpi><"clear">',
     columns: [
         {data: 'id', name: 'id'},
         {valor: {data: 'id_lote', data: 'id'}, name: 'id_lote'},
@@ -28,7 +30,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
         {data: 'id_lote', name: 'id_lote'},
     ],
     language: {
-        "lengthMenu": "Mostrando _MENU_ registros por página",
+        "lengthMenu": "Ver _MENU_ registros por página",
         "zeroRecords": "Nada que mostrar",
         "info": "Página _PAGE_ de _PAGES_",
         "infoEmpty": "No hay información disponible",
@@ -54,9 +56,9 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
                         if (row.vobo_final == null)
                             return '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
                         else
-                            return "<input type='checkbox' style='color:#007bffcc;font-size:20px'>";
+                            return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
                     else
-                        return "<input type='checkbox' style='color:#007bffcc;font-size:20px'>";
+                        return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
                 }
             },
         },
@@ -214,6 +216,13 @@ $('#Incidencias_Enviar-table tbody').on('click', 'input[type="checkbox"]', funct
 });
 
 function EjecutarLote() {
+    if (rows_selected.length == 0){
+        swal({
+            title: "No se ha seleccionado ninguna incidencia",
+            type: 'warning'
+            });
+        return false;
+    }
     swal({
             title: "Desea crear nuevo lote de incidencias?",
             text: "Todos los datos selecionados en la tabla se almacenaran con un nuevo lote...",
@@ -282,6 +291,19 @@ function EjecutarLote() {
             }
         });
 }
+
+$('#marcar').on('click', function () {
+    if ($(this).is( ":checked" ))
+        $('.selects').each(function () {
+            if (!$(this).is( ":checked" ))
+                $(this).trigger('click');
+        });
+    else
+        $('.selects').each(function () {
+            if ($(this).is( ":checked" ))
+                $(this).trigger('click');
+        });
+});
 
 
 function ExportExcel() {

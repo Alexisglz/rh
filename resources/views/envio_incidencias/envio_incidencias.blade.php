@@ -35,6 +35,21 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @can('access',[\App\User::class,'enviar_lote'])
+                                        <button id="Enviar" type="button" onclick="EjecutarLote();" class="btn btn-success">
+                                            {{__('Enviar')}}
+                                        </button>
+                                    @endcan
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check check-todo pull-right">
+                                        <input type="checkbox" class="form-check-input" id="marcar">
+                                        <label class="form-check-label" for="marcar"><strong>{{__('Marcar Todos')}}</strong></label>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="table table-active"
                                    style="font-size:12px;text-align: center; width: 100%" id="Incidencias_Enviar-table">
                                 <thead>
@@ -58,11 +73,6 @@
                             <!--button id="Enviar1" type="button" onclick="validaBoton();" class="btn btn-secondary">
                                 Arreglo
                             </button-->
-                            @can('access',[\App\User::class,'enviar_lote'])
-                                <button id="Enviar" type="button" onclick="EjecutarLote();" class="btn btn-success">
-                                    {{__('Enviar')}}
-                                </button>
-                            @endcan
                         </div>
                     </div>
                 </div>
@@ -104,6 +114,13 @@
             </div>
         </div>
     </div>
+    <style>
+        .check-todo{
+            margin-left: 2%;
+            margin-bottom: 2%;
+            z-index: 1;
+        }
+    </style>
     @include('envio_incidencias.modals.subir_vobo')
 
     {!! Html::script('js/incidencias/envio.js') !!}

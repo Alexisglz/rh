@@ -42,6 +42,8 @@ class AutorizarController extends Controller
             if ($usuario->getCoordinador){
                 $movs = $usuario->getCoordinador->getMovimientos;
                 foreach ($movs as $item){
+                    if ($item->getEmpleado == null)
+                        continue;
                     if ($item->getEmpleado->empleado_id == null)
                         continue;
                     $user = User::where('empleado_id', '=', $item->empleado_id)->first();

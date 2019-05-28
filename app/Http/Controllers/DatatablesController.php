@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Coordinador;
 use App\Http\Requests;
 use App\Models\CatalogoCoordinadores;
+use App\Models\IncidenciaPeriodo;
 use App\Models\VistaEmpleadosActivos;
+use App\Models\VistaIncidenciasPeriodo;
 use App\Models\VistaSolAltas;
 use App\PlanesLineas;
 use App\User;
+use App\VistaIncidenciasSinLote;
 use App\WBS;
 use DB;
 use Illuminate\Http\Request;
@@ -24,6 +27,15 @@ class DatatablesController extends Controller
 
     public $array  = [];
     public $coords = [];
+    /**
+     * @var false|string
+     */
+    private $date;
+
+    public function __construct()
+    {
+        $this->date = date('Y-m-d H:i:s');
+    }
 
     /** Funcion recursiva para obtener el arbol de empleados
      * @param int $id
@@ -244,6 +256,132 @@ class DatatablesController extends Controller
                     $btn .= '<button title="Eliminar usuario" id="" onClick="abrirModalEliminarUsuario(' . $user->id . ')" class="btn btn-sm btn-danger" style="margin-rigth: 5px;margin-left: 5px"><i class="fa fa-trash"></i></button>';
                 return $btn;
             })
+            ->make(true);
+    }
+
+    public function getIncidencias(Request $request){
+        $usuario     = auth()->user();
+        $area        = $usuario->getRol->Rol;
+        $incidencias = VistaIncidenciasSinLote::query();
+        $periodo     = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+            ->where('fecha_fin','>=', $this->date)->first();
+        if ($usuario->listarTodo == null) {
+            if ($usuario->getCoordinador) {
+                $this->recursivoCoordinadores($usuario->id_usuario);
+                $this->coords[] = $usuario->getCoordinador->id;
+                $coords         = array_values(array_unique($this->coords));
+                $incidencias->whereIn('coordinador_id', $coords);
+            }
+        }
+        switch ($area){
+            case 'ESP':
+            case 'ADMIN':
+                break;
+            case 'RH':
+            case 'DIR':
+            case 'ENTR':
+                $incidencias
+                    ->where('area_solicitante','<>','Especial')
+                    ->select();
+                break;
+            default:
+                $incidencias
+                    ->where('id_solicitante','=',auth()->user()->id_usuario)
+                    ->select();
+                break;
+        }
+        $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
+    public function getIncidenciasFinalizadas(Request $request)
+    {
+        $usuario = auth()->user();
+        $area    = $usuario->getRol->Rol;
+        $incidencias = VistaIncidenciasSinLote::query();
+        $incidencias
+            ->whereIn('estatus',['ENVIADO','CANCELAR'])->select();
+        if ($usuario->listarTodo == null) {
+            if ($usuario->getCoordinador) {
+                $this->recursivoCoordinadores($usuario->id_usuario);
+                $this->coords[] = $usuario->getCoordinador->id;
+                $coords         = array_values(array_unique($this->coords));
+                $incidencias->whereIn('coordinador_id', $coords);
+            }
+        }
+        switch ($area){
+            case 'ESP':
+            case 'ADMIN':
+                break;
+            case 'RH':
+            case 'DIR':
+            case 'ENTR':
+                $incidencias->where('area_solicitante','<>','Especial');
+                break;
+            default:
+                $incidencias->where('id_solicitante','=',auth()->user()->id_usuario);
+                break;
+        }
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
+    public function getIncidenciasPeriodo(Request $request){
+        $usuario = auth()->user();
+        $area    = $usuario->getRol->Rol;
+        $incidencias = VistaIncidenciasPeriodo::query();
+        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
+        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
+        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        if ($usuario->listarTodo == null) {
+            if ($usuario->getCoordinador) {
+                $this->recursivoCoordinadores($usuario->id_usuario);
+                $this->coords[] = $usuario->getCoordinador->id;
+                $coords         = array_values(array_unique($this->coords));
+                $incidencias->whereIn('coordinador_id', $coords);
+            }
+        }
+        if($area != 'ADMIN'){
+            if ($inc_s_v == 1)
+                $incidencias->where('venta','=',0);
+            if ($inc_c_v == 1)
+                $incidencias->where('venta','>',0);
+            if ($inc_ded == 1)
+                $incidencias->where('tipo_incidencia','=','DEDUCCION');
+        }
+        switch ($area){
+            case 'ESP':
+                $incidencias->where('estatus','=','POR ENVIAR')->select();
+                break;
+            case 'RH':
+                $incidencias->where('area_solicitante','<>','Especial')
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+            case 'DIR':
+                $incidencias->where('area_solicitante','<>','Especial')
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+            case 'ADMIN':
+                $incidencias->where('estatus','=','POR ENVIAR')
+                    ->select();
+                break;
+            case 'ENTR':
+                $incidencias->where('area_solicitante','<>','Especial')
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+            default:
+                $incidencias->where('id_solicitante','=',auth()->user()->id_usuario)
+                    ->where('estatus','=','POR ENVIAR')->select();
+                break;
+        }
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
             ->make(true);
     }
 }

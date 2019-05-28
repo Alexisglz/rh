@@ -4,7 +4,7 @@ var table = $('#incidencias-table').DataTable({
     processing: true,
     serverSide: true,
     order: [[0, "desc"]],
-    ajax: '/autorizar/get_incidencias/' + solicit,
+    ajax: '/datatables/get_incidencias_auth/',
     columns: [
         {data: 'id', name: 'id'},
         {data:null, name:'info',orderable: false, searchable: false},

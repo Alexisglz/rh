@@ -6,7 +6,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
     responsive: true,
     order: [[0, "desc"]],
     ajax: {
-        url: '/autorizar/get_incidencias_periodo',
+        url: '/datatables/get_incidencias_periodo',
         type: 'GET',
         data: function (data) {
             data.tipo = envio

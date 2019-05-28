@@ -37,9 +37,6 @@ Route::group(["prefix" => "autorizacion", "middleware" => ["auth"]], function() 
 
 Route::group(["prefix" => "autorizar", "middleware" => ["auth"]], function() {
     Route::get('/', 'AutorizarController@index')->name('autorizar.index');
-    Route::get('/get_incidencias/', 'AutorizarController@getIncidencias')->name('autorizar.get_incidencias');
-    Route::get('/get_incidencias_finalizadas/', 'AutorizarController@getIncidenciasFinalizadas')->name('autorizar.get_incidencias_finalizadas');
-    Route::get('/get_incidencias_periodo/', 'AutorizarController@getIncidenciasPeriodo')->name('autorizar.get_incidencias_periodo');
     Route::get('/get_incidencias_lote', 'AutorizarController@getIncidenciasLote')->name('autorizar.get_incidencias_lote');
     Route::get('/get_bitacora_incidentes', 'AutorizarController@getBitacoraIncidentes')->name('autorizar.get_bitacora_incidentes');
     Route::post('/auth_incidencia', 'AutorizarController@AuthIncidencia')->name('autorizar.auth_incidencia');
@@ -100,6 +97,10 @@ Route::group(["prefix" => "datatables", "middleware" => ["auth"]], function() {
     Route::get('/get_data_herramientas', 'DatatablesController@getDataHerramientas')->name('datatables.get_data_herramientas');
     Route::get('/get_data_empleados', 'DatatablesController@getDataEmpleados')->name('datatables.get_data_empleados');
     Route::get('/get_data_usuarios', 'DatatablesController@getDataUsuarios')->name('datatables.get_data_usuarios');
+    Route::get('/get_incidencias', 'DatatablesController@getIncidencias')->name('datatables.get_incidencias');
+    Route::get('/get_incidencias_auth', 'DatatablesController@getIncidenciasAuth')->name('datatables.get_incidencias_auth');
+    Route::get('/get_incidencias_finalizadas/', 'DatatablesController@getIncidenciasFinalizadas')->name('autorizar.get_incidencias_finalizadas');
+    Route::get('/get_incidencias_periodo/', 'DatatablesController@getIncidenciasPeriodo')->name('autorizar.get_incidencias_periodo');
 });
 
 Route::group(["prefix" => "empleados", "middleware" => ["auth"]], function() {

@@ -4,7 +4,7 @@ var table = $('#incidencias-table').DataTable({
     serverSide: true,
     order: [[0, "desc"]],
     responsive: true,
-    ajax: '/autorizar/get_incidencias/',
+    ajax: '/datatables/get_incidencias/',
     columns: [
         {data: 'id', name: 'id'},
         {},
@@ -19,8 +19,6 @@ var table = $('#incidencias-table').DataTable({
         {data: 'solicitante', name: 'solicitante'},
         {data: 'motivo', name: 'motivo'},
         {data: 'id_lote', name: 'id_lote'},
-
-
     ],
     language: {
         "lengthMenu": "Mostrando _MENU_ registros por página",

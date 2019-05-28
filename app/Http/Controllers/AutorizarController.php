@@ -91,77 +91,29 @@ class AutorizarController extends Controller
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
-        if ($usuario->listarTodo == null) {
-            if ($usuario->getCoordinador) {
-                $this->recursivoCoordinadores($usuario->id_usuario);
-                $this->coords[] = $usuario->getCoordinador->id;
-                $coords         = array_values(array_unique($this->coords));
-                $incidencias->whereIn('coordinador_id', $coords);
-            }
-        }
         if($area != 'ADMIN'){
             if ($inc_s_v == 1)
-                $incidencias->where('venta','=',0);
+                $incidencias->where('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_c_v == 1)
-                $incidencias->where('venta','>',0);
+                $incidencias->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_ded == 1)
                 $incidencias->where('tipo_incidencia','=','DEDUCCION');
         }
         switch ($area){
             case 'ESP':
-                if ($id == 'envio')
-                    $incidencias
-                        ->orWhere('estatus','=','ENVIADO')->select();
-                else
-                    $incidencias->select();
+            case 'ADMIN':
                 break;
             case 'RH':
-                if ($id == 'envio')
-                    $incidencias
-                        ->where('area_solicitante','<>','Especial')
-                        ->orWhere('estatus','=','ENVIADO')->select();
-                else
-                    $incidencias
-                        ->where('area_solicitante','<>','Especial')
-                        ->select();
-                break;
             case 'DIR':
-                if ($id == 'envio')
-                    $incidencias
-                        ->where('area_solicitante','<>','Especial')
-                        ->orWhere('estatus','=','ENVIADO')->select();
-                else
-                    $incidencias
-                        ->where('area_solicitante','<>','Especial')
-                        ->select();
-                break;
-            case 'ADMIN':
-                if ($id == 'envio')
-                    $incidencias
-                        ->orWhere('estatus','=','ENVIADO')
-                        ->select();
-                else
-                    $incidencias->select();
-                break;
             case 'ENTR':
-                if ($id == 'envio')
-                    $incidencias
-                        ->where('area_solicitante','<>','Especial')
-                        ->orWhere('estatus','=','ENVIADO')->select();
-                else
-                    $incidencias
-                        ->where('area_solicitante','<>','Especial')
-                        ->select();
+                $incidencias
+                    ->where('area_solicitante','<>','Especial')
+                    ->select();
                 break;
             default:
-                if ($id == 'envio')
-                    $incidencias
-                        ->where('id_solicitante','=',auth()->user()->id_usuario)
-                        ->orWhere('estatus','=','ENVIADO')->select();
-                else
-                    $incidencias
-                        ->where('id_solicitante','=',auth()->user()->id_usuario)
-                        ->select();
+                $incidencias
+                    ->where('id_solicitante','=',auth()->user()->id_usuario)
+                    ->select();
                 break;
         }
         $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);

@@ -297,6 +297,53 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getIncidenciasAuth(Request $request)
+    {
+        $usuario = auth()->user();
+        $area    = $usuario->getRol->Rol;
+        $incidencias = VistaIncidenciasSinLote::query();
+        $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+            ->where('fecha_fin','>=', $this->date)->first();
+        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
+        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
+        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        if($area != 'ADMIN'){
+            if ($inc_s_v == 1)
+                $incidencias->where('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
+            if ($inc_c_v == 1)
+                $incidencias->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION');
+            if ($inc_ded == 1)
+                $incidencias->where('tipo_incidencia','=','DEDUCCION');
+        }
+        switch ($area){
+            case 'ESP':
+            case 'ADMIN':
+                break;
+            case 'RH':
+            case 'DIR':
+            case 'ENTR':
+                $incidencias
+                    ->where('area_solicitante','<>','Especial')
+                    ->select();
+                break;
+            default:
+                $incidencias
+                    ->where('id_solicitante','=',auth()->user()->id_usuario)
+                    ->select();
+                break;
+        }
+        $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
     public function getIncidenciasFinalizadas(Request $request)
     {
         $usuario = auth()->user();

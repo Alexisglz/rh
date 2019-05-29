@@ -33,19 +33,6 @@
                        <option value="DEDUCCION">{{__('Deduccion')}}</option>
                     </select>
 
-                    <div id="div_esquema">
-                        {!! Form::label('tipo', '*Tipo de esquema:', []) !!}
-                        <select name="esquema" class="custom-select tipo" id="esquema" required>
-                            <option value="">{{__('Selecciona el esquema')}}</option>
-                            @if($tradicional == 1)
-                                <option value="TRADICIONAL">{{__('Tradicional')}}</option>
-                            @endif
-                            @if($asimilado == 1)
-                                <option value="ASIMILADOS">{{__('Asimilado')}}</option>
-                            @endif
-                        </select>
-                    </div>
-
                     <div id="div_incidencia">
                         {!! Form::label('incidencia', '*Incidencia:', []) !!}
                         <select name="incidencia" class="custom-select tipo" id="incidencia" required>

@@ -237,11 +237,17 @@ class IncidenciasController extends Controller
 
     public function catalogoFiltro(Request $request){
         try{
+            $tipos = [];
+            $tradicional  = auth()->user()->can('access',[User::class,'ver_tradicional_inci'])? 1:0;
+            $asimilado    = auth()->user()->can('access',[\App\User::class,'ver_asimilados_inci'])? 1:0;
+            if ($tradicional == 1)
+                $tipos[] = 'TRADICIONAL';
+            if ($asimilado == 1)
+                $tipos[] = 'ASIMILADOS';
             $catalogo = IncidenciasCatalogo::query();
             if ($request->tipo != "")
                 $catalogo->where('tipo', '=', $request->tipo);
-            if ($request->esquema != "")
-                $catalogo->where('descripcion', '=', $request->esquema);
+            $catalogo->whereIn('descripcion', $tipos);
             $catalogo->where('estatus', '=', 'ACTIVO');
             $catalogo = $catalogo->get();
             return response()->json([

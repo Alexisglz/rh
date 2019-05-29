@@ -1,84 +1,69 @@
- var monto 	 = $('.monto');
- var lapso 	 = $('.lapso');
- var rango   = $('.dias');
- var div_inc = $('#div_incidencia');
- var div_esq = $('#div_esquema');
+ var monto 	  = $('.monto');
+ var lapso 	  = $('.lapso');
+ var rango    = $('.dias');
+ var div_inc  = $('#div_incidencia');
+ var risk 	  = $('#risk');
+ var div_risk = $('#div_risk');
 
 $('document').ready(function(){
 	monto.hide();
 	lapso.hide();
 	rango.hide();
 	div_inc.hide();
-	div_esq.hide();
+	div_risk.hide();
 });
-
-var concepto = null;
 
 $('#tipo').on('change', function () {
 	var select = $(this);
 	var tipo   = select.find(":selected").val();
+	$('#incidencia').empty();
 	$("#incidencia").val("");
 	$("#esquema").val("");
-	$('#div_esquema').val("");
+	$("#risk").val("");
+	$("#id_risk").val("");
 	monto.fadeOut();
 	lapso.fadeOut();
 	rango.fadeOut();
-	div_esq.fadeIn();
-	concepto = tipo;
-	if (tipo == "PERCEPCION") {
-		$('#div_risk').fadeIn();
-	}
-	else $('#div_risk').fadeOut();
+	div_risk.fadeOut();
 	if (tipo == "") {
-		$('#div_esquema').fadeOut();
 		$('#div_incidencia').fadeOut();
 		$('#div_risk').fadeOut();
 		Swal.fire({
 			title: "Seleccione el Concepto",
 			type: "warning"
 		});
+		return false;
 	}
-});
+	if (tipo == 'PERCEPCION')
+		div_risk.fadeIn();
 
- $('#esquema').on('change', function () {
- 	var esquema = $(this).val();
-	 $('#incidencia').empty();
-	 $("#incidencia").val("");
-	 if (esquema == ""){
-		 $('#div_incidencia').fadeOut();
-		 Swal.fire({
-			 title: "Seleccione el esquema",
-			 type: "warning"
-		 });
-		 return false;
-	 }
-	 $.ajax({
-		 url: '/incidencias/filtro',
-		 type: 'GET',
-		 dataType: 'JSON',
-		 data: {
-			 tipo: concepto,
-			 esquema: esquema
-		 },
-		 success: function (data) {
-			 if (data.ok == true){
-			 	div_inc.fadeIn();
-			 	var options = data.data;
-				 $('#incidencia').append($('<option>', {
-					 value: "",
-					 text : "Selecciona el tipo"
-				 }));
-			 	for (i in options){
+	$.ajax({
+		url: '/incidencias/filtro',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			tipo: tipo,
+		},
+		success: function (data) {
+			if (data.ok == true){
+				div_inc.fadeIn();
+				var options = data.data;
+				$('#incidencia').append($('<option>', {
+					value: "",
+					text : "Selecciona el tipo"
+				}));
+				for (i in options){
 					$('#incidencia').append($('<option>', {
 						value: options[i].id,
 						text : options[i].alias,
+						class: options[i].descripcion,
 						tratamiento: options[i].tratamiento
 					}));
 				}
-			 }
-		 }
-	 });
- });
+			}
+		}
+	});
+});
 
  $('#empleado').on('keyup', function () {
      $('#risk').val("");
@@ -123,26 +108,37 @@ $("#empleado" ).autocomplete({
 	}
 });
 
- $("#risk" ).autocomplete({
-	 source: function (request, response) {
-		 $.ajax({
-			 url: '/incidencias/get_risk',
-			 type: 'GET',
-			 dataType: 'JSON',
-			 data: {
-				 term: request.term,
-				 id: $('#id_empleado').val()
-			 },
-			 success: function (data) {
-				 response(data);
-			 }
-		 });
-	 },
-	 minLength: 2,
-	 select: function(event, ui) {
-	 	$('#id_risk').val(ui.item.id);
-	 }
- });
+risk.on('keyup',function () {
+	if ($('#id_empleado').val() != ""){
+		risk.autocomplete({
+			source: function (request, response) {
+				$.ajax({
+					url: '/incidencias/get_risk',
+					type: 'GET',
+					dataType: 'JSON',
+					data: {
+						term: request.term,
+						id: $('#id_empleado').val()
+					},
+					success: function (data) {
+						response(data);
+					}
+				});
+			},
+			minLength: 2,
+			select: function(event, ui) {
+				$('#id_risk').val(ui.item.id);
+			}
+		});
+	}
+	else{
+		$(this).val("");
+		Swal.fire({
+			title: "Debe seleccionar un empleado",
+			type: "warning"
+		});
+	}
+});
 
 function descarga() {
 	for (n=1;n<=275;n++){

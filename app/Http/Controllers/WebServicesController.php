@@ -23,7 +23,7 @@ class WebServicesController extends Controller
         // dd($this->firstUpdate()); // Ejecutar esta funcion solo la primer vez que se suba a produccion
         $conn = DB::connection('incore');
         $response = $this->getRango(1853);
-        $response = $this->getEspecifico(2150);
+        $response = $this->getEspecifico(1179);
         dd($response);
         $no_actualizados = Empleados::with('getMovimientoRecurso')
             ->whereHas('getMovimientoRecurso', function ($q){

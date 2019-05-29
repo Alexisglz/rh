@@ -51,22 +51,33 @@
                     {!! Form::textarea('motivo', null, ['class'=>'form-control','required','rows' => '5']) !!}
                     <br>
 
-                    {!! Form::label('vobo', 'Vo.Bo. Jefe: '); !!}
-                    <br>
-                    {!! Form::file('vobo') !!}
-
-                    <br>
                     {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso']) !!}
                     {!! Form::date('fecha_i', \Carbon\Carbon::now(), ['class'=>'lapso form-control','required']) !!}
 
                     {!! Form::label('dias', 'Numero de dias', ['class'=>'dias']) !!}
                     {!! Form::number('dias', null, ['class'=>'dias form-control','min'=>'1']) !!}
 
-                    {!! Form::label('monto', 'monto', ['class'=>'monto']) !!}
+                    <div id="div_monto">
+                        <label for="tipo_monto">Tipo de cantidad</label>
+                        <select id="tipo_monto" class="custom-select" name="tipo_monto">
+                            <option value="">Seleccione</option>
+                            <option value="monto">Monto</option>
+                            <option value="horas">Horas</option>
+                        </select>
+                    </div>
+                    {!! Form::label('monto', 'Monto', ['class'=>'monto']) !!}
                     {!! Form::number('monto', 0, ['class'=>'monto form-control','required','step'=>"any"]) !!}
+                    {!! Form::label('horas', 'Horas', ['class'=>'horas']) !!}
+                    {!! Form::number('horas', 0, ['class'=>'horas form-control','required','min'=>1]) !!}
                     <br>
 
-                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
+                    {!! Form::label('vobo', 'Vo.Bo. Jefe: '); !!}
+                    <br>
+                    {!! Form::file('vobo') !!}
+
+                    <br>
+
+                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'style'=>'margin-top: 3%;']) !!}
                     {!! Form::close() !!}
                 </div>
             </div>

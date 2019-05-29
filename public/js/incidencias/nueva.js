@@ -1,16 +1,20 @@
- var monto 	  = $('.monto');
- var lapso 	  = $('.lapso');
- var rango    = $('.dias');
- var div_inc  = $('#div_incidencia');
- var risk 	  = $('#risk');
- var div_risk = $('#div_risk');
+ var monto 	   = $('.monto');
+ var lapso 	   = $('.lapso');
+ var rango     = $('.dias');
+ var horas	   = $('.horas');
+ var div_inc   = $('#div_incidencia');
+ var risk 	   = $('#risk');
+ var div_risk  = $('#div_risk');
+ var div_monto = $('#div_monto');
 
 $('document').ready(function(){
 	monto.hide();
 	lapso.hide();
 	rango.hide();
+	horas.hide();
 	div_inc.hide();
 	div_risk.hide();
+	div_monto.hide();
 });
 
 $('#tipo').on('change', function () {
@@ -77,7 +81,7 @@ $("#incidencia").on('change',function(){
 	    case "MONTO":
 	        $('.lapso').fadeOut();
 			$('.dias').fadeOut();
-			$('.monto').fadeIn();
+			$('#div_monto').fadeIn();
 	    break; 
 	    case "LAPSO":
 	        $('.monto').fadeOut();
@@ -138,6 +142,25 @@ risk.on('keyup',function () {
 			type: "warning"
 		});
 	}
+});
+
+$('#tipo_monto').on('change', function () {
+	var tipo = $(this).val();
+	$('.monto').fadeOut();
+	$('.horas').fadeOut();
+	$('#horas').val(0);
+	$('#monto').val(0);
+	if (tipo == "") {
+		Swal.fire({
+			title: "Seleccione el Concepto",
+			type: "warning"
+		});
+		return false;
+	}
+	if (tipo == 'monto')
+		$('.monto').fadeIn();
+	else
+		$('.horas').fadeIn();
 });
 
 function descarga() {

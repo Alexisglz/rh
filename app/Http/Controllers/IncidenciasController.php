@@ -97,6 +97,7 @@ class IncidenciasController extends Controller
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
+                        'tipo_monto'       => 'required',
                         'monto'       => 'required|numeric|min:0'
                     ];
                     break;
@@ -122,8 +123,8 @@ class IncidenciasController extends Controller
                     'errors' => $validator->messages()->all()
                 ]);
             }
-            $incidencia = new Incidencias;
-            $empleado = Empleados::find($request->id_empleado);
+            $incidencia      = new Incidencias;
+            $empleado        = Empleados::find($request->id_empleado);
             $tipo_incidencia = IncidenciasCatalogo::find($request->incidencia);
             switch ($tipo_incidencia->tratamiento) {
                 case 'LAPSO':
@@ -131,7 +132,16 @@ class IncidenciasController extends Controller
                     $incidencia->dias         = $request->dias;
                     break;
                 case 'MONTO':
-                    $incidencia->monto        = $request->monto;
+                    if ($request->tipo_monto == 'horas'){
+                        $sueldos           = $empleado->getMovimientoSueldo;
+                        $sueldo_total      = floatval($sueldos->sueldo_imss + $sueldos->sueldo_asimilado);
+                        $hora              = ($sueldo_total/30)/8;
+                        $hora_total        = round($hora, 4);
+                        $total             = $request->horas * $hora_total;
+                        $incidencia->monto = $total;
+                    }
+                    else
+                        $incidencia->monto        = $request->monto;
                     break;
                 case 'DIAS':
                     $incidencia->dias         = $request->dias;

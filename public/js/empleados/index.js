@@ -411,13 +411,16 @@ function postBajaEmpleado() {
         incidencias.css('border','1px solid #ced4da');
         observaciones.css('border','1px solid #ced4da');
         empleado_fecha_baja.css('border','1px solid #ced4da');
+        var check = 0;
+        if ($('#recurso_check').is(':checked'))
+            check = 1;
         var DataInsert = new FormData();
         DataInsert.append('_token', CSRF_TOKEN);
         DataInsert.append('empleado_fecha_baja', $('#empleado_fecha_baja').val());
         DataInsert.append('incidencia', $('#incidencias1').val());
         DataInsert.append('obs', $('#observaciones').val());
         DataInsert.append('motivo',  $('#motivo').val());
-        DataInsert.append('conbaja', $('#recurso_check').val());
+        DataInsert.append('conbaja', check);
         DataInsert.append('solicitante', $('#IdUser').val());
         DataInsert.append('vobo', file);
         DataInsert.append('fechaEmi', fecha());

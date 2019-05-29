@@ -13,6 +13,7 @@ use App\CostosIncore;
 use App\Empleados;
 use App\empleadosbaja;
 use App\Estados;
+use App\Events\BajasEvents;
 use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Models\Area;
@@ -568,6 +569,7 @@ class EmpleadosController extends Controller
 
     public function bajaEmpleado(Request $request)
     {
+        //dd($request);
         $this->authorize('access',[User::class, 'baja_empleado']);
         try{
             DB::beginTransaction();
@@ -586,7 +588,7 @@ class EmpleadosController extends Controller
             $sol->incidencias       = $incidencia;
             $sol->observaciones     = $obs;
             $sol->motivo            = $motivo;
-            $sol->conocimiento_baja = $conbaja;
+            $sol->conocimiento_baja = $conbaja==1 ? 'SI':'NO';
             //$sol->vobo_jefe         = $vobo;
             $sol->id_empleado       = $id;
             $sol->solicitante       = $request->input('solicitante');
@@ -598,6 +600,7 @@ class EmpleadosController extends Controller
                 $sol->save();
             }
             DB::commit();
+            event(new BajasEvents($sol,'nueva_baja'));
             return response()->json([
                 "ok" => true,
                 "data" => $sol

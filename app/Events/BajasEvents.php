@@ -3,13 +3,11 @@
 namespace App\Events;
 
 use App\Empleados;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
+use App\SolBajaNomina;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
 class BajasEvents
 {
@@ -17,18 +15,18 @@ class BajasEvents
     /**
      * @var Empleados
      */
-    public $empleado;
+    public $solicitud;
     public $tipo;
 
     /**
      * Create a new event instance.
      *
-     * @param Empleados $empleado
+     * @param SolBajaNomina $solicitud
      * @param $tipo
      */
-    public function __construct(Empleados $empleado, $tipo)
+    public function __construct(SolBajaNomina $solicitud, $tipo)
     {
-        $this->empleado = $empleado;
+        $this->solicitud = $solicitud;
         $this->tipo     = $tipo;
     }
 

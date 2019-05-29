@@ -2,9 +2,12 @@
 
 namespace App\Listeners;
 
+use App\Empleados;
 use App\Events\BajasEvents;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Mail\NuevaBaja;
+use DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Mail;
 
 class EnviarCorreosBajas implements ShouldQueue
 {
@@ -26,7 +29,25 @@ class EnviarCorreosBajas implements ShouldQueue
      */
     public function handle(BajasEvents $event)
     {
-        $empleado = $event->empleado;
-        $tipo     = $event->tipo;
+        $solicitud = $event->solicitud;
+        $tipo      = $event->tipo;
+        $empleado  = Empleados::find($solicitud->id_empleado);
+        $nombre    = $empleado->empleado_nombre.' '.$empleado->empleado_apaterno.' '.$empleado->empleado_amaterno;
+        $email     = config('app.mail_dev');
+        switch ($tipo){
+            case 'nueva_baja':
+                if (config('app.env')=="local")
+                    Mail::to($email)->send(new NuevaBaja($solicitud, $nombre));
+                else{
+                    $correos = DB::table('vista_permisos_empleados')
+                        ->where('codigo', '=','cita_baja')
+                        ->groupBy('id_usuario')
+                        ->get();
+                    foreach ($correos as $correo){
+                        Mail::to($correo->email)->send(new NuevaBaja($solicitud, $nombre));
+                    }
+                }
+                break;
+        }
     }
 }

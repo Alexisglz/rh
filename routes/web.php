@@ -129,6 +129,7 @@ Route::group(["prefix" => "empleados", "middleware" => ["auth"]], function() {
 Route::group(["prefix" => "envio_incidencias", "middleware" => ["auth"]], function() {
     Route::get('/', 'EnvioIncidenciasController@index')->name('envio_incidencias.index');
     Route::post('/insert_lote', 'EnvioIncidenciasController@InsertLote')->name('envio_incidencias.insert_lote');
+    Route::post('/editar', 'EnvioIncidenciasController@editar')->name('envio_incidencias.editar');
     Route::get('/update_incidencia_lote', 'EnvioIncidenciasController@UpdateIncidenciaLote')->name('envio_incidencias.update_incidencia_lote');
 });
 

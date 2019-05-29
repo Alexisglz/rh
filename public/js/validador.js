@@ -26,8 +26,9 @@ function existe(id, array = []) {
             input.css('border','1px solid #ced4da');
     });
     if (erroneos.length != 0) {
-        swal("Los campos son requeridos", {
-            icon: "error",
+        Swal.fire({
+            title: 'Los campos son requeridos',
+            type: 'error'
         });
         return false;
     }

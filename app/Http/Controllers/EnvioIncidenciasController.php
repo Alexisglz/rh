@@ -111,4 +111,35 @@ class EnvioIncidenciasController extends Controller
         }
     }
 
+    public function editar(Request $request){
+        DB::beginTransaction();
+        try{
+            $incidencia = Incidencias::find($request->id);
+            switch ($request->tratamiento){
+                case 'MONTO':
+                    $incidencia->monto = $request->monto;
+                    break;
+                case 'LAPSO':
+                    $incidencia->fecha_inicio = $request->fecha;
+                    $incidencia->dias         = $request->dias;
+                    break;
+                case 'DIAS':
+                    $incidencia->dias = $request->dias;
+                    break;
+            }
+            $incidencia->save();
+            DB::commit();
+            return response()->json([
+                'ok' => true,
+                'data' => $incidencia
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
+                'data' => []
+            ]);
+        }
+    }
+
 }

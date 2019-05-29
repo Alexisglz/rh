@@ -51,11 +51,12 @@
                                 </div>
                             </div>
                             <table class="table table-active"
-                                   style="font-size:12px;text-align: center; width: 100%" id="Incidencias_Enviar-table">
+                                   style="font-size:12px;text-align: center; width: 100%" id="envio_lote">
                                 <thead>
                                 <tr>
                                     <th>{{__('Id')}}</th>
                                     <th>{{__('Enviar')}}</th>
+                                    <th>{{__('Editar')}}</th>
                                     <!--th>{{__('Vobo Venta')}}</th-->
                                     <th>{{__('Empleado')}}</th>
                                     <th>{{__('Empleado id')}}</th>
@@ -67,7 +68,6 @@
                                     <th>{{__('Fecha de solicitud')}}</th>
                                     <th>{{__('Fecha de inicio')}}</th>
                                     <th>{{__('Motivo')}}</th>
-                                    <th>{{__('Lote')}}</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -123,6 +123,8 @@
         }
     </style>
     @include('envio_incidencias.modals.subir_vobo')
+    @include('envio_incidencias.modals.editar')
 
     {!! Html::script('js/incidencias/envio.js') !!}
+    {!! Html::script('js/validador.js?v='.time()) !!}
 @endsection 

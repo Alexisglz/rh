@@ -1,6 +1,6 @@
 var envio = $('#envio').val();
 var CSRF_TOKEN = $('#token').val();
-var table_ = $('#Incidencias_Enviar-table').DataTable({
+var table_ = $('#envio_lote').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
@@ -16,8 +16,8 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
     dom: '<"top"f>rt<"bottom"lpi><"clear">',
     columns: [
         {data: 'id', name: 'id'},
-        {valor: {data: 'id_lote', data: 'id'}, name: 'id_lote'},
-        //{},
+        {valor: {data: 'id_lote', data: 'id'}, name: 'id_lote',orderable: false, searchable: false},
+        {data:null, name:'editar',orderable: false, searchable: false},
         {data: 'empleado', name: 'empleado'},
         {data: 'emp_id', name: 'emp_id'},
         {data: 'incidencia', name: 'incidencia'},
@@ -28,7 +28,6 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
         {data: 'motivo', name: 'motivo'},
-        {data: 'id_lote', name: 'id_lote'},
     ],
     language: {
         "lengthMenu": "Ver _MENU_ registros por página",
@@ -64,6 +63,13 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
                 }*/
             },
         },
+        {
+            "targets": 2,
+            "data": null,
+            "render": function (data, type, row) {
+                return "<a class='editar_inci btn btn-md' style='color:#007bffcc;'><i class='fa fa-edit'></i></a>";
+            }
+        }
         /*{
             "targets": 2,
             "data": null,
@@ -90,6 +96,100 @@ table_.on('click', '.fa-upload', function () {
     upload_data = table_.row($(this).parent()).data();
     $('#vobo').modal('show');
 });
+
+$('#editar_envio').on('hidden.bs.modal', function() {
+    $(':input', this).val('');
+});
+
+var data;
+$('#envio_lote tbody').on('click', '.editar_inci', function () {
+    data = table_.row($(this).parent()).data();
+    $('#id_inc').val(data.id);
+    $('#empleado_id').val(data.emp_id);
+    $('#empleado').val(data.empleado);
+    $('#monto').val(data.monto).css('border','1px solid #ced4da');
+    $('#incidencia').val(data.incidencia);
+    $('#incidencia_id').val(data.id_tipo);
+    $('#tratamiento').val(data.tratamiento);
+    $('#fecha').val(data.fecha_inicio).css('border','1px solid #ced4da');
+    $('#dias').val(data.duracion).css('border','1px solid #ced4da');
+    $('#editar_envio').modal('show');
+});
+
+function enviarIncidencia() {
+    var tratamiento = $('#tratamiento').val();
+    var monto =  $('#monto').val();
+    var fecha =  $('#fecha').val();
+    var dias  =  $('#dias').val();
+    var array = [];
+    if ((dias%1)!==0){
+        swal("Atención", "Los dias deben ser completos", "error");
+        return false;
+    }
+    var object = {
+        _token: CSRF_TOKEN,
+        id: $('#id_inc').val(),
+        tratamiento: tratamiento
+    };
+    switch (tratamiento) {
+        case 'MONTO':
+            if (monto <= 0) {
+                swal("Atención", "El monto debe ser mayor a 0", "error");
+                return false;
+            }
+            object.monto = monto;
+            array.push('fecha','dias');
+            break;
+        case 'LAPSO':
+            if (dias <= 0) {
+                swal("Atención", "Los dias deben ser mayor a 0", "error");
+                return false;
+            }
+            object.fecha = fecha;
+            object.dias  = dias;
+            array.push('monto');
+            break;
+        case 'DIAS':
+            if (dias <= 0) {
+                swal("Atención", "Los dias deben ser mayor a 0", "error");
+                return false;
+            }
+            array.push('fecha','monto');
+            object.dias  = dias;
+            break;
+    }
+    var validador = existe('valida',array);
+    if (validador == false)
+        return false;
+    $.ajax({
+        url: '/envio_incidencias/editar',
+        type: 'POST',
+        dataType: 'JSON',
+        data: object,
+        beforeSend: function () {
+            $().loader("show");
+        },
+        complete: function () {
+            $().loader("hide");
+        },
+        success: function(data){
+            if(data.ok == true){
+                Swal.fire({
+                    title: 'Se actualizo la incidencia correctamente',
+                    type: 'success'
+                });
+                $('#editar_envio').modal('toggle');
+                table_.ajax.reload();
+            }
+            else
+                Swal.fire({
+                    title: 'Ocurrio un error',
+                    type: 'error'
+                });
+        }
+    });
+    console.log(object);
+}
 
 function subirVobo(){
     var vobo = $('#vobo_final');
@@ -206,7 +306,7 @@ function validaArreglo(id,cia, empleado, monto, motivo, fecha, vt1) {
     return arregloids2;
 }
 var rows_selected = [];
-$('#Incidencias_Enviar-table tbody').on('click', 'input[type="checkbox"]', function(e){
+$('#envio_lote tbody').on('click', 'input[type="checkbox"]', function(e){
     var $row = $(this).closest('tr');
     var data = table_.row($row).data();
     var rowId = data;

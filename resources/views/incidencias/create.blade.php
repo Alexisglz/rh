@@ -68,7 +68,7 @@
                     {!! Form::label('monto', 'Monto', ['class'=>'monto']) !!}
                     {!! Form::number('monto', 0, ['class'=>'monto form-control','required','step'=>"any"]) !!}
                     {!! Form::label('horas', 'Horas', ['class'=>'horas']) !!}
-                    {!! Form::number('horas', 0, ['class'=>'horas form-control','required','min'=>1]) !!}
+                    {!! Form::number('horas', 0, ['class'=>'horas form-control','required','min'=>0]) !!}
                     <br>
 
                     {!! Form::label('vobo', 'Vo.Bo. Jefe: '); !!}

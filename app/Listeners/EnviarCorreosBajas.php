@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Empleados;
 use App\Events\BajasEvents;
+use App\Mail\ConfirmarHerraBaja;
 use App\Mail\NuevaBaja;
 use DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -46,6 +47,18 @@ class EnviarCorreosBajas implements ShouldQueue
                     foreach ($correos as $correo){
                         Mail::to($correo->email)->send(new NuevaBaja($solicitud, $nombre));
                     }
+                }
+                break;
+            case 'confirmar_herra':
+                $herra = ['baja_computo','baja_coche','baja_celular','baja_herramientas','baja_rh'];
+                $correos = DB::table('vista_permisos_empleados')
+                    ->whereIn('codigo', $herra)
+                    ->groupBy('id_usuario','codigo')
+                    ->get();
+                foreach ($correos as $correo){
+                    if (config('app.env')!="local")
+                        $email = $correo->email;
+                    Mail::to($email)->send(new ConfirmarHerraBaja($solicitud, $nombre, $correo->nombre));
                 }
                 break;
         }

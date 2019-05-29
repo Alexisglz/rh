@@ -8,28 +8,28 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NuevaBaja extends Mailable
+class ConfirmarHerraBaja extends Mailable
 {
     use Queueable, SerializesModels;
     /**
      * @var SolBajaNomina
      */
     public $sol;
-    /**
-     * @var string|null
-     */
     public $emp;
+    public $tipo;
 
     /**
      * Create a new message instance.
      *
      * @param SolBajaNomina $sol
-     * @param string|null $emp
+     * @param $emp
+     * @param $tipo
      */
-    public function __construct(SolBajaNomina $sol, string $emp = null)
+    public function __construct(SolBajaNomina $sol, $emp, $tipo)
     {
-        $this->sol = $sol;
-        $this->emp = $emp;
+        $this->sol  = $sol;
+        $this->emp  = $emp;
+        $this->tipo = $tipo;
     }
 
     /**
@@ -40,9 +40,10 @@ class NuevaBaja extends Mailable
     public function build()
     {
         return $this
-            ->subject(__('Nueva solicitud de baja'))
-            ->markdown('emails.solicitud_baja')
+            ->subject(__('Confirmar Baja de Herramientas'))
+            ->markdown('emails.baja_herra')
             ->with('sol', $this->sol)
+            ->with('tipo', $this->tipo)
             ->with('emp', $this->emp);
     }
 }

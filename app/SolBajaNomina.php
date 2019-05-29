@@ -22,4 +22,5 @@ class SolBajaNomina extends Model
 {
     use SoftDeletes;
     protected $table = 'solicitudes_baja_nomina';
+    protected $dateFormat = 'Y-m-d H:i:s';
 }

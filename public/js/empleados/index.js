@@ -373,13 +373,14 @@ $('#empleados-table tbody').on('click', '.DarBajaEmpleado', function () {
             id: data.id
         },
         success:function (response) {
-            if(response.length > 0){
-                swal({title:"Ya existe un proceso de baja para este empleado",icon: "warning"});
-            }
-            else {
-                idtablaempleados = data['id'];
-                idtablaempleados = data['id'];
-                $('#myModalbaja').modal('show');
+            if(response.ok == true){
+                if ((response.data).length >0)
+                    swal({title:"Ya existe un proceso de baja para este empleado",icon: "warning"});
+                else {
+                    idtablaempleados = data['id'];
+                    idtablaempleados = data['id'];
+                    $('#myModalbaja').modal('show');
+                }
             }
         }
     });

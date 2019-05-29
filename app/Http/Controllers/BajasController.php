@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BajaComentarios;
 use App\Empleados;
+use App\Events\BajasEvents;
 use App\GlobalModel;
 use App\Models\EmpleadoCodigoMovimiento;
 use App\Models\MovimientoRecurso;
@@ -353,8 +354,12 @@ class BajasController extends Controller
             //$bajas = SolBajaNomina::where('id_empleado','=',$request->id)->whereNull('baja_definitiva')->first();
             $bajas = DB::table('solicitudes_baja_nomina')
                 ->where('id_empleado','=',$request->id)
+                ->whereNull('deleted_at')
                 ->whereNull('baja_definitiva')->get();
-            return json_encode($bajas);
+            return response()->json([
+                'ok' => true,
+                'data' => $bajas
+            ]);
         }catch (\Exception $e){
             return $e;
         }
@@ -399,10 +404,11 @@ class BajasController extends Controller
         $this->authorize('access',[User::class, 'cita_baja']);
         try{
             DB::beginTransaction();
-            $sol_baja             = solicitudbaja::find($request->id);
+            $sol_baja             = SolBajaNomina::find($request->id);
             $sol_baja->fecha_cita = $request->cita;
             $sol_baja->save();
             DB::commit();
+            event(new BajasEvents($sol_baja, 'confirmar_herra'));
             return response()->json([
                 "ok"    => true,
                 "data"  => $sol_baja->id

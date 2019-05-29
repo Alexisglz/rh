@@ -569,7 +569,6 @@ class EmpleadosController extends Controller
 
     public function bajaEmpleado(Request $request)
     {
-        //dd($request);
         $this->authorize('access',[User::class, 'baja_empleado']);
         try{
             DB::beginTransaction();

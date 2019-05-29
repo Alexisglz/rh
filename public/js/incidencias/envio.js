@@ -17,7 +17,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
     columns: [
         {data: 'id', name: 'id'},
         {valor: {data: 'id_lote', data: 'id'}, name: 'id_lote'},
-        {},
+        //{},
         {data: 'empleado', name: 'empleado'},
         {data: 'emp_id', name: 'emp_id'},
         {data: 'incidencia', name: 'incidencia'},
@@ -50,7 +50,8 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
             "targets": 1,
             "data": null,
             "render": function (data, type, row) {
-                if (data['id_lote'] != null && data['id_lote'] != undefined) {
+                return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
+                /*if (data['id_lote'] != null && data['id_lote'] != undefined) {
                     return '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
                 } else {
                     if (row.tipo_incidencia == 'PERCEPCION' && (row.venta == 0 || row.venta == null))
@@ -60,10 +61,10 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
                             return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
                     else
                         return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
-                }
+                }*/
             },
         },
-        {
+        /*{
             "targets": 2,
             "data": null,
             "render": function (data, type, row) {
@@ -80,7 +81,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
                 }
                 return view;
             }
-        },
+        },*/
     ],
 });
 

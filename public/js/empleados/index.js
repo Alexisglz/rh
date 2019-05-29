@@ -29,6 +29,7 @@ var table = $('#empleados-table').DataTable({
         {data: null, name: 'info', orderable: false, searchable: false},
         {data: 'empleado_estatus', name: 'empleado_estatus', orderable: false, searchable: false, className:'text-center editar_v'},
         {data: 'empleado_estatus', name: 'empleado_estatus', orderable: false, searchable: false, className:'text-center baja_v'},
+        {data: null, name: 'cambio_proyec', orderable: false, searchable: false, className:'text-center camb_p_v'},
         {data: 'empleado_num', name: 'empleado_num'},
         {data: 'nombre_completo', name: 'nombre_completo'},
         {data: 'coordinador', name: 'coordinador'},
@@ -60,7 +61,7 @@ var table = $('#empleados-table').DataTable({
             "targets": 1,
             "data": null,
             "render": function () {
-                return "<button data-tipo='Informacion' class='info btn btn-xs btn-success iconInfo' data-toggle='modal' data-target='#Modal'><i class='fa fa-info nav-icon nav-icon'></i></button>";
+                return "<button data-tipo='Informacion' style='font-size: 16px;' class='info btn btn-xs btn-success iconInfo' data-toggle='modal' data-target='#Modal'><i class='fa fa-info nav-icon nav-icon'></i></button>";
             },
             "className": "info"
         },
@@ -72,14 +73,14 @@ var table = $('#empleados-table').DataTable({
                 if (edit_emple == 1) {
                     switch (data) {
                         case 'BAJA':
-                            return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                            return '<i class="fa fa-ban" style="color:orange;font-size:16px"></i>';
                             break;
                         case 'ACTIVO':
-                            return "<button  class='Editar btn-xs btn-primary iconEdit' style='margin-rigth: 5px;margin-left: 5px'><i class='fa fa-pencil-square-o'></i></button>"
+                            return "<button  class='Editar btn-xs btn-primary iconEdit' style='margin-rigth: 5px;margin-left: 5px;font-size: 16px'><i class='fa fa-pencil-square-o'></i></button>";
                             break;
                     }
                 } else {
-                    return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                    return '<i class="fa fa-ban" style="color:orange;font-size:16px"></i>';
                 }
             },
         },
@@ -94,7 +95,7 @@ var table = $('#empleados-table').DataTable({
                             return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                             break;
                         case 'ACTIVO':
-                            return "<button  class='DarBajaEmpleado btn btn-xs btn-danger btnBajaEmpleado' style='margin-rigth: 5px;margin-left: 5px'><i class='fas fa-user-minus'></i></i></button>"
+                            return "<button  class='DarBajaEmpleado btn btn-xs btn-danger btnBajaEmpleado' style='margin-rigth: 5px;margin-left: 5px;font-size: 16px'><i class='fas fa-user-minus'></i></i></button>"
                             break;
                     }
                 } else {
@@ -103,25 +104,14 @@ var table = $('#empleados-table').DataTable({
             },
         },
         {
-            "targets": 10, // your case first column
+            "targets": 4,
             "data": null,
             "render": function (data, row, type) {
                 var view = '';
-                if (ver_sueldo == 1)
-                    view = data;
+                view = '<a class="cambio_proyect btn btn-sm" style="color: grey"><i class="fa fa-cog"></i></a>';
                 return view;
             }
         },
-        {
-            "targets": 11, // your case first column
-            "data": null,
-            "render": function (data, row, type) {
-                var view = '';
-                if (ver_sueldo == 1)
-                    view = data;
-                return view;
-            }
-        }
     ]
 });
 
@@ -216,6 +206,16 @@ $('#cancel_coord').on('click', function (e) {
     $('#div_coord').fadeIn();
     e.preventDefault();
 });
+
+$('#empleados-table tbody').on('click', '.cambio_proyect', function () {
+    data = table.row($(this).parent()).data();
+    $('#cliente_ca').val(data.cliente);
+    $('#servicio_ca').val(data.servicio);
+    $('#region_ca').val(data.region);
+    $('#tecnologia_ca').val(data.tecnologia);
+    $('#grupo_cabio').val(data.grupo);
+    $('#modal_cambio_pro').modal('show');
+}); // Pausar para buscar una mejor manera de hacerlo
 
 $('#save_coord').on('click', function (e) {
     var validador = existe('editar_coord');
@@ -661,6 +661,8 @@ if(baja_emple != 1)
     table.columns( '.baja_v' ).visible( false );
 if(ver_sueldo != 1)
     table.columns( '.sueldo_v' ).visible( false );
+if(camb_pro != 1)
+    table.columns( '.camb_p_v' ).visible( false );
 
 var search_id     = $('#search_id');
 var num_emp       = $('#num_emp');

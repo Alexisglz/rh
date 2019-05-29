@@ -66,6 +66,7 @@
                     <th>{{__('Info')}}</th>
                     <th>{{__('Editar')}}</th>
                     <th>{{__('Solicitar baja')}}</th>
+                    <th>{{__('')}}</th>
                     <th>{{__('No.Empleado')}}</th>
                     <th>{{__('Nombre')}}</th>
                     <th>{{__('Coordinador')}}</th>
@@ -110,16 +111,19 @@
 
     <!-- Modal -->
     @include('empleados.modals.nuevo_empleado')
+    @include('empleados.modals.cambio_proyecto')
 
     @php
         $edit_emple = auth()->user()->can('access',[\App\User::class,'editar_empleado'])? 1:0;
         $baja_emple = auth()->user()->can('access',[\App\User::class,'baja_empleado'])? 1:0;
         $ver_sueldo = auth()->user()->can('access',[\App\User::class,'ver_sueldo'])? 1:0;
+        $camb_pro   = auth()->user()->can('access',[\App\User::class,'cambio_proyecto'])? 1:0;
     @endphp
     <script>
         var edit_emple = '<?php echo $edit_emple ?>';
         var baja_emple = '<?php echo $baja_emple ?>';
         var ver_sueldo = '<?php echo $ver_sueldo ?>';
+        var camb_pro   = '<?php echo $camb_pro ?>';
         $(function () {
             $("#celular").bootstrapToggle({
                 on: 'SI',

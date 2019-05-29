@@ -19,6 +19,12 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\IncidenciasEvents::class => [
             \App\Listeners\EnviarCorreosInci::class,
         ],
+        \App\Events\EmpleadosEvents::class => [
+            \App\Listeners\EnviarCorreosEmp::class,
+        ],
+        \App\Events\BajasEvents::class => [
+            \App\Listeners\EnviarCorreosBajas::class,
+        ],
     ];
 
     /**

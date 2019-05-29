@@ -277,7 +277,8 @@ class IncidenciasController extends Controller
         try{
             $data         = [];
             $usuario      = auth()->user();
-            $rec_proyecto = ProyectosIndeploRecurso::where('empleado_id', $request->id)
+            $empleado     = Empleados::find($request->id);
+            $rec_proyecto = ProyectosIndeploRecurso::where('empleado_id', $empleado->empleado_id)
                             ->orderByDesc('id')->first();
             if ($rec_proyecto) {//Buscar si el usuario esta relacionado a una RO
                 $proyecto_ind = ProyectosIndeplo::where('id', '=', $rec_proyecto->proyecto_id)
@@ -296,6 +297,18 @@ class IncidenciasController extends Controller
                             return response()->json($data);
                         }
                     }
+                }
+            }
+            if ($empleado->getWBS != null){ //Buscar la RO de administrativos con el wbs al que se le solicita la incidencia
+                $proy_rec = ProyectosIndeplo::where('proyecto_nombre','LIKE', '%'.$empleado->getWBS->wbs.'%')
+                    ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '=', date('m'))
+                    ->get();
+                if (count($proy_rec) > 0){
+                    foreach ($proy_rec as $pros){
+                        $text = $pros->pedido.' '.$pros->proyecto_nombre.' '.$pros->sitio;
+                        $data[] = ['value' => $text, 'id' => $pros->id];
+                    }
+                    return response()->json($data);
                 }
             }
             $proyecto = ProyectosIndeplo::query();

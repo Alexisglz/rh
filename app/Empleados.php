@@ -4,7 +4,9 @@ namespace App;
 
 use App\Models\MovimientoRecurso;
 use App\Models\MovimientosCoordinador;
+use App\Models\MovimientosProyecto;
 use App\Models\MovimientosSueldo;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -32,5 +34,13 @@ class Empleados extends Model
 
     public function getMovimientoSueldo(){
         return $this->hasOne(MovimientosSueldo::class, 'empleado_id', 'empleado_id')->whereNull('fecha_fin');
+    }
+
+    public function getMovimientoProyecto(){
+        return $this->hasOne(MovimientosProyecto::class, 'empleado_id', 'empleado_id')->whereNull('fecha_fin');
+    }
+
+    public function getWBS(){
+        return $this->hasOne(MovimientosProyecto::class, 'empleado_id', 'empleado_id')->whereNull('fecha_fin')->select(DB::raw("id,CONCAT_WS('-',cliente,servicio,region,tecnologia,grupo) AS wbs"));
     }
 }

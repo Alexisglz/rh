@@ -112,6 +112,7 @@ class EnvioIncidenciasController extends Controller
     }
 
     public function editar(Request $request){
+        $this->authorize('access',[User::class, 'editar_inci_env']);
         DB::beginTransaction();
         try{
             $incidencia = Incidencias::find($request->id);

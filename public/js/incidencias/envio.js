@@ -17,7 +17,7 @@ var table_ = $('#envio_lote').DataTable({
     columns: [
         {data: 'id', name: 'id'},
         {valor: {data: 'id_lote', data: 'id'}, name: 'id_lote',orderable: false, searchable: false},
-        {data:null, name:'editar',orderable: false, searchable: false},
+        {data:null, name:'editar',orderable: false, searchable: false, className:'edit_in'},
         {data: 'empleado', name: 'empleado'},
         {data: 'emp_id', name: 'emp_id'},
         {data: 'incidencia', name: 'incidencia'},
@@ -424,3 +424,6 @@ function ExportExcel() {
             }
         });
 }
+
+if (edit_inci != 1)
+    table_.columns( '.edit_in' ).visible( false );

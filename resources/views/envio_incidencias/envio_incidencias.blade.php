@@ -115,6 +115,12 @@
             </div>
         </div>
     </div>
+    @php
+        $edit_inci = auth()->user()->can('access',[\App\User::class,'editar_inci_env'])? 1:0;
+    @endphp
+    <script>
+        var edit_inci = '<?php echo $edit_inci ?>';
+    </script>
     <style>
         .check-todo{
             margin-left: 2%;

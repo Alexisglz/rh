@@ -23,6 +23,7 @@ var table_ = $('#Incidencias_Enviar-table').DataTable({
         {data: 'incidencia', name: 'incidencia'},
         {data: 'tipo_incidencia', name: 'tipo_incidencia'},
         {data: 'solicitante', name: 'solicitante'},
+        {data: 'monto', name: 'monto'},
         {data: 'duracion', name: 'duracion'},
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},

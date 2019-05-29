@@ -62,6 +62,7 @@
                                     <th>{{__('Incidencia')}}</th>
                                     <th>{{__('Tipo de incidencia')}}</th>
                                     <th>{{__('Solicitante')}}</th>
+                                    <th>{{__('Monto')}}</th>
                                     <th>{{__('Duracion(Días)')}}</th>
                                     <th>{{__('Fecha de solicitud')}}</th>
                                     <th>{{__('Fecha de inicio')}}</th>

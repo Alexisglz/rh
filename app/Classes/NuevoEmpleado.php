@@ -89,13 +89,13 @@ class NuevoEmpleado
                 if($coordinador->user_log != 0){
                     /* Agregar al catalogo de coordinadores nokia indeplo*/
                     $coord_nok_ind                         = new CatCoordNokiaInd();
-                    $coord_nok_ind->coordinador_nokia_id   = $request->coordinador;
+                    $coord_nok_ind->coordinador_nokia_id   = $coordinador->id;
                     $coord_nok_ind->coordinador_indeplo_id = 5;
                     $coord_nok_ind->save();
                 }
                 else{
-                    $coord_nok_ind = CatCoordNokiaInd::where('coordinador_nokia_id', $request->coordinador)->get();
-                    if (count($coord_nok_ind) == 0){
+                    $coord_nok_ind = CatCoordNokiaInd::where('coordinador_nokia_id', $request->coordinador)->first();
+                    if ($coord_nok_ind){
                         /* Agregar al catalogo de coordinadores nokia indeplo*/
                         $coord_nok_ind                         = new CatCoordNokiaInd();
                         $coord_nok_ind->coordinador_nokia_id   = $request->coordinador;
@@ -103,13 +103,13 @@ class NuevoEmpleado
                         $coord_nok_ind->save();
                     }
                 }
-                /*$pro_ent_coord_rec = ProyectosEntCoordRecurso::updateOrCreate(
+                $pro_ent_coord_rec = ProyectosEntCoordRecurso::updateOrCreate(
                     ['id_recurso' => $empleado->empleado_id],
                     [
-                        'id_usuario' => $coordinador->user_id,
-                        'id_coordinador_nokia' => 131
+                        'id_usuario'           => $coordinador->user_id == 0 ? 129:$coordinador->user_id,
+                        'id_coordinador_nokia' => $coord_nok_ind->coordinador_nokia_id
                     ]
-                );*/
+                );
             }
 
             // Guardar el movimiento proyecto

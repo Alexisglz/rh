@@ -13,7 +13,7 @@ use Exception;
 class RentaFijaETL
 {
     public static function create($empleado_id, $fecha = ''){
-        $ro = RentaFijaETL::buscarRO($empleado_id);
+        /*$ro = RentaFijaETL::buscarRO($empleado_id);
         if($ro){
             $proyecto = ProyectosIndeplo::find($ro->id);
             $codigos = RentaFijaETL::getCodigos($proyecto->id, $empleado_id);
@@ -26,7 +26,7 @@ class RentaFijaETL
                 "codigos"  => $codigos,
                 "existe"   => true
             ];
-        }
+        }*/
         $conn = DB::connection('incore');
         $conn->beginTransaction();
         try{

@@ -1,4 +1,7 @@
 @component('mail::message')
+@if(config('app.env')=="local")
+# {{__('Este correo es una prueba por parte del area desarrollo y no tiene ningun efecto en el proceso real')}}
+@endif
 # {{ __("Se registro una nueva incidencia") }}
 
 Incidencia: <br>

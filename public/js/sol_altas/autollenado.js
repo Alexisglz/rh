@@ -106,6 +106,9 @@ $(function () {
     }
     btn_auto.on('click',function () {
         if(datos != null){
+            $('#nombre').val(datos.empleado_nombre);
+            $('#apaterno').val(datos.empleado_apaterno);
+            $('#amaterno').val(datos.empleado_amaterno);
             $('#calle').val(datos.calle);
             $('#num_ext').val(datos.num_exterior);
             $('#num_int').val(datos.num_interior);

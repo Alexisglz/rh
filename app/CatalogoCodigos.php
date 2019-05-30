@@ -15,15 +15,12 @@ use DB;
  */
 class CatalogoCodigos extends Model
 {
-	protected $table = 'catalogo_codigos';
-	
-
-
-
-
+    protected $connection = 'incore';
+	protected $table      = 'catalogo_nokia_codigos';
+	public $timestamps    = false;
 
     public static function getCodigosCelular($term){
-    	$array = DB::table('catalogo_codigos')
+    	$array = DB::table('incore.catalogo_nokia_codigos')
     			->select()
     			->where('tipo','like','%celular%')
     			->where('codigo','like','%'.$term.'%')
@@ -34,7 +31,7 @@ class CatalogoCodigos extends Model
 
 
 	public static function getCodigosCelularDato($term){
-    	$array = DB::table('catalogo_codigos')
+    	$array = DB::table('incore.catalogo_nokia_codigos')
     			->select()
     			->where('codigo',"=",$term)
     			->get();
@@ -44,7 +41,7 @@ class CatalogoCodigos extends Model
 
 
     public static function getCodigosComputadora($term){
-    	$array = DB::table('catalogo_codigos')
+    	$array = DB::table('incore.catalogo_nokia_codigos')
     			->select()
     			->where('tipo','like','%computo%')
     			->where('codigo','like','%'.$term.'%')
@@ -54,7 +51,7 @@ class CatalogoCodigos extends Model
     } 
 
     public static function getCodigosSoftware($term){
-    	$array = DB::table('catalogo_codigos')
+    	$array = DB::table('incore.catalogo_nokia_codigos')
     			->select()
     			->where('tipo','like','%sw%')
     			->where('codigo','like','%'.$term.'%')
@@ -64,7 +61,7 @@ class CatalogoCodigos extends Model
     } 
 
     public static function getCodigosBam($term){
-    	$array = DB::table('catalogo_codigos')
+    	$array = DB::table('incore.catalogo_nokia_codigos')
     			->select()
     			->where('tipo','like','%bam%')
     			->where('codigo','like','%'.$term.'%')
@@ -74,7 +71,7 @@ class CatalogoCodigos extends Model
     }
 
     public static function getCodigosAuto($term){
-    	$array = DB::table('catalogo_codigos')
+    	$array = DB::table('incore.catalogo_nokia_codigos')
     			->select()
     			->where('tipo','like','%auto%')
     			->where('codigo','like','%'.$term.'%')
@@ -84,7 +81,7 @@ class CatalogoCodigos extends Model
     } 
 
     public static function getCodigosPoliza($term){
-        $array = DB::table('catalogo_codigos')
+        $array = DB::table('incore.catalogo_nokia_codigos')
                 ->select()
               ->where('tipo','like','%poliza%')
                 ->where('codigo','like','%'.$term.'%')
@@ -94,7 +91,7 @@ class CatalogoCodigos extends Model
     }
 
     public static function getCodigosSueldo($term){
-        $array = DB::table('catalogo_codigos')
+        $array = DB::table('incore.catalogo_nokia_codigos')
                 ->select('*')
                 ->where('tipo','like','%sueldo%')
                 ->where('codigo','like','%'.$term.'%')

@@ -88,7 +88,7 @@ $(".select_wbs").on('change', function () {
         //MOSTRAR ESQUEMA
         $("#esquema_div").removeClass('hide');
         //NUEVO COORDINADOR
-        $("#coord_nuevo_div").removeClass('hide');
+        //$("#coord_nuevo_div").removeClass('hide');
         //VENTA CALCULADA
         $("#venta_calculada_div").removeClass('hide');
         var esquema = $('#esquemas');

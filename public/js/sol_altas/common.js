@@ -210,7 +210,7 @@ $("#coord_nuevo").change(function () {
 $("#nombre_coor").keyup(function () {
     var valor = $(this).val();
     if (valor.length > 3) {
-        $.post("/getCoord",
+        $.post("/pet_sol/get_coord",
             {valor: valor, '_token': token})
             .done(function (data) {
                 var dato = JSON.parse(data);

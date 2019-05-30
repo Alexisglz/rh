@@ -190,7 +190,7 @@ Route::group(["prefix" => "pet_sol", "middleware" => ["auth"]], function() {
     Route::get('/get_codigos_auto', 'PeticionesSolicitudesController@getCodigosAuto')->name('pet_sol.get_codigos_auto');
     Route::get('/get_codigos_poliza', 'PeticionesSolicitudesController@getCodigosPoliza')->name('pet_sol.get_codigos_poliza');
     Route::get('/get_codigos_sueldo', 'PeticionesSolicitudesController@getCodigosSueldo')->name('pet_sol.get_codigos_sueldo');
-    Route::get('/get_coord', 'PeticionesSolicitudesController@getCoord')->name('pet_sol.get_coord');
+    Route::post('/get_coord', 'PeticionesSolicitudesController@getCoord')->name('pet_sol.get_coord');
     Route::post('/calcular_costos_recuros', 'PeticionesSolicitudesController@calcularCostosRecuros')->name('pet_sol.calcular_costos_recuros');
     Route::post('/get_costo_plan', 'PeticionesSolicitudesController@getCostoPlan')->name('pet_sol.get_costo_plan');
 });

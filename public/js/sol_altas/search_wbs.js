@@ -256,7 +256,6 @@ $(".select_wbss").on('change', function () {
 });
 
 $('#cliente').on('change', function () {
-    console.log($(this).val());
     var cliente = $(this);
     $.ajax({
         url: '/altas/get_coordinadores',

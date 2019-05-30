@@ -666,10 +666,12 @@ function costoVenta() {
 
         $('#venta_calculada').empty();
         $('#costo_estimado').empty();
-        var valor_venta = isNaN(venta.toFixed(2)) ? 0 : venta.toFixed(2);
-        var valor_costo = isNaN(costo.toFixed(2)) ? 0 : costo.toFixed(2);
+        var valor_venta  = isNaN(venta.toFixed(2)) ? 0 : venta.toFixed(2);
+        var valor_costo  = isNaN(costo.toFixed(2)) ? 0 : costo.toFixed(2);
+        var valor_margen = isNaN(margen.toFixed(2)) ? 0 : margen.toFixed(2);
         $('#venta_calculada').val(valor_venta);
         $('#costo_estimado').val(valor_costo);
+        $('#margen').val(valor_margen);
 
     }, 500);
 }

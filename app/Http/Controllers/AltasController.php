@@ -307,8 +307,9 @@ class AltasController extends Controller
 
                         break;
                 }
-                $sol->venta = $request->venta_calculada;
-                $sol->costo = $request->costo_estimado;
+                $sol->venta  = $request->venta_calculada;
+                $sol->costo  = $request->costo_estimado;
+                $sol->margen = $request->margen;
 
 
             } else {

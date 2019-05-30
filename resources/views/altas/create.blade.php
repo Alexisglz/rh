@@ -532,6 +532,7 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <p class="h5">Margen: <span id="margen_span">  </span></p>
+                                {!! Form::hidden('margen', null, ['class' => 'form-control','id'=>'margen']) !!}
                             </div>
                         </div>
                     </div>

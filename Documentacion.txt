@@ -1,0 +1,30 @@
+*Incompleto*
+
+Pasos para configurar el proyecto y no morir en el intento
+* Cambiar las credenciales de la base de datos en el archivo .env si no existe renombrar el archivo .env.dev a .env
+* Instalar la libreria de redis (Ubuntu y Mint), se encarga de manejar la cache de una forma mas eficiente
+    - sudo apt-get update
+    - sudo apt-get install redis-server
+    - Ejecutar: redis -cli ping
+        Respuesta: PONG
+* Agregar el cron de Laravel
+    - sudo crontab -e
+    - * * * * * cd /path_del_proyecto && php artisan schedule:run >> /dev/null 2>&1
+    - sudo service cron restart
+
+Errores Comunes
+Falta la carpeta para las caches
+Crear en storage/framework y darles permisos 777
+    -cache
+    -sessions
+    -views
+
+Si no se envian los correos:
+Revisar el archivo de configuracion .env y la seccion de MAIL revisar que las crendeciales sean correctas
+Borrar la cache del archivo .env con el comando php artisan config:clear
+Si se utiliza el metodo queue para envio de correos ejecutar los comandos:
+    - php artisan config:clear
+    - php artisan view:clear
+    - php artisan cache:clear
+Verificar que exista la tabla jobs en la base de datos y corroborar que los procesos se encuentren guardados
+Y reiniciar el servicio del cron sudo service cron restart

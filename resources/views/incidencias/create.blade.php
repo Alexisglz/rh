@@ -18,6 +18,11 @@
                     </h3>
                 </div>
                 <div class="card-body form-group">
+                    @if($periodo == null)
+                        <div class="row text-center">
+                            <h3 style="color: red;">{{__('El dia de hoy no se reciben incidencias')}}</h3>
+                        </div>
+                    @endif
                     {!! Form::open(['route'=>'incidencias.store','method'=>'post','files'=>true,'enctype'=>"multipart/form-data"]) !!}
 
                     {!! Form::token() !!}
@@ -76,8 +81,9 @@
                     {!! Form::file('vobo') !!}
 
                     <br>
-
+                    @if($periodo != null)
                     {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'style'=>'margin-top: 3%;']) !!}
+                    @endif
                     {!! Form::close() !!}
                 </div>
             </div>

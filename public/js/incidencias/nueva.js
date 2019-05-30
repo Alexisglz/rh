@@ -22,6 +22,8 @@ $('#tipo').on('change', function () {
 	var tipo   = select.find(":selected").val();
 	$('#incidencia').empty();
 	$("#incidencia").val("");
+	$('#div_vobo').fadeOut();
+	$('#div_monto').fadeOut();
 	$("#esquema").val("");
 	$("#risk").val("");
 	$("#id_risk").val("");
@@ -71,9 +73,11 @@ $('#tipo').on('change', function () {
 
  $('#empleado').on('keyup', function () {
      $('#risk').val("");
+	 $('#div_vobo').hide();
  });
 
 $("#incidencia").on('change',function(){
+	$('#div_monto').fadeOut();
 	var e = $("#incidencia");
 	var tratamiento = e.find(":selected").attr('tratamiento');
 	$(".tratement").val(tratamiento);
@@ -132,6 +136,11 @@ risk.on('keyup',function () {
 			minLength: 2,
 			select: function(event, ui) {
 				$('#id_risk').val(ui.item.id);
+				$('#venta').val(ui.item.monto_venta);
+				if (ui.item.monto_venta == 0)
+					$('#div_vobo').fadeIn();
+				else
+					$('#div_vobo').fadeOut();
 			}
 		});
 	}
@@ -148,8 +157,8 @@ $('#tipo_monto').on('change', function () {
 	var tipo = $(this).val();
 	$('.monto').fadeOut();
 	$('.horas').fadeOut();
-	$('#horas').val(0);
-	$('#monto').val(0);
+	$('#horas').val('');
+	$('#monto').val('');
 	if (tipo == "") {
 		Swal.fire({
 			title: "Seleccione el Concepto",
@@ -171,3 +180,36 @@ function descarga() {
         document.body.appendChild(imgs);
 	}
 }
+
+ $("#save_inci").click(function (e) {
+ 	var array = [];
+ 	var tipo = $('#tipo').val();
+ 	var tipo_monto = $('#tipo_monto').val();
+ 	var tratamiento = $(".tratement").val();
+ 	var venta 		= $('#venta').val();
+ 	if (tipo == 'DEDUCCION')
+ 		array.push('risk','id_risk','vobo','venta');
+ 	switch (tratamiento) {
+		 case 'MONTO':
+		 	array.push('fecha_i','dias');
+			 break;
+		 case 'LAPSO':
+		 	array.push('monto','horas','tipo_monto');
+			 break;
+		 case 'DIAS':
+			 array.push('monto','fecha_i','horas','tipo_monto');
+		 	break;
+ 	}
+	 if (tipo_monto == 'monto')
+	 	array.push('horas');
+	 if (tipo_monto == 'horas')
+		 array.push('monto');
+	 if (venta != 0)
+		 array.push('vobo');
+ 	var validar = existe('div_inc', array);
+	 if (validar == true) {
+		 $("#form_incidencia").submit();
+	 }
+	 else
+	 	e.preventDefault();
+ });

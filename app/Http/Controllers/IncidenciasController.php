@@ -93,7 +93,6 @@ class IncidenciasController extends Controller
             switch ($request->tratamiento) {
                 case 'LAPSO':
                     $reglas = [
-                        'vobo'        => 'required',
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
@@ -103,17 +102,15 @@ class IncidenciasController extends Controller
                     break;
                 case 'MONTO':
                     $reglas = [
-                        'vobo'        => 'required',
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
-                        'tipo_monto'       => 'required',
-                        'monto'       => 'required|numeric|min:0'
+                        'tipo_monto'  => 'required',
+                        'monto'       => 'required|numeric|min:1'
                     ];
                     break;
                 case 'DIAS':
                     $reglas = [
-                        'vobo'        => 'required',
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
@@ -181,9 +178,11 @@ class IncidenciasController extends Controller
                 $incidencia->id_proyecto    = $request->id_risk;
             $incidencia->save();
 
-            $nombre           = "vobo_jefe_" . $incidencia->id;
-            $incidencia->vobo = Upload::uploadFile('incidencias/'.$nombre,'vobo', $incidencia, $nombre);
-            $incidencia->save();
+            if ($request->file('vobo') != null){
+                $nombre           = "vobo_jefe_" . $incidencia->id;
+                $incidencia->vobo = Upload::uploadFile('incidencias/'.$nombre,'vobo', $incidencia, $nombre);
+                $incidencia->save();
+            }
 
             $Tipo_bita = 'incidencia';
             $mensaje   = 'Se ha creado una incidencia';
@@ -299,11 +298,11 @@ class IncidenciasController extends Controller
                     if ($tipo_proyecto == 2 || $tipo_proyecto == 3 || $tipo_proyecto == 4 || $tipo_proyecto == 6){
                         if ($servicio == "RREC" || $servicio == "POLZ" || $servicio == "TKBS" || $servicio == "SERV") { // En caso de estos servicios se regresa la RO a la que pertenecen
                             $text = $proyecto_ind->pedido . ' ' . $proyecto_ind->proyecto_nombre . ' ' . $proyecto_ind->sitio;
-                            $data[] = ['value' => $text, 'id' => $proyecto_ind->id];
+                            $data[] = ['value' => $text, 'id' => $proyecto_ind->id, 'monto_venta' => $proyecto_ind->monto_venta];
                             return response()->json($data);
                         } elseif ($proyecto_ind->cliente == "NAE" && $proyecto_ind->tecnologia == "GEST") {// En caso de los NAE se regresa la RO a la que pertenecen
                             $text = $proyecto_ind->pedido . ' ' . $proyecto_ind->proyecto_nombre . ' ' . $proyecto_ind->sitio;
-                            $data[] = ['value' => $text, 'id' => $proyecto_ind->id];
+                            $data[] = ['value' => $text, 'id' => $proyecto_ind->id,'monto_venta' => $proyecto_ind->monto_venta];
                             return response()->json($data);
                         }
                     }
@@ -316,7 +315,7 @@ class IncidenciasController extends Controller
                 if (count($proy_rec) > 0){
                     foreach ($proy_rec as $pros){
                         $text = $pros->pedido.' '.$pros->proyecto_nombre.' '.$pros->sitio;
-                        $data[] = ['value' => $text, 'id' => $pros->id];
+                        $data[] = ['value' => $text, 'id' => $pros->id, 'monto_venta' => $pros->monto_venta];
                     }
                     return response()->json($data);
                 }
@@ -343,7 +342,7 @@ class IncidenciasController extends Controller
             $proyectos = $proyecto->get();
             foreach ($proyectos as $proyecto){
                 $text = $proyecto->pedido.' '.$proyecto->proyecto_nombre.' '.$proyecto->sitio;
-                $data[] = ['value' => $text, 'id' => $proyecto->id];
+                $data[] = ['value' => $text, 'id' => $proyecto->id, 'monto_venta' => $proyecto->monto_venta ];
             }
             return response()->json($data);
         }catch (\Exception $e){

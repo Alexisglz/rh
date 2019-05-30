@@ -23,66 +23,71 @@
                             <h3 style="color: red;">{{__('El dia de hoy no se reciben incidencias')}}</h3>
                         </div>
                     @endif
-                    {!! Form::open(['route'=>'incidencias.store','method'=>'post','files'=>true,'enctype'=>"multipart/form-data"]) !!}
+                    {!! Form::open(['id'=>'form_incidencia','route'=>'incidencias.store','method'=>'post','files'=>true,'enctype'=>"multipart/form-data"]) !!}
 
                     {!! Form::token() !!}
+                        <div id="div_inc">
+                            {!! Form::label('empleado', '*Empleado:', []) !!}
+                            {!! Form::text('empleado', null, ['class'=>'form-control','id'=>'empleado','required']) !!}
+                            {!! Form::hidden('id_empleado', null, ['id'=>'id_empleado']) !!}
 
-                    {!! Form::label('empleado', '*Empleado:', []) !!}
-                    {!! Form::text('empleado', null, ['class'=>'form-control','id'=>'empleado','required']) !!}
-                    {!! Form::hidden('id_empleado', null, ['id'=>'id_empleado']) !!}
+                            {!! Form::label('tipo', '*Concepto de la incidencia:', []) !!}
+                            <select name="tipo" class="custom-select tipo" id="tipo" required>
+                                <option value="">{{__('Selecciona el concepto')}}</option>
+                                <option value="PERCEPCION">{{__('Percepcion')}}</option>
+                                <option value="DEDUCCION">{{__('Deduccion')}}</option>
+                            </select>
 
-                    {!! Form::label('tipo', '*Concepto de la incidencia:', []) !!}
-                    <select name="tipo" class="custom-select tipo" id="tipo" required>
-                        <option value="">{{__('Selecciona el concepto')}}</option>
-                       <option value="PERCEPCION">{{__('Percepcion')}}</option>
-                       <option value="DEDUCCION">{{__('Deduccion')}}</option>
-                    </select>
+                            <div id="div_incidencia">
+                                {!! Form::label('incidencia', '*Incidencia:', []) !!}
+                                <select name="incidencia" class="custom-select tipo" id="incidencia" required>
+                                </select>
+                            </div>
 
-                    <div id="div_incidencia">
-                        {!! Form::label('incidencia', '*Incidencia:', []) !!}
-                        <select name="incidencia" class="custom-select tipo" id="incidencia" required>
-                        </select>
-                    </div>
+                            <div id="div_risk" style="display:none;">
+                                {!! Form::label('risk', '*Risk Order:', []) !!}
+                                {!! Form::text('risk', null, ['class'=>'form-control','id'=>'risk']) !!}
+                                {!! Form::hidden('id_risk', null, ['id'=>'id_risk']) !!}
+                                {!! Form::hidden('venta', null, ['id'=>'venta']) !!}
+                            </div>
 
-                    <div id="div_risk" style="display:none;">
-                        {!! Form::label('risk', '*Risk Order:', []) !!}
-                        {!! Form::text('risk', null, ['class'=>'form-control','id'=>'risk']) !!}
-                        {!! Form::hidden('id_risk', null, ['id'=>'id_risk']) !!}
-                    </div>
+                            {!! Form::hidden('tratamiento', null, ['class'=>'tratement']) !!}
 
-                    {!! Form::hidden('tratamiento', null, ['class'=>'tratement']) !!}
+                            {!! Form::label('motivo', '*Motivo', []) !!}
+                            {!! Form::textarea('motivo', null, ['class'=>'form-control','required','rows' => '5']) !!}
+                            <br>
 
-                    {!! Form::label('motivo', '*Motivo', []) !!}
-                    {!! Form::textarea('motivo', null, ['class'=>'form-control','required','rows' => '5']) !!}
-                    <br>
+                            {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso']) !!}
+                            {!! Form::date('fecha_i', \Carbon\Carbon::now(), ['id'=>'fecha_i','class'=>'lapso form-control','required']) !!}
 
-                    {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso']) !!}
-                    {!! Form::date('fecha_i', \Carbon\Carbon::now(), ['class'=>'lapso form-control','required']) !!}
+                            {!! Form::label('dias', 'Numero de dias', ['class'=>'dias']) !!}
+                            {!! Form::number('dias', null, ['id'=>'dias','class'=>'dias form-control','min'=>'1']) !!}
 
-                    {!! Form::label('dias', 'Numero de dias', ['class'=>'dias']) !!}
-                    {!! Form::number('dias', null, ['class'=>'dias form-control','min'=>'1']) !!}
+                            <div id="div_monto">
+                                <label for="tipo_monto">Tipo de cantidad</label>
+                                <select id="tipo_monto" class="custom-select" name="tipo_monto">
+                                    <option value="">Seleccione</option>
+                                    <option value="monto">Monto</option>
+                                    <option value="horas">Horas</option>
+                                </select>
+                            </div>
+                            {!! Form::label('monto', 'Monto', ['class'=>'monto']) !!}
+                            {!! Form::number('monto', null, ['id'=>'monto','class'=>'monto form-control','required','min'=>0,'step'=>"any"]) !!}
+                            {!! Form::label('horas', 'Horas', ['class'=>'horas']) !!}
+                            {!! Form::number('horas', null, ['id'=>'horas','class'=>'horas form-control','required','min'=>0]) !!}
+                            <br>
 
-                    <div id="div_monto">
-                        <label for="tipo_monto">Tipo de cantidad</label>
-                        <select id="tipo_monto" class="custom-select" name="tipo_monto">
-                            <option value="">Seleccione</option>
-                            <option value="monto">Monto</option>
-                            <option value="horas">Horas</option>
-                        </select>
-                    </div>
-                    {!! Form::label('monto', 'Monto', ['class'=>'monto']) !!}
-                    {!! Form::number('monto', 0, ['class'=>'monto form-control','required','step'=>"any"]) !!}
-                    {!! Form::label('horas', 'Horas', ['class'=>'horas']) !!}
-                    {!! Form::number('horas', 0, ['class'=>'horas form-control','required','min'=>0]) !!}
-                    <br>
+                            <div id="div_vobo" style="display: none;">
+                                <h5 style="color: red">{{__('La RO seleccionada tiene un monto de venta de 0 se necesita una autorización.')}}</h5>
+                                {!! Form::label('vobo', 'Vo.Bo.'); !!}
+                                <br>
+                                {!! Form::file('vobo') !!}
+                            </div>
 
-                    {!! Form::label('vobo', 'Vo.Bo. Jefe: '); !!}
-                    <br>
-                    {!! Form::file('vobo') !!}
-
-                    <br>
+                            <br>
+                        </div>
                     @if($periodo != null)
-                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'style'=>'margin-top: 3%;']) !!}
+                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'style'=>'margin-top: 3%;', 'id'=> 'save_inci']) !!}
                     @endif
                     {!! Form::close() !!}
                 </div>
@@ -90,6 +95,7 @@
         </div>
     </div>
 
+    {!! Html::script('js/validador.js?v='.time()) !!}
     {!! Html::script('js/incidencias/nueva.js') !!}
 
 @endsection

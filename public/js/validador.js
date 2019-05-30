@@ -19,7 +19,7 @@ function existe(id, array = []) {
             return true;
         }
         if (value == null || value == ""){
-            input.css('border-color','red');
+            input.css('border','1px solid red');
             erroneos.push(id);
         }
         else

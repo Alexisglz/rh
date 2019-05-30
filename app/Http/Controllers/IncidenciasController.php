@@ -7,6 +7,7 @@ use App\Events\IncidenciasEvents;
 use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Incidencias;
+use App\Models\IncidenciaPeriodo;
 use App\Models\IncidenciasCatalogo;
 use App\Models\ProyectosIndeplo;
 use App\Models\ProyectosIndeploRecurso;
@@ -22,10 +23,21 @@ class IncidenciasController extends Controller
 {
 
     public $array;
+    /**
+     * @var false|string
+     */
+    private $date;
+
     /** Funcion recursiva para obtener el arbol de empleados
      * @param int $id
      * @return bool
      */
+
+    public function __construct()
+    {
+        $this->date = date('Y-m-d');
+    }
+
     public function recursivoEmpleados(int $id){
         if ($id == null)
             return true;
@@ -72,14 +84,10 @@ class IncidenciasController extends Controller
         try{
             DB::beginTransaction();
             $user = User::find(auth()->user()->id_usuario);
-            $hoy  = date('d');
-            if ($hoy <= 13) {
-                $fecha_max = date('Y-m-13');
-                $fecha_min = date('Y-m-29', strtotime('-1 month', time()));
-            } else {
-                $fecha_min = date('Y-m-14');
-                $fecha_max = date('Y-m-28');
-            }
+            $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+                ->where('fecha_fin','>=', $this->date)->first();
+            $fecha_min = $periodo->fecha_inicio;
+            $fecha_max = $periodo->fecha_fin;
             switch ($request->tratamiento) {
                 case 'LAPSO':
                     $reglas = [

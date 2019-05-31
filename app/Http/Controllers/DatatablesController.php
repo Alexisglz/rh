@@ -9,6 +9,7 @@ use App\Models\IncidenciaPeriodo;
 use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaIncidenciasPeriodo;
 use App\Models\VistaSolAltas;
+use App\Models\VistaSolBajas;
 use App\PlanesLineas;
 use App\User;
 use App\VistaIncidenciasSinLote;
@@ -160,8 +161,17 @@ class DatatablesController extends Controller
 
     public function getBajasNom()
     {
-        $solicitudes = DB::table('vista_solicitudes_baja_nom')->get();
-        return DataTables::of($solicitudes)
+        $usuario     = auth()->user();
+        $solicitudes = VistaSolBajas::query();
+        if ($usuario->listarTodo == null){
+            if ($usuario->getCoordinador){
+                $this->recursivoEmpleados($usuario->id_usuario);
+                $emps = array_values(array_unique($this->array));
+                $solicitudes->whereIn('empleado_id', $emps);
+            }
+        }
+        $data = $solicitudes->get();
+        return DataTables::of($data)
             ->make(true);
     }
 

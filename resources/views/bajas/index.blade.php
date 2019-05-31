@@ -329,6 +329,7 @@
         $baja_crede  = auth()->user()->can('access',[\App\User::class,'baja_credencial'])? 1:0;
         $baja_rh     = auth()->user()->can('access',[\App\User::class,'baja_rh'])? 1:0;
         $baja_def    = auth()->user()->can('access',[\App\User::class,'baja_definitiva'])? 1:0;
+        $ver_checks  = auth()->user()->can('access',[\App\User::class,'ver_autorizaciones'])? 1:0;
     @endphp
     <script>
         var cancel_baja = '<?php echo $cancel_baja ?>';
@@ -341,6 +342,7 @@
         var baja_rh     = '<?php echo $baja_rh ?>';
         var baja_def    = '<?php echo $baja_def ?>';
         var area        = '<?php echo auth()->user()->getRol->Rol ?>';
+        var ver_checks  = '<?php echo $ver_checks?>';
         $(function () {
             $("#computadora_check").bootstrapToggle({
                 on: 'SI',

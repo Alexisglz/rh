@@ -106,8 +106,11 @@ class IncidenciasController extends Controller
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
                         'tipo_monto'  => 'required',
-                        'monto'       => 'required|numeric|min:1'
                     ];
+                    if ($request->tipo_monto == "monto")
+                        $reglas['monto'] = 'required|numeric|min:1';
+                    if ($request->tipo_monto == "horas")
+                        $reglas['horas'] = 'required|numeric|min:1';
                     break;
                 case 'DIAS':
                     $reglas = [

@@ -91,11 +91,13 @@ $("#incidencia").on('change',function(){
 	        $('.monto').fadeOut();
 			$('.dias').fadeIn();
 			$('.lapso').fadeIn();
+			$('.horas').fadeOut();
 	    break;
 	    case "DIAS":
 	        $('.monto').fadeOut();
 			$('.lapso').fadeOut();
 			$('.dias').fadeIn();
+			$('.horas').fadeOut();
 	    break;
 	    default:
 			Swal.fire({
@@ -206,7 +208,7 @@ function descarga() {
 		 array.push('monto');
 	 if (venta != 0)
 		 array.push('vobo');
- 	var validar = existe('div_inc', array);
+ 		var validar = existe('div_inc', array);
 	 if (validar == true) {
 		 $("#form_incidencia").submit();
 	 }

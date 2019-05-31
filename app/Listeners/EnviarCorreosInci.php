@@ -4,8 +4,10 @@ namespace App\Listeners;
 
 use App\Empleados;
 use App\Events\IncidenciasEvents;
+use App\Mail\AuthCancelInci;
 use App\Mail\NuevaIncidencia;
 use App\Models\IncidenciasCatalogo;
+use App\User;
 use DB;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -100,6 +102,28 @@ class EnviarCorreosInci Implements ShouldQueue
                         foreach ($correos as $correo){
                             Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                         }
+                    }
+                    break;
+                case 'autorizar':
+                    $msg = "La incidencias con el id: ".$incidencia->id." de tipo: ".$inc_tipo->alias;
+                    if (config('app.env')=="local")
+                        Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre));
+                    else{
+                        $solicitante = User::find($incidencia->id_solicitante);
+                        if ($solicitante->correo != null)
+                            $email = $solicitante->correo;
+                        Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre));
+                    }
+                    break;
+                case 'cancelar':
+                    $msg = "La incidencias con el id: ".$incidencia->id." de tipo: ".$inc_tipo->alias;
+                    if (config('app.env')=="local")
+                        Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre));
+                    else{
+                        $solicitante = User::find($incidencia->id_solicitante);
+                        if ($solicitante->correo != null)
+                            $email = $solicitante->correo;
+                        Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre));
                     }
                     break;
             }

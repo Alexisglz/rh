@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\IncidenciasEvents;
 use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Incidencias;
@@ -189,6 +190,10 @@ class AutorizarController extends Controller
                 $incidencia->status_auth = 'POR ENVIAR';
             $incidencia->save();
             DB::commit();
+            if($accion == 'autorizar')
+                event(new IncidenciasEvents($incidencia, 'autorizar'));
+            else
+                event(new IncidenciasEvents($incidencia, 'cancelar'));
             $response = [
                 'ok'   => true,
                 'data' => $incidencia

@@ -61,34 +61,30 @@ class UsuariosController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
-        exit;
         $this->authorize('access',[User::class, 'crear_usuarios']);
+        $conn = DB::connection('incore');
         try{
-            DB::beginTransaction();
-            $edit_pass_temp = 0;
-            if ( isset( $request->checkedit_pass) ) {
-                $edit_pass_temp = 1;
-            } else {
-                $edit_pass_temp = 0;
-            }
-
-            $area = DB::table('usuarios_roles')->where('id','=', $request->area)->first();
+            $conn->beginTransaction();
 
             $user = new User();
-            $user->name           = $request->name;
-            $user->email          = $request->email;
-            $user->password       = bcrypt($request->password);
-            $user->id_area        = $request->area;
-            $user->area           = $area->Descripcion;
-            $user->edit_pass      = $edit_pass_temp;
-            $user->fecha_creacion = $this->date;
+            $user->nombre         = $request->name;
+            $user->apellido       = $request->last_name;
+            $user->usuario        = $request->usuario;
+            $user->password       = md5($request->password);
+            $user->perfil         = $request->perfil;
+            $user->area           = $request->area;
+            $user->correo         = $request->correo;
+            $user->pwdcgd         = 0;
+            $user->estatus        = 'ACTIVO';
+            $user->empleado_id    = $request->id_empleado;
+            $user->id_area        = $request->Rol;
+            $user->password2      = bcrypt($request->password);
             $user->save();
             $this::permisosDefault($user);
-            DB::commit();
+            $conn->commit();
             return redirect()->route('usuarios.index');
         }catch (\Exception $e){
-            DB::rollBack();
+            $conn->rollBack();
             dd($e);
             return redirect()->route('usuarios.index')->with($e);
         }

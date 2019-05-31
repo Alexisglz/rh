@@ -155,7 +155,7 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
-                        <button id="create_user" onclick="Createuser()" type="submit" class="btn btn-primary">
+                        <button id="create_user" type="submit" class="btn btn-primary">
                             {{ __('Register') }}
                         </button>
                     </div>
@@ -164,5 +164,4 @@
         </div>
     </div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {!! Html::script('js/usuarios/index.js?v='.time()) !!}
 @endsection

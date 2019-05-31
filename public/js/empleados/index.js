@@ -115,6 +115,14 @@ var table = $('#empleados-table').DataTable({
     ]
 });
 
+//Guardar sql para los reportes
+table.on( 'xhr', function () {
+    var json = table.ajax.json();
+    var input = $('#sql_input');
+    input.val("");
+    input.val(json.sql);
+});
+
 new $.fn.dataTable.FixedHeader(table);
 
 $('#empleados-table tbody').on('click', '.Editar', function () {

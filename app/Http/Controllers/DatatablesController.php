@@ -99,6 +99,19 @@ class DatatablesController extends Controller
     }
 
     /**
+     * @param $query
+     * @return string
+     */
+    function getRealQuery($query)
+    {
+        $params = array_map(function ($item) {
+            return "'{$item}'";
+        }, $query->getBindings());
+        $result = str_replace_array('?', $params, $query->toSql());
+        return $result;
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      * @throws \Exception
@@ -127,8 +140,10 @@ class DatatablesController extends Controller
             if ($request->rh_no_auth != 0)
                 $solicitudes->where('Auth RH', '=', 'x');
         }
+        $sql = $this->getRealQuery($solicitudes);
         $data = $solicitudes->get();
         return DataTables::of($data)
+            ->with(['sql' => $sql])
             ->make(true);
     }
 
@@ -154,8 +169,10 @@ class DatatablesController extends Controller
             $emp->where('coordinador','LIKE', '%'.$request->search_coord.'%');
         if($request->search_pd != null)
             $emp->where('pd','LIKE', '%'.$request->search_pd.'%');
+        $sql = $this->getRealQuery($emp);
         $emp->get();
         return DataTables::of($emp)
+            ->with(['sql' => $sql])
             ->make(true);
     }
 

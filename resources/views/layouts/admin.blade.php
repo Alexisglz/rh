@@ -142,6 +142,7 @@ to get the desired effect
         {!! Form::hidden('CorreoUser',Auth::user()->email, ['class'=>'form-control' ,'id'=>'CorreoUser']) !!}
         {!! Form::hidden('NombreUsuario',Auth::user()->name, ['class'=>'form-control' ,'id'=>'NombreUsuario']) !!}
         {!! Form::hidden('Area',Auth::user()->getRol->Descripcion, ['class'=>'form-control' ,'id'=>'Area']) !!}
+        {!! Form::hidden('sql_input',null, ['class'=>'form-control' ,'id'=>'sql_input']) !!}
 
         @php
             $area = auth()->user()->getRol->Descripcion;

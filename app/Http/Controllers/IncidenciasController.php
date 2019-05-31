@@ -85,7 +85,7 @@ class IncidenciasController extends Controller
         $this->authorize('access',[User::class, 'crear_incidencias']);
         try{
             DB::beginTransaction();
-            $user = User::find(auth()->user()->id_usuario);
+            $user    = User::find(auth()->user()->id_usuario);
             $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
                 ->where('fecha_fin','>=', $this->date)->first();
             $fecha_min = $periodo->fecha_inicio;
@@ -175,7 +175,7 @@ class IncidenciasController extends Controller
             $incidencia->id_incidencia_tipo = $request->incidencia;
             $incidencia->fecha_solicitud    = date('Y-m-d');
             $incidencia->id_solicitante     = auth()->user()->id_usuario;
-            $incidencia->area_solicitante   = $user->area;
+            $incidencia->area_solicitante   = $user->getRol->Rol;
             $incidencia->motivo             = $request->motivo;
             if ($request->id_risk != "" && $request->id_risk != null)
                 $incidencia->id_proyecto    = $request->id_risk;

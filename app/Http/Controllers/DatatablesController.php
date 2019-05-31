@@ -279,8 +279,7 @@ class DatatablesController extends Controller
             case 'DIR':
             case 'ENTR':
                 $incidencias
-                    ->where('area_solicitante','<>','Especial')
-                    ->select();
+                    ->where('area_solicitante','<>','Esp');
                 break;
             default:
                 $incidencias
@@ -309,7 +308,9 @@ class DatatablesController extends Controller
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
-        if($area != 'ADMIN'){
+        if($area == 'ADMIN' || $area == 'ESP'){
+        }
+        else{
             if ($inc_s_v == 1)
                 $incidencias->where('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_c_v == 1)
@@ -325,7 +326,7 @@ class DatatablesController extends Controller
             case 'DIR':
             case 'ENTR':
                 $incidencias
-                    ->where('area_solicitante','<>','Especial')
+                    ->where('area_solicitante','<>','Esp')
                     ->select();
                 break;
             default:
@@ -366,7 +367,7 @@ class DatatablesController extends Controller
             case 'RH':
             case 'DIR':
             case 'ENTR':
-                $incidencias->where('area_solicitante','<>','Especial');
+                $incidencias->where('area_solicitante','<>','Esp');
                 break;
             default:
                 $incidencias->where('id_solicitante','=',auth()->user()->id_usuario);
@@ -384,9 +385,6 @@ class DatatablesController extends Controller
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_fin','>=', $this->date)->first();
         $incidencias = VistaIncidenciasPeriodo::query();
-        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
-        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
-        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
         if ($usuario->listarTodo == null) {
             if ($usuario->getCoordinador) {
                 $this->recursivoCoordinadores($usuario->id_usuario);
@@ -395,37 +393,20 @@ class DatatablesController extends Controller
                 $incidencias->whereIn('coordinador_id', $coords);
             }
         }
-        if($area != 'ADMIN'){
-            if ($inc_s_v == 1)
-                $incidencias->where('venta','=',0);
-            if ($inc_c_v == 1)
-                $incidencias->where('venta','>',0);
-            if ($inc_ded == 1)
-                $incidencias->where('tipo_incidencia','=','DEDUCCION');
-        }
         switch ($area){
             case 'ESP':
-                $incidencias->where('estatus','=','POR ENVIAR')->select();
+            case 'ADMIN':
+                $incidencias->where('estatus','=','POR ENVIAR');
                 break;
             case 'RH':
-                $incidencias->where('area_solicitante','<>','Especial')
-                    ->where('estatus','=','POR ENVIAR')->select();
-                break;
             case 'DIR':
-                $incidencias->where('area_solicitante','<>','Especial')
-                    ->where('estatus','=','POR ENVIAR')->select();
-                break;
-            case 'ADMIN':
-                $incidencias->where('estatus','=','POR ENVIAR')
-                    ->select();
-                break;
             case 'ENTR':
-                $incidencias->where('area_solicitante','<>','Especial')
-                    ->where('estatus','=','POR ENVIAR')->select();
+                $incidencias->where('area_solicitante','<>','Esp')
+                    ->where('estatus','=','POR ENVIAR');
                 break;
             default:
                 $incidencias->where('id_solicitante','=',auth()->user()->id_usuario)
-                    ->where('estatus','=','POR ENVIAR')->select();
+                    ->where('estatus','=','POR ENVIAR');
                 break;
         }
         if($periodo)

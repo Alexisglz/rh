@@ -69,7 +69,12 @@ class AltasController extends Controller
     {
         $this->authorize('access',[User::class, 'crear_solicitudes']);
         $estados        = Estados::getEstados();
-        $clientes       = CatalogoWbs::Clientes();
+        $clientes       = DB::table('incore.catalogo_wbs AS wbs')
+                            ->select('pc.id','nombre')
+                            ->distinct()
+                            ->join('incore.proyectos_clientes AS pc', 'wbs.cliente','=','pc.id')
+                            ->where('pc.status','!=',0)
+                            ->where('wbs.estatus','!=',0)->pluck('nombre','id');
         $coordinadores  = Coordinadores::getCoordinadores();
         $planes         = CatalogoPlanesLineas::getPlanes();
         $costos         = CostosIncore::getCostos();

@@ -4,9 +4,9 @@
 @endif
 # {{ __("Incidencia") }}
 
-{{ $msg }}<br><br>
-Para el Recurso: <strong>{{ $emp }}</strong><br><br>
-Fue <strong>{{$estatus}}</strong>.
+{{ $msg }}.<br><br>
+Para el Recurso: <strong>{{ $emp }}</strong>.<br><br>
+Fue: <strong>{{$estatus}}</strong>.
 
 @component('mail::button', ['url' => url('/altas'), 'color' => 'green'])
     {{ __("Ir al portal") }}

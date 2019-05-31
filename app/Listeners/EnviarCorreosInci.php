@@ -33,7 +33,7 @@ class EnviarCorreosInci Implements ShouldQueue
     {
         try{
             $incidencia = $event->incidencia;
-            $inc_tipo       = IncidenciasCatalogo::find($incidencia->id_incidencia_tipo);
+            $inc_tipo   = IncidenciasCatalogo::find($incidencia->id_incidencia_tipo);
             $empleado   = Empleados::find($incidencia->id_empleado);
             $tipo       = $event->tipo;
             $nombre     = $empleado->empleado_nombre.' '.$empleado->empleado_apaterno.' '.$empleado->empleado_amaterno;
@@ -43,10 +43,18 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                     else {
-                        $correos = DB::table('vista_permisos_empleados')
-                            ->where('codigo', '=','aut_cancel_inci_dec')
-                            ->groupBy('id_usuario')
-                            ->get();
+                        if ($incidencia->area_solicitante = 'ESP')
+                            $correos = DB::table('vista_permisos_empleados')
+                                ->where('codigo', '=','aut_cancel_inci_dec')
+                                ->whereIn('area', ['ESP','ADMIN'])
+                                ->groupBy('id_usuario')
+                                ->get();
+                        else
+                            $correos = DB::table('vista_permisos_empleados')
+                                ->where('codigo', '=','aut_cancel_inci_dec')
+                                ->where('area', '<>','ESP')
+                                ->groupBy('id_usuario')
+                                ->get();
                         foreach ($correos as $correo){
                             Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                         }
@@ -56,10 +64,18 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                     else {
-                        $correos = DB::table('vista_permisos_empleados')
-                            ->where('codigo', '=','aut_cancel_inci_c_v')
-                            ->groupBy('id_usuario')
-                            ->get();
+                        if ($incidencia->area_solicitante = 'ESP')
+                            $correos = DB::table('vista_permisos_empleados')
+                                ->where('codigo', '=','aut_cancel_inci_c_v')
+                                ->whereIn('area', ['ESP','ADMIN'])
+                                ->groupBy('id_usuario')
+                                ->get();
+                        else
+                            $correos = DB::table('vista_permisos_empleados')
+                                ->where('codigo', '=','aut_cancel_inci_c_v')
+                                ->where('area', '<>','ESP')
+                                ->groupBy('id_usuario')
+                                ->get();
                         foreach ($correos as $correo){
                             Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                         }
@@ -69,10 +85,18 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                     else {
-                        $correos = DB::table('vista_permisos_empleados')
-                            ->where('codigo', '=','aut_cancel_inci_s_v')
-                            ->groupBy('id_usuario')
-                            ->get();
+                        if ($incidencia->area_solicitante = 'ESP')
+                            $correos = DB::table('vista_permisos_empleados')
+                                ->where('codigo', '=','aut_cancel_inci_s_v')
+                                ->whereIn('area', ['ESP','ADMIN'])
+                                ->groupBy('id_usuario')
+                                ->get();
+                        else
+                            $correos = DB::table('vista_permisos_empleados')
+                                ->where('codigo', '=','aut_cancel_inci_s_v')
+                                ->where('area', '<>','ESP')
+                                ->groupBy('id_usuario')
+                                ->get();
                         foreach ($correos as $correo){
                             Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
                         }

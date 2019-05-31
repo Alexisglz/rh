@@ -487,27 +487,6 @@ function validaCheckNotificaciones() {
 }
 
 
-function Createuser() {
-
-    if ($("#name").val() != '' || $("#email").val() != '' || $("#password").val() != '' || $("#password-confirm").val() != '') {
-        var datanotificacion = {
-            asunto: "Notificación Indeplo",
-            puesto: $("#Area").val(),
-            mensaje: "Se ha creado un usuario por: " + $("#NombreUsuario").val(),
-            name: $("#NombreUsuario").val(),
-            cc: "uscrear",
-            // datos necesarios para el elvio de correo
-            para: $("#CorreoUser").val(),
-            de: $("#CorreoUser").val(),
-            usuario: $("#NombreUsuario").val(),
-            recurso: $("#NombreUsuario").val(),
-        };
-        EnviarCorreos(datanotificacion, "/usuarios");
-
-    }
-}
-
-
 function ExcelUsuarios() {
     swal({
         title: "Descargar Usuarios",

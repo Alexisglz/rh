@@ -35,16 +35,16 @@
             <input type="text" name="" value="{{auth()->user()->id_usuario}}" id="index_user" hidden="true">
             <div class="form-inline">
                 <div class="form-group mb-2">
-                    <button id="auth" title="Solicitudes Autorizadas" class="btn btn-success btn-md" style="color: white; font-size: 13px;">{{__('DIR')}}<br>{{__('Autorizadas')}}</button>
+                    <button id="auth" title="Solicitudes Autorizadas" class="btn btn-success btn-sm" style="color: white; font-size: 13px;">{{__('DIR')}}<br>{{__('Autorizadas')}}</button>
                 </div>
                 <div class="form-group mb-2">
-                    <button id="no_auth" title="Solicitudes Autorizadas" class="btn btn-warning btn-md" style="color: white; font-size: 13px;">{{__('DIR')}}<br>{{__('Sin Autorizar')}}</button>
+                    <button id="no_auth" title="Solicitudes Autorizadas" class="btn btn-warning btn-sm" style="color: white; font-size: 13px;">{{__('DIR')}}<br>{{__('Sin Autorizar')}}</button>
                 </div>
                 <div class="form-group mb-2">
-                    <button id="rh_auth" title="Solicitudes Autorizadas" class="btn btn-primary btn-md" style="color: white; font-size: 13px;">{{__('RH')}}<br>{{__('Autorizadas')}}</button>
+                    <button id="rh_auth" title="Solicitudes Autorizadas" class="btn btn-primary btn-sm" style="color: white; font-size: 13px;">{{__('RH')}}<br>{{__('Autorizadas')}}</button>
                 </div>
                 <div class="form-group mb-2">
-                    <button id="rh_no_auth" title="Solicitudes Autorizadas" class="btn btn-orange btn-md" style="color: white; font-size: 13px;">{{__('RH')}}<br>{{__('Sin Autorizar')}}</button>
+                    <button id="rh_no_auth" title="Solicitudes Autorizadas" class="btn btn-orange btn-sm" style="color: white; font-size: 13px;">{{__('RH')}}<br>{{__('Sin Autorizar')}}</button>
                 </div>
                 <div class="col-sm">
                     <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">

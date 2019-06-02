@@ -8,10 +8,11 @@ use DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize
+class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents
 {
     use Exportable;
     public $ini;
@@ -57,6 +58,18 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize
         }
     }
 
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $cellRange = 'A1:W1';
+                /*$event->sheet->getStyle($cellRange)->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setARGB('FFFFFFFF');*/
+            },
+        ];
+    }
+
     public function collection()
     {
         $usuario = auth()->user();
@@ -85,16 +98,6 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize
             'CURP', 'RFC', 'CALLE', 'NUMEROEXTERIOR', 'NUMEROINTERIOR', 'CP', 'COLONIA', 'DELEGACION_MUNICIPIO',
             'ENTIDAD_FEDERATIVA', 'TELEFONO', 'CELULAR', 'EMAIL', 'NSS',
             'FECHA_INGRESO', 'ZONA', 'TIPO_CONTRATO', 'PUESTO_TRADICIONAL', 'AREA'
-        ];
-    }
-
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function(AfterSheet $event) {
-                $cellRange = 'A1:W1';
-                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
-            },
         ];
     }
 }

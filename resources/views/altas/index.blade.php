@@ -33,7 +33,7 @@
         </div>
         <div class="card-body">
             <input type="text" name="" value="{{auth()->user()->id_usuario}}" id="index_user" hidden="true">
-            <div class="form-inline">
+            <div class="form-inline" style="display: none;">
                 <div class="form-group mb-2">
                     <button id="auth" title="Solicitudes Autorizadas" class="btn btn-success btn-sm" style="color: white; font-size: 13px;">{{__('DIR')}}<br>{{__('Autorizadas')}}</button>
                 </div>

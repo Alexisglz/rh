@@ -662,6 +662,15 @@ $('#Modal').on('show.bs.modal', function (event) {
         cuerpo.append(tabla);
     }
 });
+/*
+$("#search_nombre" ).autocomplete({
+    source: "/incidencias/get_empleados",
+    minLength: 2,
+    select: function(event, ui) {
+        $('#search_nombre').val(ui.item.value);
+    }
+});
+*/
 
 function refreshTable() {
     table.ajax.reload();
@@ -690,7 +699,7 @@ num_emp.on('keyup',function () {
     n_emp = $(this).val();
     table.draw();
 });
-search_nombre.on('keyup',function () {
+search_nombre.on('keyup change',function () {
     s_nombre = $(this).val();
     table.draw();
 });

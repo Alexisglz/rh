@@ -394,24 +394,24 @@ function asignarPermisos(id) {
                     var checkbox = $(template);
                     checkbox.appendTo(body);
                 }
-            }
-        },
-    });
-    $.ajax({
-        url: '/usuarios/get_permisos_usuario',
-        type: "GET",
-        dataType: 'JSON',
-        data: {
-            id: id
-        },
-        success:function (data) {
-            if (data.ok == true){
-                var data = data.data;
-                for (i = 0; i < data.length; i++) {
-                    var permiso = data[i];
-                    var check = $('#permiso_'+permiso.id_permiso);
-                    check.prop("checked", true);
-                }
+                $.ajax({
+                    url: '/usuarios/get_permisos_usuario',
+                    type: "GET",
+                    dataType: 'JSON',
+                    data: {
+                        id: id
+                    },
+                    success:function (data) {
+                        if (data.ok == true){
+                            var data = data.data;
+                            for (i = 0; i < data.length; i++) {
+                                var permiso = data[i];
+                                var check = $('#permiso_'+permiso.id_permiso);
+                                check.prop("checked", true);
+                            }
+                        }
+                    },
+                });
             }
         },
     });

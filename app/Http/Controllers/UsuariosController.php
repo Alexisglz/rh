@@ -80,8 +80,8 @@ class UsuariosController extends Controller
             $user->id_area        = $request->Rol;
             $user->password2      = bcrypt($request->password);
             $user->save();
-            $this::permisosDefault($user);
             $conn->commit();
+            $this::permisosDefault($user->id_usuario);
             return redirect()->route('usuarios.index');
         }catch (\Exception $e){
             $conn->rollBack();
@@ -148,7 +148,7 @@ class UsuariosController extends Controller
             $user->save();
             if ($cambiar == true){
                 UsuarioPermiso::where('id_usuario','=',$user->id_usuario)->delete();
-                $this::permisosDefault($user);
+                $this::permisosDefault($user->id_usuario);
             }
             DB::commit();
             return response()->json([
@@ -294,12 +294,13 @@ class UsuariosController extends Controller
         }
     }
 
-    public function permisosDefault(User $user){
+    public function permisosDefault($id){
         try{
             DB::beginTransaction();
-            $permisos    = [];
-            switch ($user->getRol->Descripcion){
-                case 'Recursos Humanos':
+            $permisos = [];
+            $user     = User::find($id);
+            switch ($user->getRol->Rol){
+                case 'RH':
                     $permisos = [
                         'listado_solicitudes','crear_solicitudes','editar_solicitudes','agendar_cita',
                         'autorizar_empleado','editar_empleado','baja_empleado','cancelar_bajas','baja_rh','baja_definitiva',
@@ -309,7 +310,7 @@ class UsuariosController extends Controller
                         'cita_baja','baja_credencial'
                     ];
                     break;
-                case 'Direccion':
+                case 'DIR':
                     $permisos = [
                         'listado_solicitudes','crear_solicitudes','editar_solicitudes','autorizar_solicitudes','editar_empleado',
                         'baja_empleado','cancelar_bajas','baja_definitiva','listado_empleados','listado_bajas','listado_citas',
@@ -317,12 +318,12 @@ class UsuariosController extends Controller
                         'exportar_incidencias','ver_sueldo','cita_baja'
                     ];
                     break;
-                case 'Coordinador':
+                case 'COOR':
                     $permisos = [
                         'listado_solicitudes','listado_empleados','listado_incidencias','crear_incidencias'
                     ];
                     break;
-                case 'Proveedor':
+                case 'ENTR':
                     $permisos = [
                         'listado_solicitudes','crear_solicitudes','editar_solicitudes','autorizar_solicitudes','agendar_cita',
                         'autorizar_empleado','editar_empleado','baja_empleado','cancelar_bajas','baja_definitiva',
@@ -332,7 +333,7 @@ class UsuariosController extends Controller
                         'baja_credencial'
                     ];
                     break;
-                case 'ADMINISTRADOR':
+                case 'ADMIN':
                     $permisos = [];
                     break;
                 case 'PM':
@@ -340,31 +341,31 @@ class UsuariosController extends Controller
                         'listado_solicitudes','listado_empleados','listado_incidencias','crear_incidencias'
                     ];
                     break;
-                case 'Soporte IT':
+                case 'STI':
                     $permisos = [
                         'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_computadora',
                         'baja_computo','exportar_solicitudes','exportar_empleados'
                     ];
                     break;
-                case 'Soporte Auto':
+                case 'SAUTO':
                     $permisos = [
                         'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_coche',
                         'baja_coche','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;
-                case 'Soporte Celular':
+                case 'SCEL':
                     $permisos = [
                         'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_celular',
                         'baja_celular','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;
-                case 'Soporte Almacen':
+                case 'SALMA':
                     $permisos = [
                         'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_herramientas',
                         'baja_herramientas','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;
-                case 'Especial':
+                case 'ESP':
                     $permisos = [
                         'listado_solicitudes','crear_solicitudes','editar_solicitudes','autorizar_solicitudes','agendar_cita',
                         'autorizar_empleado','editar_empleado','baja_empleado','cancelar_bajas','baja_definitiva',
@@ -375,7 +376,7 @@ class UsuariosController extends Controller
                     ];
                     break;
             }
-            if ($user->getRol->Descripcion == 'ADMINISTRADOR'){
+            if ($user->getRol->Rol == 'ADMIN'){
                 $permisos = Permiso::where('status',1)->get();
                 foreach ($permisos as $permiso){
                     $user_permiso = new UsuarioPermiso();

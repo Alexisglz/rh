@@ -14,7 +14,15 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class IncidenciasLoteExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     use Exportable;
+    public $id;
+    public $area;
+    public $array;
 
+    /**
+     * IncidenciasLoteExport constructor.
+     * @param $id
+     * @param $area
+     */
     public function __construct($id, $area)
     {
         $this->id   = $id;
@@ -33,11 +41,14 @@ class IncidenciasLoteExport implements FromCollection, WithHeadings, ShouldAutoS
             if ($usuario->getCoordinador){
                 $movs = $usuario->getCoordinador->getMovimientos;
                 foreach ($movs as $item){
+                    if ($item->getEmpleado == null )
+                        continue;
                     if ($item->getEmpleado->empleado_id == null)
                         continue;
                     $this->array[] = $item->getEmpleado->empleado_id;
                     $user          = User::where('empleado_id', '=', $item->empleado_id)->first();
-                    $this->recursivoEmpleados($user->id_usuario);
+                    if ($user)
+                        $this->recursivoEmpleados($user->id_usuario);
                 }
             }
             else{

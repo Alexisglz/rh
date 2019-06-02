@@ -32,11 +32,13 @@ class AltasExport implements FromCollection, WithHeadings, ShouldAutoSize
             if ($usuario->getCoordinador){
                 $movs = $usuario->getCoordinador->getMovimientos;
                 foreach ($movs as $item){
+                    if ($item->getEmpleado == null)
+                        continue;
                     if ($item->getEmpleado->empleado_id == null)
                         continue;
                     $user = User::where('empleado_id', '=', $item->empleado_id)->first();
                     if ($user == null){
-                        return true;
+                        continue;
                     }
                     $coord = CatalogoCoordinadores::where('user_id', '=', $user->id_usuario)->first();
                     if ($coord)

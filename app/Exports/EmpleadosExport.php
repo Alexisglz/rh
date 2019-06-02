@@ -14,7 +14,15 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     use Exportable;
+    public $ini;
+    public $fin;
+    public $array;
 
+    /**
+     * EmpleadosExport constructor.
+     * @param $ini
+     * @param $fin
+     */
     public function __construct($ini, $fin)
     {
         $this->ini = $ini;
@@ -33,11 +41,14 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize
             if ($usuario->getCoordinador){
                 $movs = $usuario->getCoordinador->getMovimientos;
                 foreach ($movs as $item){
+                    if ($item->getEmpleado == null )
+                        continue;
                     if ($item->getEmpleado->empleado_id == null)
                         continue;
                     $this->array[] = $item->getEmpleado->empleado_id;
                     $user          = User::where('empleado_id', '=', $item->empleado_id)->first();
-                    $this->recursivoEmpleados($user->id_usuario);
+                    if ($user)
+                        $this->recursivoEmpleados($user->id_usuario);
                 }
             }
             else{

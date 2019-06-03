@@ -40,20 +40,20 @@
                 </div>
             @endcan
             <div class="form-inline" style="padding-top: 10px;border-top: 1px solid lightgrey;">
-                <div class="form-group mb-2">
-                    <input class="form-control input-sm" title="Buscar por id" id="search_id" name="search_id" placeholder="ID">
+                <div class="form-group mb-2 col-sm-1">
+                    <input class="form-control input-sm col-sm-12" title="Buscar por id" id="search_id" name="search_id" placeholder="ID">
                 </div>
-                <div class="form-group mb-2">
-                    <input class="form-control input-sm" title="Buscar por numero de empleado" id="num_emp" name="num_emp" placeholder="No. Emp">
+                <div class="form-group mb-2 col-sm-1">
+                    <input class="form-control input-sm col-sm-12" title="Buscar por numero de empleado" id="num_emp" name="num_emp" placeholder="No. Emp">
                 </div>
-                <div class="form-group mb-2">
-                    <input class="form-control input-sm" title="Buscar por nombre" id="search_nombre" name="search_nombre" placeholder="NOMBRE">
+                <div class="form-group mb-2 col-sm-2">
+                    <input class="form-control input-sm col-sm-12" title="Buscar por nombre" id="search_nombre" name="search_nombre" placeholder="NOMBRE">
                 </div>
-                <div class="form-group mb-2">
-                    <input class="form-control input-sm" title="Buscar por coordinador" id="search_coord" name="search_coord" placeholder="COORDINADOR">
+                <div class="form-group mb-2 col-sm-2">
+                    <input class="form-control input-sm col-sm-12" title="Buscar por coordinador" id="search_coord" name="search_coord" placeholder="COORDINADOR">
                 </div>
-                <div class="form-group mb-2">
-                    <input class="form-control input-sm" title="Buscar por project definition" id="search_pd" name="search_pd" placeholder="PD">
+                <div class="form-group mb-2 col-sm-1">
+                    <input class="form-control input-sm col-sm-12" title="Buscar por project definition" id="search_pd" name="search_pd" placeholder="PD">
                 </div>
                 <div class="col-sm">
                     <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">

@@ -34,17 +34,17 @@
         <div class="card-body">
             <input type="text" name="" value="{{auth()->user()->id_usuario}}" id="index_user" hidden="true">
             <div class="form-inline">
-                <div class="form-group mb-2">
-                    <input id="search_id" name="search_id" class="form-control" placeholder="ID">
+                <div class="form-group mb-2 col-sm-1">
+                    <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por ID">
                 </div>
-                <div class="form-group mb-2">
-                    <input id="search_nombre" name="search_nombre" class="form-control" placeholder="Nombre">
+                <div class="form-group mb-2 col-sm-2">
+                    <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="Nombre" title="Buscar por el nombre">
                 </div>
-                <div class="form-group mb-2">
-                    <input id="search_wbs" name="search_wbs" class="form-control" placeholder="WBS">
+                <div class="form-group mb-2 col-sm-2">
+                    <input id="search_wbs" name="search_wbs" class="form-control col-sm-12" placeholder="WBS" title="Buscar por el WBS">
                 </div>
-                <div class="form-group mb-2">
-                    <input id="search_coord" name="search_coord" class="form-control" placeholder="Coordinador">
+                <div class="form-group mb-2 col-sm-2">
+                    <input id="search_coord" name="search_coord" class="form-control col-sm-12" placeholder="Coordinador" title="Buscar por el coordinador">
                 </div>
                 <div class="col-sm">
                     <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">

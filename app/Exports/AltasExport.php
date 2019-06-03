@@ -65,8 +65,8 @@ class AltasExport implements FromCollection, WithHeadings, ShouldAutoSize
             }
         }
         $models->select(
-            'fecha solicitud','cita','WBS','Nombre','coordinador','coordinadornokia',
-            'pm','imss','variable','asimilado','costo','venta','margen','Solicitante');
+            'id','Nombre','fecha solicitud','WBS','coordinador','pm','imss','variable','asimilado','costo','venta',
+            'margen','Solicitante','Computadora','Coche','Celular','Herramientas');
         $models->whereBetween('fecha solicitud',[$this->ini, $this->fin]);
         $models = $models->get();
         return collect($models);
@@ -75,12 +75,11 @@ class AltasExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function headings(): array
     {
         return [
-            'Fecha Solicitud',
-            'Cita',
-            'WBS',
+            'ID',
             'Nombre',
+            'Fecha Solicitud',
+            'WBS',
             'Coordinador',
-            'Coordinador Nokia',
             'PM',
             'IMSS',
             'Variable',
@@ -88,7 +87,11 @@ class AltasExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Costo',
             'Venta',
             'Margen',
-            'Solicitante'
+            'Solicitante',
+            'Computadora',
+            'Coche',
+            'Celular',
+            'Herramientas'
         ];
     }
 

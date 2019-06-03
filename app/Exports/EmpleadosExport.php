@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaEmpleadosExcel;
 use App\User;
 use DB;
@@ -18,6 +19,10 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     public $ini;
     public $fin;
     public $array;
+    /**
+     * @var int
+     */
+    public $ver_sueldo;
 
     /**
      * EmpleadosExport constructor.
@@ -28,6 +33,7 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     {
         $this->ini = $ini;
         $this->fin = $fin;
+        $this->ver_sueldo = auth()->user()->can('access',[\App\User::class,'ver_sueldo'])? 1:0;
     }
 
     /** Funcion recursiva para obtener el arbol de empleados
@@ -72,8 +78,8 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
     public function collection()
     {
-        $usuario = auth()->user();
-        $models  = VistaEmpleadosExcel::query();
+        $usuario    = auth()->user();
+        $models     = VistaEmpleadosActivos::query();
         if ($usuario->listarTodo == null){
             if ($usuario->getCoordinador){
                 $this->recursivoEmpleados($usuario->id_usuario);
@@ -81,11 +87,16 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                 $models->whereIn('id', $emps);
             }
         }
-        $models->select(
-                'id','empresa','empleado_apaterno','empleado_amaterno','empleado_nombre','municipio','curp','rfc',
-                'calle','num_exterior','num_interior','cp','colonia','mun','estado','telefono','telefono2','mail',
-                'nss','fecha_ingreso','zona','tipo_contrato','puesto','area'
-            );
+        $campos = [
+            'id','empleado_num','empleado_apaterno','empleado_amaterno','empleado_nombre','proyecto','pd','calle','num_exterior','num_interior',
+            'colonia','municipio','cp','estado','localidad','nss','curp','rfc','mail','telefono','telefono2','empresa','coordinador','puesto',
+            'segmento','esquema','num_cuenta','clabe','banco','esquema_viaticos'
+        ];
+        if ($this->ver_sueldo == 1){
+            $campos[] = 'sueldo_imss';
+            $campos[] = 'sueldo_asimilado';
+        }
+        $models->select($campos);
         $models->whereBetween('fecha_ingreso',[$this->ini, $this->fin]);
         $models = $models->get();
         return collect($models);
@@ -93,11 +104,15 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
     public function headings(): array
     {
-        return [
-            'ID','EMPRESA', 'PATERNO', 'MATERNO', 'NOMBRE', 'LUGAR_NACIMIENTO',
-            'CURP', 'RFC', 'CALLE', 'NUMEROEXTERIOR', 'NUMEROINTERIOR', 'CP', 'COLONIA', 'DELEGACION_MUNICIPIO',
-            'ENTIDAD_FEDERATIVA', 'TELEFONO', 'CELULAR', 'EMAIL', 'NSS',
-            'FECHA_INGRESO', 'ZONA', 'TIPO_CONTRATO', 'PUESTO_TRADICIONAL', 'AREA'
+        $headers = [
+            'ID','NUMERO EMPLEADO', 'PATERNO', 'MATERNO', 'NOMBRE', 'PROYECTO','PD','CALLE','NUM EXTERIOR','NUM INTERIOR',
+            'COLONIA','MUNICIPIO','CP','ESTADO','NSS','CURP','RFC','MAIL','TELEFONO','TELEFONO 2','EMPRESA','SEGEMENTO',
+            'ESQUEMA','NO. CUENTA', 'CLABE','BANCO','LOCALIDAD','ESQUEMA VIATICOS','COORDINADOR','PUESTO'
         ];
+        if ($this->ver_sueldo == 1){
+            $headers[] = 'SUELDO IMSS';
+            $headers[] = 'SUELDO ASIMILADO';
+        }
+        return $headers;
     }
 }

@@ -6368,3 +6368,24 @@ ul.ui-autocomplete {
 .btn-orange:hover{
   background-color: #e13900;
 }
+.brand-image {
+  float: left;
+  line-height: .8;
+  width: 58px;
+  margin-left: 0;
+  margin-right: .5rem;
+  margin-top: -3px;
+  transition: all 0.3s linear;
+  transform: scale(1);
+}
+.main-sidebar:hover .brand-image{
+  margin-left: 3.8rem;
+  transition: all 0.4s linear;
+  transform: scale(2);
+}
+
+.sidebar-open .brand-image{
+  margin-left: 3.8rem;
+  transition: all 0.4s linear;
+  transform: scale(2);
+}

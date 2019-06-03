@@ -89,7 +89,7 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
         }
         $campos = [
             'id','empleado_num','empleado_apaterno','empleado_amaterno','empleado_nombre','proyecto','pd','calle','num_exterior','num_interior',
-            'colonia','municipio','cp','estado','localidad','nss','curp','rfc','mail','telefono','telefono2','empresa','coordinador','puesto',
+            'colonia','municipio','cp','estado','nss','curp','rfc','mail','telefono','telefono2','empresa','coordinador','puesto',
             'segmento','esquema','num_cuenta','clabe','banco','esquema_viaticos'
         ];
         if ($this->ver_sueldo == 1){
@@ -106,8 +106,8 @@ class EmpleadosExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     {
         $headers = [
             'ID','NUMERO EMPLEADO', 'PATERNO', 'MATERNO', 'NOMBRE', 'PROYECTO','PD','CALLE','NUM EXTERIOR','NUM INTERIOR',
-            'COLONIA','MUNICIPIO','CP','ESTADO','NSS','CURP','RFC','MAIL','TELEFONO','TELEFONO 2','EMPRESA','SEGEMENTO',
-            'ESQUEMA','NO. CUENTA', 'CLABE','BANCO','LOCALIDAD','ESQUEMA VIATICOS','COORDINADOR','PUESTO'
+            'COLONIA','MUNICIPIO','CP','ESTADO','NSS','CURP','RFC','MAIL','TELEFONO','TELEFONO 2','EMPRESA','COORDINADOR','PUESTO'
+            ,'SEGEMENTO','ESQUEMA','NO. CUENTA', 'CLABE','BANCO','ESQUEMA VIATICOS'
         ];
         if ($this->ver_sueldo == 1){
             $headers[] = 'SUELDO IMSS';

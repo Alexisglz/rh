@@ -34,29 +34,29 @@
                 @endcan
                 <div class="form-inline" style="padding-top: 10px;border-top: 1px solid lightgrey;border-bottom: 1px solid lightgrey;margin-bottom: 5px;">
                     <div class="form-group mb-2 col-sm-1">
-                        <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID">
+                        <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por el id de la incidencia">
                     </div>
                     <div class="form-group mb-2 col-sm-2">
-                        <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="EMPLEADO">
+                        <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="EMPLEADO" title="Buscar por el nombre del empleado">
                     </div>
                     <div class="form-group mb-2 col-sm-1">
-                        <input id="search_num" name="search_num" class="form-control col-sm-12" placeholder="NUM EMP">
+                        <input id="search_num" name="search_num" class="form-control col-sm-12" placeholder="NUM EMP" title="Buscar por el numero del empleado">
                     </div>
                     <div class="form-group mb-2 col-sm-2">
-                        <input id="search_inci" name="search_inci" class="form-control col-sm-12" placeholder="INCIDENCIA">
+                        <input id="search_inci" name="search_inci" class="form-control col-sm-12" placeholder="INCIDENCIA" title="Buscar por el nombre de la incidencia">
                     </div>
                     <div class="form-group mb-2 col-sm-2">
-                        <input id="search_sol" name="search_sol" class="form-control col-sm-12" placeholder="SOLICITANTE">
+                        <input id="search_sol" name="search_sol" class="form-control col-sm-12" placeholder="SOLICITANTE" title="Buscar por el nombre solicitante">
                     </div>
                     <div class="form-group mb-2">
-                        <select id="search_esta" name="search" class="form-control col-sm-12">
+                        <select id="search_esta" name="search" class="form-control col-sm-12" title="Filtrar incidencias por estatus">
                             <option value="">{{__('ESTATUS')}}</option>
                             <option value="CANCELAR">{{__('CANCELADA')}}</option>
                             <option value="ENVIADO">{{__('ENVIADA')}}</option>
                         </select>
                     </div>
                     <div class="form-group mb-2 col-sm-1">
-                        <select id="search_tipo" name="search" class="form-control col-sm-12">
+                        <select id="search_tipo" name="search" class="form-control col-sm-12" title="Filtrar incidencias por tipo">
                             <option value="">{{__('TIPO')}}</option>
                             <option value="PERCEPCION">{{__('PERCEPCION')}}</option>
                             <option value="DEDUCCION">{{__('DEDUCCION')}}</option>

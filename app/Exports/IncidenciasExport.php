@@ -71,8 +71,8 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
         $models->select(
             'id','id_empleado','empleado','id_incidencia_tipo','nombre','fecha_solicitud',
             'fecha_inicio', 'fecha_fin','dias','monto','motivo','id_solicitante','solicitante','id_lote',
-            'auth_rh','id_rh_auth','rh','auth_direccion','id_direccion_auth','dir','auth_capital',
-            'id_capital_auth','capital','created_at','updated_at','deleted_at','status_auth'
+            'auth_rh','id_rh_auth','rh','auth_direccion','id_direccion_auth','dir','status_auth','created_at',
+            'updated_at','deleted_at'
         );
         switch ($this->area){
             case 'ESP':
@@ -99,10 +99,10 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function headings(): array
     {
         return [
-            'ID','ID EMPLEADO','NOMBRE EMPLEADO','ID TIPO','NOMBRE TIPO','FECHA SOL','FECHA INICIO','FECHA FIN',
+            'ID','ID EMPLEADO','NOMBRE EMPLEADO','ID INCIDENCIA','NOMBRE INCIDENCIA','FECHA SOL','FECHA INICIO','FECHA FIN',
             'DIAS','MONTO','MOTIVO','ID SOLICITANTE','NOMBRE SOLICITANTE','ID LOTE','AUTH RH','ID AUTH RH',
-            'NOMBRE RH','AUTH DIR','ID AUTH DIR','NOMBRE DIR','CAPITAL','ID AUTH CAPITAL','NOMBRE CAPITAL',
-            'FECHA DE CREACION','FECHA DE MODIFICACION','FECHA DE ELIMINACION','ESTATUS'
+            'NOMBRE RH','AUTH DIR','ID AUTH DIR','NOMBRE DIR','ESTATUS',
+            'FECHA DE CREACION','FECHA DE MODIFICACION','FECHA DE ELIMINACION'
         ];
     }
     public function registerEvents(): array

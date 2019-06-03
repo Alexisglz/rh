@@ -442,6 +442,12 @@ function postBajaEmpleado() {
             processData: false,
             method: 'POST',
             type: 'POST',
+            beforeSend: function () {
+                $().loader("show");
+            },
+            complete: function () {
+                $().loader("hide");
+            },
             success: function(data){
                 if (data.ok == true){
                     swal("La solicitud se a generado exitosamente:", {

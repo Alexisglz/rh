@@ -27,9 +27,7 @@ var table      = $('#darbaja-table').DataTable({
         {data: 'fecha_emision',name: 'fecha_emision', className:'text-center common'},
         {data: 'fecha_baja_sol',name: 'fecha_baja_sol', className:'text-center common'},
         {data: 'fecha_baja_nom',name: 'fecha_baja_nom', className:'text-center common'},
-        {data: 'adeudos',name: 'adeudos', className:'text-center common'},
         {data: 'tiempo_retraso_her',name: 'tiempo_retraso_her', className:'text-center common'},
-        {data: 'baja_definitiva',name: 'baja_definitiva', className:'text-center common'},
         {data: 'vobo',name: 'vobo', className:'text-center common'}
         ],
     language: {
@@ -236,87 +234,7 @@ var table      = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 22,
-            "data": null,
-            "render": function (data, type, row) {
-                if (area == 'ADMIN') {
-                    switch (data) {
-                        case "PENDIENTE"  :
-                            return "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                            break;
-                        case "COMPLETADO"  :
-                            return "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                            break;
-                        default :
-                            return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                    }
-                } else {
-                    switch (area) {
-                        case 'STI':
-                            if(baja_compu == 1){
-                                var view = "";
-                                if(row.baja_computo != 'NO SE HA DADO DE BAJA')
-                                    view = "<button data-tipo='Autorizar' class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                else
-                                    view = "<button data-tipo='Autorizar' class='Autorizar btn btn-xs btn-success iconAutorizarOrange' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                return view;
-                            }
-                            else return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                            break;
-                        case 'SAUTO':
-                            if (baja_coche == 1){
-                                var view = "";
-                                view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                if(row.baja_auto != 'NO SE HA DADO DE BAJA')
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                else
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizarOrange' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                return view;
-                            }
-                            else return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                            break;
-                        case 'SCEL':
-                            if (baja_cel == 1){
-                                var view = "";
-                                if(row.baja_celular != 'NO SE HA DADO DE BAJA')
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                else
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizarOrange' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                return view;
-                            }
-                            else return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                            break;
-                        case 'SALMA':
-                            if (baja_herra == 1){
-                                var view = "";
-                                if(row.baja_almacen != 'NO SE HA DADO DE BAJA')
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                else
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizarOrange' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                return view;
-                            }
-                            else return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                            break;
-                        case 'RH':
-                            if (baja_rh == 1){
-                                var view = "";
-                                if(row.baja_credencial != 'NO SE HA DADO DE BAJA' && row.pago_finiquito != 'NO SE HA PAGADO')
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizar' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                else
-                                    view = "<button data-tipo='Autorizar'class='Autorizar btn btn-xs btn-success iconAutorizarOrange' data-toggle='modal' data-target='#AutorizarcionesHerramientas'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
-                                return view;
-                            }
-                            else return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                            break;
-                        default:
-                            return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                            break;
-                    }
-                }
-            }
-        },
-        {
-            'targets': 23,
+            'targets': 21,
             'data':null,
             'render': function (data, type, row) {
                 var view = '';

@@ -39,9 +39,7 @@
                         <th>{{__('FECHA DE EMISION')}}</th>
                         <th>{{__('FECHA BAJA (SOLICITANTE)')}}</th>
                         <th>{{__('FECHA BAJA NOMINA')}}</th>
-                        <th>{{__('ADEUDOS')}}</th>
                         <th>{{__('TIEMPO DE RETRASO')}}</th>
-                        <th>{{__('HERRAMIENTAS')}}</th>
                         <th>{{__('VOBO')}}</th>
                     </tr>
                     </thead>

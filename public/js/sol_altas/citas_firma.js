@@ -21,7 +21,6 @@ var table = $('#citas-firma-table').DataTable({
         {data: 'WBS',               name: 'WBS'},
         {data: 'Nombre',            name: 'Nombre'},
         {data: 'coordinador',       name: 'coordinador'},
-        {data: 'Auth_entregables',  name: 'Auth_entregables'},
         {data: 'Auth_direccion',    name: 'Auth_direccion'},
         {data: 'Auth_RH',           name: 'Auth_RH'},
         {data: 'fecha_cita',        name: 'fecha_cita'},

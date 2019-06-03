@@ -26,9 +26,8 @@
                     <th>WBS</th>
                     <th>Nombre</th>
                     <th>Coordinador</th>
-                    <th>Auth entregables</th>
                     <th>Auth dirección</th>
-                    <th>Atuh RH</th>
+                    <th>Auth RH</th>
                     <th>Fecha de cita</th>
                     <th>Hora de cita</th>
                     <th>Estatus de cita</th>

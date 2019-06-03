@@ -305,9 +305,9 @@ class UsuariosController extends Controller
                         'listado_solicitudes','crear_solicitudes','editar_solicitudes','agendar_cita',
                         'autorizar_empleado','editar_empleado','baja_empleado','cancelar_bajas','baja_rh','baja_definitiva',
                         'listado_empleados','listado_bajas','listado_citas','listado_incidencias','crear_incidencias',
-                        'listado_autorizar','listado_lote','aut_cancel_incidencia','exportar_solicitudes',
-                        'exportar_empleados','exportar_incidencias','export_lote_incidencias','enviar_lote','ver_sueldo',
-                        'cita_baja','baja_credencial'
+                        'listado_autorizar','aut_cancel_incidencia','exportar_solicitudes','exportar_empleados',
+                        'exportar_incidencias','ver_sueldo','cita_baja','baja_credencial','listar_todos','ver_asimilados_inci',
+                        'ver_tradicional_inci'
                     ];
                     break;
                 case 'DIR':

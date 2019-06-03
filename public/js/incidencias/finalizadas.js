@@ -72,6 +72,8 @@ var table = $('#Incidencias_Enviar-table').DataTable({
     ],
 });
 
+new $.fn.dataTable.FixedHeader(table);
+
 function ExportExcel() {
     swal({
             title: "Incidencias",

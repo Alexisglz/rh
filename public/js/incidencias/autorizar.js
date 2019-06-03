@@ -148,6 +148,7 @@ var table = $('#incidencias-table').DataTable({
         },
     ],
 });
+new $.fn.dataTable.FixedHeader(table);
 var data;
 
 $('#incidencias-table tbody').on('click', '.info', function () {

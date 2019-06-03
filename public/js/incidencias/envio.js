@@ -91,6 +91,8 @@ var table_ = $('#envio_lote').DataTable({
     ],
 });
 
+new $.fn.dataTable.FixedHeader(table_);
+
 var upload_data = null;
 table_.on('click', '.fa-upload', function () {
     upload_data = table_.row($(this).parent()).data();

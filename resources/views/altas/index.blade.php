@@ -33,6 +33,25 @@
         </div>
         <div class="card-body">
             <input type="text" name="" value="{{auth()->user()->id_usuario}}" id="index_user" hidden="true">
+            <div class="form-inline">
+                <div class="form-group mb-2">
+                    <input id="search_id" name="search_id" class="form-control" placeholder="ID">
+                </div>
+                <div class="form-group mb-2">
+                    <input id="search_nombre" name="search_nombre" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="form-group mb-2">
+                    <input id="search_wbs" name="search_wbs" class="form-control" placeholder="WBS">
+                </div>
+                <div class="form-group mb-2">
+                    <input id="search_coord" name="search_coord" class="form-control" placeholder="Coordinador">
+                </div>
+                <div class="col-sm">
+                    <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
             <div class="form-inline" style="display: none;">
                 <div class="form-group mb-2">
                     <button id="auth" title="Solicitudes Autorizadas" class="btn btn-success btn-sm" style="color: white; font-size: 13px;">{{__('DIR')}}<br>{{__('Autorizadas')}}</button>

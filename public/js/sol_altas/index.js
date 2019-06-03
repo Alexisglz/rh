@@ -4,6 +4,10 @@ var no_auth    = 0;
 var rh_auth    = 0;
 var rh_no_auth = 0;
 var reset      = 0;
+var s_id       = null;
+var s_nombre   = null;
+var s_wbs      = null;
+var s_coord    = null;
 var table      = $('#altas-table').DataTable({
     processing: true,
     serverSide: true,
@@ -12,11 +16,15 @@ var table      = $('#altas-table').DataTable({
         url: '/datatables/get_data_altas',
         type: 'GET',
         data: function (data) {
-            data.auth       = auth,
-            data.no_auth    = no_auth,
-            data.rh_auth    = rh_auth,
-            data.rh_no_auth = rh_no_auth,
-            data.reset      = reset
+            data.auth          = auth,
+            data.no_auth       = no_auth,
+            data.rh_auth       = rh_auth,
+            data.rh_no_auth    = rh_no_auth,
+            data.search_id     = s_id,
+            data.search_nombre = s_nombre,
+            data.search_wbs    = s_wbs,
+            data.search_coord  = s_coord,
+            data.reset         = reset
         },
         beforeSend: function () {
         },
@@ -1528,10 +1536,34 @@ function ExcelAltas() {
     }
 }
 
-var autorizados   = $('#auth');
-var sin_autorizar = $('#no_auth');
+var autorizados      = $('#auth');
+var sin_autorizar    = $('#no_auth');
 var rh_autorizados   = $('#rh_auth');
 var rh_sin_autorizar = $('#rh_no_auth');
+var search_id        = $('#search_id');
+var search_nombre    = $('#search_nombre');
+var search_wbs       = $('#search_wbs');
+var search_coord     = $('#search_coord');
+
+search_id.on('keyup',function () {
+    s_id = $(this).val();
+    table.draw();
+});
+
+search_nombre.on('keyup',function () {
+    s_nombre = $(this).val();
+    table.draw();
+});
+
+search_wbs.on('keyup',function () {
+    s_wbs = $(this).val();
+    table.draw();
+});
+
+search_coord.on('keyup',function () {
+    s_coord = $(this).val();
+    table.draw();
+});
 
 autorizados.on('click', function (e) {
     auth = 1;
@@ -1575,6 +1607,10 @@ $('#reset').on('click', function (e) {
     no_auth    = 0;
     rh_auth    = 0;
     rh_no_auth = 0;
+    s_id       = null;
+    s_nombre   = null;
+    s_wbs      = null;
+    s_coord    = null;
     table.draw();
     e.preventDefault();
     reset = 0;
@@ -1582,6 +1618,10 @@ $('#reset').on('click', function (e) {
     sin_autorizar.prop('disabled',false);
     rh_autorizados.prop('disabled',false);
     rh_sin_autorizar.prop('disabled',false);
+    search_id.val("");
+    search_nombre.val("");
+    search_wbs.val("");
+    search_coord.val("");
 });
 
 if (cita != 1 && ver_checks == 1)

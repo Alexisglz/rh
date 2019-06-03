@@ -139,6 +139,14 @@ class DatatablesController extends Controller
                 $solicitudes->where('Auth RH', '<>', 'x');
             if ($request->rh_no_auth != 0)
                 $solicitudes->where('Auth RH', '=', 'x');
+            if($request->search_id != null)
+                $solicitudes->where('id','LIKE','%'.$request->search_id.'%');
+            if($request->search_nombre != null)
+                $solicitudes->where('Nombre','LIKE','%'.$request->search_nombre.'%');
+            if($request->search_wbs != null)
+                $solicitudes->where('WBS','LIKE','%'.$request->search_wbs.'%');
+            if($request->search_coord != null)
+                $solicitudes->where('coordinador','LIKE','%'.$request->search_coord.'%');
         }
         $sql = $this->getRealQuery($solicitudes);
         $data = $solicitudes->get();

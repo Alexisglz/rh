@@ -69,6 +69,7 @@ class ResetPasswordController extends Controller
     protected function resetPassword($user, $password)
     {
         $user->password2 = Hash::make($password);
+        $user->password  = md5($password);
 
         $user->setRememberToken(Str::random(60));
 

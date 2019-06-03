@@ -18,7 +18,7 @@
 
             <br>
             @can('access',[\App\User::class,'autorizar_empleado'])
-                <div class="row" style="margin-left: 0">
+                <div class="row" style="margin-left: 0; display: none;">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdialTamanio">{{__('Agregar')}}</button>
                 </div>
             @endcan

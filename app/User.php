@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\CatalogoCoordinadores;
 use App\Models\CoordinadorPD;
+use App\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
@@ -89,5 +90,10 @@ class User extends Authenticatable
 
     public function getAuthPassword() {
         return $this->password2;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

@@ -12,6 +12,7 @@
                 <i class="fa fa-plus"></i>
                 {{__('LISTADO DE SOLICITUDES DE ALTA')}}
             </h3>
+            <a class="btn btn-primary btn-sm pull-right btn-circle" title="Informacion de los checks" onclick="$('#infoCheck').modal('toggle')"><i class="fa fa-info"></i></a>
             <br>
             <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -130,6 +131,9 @@
 
     <!--Modal para autorizar almacen -->
     @include('altas.modals.almacen')
+
+    <!--Modal para info checks -->
+    @include('altas.modals.check')
 
     <style type="text/css">
         .main-sidebar {

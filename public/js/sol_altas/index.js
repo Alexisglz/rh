@@ -116,12 +116,12 @@ var table      = $('#altas-table').DataTable({
                             return "<button data-tipo='Autorizar' class='Autorizar btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
                             break;
                         default :
-                            return '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                            return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                     }
                 }
                 else {
                     if (data['cita'] != null)
-                        return '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                        return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                     else
                         return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                 }
@@ -136,7 +136,7 @@ var table      = $('#altas-table').DataTable({
                     return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 if (row.status_cita == "PENDIENTE" && data == "cita"){
-                    return '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                    return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
                     if (cita == 1) {
@@ -145,7 +145,7 @@ var table      = $('#altas-table').DataTable({
                                 return "<button data-tipo='CitaFirma' class='cita info btn btn-xs btn-success iconCheckAuths' data-toggle='modal' data-target='#CitaFirma'><i class='fas fa-calendar nav-icon nav-icon nav-icon'></i></button>";
                                 break;
                             case "ok":
-                                return '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                                return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                                 break;
                             default :
                                 return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
@@ -163,14 +163,18 @@ var table      = $('#altas-table').DataTable({
             "render" : function (data, type, row) {
                 var view = '';
                 if (data == 'ASIGNADA') {
-                    view = '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else{
-                    if (data == 'SOLICITADO' && auth_computadora == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
-                        view = "<button  data-tipo='AutorizarHerraCompu' class='AutorizarHerraCompu btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                    if (data == 'SOLICITADO'){
+                        if (auth_computadora == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
+                            view = "<button  data-tipo='AutorizarHerraCompu' class='AutorizarHerraCompu btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                        }
+                        else
+                            view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                     }
                     else
-                        view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fa fa-minus-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 return view;
             }
@@ -182,14 +186,18 @@ var table      = $('#altas-table').DataTable({
             "render" : function (data, type, row) {
                 var view = '';
                 if (data == 'ASIGNADA') {
-                    view = '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
-                    if (data == 'SOLICITADO' && auth_celular == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
-                        view = "<button  data-tipo='AutorizarHerraCel' class='AutorizarHerraCel btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                    if (data == 'SOLICITADO'){
+                        if (auth_celular == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
+                            view = "<button  data-tipo='AutorizarHerraCel' class='AutorizarHerraCel btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                        }
+                        else
+                            view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                     }
                     else
-                        view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fa fa-minus-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 return view;
             }
@@ -201,14 +209,18 @@ var table      = $('#altas-table').DataTable({
             "render" : function (data, type, row) {
                 var view = '';
                 if (data == 'ASIGNADA') {
-                    view = '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
-                    if (data == 'SOLICITADO' && auth_coche == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
-                        view = "<button  data-tipo='AutorizarHerraCoche' class='AutorizarHerraCoche btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                    if (data == 'SOLICITADO'){
+                        if (auth_coche == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
+                            view = "<button  data-tipo='AutorizarHerraCoche' class='AutorizarHerraCoche btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                        }
+                        else
+                            view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                     }
                     else
-                        view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fa fa-minus-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 return view;
             }
@@ -220,14 +232,18 @@ var table      = $('#altas-table').DataTable({
             "render" : function (data, type, row) {
                 var view = '';
                 if (data == 'ASIGNADA') {
-                    view = '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
-                    if (data == 'SOLICITADO' && auth_herramientas == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
-                        view = "<button  data-tipo='AutorizarHerraHerra' class='AutorizarHerraHerra btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                    if (data == 'SOLICITADO'){
+                        if( auth_herramientas == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x') {
+                            view = "<button  data-tipo='AutorizarHerraHerra' class='AutorizarHerraHerra btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon nav-icon nav-icon'></i></button>";
+                        }
+                        else
+                            view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                     }
                     else
-                        view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                        view = '<i class="fa fa-minus-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 return view;
             }
@@ -239,7 +255,7 @@ var table      = $('#altas-table').DataTable({
             "render" : function (data, type, row) {
                 var view = '';
                 if (data == 'OK') {
-                    view = '<i class="fas fa-check-circle" style="color:#007bffcc;font-size:20px"></i>';
+                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
                     if (cont_firm == 1 && row['Auth RH'] != 'x' && row['Auth direccion'] != 'x')

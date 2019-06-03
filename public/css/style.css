@@ -6329,7 +6329,8 @@ ul.ui-autocomplete {
 
 .btn-circle{
   color: white !important;
-  border-radius: 9px
+  border-radius: 15px;
+  font-size: 11px;
 }
 
 .table-asignaciones {

@@ -9,11 +9,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form id="form_edit_empleado" method="post" action="">
-                                                <textarea class="form-control" id="obs_cita"
-                                                          placeholder="Comentarios adicionales,lugar de cita,etc"
-                                                          style="height: 150px"></textarea>
-                                <label for="message-text" class="col-form-label">Fecha:</label>
-                                <input type="datetime-local" class="form-control" name="fecha_cita" id="fecha_cita">
+                                <div class="row">
+                                    <textarea class="form-control" id="obs_cita" placeholder="Comentarios adicionales,lugar de cita,etc"
+                                              style="height: 150px"></textarea>
+                                </div>
+                                <div class="row">
+                                    <label for="fecha_cita" class="col-md-12">Fecha</label>
+                                    <input type="text" name="fecha_cita" id="fecha_cita" class="form-control col-md-11">
+                                </div>
+                                <div class="row">
+                                    <label for="hora_cita" class="col-md-12">Hora</label>
+                                    <input type="time" name="hora_cita" id="hora_cita" class="form-control">
+                                </div>
                             </form>
                         </div>
                     </div>

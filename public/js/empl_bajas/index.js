@@ -584,12 +584,20 @@ $('#darbaja-table tbody').on('click', '.Cita', function () {
 function enviarCita() {
     var comment = $('#obs_cita').val();
     var cita    = $('#fecha_cita');
+    var hora    = $('#hora_cita');
     if (cita.val() == null || cita.val() == ""){
         cita.css('border-color','red');
         return false;
     }
     else
         cita.css('border','1px solid #ced4da');
+    if (hora.val() == "" || hora.val() == null){
+        hora.css('border-color','red');
+        return false;
+    }
+    else
+        hora.css('border','1px solid #ced4da');
+    var fecha = cita.val() +' '+hora.val();
     $.ajax({
         url: '/bajas/save_cita',
         type: "POST",
@@ -598,7 +606,7 @@ function enviarCita() {
             _token: CSRF_TOKEN,
             id: data.id,
             obs: comment,
-            cita: cita.val()
+            cita: fecha
         },
         beforeSend: function () {
             $().loader("show");
@@ -618,6 +626,15 @@ function enviarCita() {
         }
     });
 }
+
+$( function() {
+    $( "#fecha_cita" ).datepicker({
+        showOn: "both",
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        buttonText: "<i class='fa fa-calendar'></i>"
+    }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
+} );
 
 $('#modalCompu').on('hidden.bs.modal', function() {
     $(':input', this).val('');

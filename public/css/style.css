@@ -6368,6 +6368,9 @@ ul.ui-autocomplete {
 .btn-orange:hover{
   background-color: #e13900;
 }
+.sidebar{
+  overflow-x: hidden;
+}
 .brand-image {
   float: left;
   line-height: .8;

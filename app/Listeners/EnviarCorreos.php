@@ -56,7 +56,7 @@ class EnviarCorreos implements ShouldQueue
                     }
                     break;
                 case 'notificar_auth_rh':
-                    $message  = 'Direccion autorizo una solicitud de alta con el id: '.$solicitud->id.' ahora puede entrar en agendar la cita.';
+                    $message  = 'Direccion autorizo una solicitud de alta con el id: '.$solicitud->id.' ahora puede entrar a agendar la cita.';
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new AuthDireccion($message, $nombre));
                     else {

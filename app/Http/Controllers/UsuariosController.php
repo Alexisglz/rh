@@ -320,7 +320,7 @@ class UsuariosController extends Controller
                     break;
                 case 'COOR':
                     $permisos = [
-                        'listado_solicitudes','listado_empleados','listado_incidencias','crear_incidencias'
+                        'listado_solicitudes','listado_empleados','listado_incidencias','crear_incidencias','crear_solicitudes'
                     ];
                     break;
                 case 'ENTR':

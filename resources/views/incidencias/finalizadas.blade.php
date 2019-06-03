@@ -13,11 +13,11 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa fa-plus"></i>
-                    Envio de Incidencias
+                    Incidencias Finalizadas
                 </h3>
                 <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                 @can('access',[\App\User::class,'export_lote_incidencias'])
-                    <form class="form-inline">
+                    <form class="form-inline" style="display: none;">
                         <div class="form-group mx-sm-3 mb-2">
                             <label for="FInicio" class="sr-only">Fecha Inicio</label>
                             <input type="date" name="FInicio" class="form-control" id="FInicio">
@@ -32,6 +32,42 @@
                         </div>
                     </form>
                 @endcan
+                <div class="form-inline" style="padding-top: 10px;border-top: 1px solid lightgrey;border-bottom: 1px solid lightgrey;margin-bottom: 5px;">
+                    <div class="form-group mb-2 col-sm-1">
+                        <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID">
+                    </div>
+                    <div class="form-group mb-2 col-sm-2">
+                        <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="EMPLEADO">
+                    </div>
+                    <div class="form-group mb-2 col-sm-1">
+                        <input id="search_num" name="search_num" class="form-control col-sm-12" placeholder="NUM EMP">
+                    </div>
+                    <div class="form-group mb-2 col-sm-2">
+                        <input id="search_inci" name="search_inci" class="form-control col-sm-12" placeholder="INCIDENCIA">
+                    </div>
+                    <div class="form-group mb-2 col-sm-2">
+                        <input id="search_sol" name="search_sol" class="form-control col-sm-12" placeholder="SOLICITANTE">
+                    </div>
+                    <div class="form-group mb-2">
+                        <select id="search_esta" name="search" class="form-control col-sm-12">
+                            <option value="">{{__('ESTATUS')}}</option>
+                            <option value="CANCELAR">{{__('CANCELADA')}}</option>
+                            <option value="ENVIADO">{{__('ENVIADA')}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-2 col-sm-1">
+                        <select id="search_tipo" name="search" class="form-control col-sm-12">
+                            <option value="">{{__('TIPO')}}</option>
+                            <option value="PERCEPCION">{{__('PERCEPCION')}}</option>
+                            <option value="DEDUCCION">{{__('DEDUCCION')}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12">
@@ -42,7 +78,7 @@
                                     <th>{{__('Id')}}</th>
                                     <th>{{__('Enviada')}}</th>
                                     <th>{{__('Empleado')}}</th>
-                                    <th>{{__('Empleado id')}}</th>
+                                    <th>{{__('Empleado Num')}}</th>
                                     <th>{{__('Incidencia')}}</th>
                                     <th>{{__('Tipo de incidencia')}}</th>
                                     <th>{{__('Solicitante')}}</th>

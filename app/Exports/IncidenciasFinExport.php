@@ -49,6 +49,8 @@ class IncidenciasFinExport implements FromCollection, WithHeadings, ShouldAutoSi
         $columns = $columns->getTableColumns();
         $headings = [];
         foreach ($columns as $column){
+            if ($column == 'emp_id')
+                $column = 'numero_empleado';
             $text = strtoupper($column);
             $text = str_replace('_',' ',$text);
             $headings[] = $text;

@@ -58,22 +58,22 @@
                                 <div class="row">
                                     <div class="col col-md-4">
                                         <label class="modalLabel">Nombre(s)</label>
-                                        <input type="text" name="" class="form-control" required id="nombre">
+                                        <input type="text" name="" class="form-control upper" required id="nombre">
                                     </div>
                                     <div class="col col-md-4">
                                         <label class="modalLabel">A.Paterno</label>
-                                        <input type="text" name="" class="form-control" required id="apaterno">
+                                        <input type="text" name="" class="form-control upper" required id="apaterno">
                                     </div>
                                     <div class="col col-md-4">
                                         <label class="modalLabel">A.Materno</label>
-                                        <input type="text" name="" class="form-control" required id="amaterno">
+                                        <input type="text" name="" class="form-control upper" required id="amaterno">
                                     </div>
                                 </div>
                                 <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col col-md-4">
                                         <label class="modalLabel">Calle</label>
-                                        <input type="text" name="" class="form-control" required id="calle">
+                                        <input type="text" name="" class="form-control upper" required id="calle">
                                     </div>
                                     <div class="col col-md-2">
                                         <label class="modalLabel"># Ext.</label>
@@ -85,13 +85,13 @@
                                     </div>
                                     <div class="col col-md-4">
                                         <label class="modalLabel">Colonia</label>
-                                        <input type="text" name="" class="form-control" required id="colonia">
+                                        <input type="text" name="" class="form-control upper" required id="colonia">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
                                         <label class="modalLabel">Del./Municipio</label>
-                                        <input type="text" name="" class="form-control" required id="municipio">
+                                        <input type="text" name="" class="form-control upper" required id="municipio">
                                     </div>
                                     <div class="col col-md-4">
                                         <label class="modalLabel">CP</label>
@@ -115,11 +115,11 @@
                                     </div>
                                     <div class="col col-md-4">
                                         <label class="modalLabel">RFC</label>
-                                        <input type="text" name="" class="form-control" required id="rfc">
+                                        <input type="text" name="" class="form-control upper" required id="rfc">
                                     </div>
                                     <div class="col col-md-4">
                                         <label class="modalLabel">CURP</label>
-                                        <input type="text" name="" class="form-control" required id="curp">
+                                        <input type="text" name="" class="form-control upper" required id="curp">
                                     </div>
                                 </div>
                                 <div class="row text-center">
@@ -364,7 +364,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Observaciones</label>
-                                        <textarea class="form-control" id="observaciones"></textarea>
+                                        <textarea class="form-control upper" id="observaciones"></textarea>
                                     </div>
                                 </div>
                             </div>

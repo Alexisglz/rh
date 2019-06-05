@@ -54,7 +54,7 @@
                             {!! Form::hidden('tratamiento', null, ['class'=>'tratement']) !!}
 
                             {!! Form::label('motivo', '*Motivo', []) !!}
-                            {!! Form::textarea('motivo', null, ['class'=>'form-control','required','rows' => '5']) !!}
+                            {!! Form::textarea('motivo', null, ['class'=>'form-control upper','required','rows' => '5']) !!}
                             <br>
 
                             {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso']) !!}

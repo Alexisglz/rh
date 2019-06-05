@@ -81,13 +81,13 @@
                         <div class="row valid-feedback d-block">
                             <div class="col-md-6">
                                 <label for="nombre"><abbr title="Este campo es obligatorio">*</abbr>Nombre:</label>
-                                {!! Form::text('nombre', null, ['class' => 'form-control req_common']) !!}
+                                {!! Form::text('nombre', null, ['class' => 'form-control req_common upper']) !!}
 
                                 <label for="apaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido paterno:</label>
-                                {!! Form::text('apaterno', null, ['class' => 'form-control req_common']) !!}
+                                {!! Form::text('apaterno', null, ['class' => 'form-control req_common upper']) !!}
 
                                 <label for="amaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido materno</label>
-                                {!! Form::text('amaterno', null, ['class' => 'form-control req_common']) !!}
+                                {!! Form::text('amaterno', null, ['class' => 'form-control req_common upper']) !!}
 
                                 {!! Form::label('cv', 'C.V. recurso: '); !!}
                                 <br>
@@ -288,7 +288,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="motivo"><abbr title="Este campo es obligatorio">*</abbr>Motivo:</label>
-                                {!! Form::textarea('motivo', null, ['class' => 'form-control','maxlength'=>'250','rows'=>'4','style'=>'overflow: hidden; resize: none;']) !!}
+                                {!! Form::textarea('motivo', null, ['class' => 'form-control upper','maxlength'=>'250','rows'=>'4','style'=>'overflow: hidden; resize: none;']) !!}
 
                                 {!! Form::label('vobo', 'Vo.Bo. Cliente: '); !!}
                                 <br>
@@ -453,7 +453,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
-                                {!! Form::textarea('herramientas_almacen', null, ['class' => 'form-control','maxlength'=>'250','rows'=>'5','style'=>'overflow: hidden; resize: none;','placeholder'=>'Detalle de las herramientas de almacen necesitadas']) !!}
+                                {!! Form::textarea('herramientas_almacen', null, ['class' => 'form-control upper','maxlength'=>'250','rows'=>'5','style'=>'overflow: hidden; resize: none;','placeholder'=>'Detalle de las herramientas de almacen necesitadas']) !!}
                             </div>
                         </div>
                     </div>
@@ -470,7 +470,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {!! Form::label('actividad', 'Actividades: ') !!}
-                                {!! Form::textarea('actividad', null, ['class' => 'form-control req_common','maxlength'=>'250','rows'=>'2','style'=>'overflow: hidden; resize: none;']) !!}
+                                {!! Form::textarea('actividad', null, ['class' => 'form-control req_common upper','maxlength'=>'250','rows'=>'2','style'=>'overflow: hidden; resize: none;']) !!}
                             </div>
                         </div>
                         <div class="row">
@@ -508,13 +508,13 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="pm"><abbr title="Este campo es obligatorio">*</abbr>PM:</label>
-                                {!! Form::text('pm', null, ['class' => 'form-control req_common','id'=>'pm']) !!}
+                                {!! Form::text('pm', null, ['class' => 'form-control req_common upper','id'=>'pm']) !!}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {!! Form::label('direccion', 'Direccion: ') !!}
-                                {!! Form::textarea('direccion', null, ['class' => 'form-control req_common','maxlength'=>'150','rows'=>'2','style'=>'overflow: hidden; resize: none;','id'=>'direccion']) !!}
+                                {!! Form::textarea('direccion', null, ['class' => 'form-control req_common upper','maxlength'=>'150','rows'=>'2','style'=>'overflow: hidden; resize: none;','id'=>'direccion']) !!}
                             </div>
                         </div>
                     </div>

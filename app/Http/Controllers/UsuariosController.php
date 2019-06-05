@@ -315,7 +315,7 @@ class UsuariosController extends Controller
                         'listado_solicitudes','crear_solicitudes','editar_solicitudes','autorizar_solicitudes','editar_empleado',
                         'baja_empleado','cancelar_bajas','baja_definitiva','listado_empleados','listado_bajas','listado_citas',
                         'listado_incidencias','crear_incidencias','listado_autorizar','exportar_solicitudes','exportar_empleados',
-                        'exportar_incidencias','ver_sueldo','cita_baja','ver_asimilados_inci','ver_tradicional_inci'
+                        'exportar_incidencias','cita_baja','ver_asimilados_inci','ver_tradicional_inci'
                     ];
                     break;
                 case 'COOR':
@@ -373,7 +373,7 @@ class UsuariosController extends Controller
                         'listado_empleados','listado_bajas','listado_citas','listado_incidencias','crear_incidencias',
                         'listado_autorizar','listado_lote','aut_cancel_incidencia','exportar_solicitudes',
                         'exportar_empleados','exportar_incidencias','export_lote_incidencias','enviar_lote','cita_baja',
-                        'baja_credencial'
+                        'baja_credencial','ver_sueldo'
                     ];
                     break;
             }

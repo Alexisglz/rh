@@ -652,6 +652,14 @@ $('#Modal').on('show.bs.modal', function (event) {
                 'tipo_contrato','updated_at','created_at','id_solicitud','opc_computadora','opc_auto','opc_celular',
                 'opc_herramientas'
             ];
+            var sueldo = [
+                'sueldo_imss','sueldo_alternativo','sueldo_asimilado','sueldo_imss_bruto','sueldo_alternativo_bruto',
+                'sueldo_mensual_neto','sueldo_neto',
+            ];
+            if (ver_sueldo == 0){
+                if (sueldo.indexOf(k) != -1)
+                    continue;
+            } 
             if (ocultas.indexOf(k) != -1)
                 continue;
             var tr           = document.createElement("tr");

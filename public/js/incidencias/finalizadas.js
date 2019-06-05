@@ -8,6 +8,7 @@ var s_sol = null;
 var s_esta = null;
 var s_tipo = null;
 var reset = 0;
+var sql = null;
 var table = $('#Incidencias_Enviar-table').DataTable({
     processing: true,
     serverSide: true,
@@ -74,6 +75,14 @@ var table = $('#Incidencias_Enviar-table').DataTable({
 
 new $.fn.dataTable.FixedHeader(table);
 
+//Guardar sql para los reportes
+table.on( 'xhr', function () {
+    var json = table.ajax.json();
+    var input = $('#sql_input');
+    input.val("");
+    input.val(json.sql);
+});
+
 function ExportExcel() {
     swal({
             title: "Incidencias",
@@ -86,7 +95,10 @@ function ExportExcel() {
         },
         function (isConfirm) {
             if (isConfirm) {
-                location.href = "/excel/export_incidencias_lote/";
+                var sql =  $('#sql_input').val();
+                var url = "/excel/excel_incidencias_fin/?sql="+encodeURI(sql);
+                console.log(url);
+                window.location = url;
             }
         });
 }

@@ -16,22 +16,12 @@
                     Incidencias Finalizadas
                 </h3>
                 <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
-                @can('access',[\App\User::class,'export_lote_incidencias'])
-                    <form class="form-inline" style="display: none;">
-                        <div class="form-group mx-sm-3 mb-2">
-                            <label for="FInicio" class="sr-only">Fecha Inicio</label>
-                            <input type="date" name="FInicio" class="form-control" id="FInicio">
-                        </div>
-                        <div class="form-group mx-sm-3 mb-2">
-                            <label for="FFIn" class="sr-only">Fecha Fin</label>
-                            <input type="date" name="FFIn" class="form-control" id="FFIn">
-                        </div>
-                        <div class="form-group mx-sm-3 mb-2">
-                            <button id="excel" type="button" onclick="ExportExcel();" class="btn btn-success">Exportar
-                            </button>
-                        </div>
-                    </form>
-                @endcan
+                <div class="form-inline">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <button id="excel" type="button" onclick="ExportExcel();" class="btn btn-success">Exportar
+                        </button>
+                    </div>
+                </div>
                 <div class="form-inline" style="padding-top: 10px;border-top: 1px solid lightgrey;border-bottom: 1px solid lightgrey;margin-bottom: 5px;">
                     <div class="form-group mb-2 col-sm-1">
                         <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por el id de la incidencia">
@@ -91,14 +81,6 @@
                                 </tr>
                                 </thead>
                             </table>
-                            <!--button id="Enviar1" type="button" onclick="validaBoton();" class="btn btn-secondary">
-                                Arreglo
-                            </button-->
-                            @can('access',[\App\User::class,'enviar_lote'])
-                                <button id="Enviar" type="button" onclick="EjecutarLote();" class="btn btn-success">
-                                    {{__('Enviar')}}
-                                </button>
-                            @endcan
                         </div>
                     </div>
                 </div>

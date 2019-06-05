@@ -142,6 +142,7 @@ Route::group(["prefix" => "excel", "middleware" => ["auth"]], function() {
     Route::get('/get_empleado', 'ExcelController@getEmpleado')->name('excel.get_empleado');
     Route::get('/get_sol_altas', 'ExcelController@getSolAltas')->name('excel.get_sol_altas');
     Route::get('/excel_usuarios', 'ExcelController@ExcelUsuarios')->name('excel.excel_usuarios');
+    Route::get('/excel_incidencias_fin/', 'ExcelController@ExportIncidenciasFin')->name('excel.excel_incidencias_fin');
 });
 
 Route::group(["prefix" => "firma_cita", "middleware" => ["auth"]], function() {

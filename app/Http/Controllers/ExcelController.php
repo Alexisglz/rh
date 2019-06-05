@@ -6,10 +6,12 @@ use App\Empleados;
 use App\Exports\AltasExport;
 use App\Exports\EmpleadosExport;
 use App\Exports\IncidenciasExport;
+use App\Exports\IncidenciasFinExport;
 use App\Exports\IncidenciasLoteExport;
 use App\Exports\UsersExport;
 use App\Incidencias;
 use App\Solicitudes;
+use App\VistaIncidenciasSinLote;
 use DB;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -54,6 +56,10 @@ class ExcelController extends Controller
     public function ExportEmpleados($inicio, $fin)
     {
         return Excel::download(new EmpleadosExport($inicio, $fin), 'Empleados_'.$this->date.'.xlsx');
+    }
+
+    public function ExportIncidenciasFin(Request $request){
+        return Excel::download(new IncidenciasFinExport($request->sql),'prueba.xlsx');
     }
 
     public function getEmpleado($id)

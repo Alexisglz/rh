@@ -464,7 +464,9 @@ class DatatablesController extends Controller
             if($request->search_tipo)
                 $incidencias->where('tipo_incidencia','=',$request->search_tipo);
         }
+        $sql = $this->getRealQuery($incidencias);
         return DataTables::of($incidencias)
+            ->with(['sql' => $sql])
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
                 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
             ->make(true);

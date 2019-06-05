@@ -15,4 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 class VistaIncidenciasSinLote extends Model
 {
     protected $table = 'vista_incidencias_sin_lote';
+
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
 }

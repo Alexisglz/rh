@@ -28,7 +28,7 @@
                     {!! Form::token() !!}
                         <div id="div_inc">
                             {!! Form::label('empleado', '*Empleado:', []) !!}
-                            {!! Form::text('empleado', null, ['class'=>'form-control','id'=>'empleado','required']) !!}
+                            {!! Form::text('empleado', null, ['class'=>'form-control upper','id'=>'empleado','required']) !!}
                             {!! Form::hidden('id_empleado', null, ['id'=>'id_empleado']) !!}
 
                             {!! Form::label('tipo', '*Concepto de la incidencia:', []) !!}

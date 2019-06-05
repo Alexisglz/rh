@@ -57,26 +57,26 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Nombre(s)</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Nombre(s)</label>
                                         <input type="text" name="" class="form-control upper" required id="nombre">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">A.Paterno</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>A.Paterno</label>
                                         <input type="text" name="" class="form-control upper" required id="apaterno">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">A.Materno</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>A.Materno</label>
                                         <input type="text" name="" class="form-control upper" required id="amaterno">
                                     </div>
                                 </div>
                                 <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Calle</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Calle</label>
                                         <input type="text" name="" class="form-control upper" required id="calle">
                                     </div>
                                     <div class="col col-md-2">
-                                        <label class="modalLabel"># Ext.</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr># Ext.</label>
                                         <input type="text" name="" class="form-control" required id="num_ext">
                                     </div>
                                     <div class="col col-md-2">
@@ -84,21 +84,21 @@
                                         <input type="text" name="" class="form-control" id="num_int">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Colonia</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Colonia</label>
                                         <input type="text" name="" class="form-control upper" required id="colonia">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Del./Municipio</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Del./Municipio</label>
                                         <input type="text" name="" class="form-control upper" required id="municipio">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">CP</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>CP</label>
                                         <input type="number" name="" class="form-control" required id="cp">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Estado</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Estado</label>
                                         <select class="form-control" id="estado" required>
                                             <option value="" selected>{{__('--SELECCIONE--')}}</option>
                                             @foreach($estados as $estado)
@@ -110,15 +110,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">NSS</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>NSS</label>
                                         <input type="text" name="" class="form-control" required id="nss">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">RFC</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>RFC</label>
                                         <input type="text" name="" class="form-control upper" required id="rfc">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">CURP</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>CURP</label>
                                         <input type="text" name="" class="form-control upper" required id="curp">
                                     </div>
                                 </div>
@@ -153,11 +153,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">E-mail</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>E-mail</label>
                                         <input type="email" name="" class="form-control" required id="email">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Tél. 1</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Tél. 1</label>
                                         <input type="tel" name="" class="form-control" required id="telefono1">
                                     </div>
                                     <div class="col col-md-4">
@@ -210,15 +210,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Fecha ingreso</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Fecha ingreso</label>
                                         <input type="date" name="" class="form-control" required id="fecha_ingreso">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel"># Empleado</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr># Empleado</label>
                                         <input type="number" name="" class="form-control" required id="num_empleado">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Empresa</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Empresa</label>
                                         <select class="form-control" name="empresa" id="empresa" class="required"
                                                 required="">
                                             <option value="">--SELECCIONE--</option>
@@ -230,7 +230,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Localidad</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Localidad</label>
                                         <select class="form-control" id="localidad" required name="localidad">
                                             @foreach($localidades as $localidad)
                                                 <option value="{{$localidad}}">{{$localidad}}</option>
@@ -238,7 +238,7 @@
                                         </select>
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Segmento</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Segmento</label>
                                         <!--input type="text" class="form-control" id="segmento"-->
                                         <select class="form-control" required id="segmento">
                                             <option value="ADMINISTRATIVO">Administrativo</option>
@@ -246,7 +246,7 @@
                                         </select>
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Coordinador</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Coordinador</label>
                                         <select name="" class="form-control" required id="coordinador">
                                         </select>
                                     </div>
@@ -257,7 +257,7 @@
                                         <input type="number" name="" class="form-control" required id="ind_alcatel" readonly>
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Proveedor</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Proveedor</label>
                                         <select class="form-control" name="proveedor" id="proveedor" class="form-select"
                                                 required="">
                                             <option value="">{{__('--SELECCIONE--')}}</option>
@@ -268,7 +268,7 @@
                                         <!--input type="text" class="form-control" required id="proveedor"-->
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Razon Social</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Razon Social</label>
                                         <select class="form-control" name="razon_social" id="razon_social" class="form-select"
                                                 required="">
                                             <option value="">{{__('--SELECCIONE--')}}</option>
@@ -280,7 +280,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Puesto</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Puesto</label>
                                         <select class="form-control" id="puesto" required>
                                             <option value="">{{__('--SELECCIONE--')}}</option>
                                             @foreach($puestos as $puesto)
@@ -289,7 +289,7 @@
                                         </select>
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Sueldo IMSS</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Sueldo IMSS</label>
                                         <input type="number" name="" class="form-control" required id="sueldo_imss">
                                     </div>
                                     <div class="col col-md-4">
@@ -299,7 +299,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Esquema</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Esquema</label>
                                         <select class="form-control" name="esquema" id="esquema">
                                             <option value="TRADICIONAL">TRADICIONAL</option>
                                             <option value="ASIMILADO">ASIMILADO</option>
@@ -319,17 +319,17 @@
                                         <!--input type="text" class="form-control" required id="esquema_viaticos"-->
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel"># Monex</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr># Monex</label>
                                         <input type="number" name="" class="form-control" required id="num_monex">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">No.Cuenta</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>No.Cuenta</label>
                                         <input type="number" name="" class="form-control" required id="num_cuenta">
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Banco</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Banco</label>
                                         <select class="form-control" name="banco" id="banco">
                                             <option>SANTANDER</option>
                                             <option>BANCOMER</option>
@@ -346,13 +346,13 @@
                                         <!--input type="text" name="" class="form-control" required id="banco"-->
                                     </div>
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Clabe</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Clabe</label>
                                         <input type="number" name="" class="form-control" required id="clabe">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
-                                        <label class="modalLabel">Area</label>
+                                        <label class="modalLabel"><abbr title="Este campo es obligatorio">*</abbr>Area</label>
                                         <select class="form-control" id="area" required>
                                             <option value="">{{__('--SELECCIONE--')}}</option>
                                             @foreach($areas as $area)

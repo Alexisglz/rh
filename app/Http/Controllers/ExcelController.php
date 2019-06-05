@@ -19,6 +19,11 @@ use Maatwebsite\Excel\Facades\Excel;
 class ExcelController extends Controller
 {
 
+    /**
+     * @var false|string
+     */
+    private $date;
+
     public function __construct()
     {
         $this->date = date('d-m-Y H:i:s');
@@ -59,7 +64,7 @@ class ExcelController extends Controller
     }
 
     public function ExportIncidenciasFin(Request $request){
-        return Excel::download(new IncidenciasFinExport($request->sql),'prueba.xlsx');
+        return Excel::download(new IncidenciasFinExport($request->sql),'Incidencias_Finalizadas_'.$this->date.'.xlsx');
     }
 
     public function getEmpleado($id)

@@ -186,7 +186,6 @@ $('#incidencias-table tbody').on('click', '.cancel_sv', function () {
 });
 
 function alertAccion(data, tipo, accion){
-    console.log(tipo, accion);
     Swal.fire({
         title: "¿DESEA AUTORIZAR ESTA INCIDENCIA?",
         text: "",

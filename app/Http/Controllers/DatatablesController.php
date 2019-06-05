@@ -384,7 +384,7 @@ class DatatablesController extends Controller
         $usuario = auth()->user();
         $area    = $usuario->getRol->Rol;
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-            ->where('fecha_fin','>=', $this->date)->first();
+            ->where('fecha_envio','>=', $this->date)->first();
         $incidencias = VistaIncidenciasPeriodo::query();
         if ($usuario->listarTodo == null) {
             if ($usuario->getCoordinador) {

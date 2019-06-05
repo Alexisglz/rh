@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.autoload({
     jquery: ['$', 'window.jQuery', 'jQuery'],
-    'sweetalert2.js/node_modules/sweetalert2/dist/sweetalert2.js':['swal', 'Swal']
+    'sweetalert2.js/node_modules/sweetalert2/dist/sweetalert2.js':['swal', 'Swal'],
+    'jquery.dataTables.js/node_modules/datatables/media/js/jquery.dataTables':['Datatables','datatables']
 }).js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css');

@@ -15,6 +15,7 @@ use DB;
  */
 class CatalogoWbs extends Model
 {
+    protected $connection = 'incore';
     protected $table = 'catalogo_wbs';
 
     public static function Clientes(){

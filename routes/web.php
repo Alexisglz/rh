@@ -19,7 +19,6 @@ Route::group(["prefix" => "altas", "middleware" => ["auth"]], function() {
     Route::put('/update', 'AltasController@update')->name('altas.update');
     Route::get('/update_solicitud/{id}', 'AltasController@updateSolicitud')->name('altas.update_solicitud');
     Route::post('/agendar_cita_firma', 'AltasController@AgendarCitaFirma')->name('altas.agendar_cita_firma');
-    Route::get('/get_citas_firma', 'AltasController@getCitasFirma')->name('altas.get_citas_firma');
     Route::get('/get_coordinadores', 'AltasController@getCoordinadores')->name('altas.get_coordinadores');
 });
 
@@ -89,6 +88,7 @@ Route::group(["prefix" => "datatables", "middleware" => ["auth"]], function() {
     Route::get('/get_bajas_nom', 'DatatablesController@getBajasNom')->name('datatables.get_bajas_nom');
     Route::get('/get_catalogo_codigos', 'DatatablesController@getCatalogoCodigos')->name('datatables.get_catalogo_codigos');
     Route::get('/get_catalogo_proyectos', 'DatatablesController@getCatalogoProyectos')->name('datatables.get_catalogo_proyectos');
+    Route::get('/get_citas_firma', 'DatatablesController@getCitasFirma')->name('datatables.get_citas_firma');
     Route::get('/get_catalogo_coordinador', 'DatatablesController@getCatalogoCoordinador')->name('datatables.get_catalogo_coordinador');
     Route::get('/get_catalogo_planes', 'DatatablesController@getCatalogoPlanes')->name('datatables.get_catalogo_planes');
     Route::get('/get_empleados_criterio', 'DatatablesController@getEmpleadosCriterio')->name('datatables.get_empleados_criterio');

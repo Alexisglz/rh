@@ -239,7 +239,7 @@ class NuevoEmpleado
             }
 
             /* Actualizar el estatus de la solicitud del recurso */
-            $solicitud->status_cita = "EMPLEDO CREADO";
+            $solicitud->status_cita = "EMPLEADO CREADO";
             $solicitud->id_empleado = $empleado->empleado_id;
             $solicitud->save();
             $alta_auth                   = SolicitudesAltasAuth::where('id_solicitud', $solicitud->id)->first();

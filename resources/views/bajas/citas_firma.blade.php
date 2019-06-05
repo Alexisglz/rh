@@ -18,6 +18,20 @@
             </h3>
         </div>
         <div class="card-body">
+            <div class="form-inline">
+                <div class="form-group mb-2 col-sm-2">
+                    <select id="search_estatus" class="form-control col-sm-12">
+                        <option value="">{{__('ESTATUS')}}</option>
+                        <option value="PENDIENTE">{{__('PENDIENTE')}}</option>
+                        <option value="EMPLEADO CREADO">{{__('EMPLEADO CREADO')}}</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
             <table class="table table-active table-altas table-responsive" id="citas-firma-table" style="width: 100%">
                 <thead>
                 <tr>

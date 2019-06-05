@@ -89,7 +89,7 @@ var table      = $('#altas-table').DataTable({
             "defaultContent": "<button data-tipo='Editar' class='Editar btn btn-xs btn-primary iconEdit'><i class=' fa fa-pencil-square-o nav-icon nav-icon'></i></button>",
             "render": function (data, type, row) {
                 if (edit == 1) {
-                    if (row.status_cita == "EMPLEDO CREADO" || data['Auth direccion'] != 'x'){
+                    if (row.status_cita == "EMPLEADO CREADO" || data['Auth direccion'] != 'x'){
                         return '';
                     }
                     else {
@@ -132,7 +132,7 @@ var table      = $('#altas-table').DataTable({
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
-                if (row.status_cita == "EMPLEDO CREADO"){
+                if (row.status_cita == "EMPLEADO CREADO"){
                     return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 if (row.status_cita == "PENDIENTE" && data == "cita"){

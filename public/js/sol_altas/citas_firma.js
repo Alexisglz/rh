@@ -8,12 +8,21 @@ function ordenarSelect(id_componente) {
 }
 
 var CSRF_TOKEN = $('#token').val();
+var reset      = 0;
+var s_esta     = null;
 
 var table = $('#citas-firma-table').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
-    ajax: '/altas/get_citas_firma',
+    ajax: {
+        url: '/datatables/get_citas_firma',
+        type: 'GET',
+        data: function (data) {
+            data.reset   = reset;
+            data.estatus = s_esta;
+        }
+    },
     order: [[0, "desc"]],
     columns: [
         {data: 'id',                name: 'id'},
@@ -251,3 +260,19 @@ function validate(obj) {
 
     return validation;
 }
+
+var search_estatus = $('#search_estatus');
+
+search_estatus.on('change', function () {
+    s_esta = $(this).val();
+    table.draw();
+});
+
+$('#reset').on('click', function (e) {
+    reset    = 1;
+    s_esta   = null;
+    search_estatus.val("");
+    table.draw();
+    e.preventDefault();
+    reset = 0;
+});

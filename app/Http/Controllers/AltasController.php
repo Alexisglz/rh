@@ -853,27 +853,6 @@ class AltasController extends Controller
         }
     }
 
-    public function getCitasFirma()
-    {
-        $citas = DB::table('vista_citas_firma')->get();
-        //$citas = DB::select(DB::raw("Call sp_select_citas();"));
-        return DataTables::of($citas)
-            ->whitelist([
-                'id',
-                'WBS',
-                'Nombre',
-                'coordinador',
-                'Auth_entregables',
-                'Auth_direccion',
-                'Auth_RH',
-                'fecha_cita',
-                'hora_cita',
-                'status_cita',
-                'correo_cita',
-                'detalles_cita'])
-            ->make(true);
-    }
-
     public function getCoordinadores(Request $request){
         $coords = CatalogoCoordinadores::query();
         $coords_nokia = DB::table('incore.catalogo_coordinadores_nokia_indeplo')

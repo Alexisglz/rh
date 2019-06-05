@@ -6,6 +6,7 @@ use App\Coordinador;
 use App\Http\Requests;
 use App\Models\CatalogoCoordinadores;
 use App\Models\IncidenciaPeriodo;
+use App\Models\VistaCitasFirma;
 use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaIncidenciasPeriodo;
 use App\Models\VistaSolAltas;
@@ -197,6 +198,42 @@ class DatatablesController extends Controller
         }
         $data = $solicitudes->get();
         return DataTables::of($data)
+            ->make(true);
+    }
+
+    public function getCitasFirma(Request $request)
+    {
+        $citas   = VistaCitasFirma::query();
+        $usuario = auth()->user();
+        if ($usuario->listarTodo == null) {
+            if ($usuario->getCoordinador) {
+                $this->recursivoCoordinadores($usuario->id_usuario);
+                $this->coords[] = $usuario->getCoordinador->id;
+                $coords         = array_values(array_unique($this->coords));
+                $citas->whereIn('coordinador_id', $coords);
+            }
+        }
+        if ($request->reset == 0){
+            if($request->search_id)
+                $citas->where('id','LIKE','%'.$request->search_id.'%');
+            if($request->estatus)
+                $citas->where('status_cita','=',$request->estatus);
+        }
+        $citas = $citas->get();
+        return DataTables::of($citas)
+            ->whitelist([
+                'id',
+                'WBS',
+                'Nombre',
+                'coordinador',
+                'Auth_entregables',
+                'Auth_direccion',
+                'Auth_RH',
+                'fecha_cita',
+                'hora_cita',
+                'status_cita',
+                'correo_cita',
+                'detalles_cita'])
             ->make(true);
     }
 

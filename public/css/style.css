@@ -6393,3 +6393,8 @@ ul.ui-autocomplete {
   transition: all 0.4s linear;
   transform: scale(2);
 }
+
+abbr[title]{
+  text-decoration: none;
+  color: red;
+}

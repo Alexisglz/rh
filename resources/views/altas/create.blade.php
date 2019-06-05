@@ -80,13 +80,13 @@
                     <div class="card-body">
                         <div class="row valid-feedback d-block">
                             <div class="col-md-6">
-                                {!! Form::label('nombre', 'Nombre: ') !!}
+                                <label for="nombre"><abbr title="Este campo es obligatorio">*</abbr>Nombre:</label>
                                 {!! Form::text('nombre', null, ['class' => 'form-control req_common']) !!}
 
-                                {!! Form::label('apaterno', 'Apellido paterno: ') !!}
+                                <label for="apaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido paterno:</label>
                                 {!! Form::text('apaterno', null, ['class' => 'form-control req_common']) !!}
 
-                                {!! Form::label('amaterno', 'Apellido materno: ') !!}
+                                <label for="amaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido materno</label>
                                 {!! Form::text('amaterno', null, ['class' => 'form-control req_common']) !!}
 
                                 {!! Form::label('cv', 'C.V. recurso: '); !!}
@@ -95,13 +95,13 @@
                             </div>
                             <div class="col-md-6">
 
-                                {!! Form::label('puesto', 'Puesto:') !!}
+                                <label for="puesto"><abbr title="Este campo es obligatorio">*</abbr>Puesto:</label>
                                 {!! Form::select('puesto',$puestos,null,['class'=>'form-control req_nok','id'=>'puesto','style'=>'width: 100%;']) !!}
 
-                                {!! Form::label('area', 'Area:') !!}
+                                <label for="area"><abbr title="Este campo es obligatorio">*</abbr>Area</label>
                                 {!! Form::select('area',$areas,null,['class'=>'form-control req_nok','id'=>'area','style'=>'width: 100%;']) !!}
 
-                                {!! Form::label('fecha_inicio', 'Fecha de inicio: ') !!}
+                                <label for="fecha_inicio"><abbr title="Este campo es obligatorio">*</abbr>Fecha de inicio:</label>
                                 {!! Form::text('fecha_inicio', null, ['class' => 'form-control req_common']) !!}
 
                                 <div id="esquema_div" class="hide">
@@ -116,7 +116,7 @@
                                             '7'=>'RENTA FIJA',
                                         ];
                                     @endphp
-                                    {!! Form::label('esquemas', 'Esquema: ') !!}
+                                    <label for="esquemas"><abbr title="Este campo es obligatorio">*</abbr>Esquema:</label>
                                     {!! Form::select('esquemas', $esquema_con, null,['class'=>'form-control req_nok','id'=>'esquemas','style'=>'width: 100%;']) !!}
                                 </div>
                             <!--div id="temporalidad_contrato_div">
@@ -130,6 +130,7 @@
                                 ];
                             @endphp
                             {!! Form::label('temporalidad_contrato', 'Temporalidad de contrato: ') !!}
+                                <label for="""><abbr title="Este campo es obligatorio">*</abbr>
                             {!! Form::select('temporalidad_contrato',$temps_contrato,null,['class'=>'form-control req_nok','id'=>'temporalidades_contrato','style'=>'width: 100%;']) !!}
                                     </div-->
                             </div>
@@ -286,7 +287,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                {!! Form::label('motivo', 'Motivo: ') !!}
+                                <label for="motivo"><abbr title="Este campo es obligatorio">*</abbr>Motivo:</label>
                                 {!! Form::textarea('motivo', null, ['class' => 'form-control','maxlength'=>'250','rows'=>'4','style'=>'overflow: hidden; resize: none;']) !!}
 
                                 {!! Form::label('vobo', 'Vo.Bo. Cliente: '); !!}
@@ -506,7 +507,7 @@
                                 {!! Form::select('lugar_trabajo',$estados,null,['class'=>'form-control req_common','id'=>'lugar_trabajo','style'=>'width: 100%;']) !!}
                             </div>
                             <div class="col-md-6">
-                                {!! Form::label('pm', 'PM: ') !!}
+                                <label for="pm"><abbr title="Este campo es obligatorio">*</abbr>PM:</label>
                                 {!! Form::text('pm', null, ['class' => 'form-control req_common','id'=>'pm']) !!}
                             </div>
                         </div>

@@ -1,10 +1,25 @@
 var tabla;
 var CSRF_TOKEN = $('#token').val();
+var s_id       = null;
+var s_rec      = null;
+var s_wbs      = null;
+var s_est      = null;
+var reset      = 0;
 var table      = $('#darbaja-table').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
-    ajax: '/datatables/get_bajas_nom',
+    ajax: {
+        url:'/datatables/get_bajas_nom',
+        type: 'GET',
+        data: function (data) {
+            data.id    = s_id;
+            data.rec   = s_rec;
+            data.wbs   = s_wbs;
+            data.est   = s_est;
+            data.reset = reset;
+        }
+    },
     order: [[0, "desc"]],
     columns: [
         {data: 'id',name: 'id', className: 'id'},
@@ -901,3 +916,40 @@ if(baja_rh != 1 && ver_checks == 1)
     table.columns( '.fini_v' ).visible( false );
 if(baja_def != 1 && ver_checks == 1)
     table.columns( '.baja_v' ).visible( false );
+
+var search_id  = $('#search_id');
+var search_rec = $('#search_rec');
+var search_wbs = $('#search_wbs');
+var search_est = $('#search_est');
+
+search_id.on('keyup', function () {
+    s_id = $(this).val();
+    table.draw();
+});
+search_rec.on('keyup', function () {
+    s_rec = $(this).val();
+    table.draw();
+});
+search_wbs.on('keyup', function () {
+    s_wbs = $(this).val();
+    table.draw();
+});
+search_est.on('change', function () {
+    s_est = $(this).val();
+    table.draw();
+});
+
+$('#reset').on('click', function (e) {
+    reset    = 1;
+    s_id     = null;
+    s_rec    = null;
+    s_wbs    = null;
+    s_est   = null;
+    search_id.val("");
+    search_rec.val("");
+    search_wbs.val("");
+    search_est.val("");
+    table.draw();
+    e.preventDefault();
+    reset = 0;
+});

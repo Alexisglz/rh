@@ -15,6 +15,29 @@
                     <a class="btn btn-primary btn-sm pull-right btn-circle" title="Informacion de los checks" onclick="$('#infoCheck').modal('toggle')"><i class="fa fa-info"></i></a>
                 </h3>
             </div>
+            <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">
+                <div class="form-group mb-2 col-sm-1">
+                    <input id="search_id" name="search_id" class="form-control col-sm-12 text-center" placeholder="ID" title="Buscar por el numero de id de la baja">
+                </div>
+                <div class="form-group mb-2 col-sm-2">
+                    <input id="search_rec" name="search_rec" class="form-control col-sm-12 text-center" placeholder="RECURSO" title="Buscar por el nombre del recurso">
+                </div>
+                <div class="form-group mb-2 col-sm-2">
+                    <input id="search_wbs" name="search_wbs" class="form-control col-sm-12 text-center" placeholder="WBS" title="Buscar por el wbs del recurso">
+                </div>
+                <div class="form-group mb-2 col-sm-2">
+                    <select id="search_est" name="search_est" class="form-control col-sm-8" title="Buscar por el estatus de la baja">
+                        <option value="">ESTATUS</option>
+                        <option value="PENDIENTE">PENDIENTE</option>
+                        <option value="COMPLETADO">COMPLETADO</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-active table-altas" width="100%" id="darbaja-table">
                     <thead>

@@ -189,7 +189,7 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
-    public function getBajasNom()
+    public function getBajasNom(Request $request)
     {
         $usuario     = auth()->user();
         $solicitudes = VistaSolBajas::query();
@@ -199,6 +199,16 @@ class DatatablesController extends Controller
                 $emps = array_values(array_unique($this->array));
                 $solicitudes->whereIn('empleado_id', $emps);
             }
+        }
+        if ($request->reset == 0){
+            if($request->id != null)
+                $solicitudes->where('id','=',$request->id);
+            if($request->rec != null)
+                $solicitudes->where('Recurso','LIKE','%'.$request->rec.'%');
+            if($request->wbs != null)
+                $solicitudes->where('WBS','LIKE','%'.$request->wbs.'%');
+            if($request->est != null)
+                $solicitudes->where('baja_definitiva','=',$request->est);
         }
         $data = $solicitudes->get();
         return DataTables::of($data)

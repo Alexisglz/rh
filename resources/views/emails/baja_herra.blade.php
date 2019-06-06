@@ -8,7 +8,7 @@
 Con cita para la fecha: <strong>{{$sol->fecha_cita}}</strong><br>
 Favor de realizar la: <strong>{{$tipo}}</strong>
 
-@component('mail::button', ['url' => url('/altas'), 'color' => 'green'])
+@component('mail::button', ['url' => url('/bajas?id='.$sol->id), 'color' => 'green'])
 {{ __("Ir al portal") }}
 @endcomponent
 {{ __("Saludos") }}.<br>

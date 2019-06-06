@@ -9,7 +9,7 @@ Se registra la baja para el dia:<br>
 <br>
 <strong>{{$sol->conocimiento_baja}}</strong> tiene conocimiento de su baja.
 
-@component('mail::button', ['url' => url('/altas'), 'color' => 'green'])
+@component('mail::button', ['url' => url('/bajas?id='.$sol->id), 'color' => 'green'])
     {{ __("Ir al portal") }}
 @endcomponent
 {{ __("Saludos") }}.<br>

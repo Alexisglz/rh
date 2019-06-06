@@ -12,7 +12,7 @@
 <link rel="icon"  href="http://www.indeplo.com/www/templates/jm_consilium/favicon.ico" sizes="16x16">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!--script src="{{ asset('js/app.js') }}" defer></script-->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

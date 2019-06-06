@@ -71,4 +71,13 @@
         <div class="col-md-3"></div>
     </div>
 </div>
+    <style>
+        .card{
+            border: none;
+            background-color: transparent;
+        }
+        .card-header{
+            background-color: #1f64a7;
+        }
+    </style>
 @endsection

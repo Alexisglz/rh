@@ -46,6 +46,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        session(['link' => url()->previous()]);
         if($user = Auth::user())
             return back();
         return view('auth.login');
@@ -75,7 +76,11 @@ class LoginController extends Controller
 
         if (Auth::attempt(['usuario'=>$email, 'password' =>$password]))
         {
-            return redirect()->route('altas.index');
+            if (session('link')){
+                return redirect(session('link'));
+            }
+            else
+                return redirect()->route('altas.index');
         }
         else
         {

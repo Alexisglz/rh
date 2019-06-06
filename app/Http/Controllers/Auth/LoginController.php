@@ -76,7 +76,7 @@ class LoginController extends Controller
 
         if (Auth::attempt(['usuario'=>$email, 'password' =>$password]))
         {
-            if (session('link')){
+            if (session('link') && session('link') != url()->current()){
                 return redirect(session('link'));
             }
             else
@@ -84,6 +84,7 @@ class LoginController extends Controller
         }
         else
         {
+            session(['link_error' => session('link')]);
             $errors = [$this->username() => trans('auth.failed')];
             return redirect()->back()->withInput($request->only($this->username(), 'remember'))->withErrors($errors);
         }

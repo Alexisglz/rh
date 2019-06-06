@@ -421,6 +421,12 @@ class DatatablesController extends Controller
                     ->select();
                 break;
         }
+        if($request->reset == 0){
+            if($request->id != null)
+                $incidencias->where('id','=',$request->id);
+            if($request->emp != null)
+                $incidencias->where('empleado','LIKE','%'.$request->emp.'%');
+        }
         if($periodo)
             $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
         else

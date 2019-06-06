@@ -8,7 +8,7 @@ Incidencia: <br>
 <strong>{{$tipo->alias}}</strong><br>
 Para el recurso: <br><strong>{{ $emp }}</strong>
 
-@component('mail::button', ['url' => url('/autorizar'), 'color' => 'green'])
+@component('mail::button', ['url' => url('/autorizar?id='.$id), 'color' => 'green'])
 {{ __("Ir al portal") }}
 @endcomponent
 {{ __("Saludos") }}.<br>

@@ -12,18 +12,20 @@ class NuevaIncidencia extends Mailable
 
     protected $tipo;
     protected $emp;
+    private $id;
 
     /**
      * Create a new message instance.
      *
      * @param $tipo
      * @param $emp
+     * @param $id
      */
-    public function __construct($tipo, $emp)
+    public function __construct($tipo, $emp, $id)
     {
-        //
         $this->tipo = $tipo;
         $this->emp  = $emp;
+        $this->id = $id;
     }
 
     /**
@@ -36,6 +38,7 @@ class NuevaIncidencia extends Mailable
         return $this
             ->subject(__('Nueva incidencia'))
             ->markdown('emails.nueva_inci')
+            ->with('id', $this->id)
             ->with('emp', $this->emp)
             ->with('tipo', $this->tipo);
     }

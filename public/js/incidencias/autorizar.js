@@ -1,10 +1,21 @@
-var solicit = $("#NombreUsuario").val();
+var solicit    = $("#NombreUsuario").val();
 var CSRF_TOKEN = $('#token').val();
-var table = $('#incidencias-table').DataTable({
+var reset      = 0;
+var s_id       = $('#search_id').val();
+var s_emp      = null;
+var table      = $('#incidencias-table').DataTable({
     processing: true,
     serverSide: true,
     order: [[0, "desc"]],
-    ajax: '/datatables/get_incidencias_auth',
+    ajax: {
+        url: '/datatables/get_incidencias_auth',
+        type: 'GET',
+        data: function (data) {
+            data.reset = reset;
+            data.id    = s_id;
+            data.emp   = s_emp;
+        }
+    },
     columns: [
         {data: 'id', name: 'id'},
         {data:null, name:'info',orderable: false, searchable: false},
@@ -409,3 +420,28 @@ if (inc_c_v != 1)
     table.columns( '.auth_cv_v' ).visible( false );
 if (inc_s_v != 1)
     table.columns( '.auth_sv_v' ).visible( false );
+
+var search_id  = $('#search_id');
+var search_emp = $('#search_emp');
+
+search_id.on('keyup', function () {
+    s_id = $(this).val();
+    table.draw();
+});
+search_emp.on('keyup', function () {
+    s_emp = $(this).val();
+    table.draw();
+});
+
+$('#reset').on('click', function (e) {
+    if (id_post != 0)
+        window.location = '/autorizar';
+    reset    = 1;
+    s_id     = null;
+    s_emp    = null;
+    search_id.val("");
+    search_emp.val("");
+    table.draw();
+    e.preventDefault();
+    reset = 0;
+});

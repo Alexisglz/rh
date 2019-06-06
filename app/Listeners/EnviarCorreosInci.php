@@ -43,7 +43,7 @@ class EnviarCorreosInci Implements ShouldQueue
             switch ($tipo){
                 case 'noti_deduc':
                     if (config('app.env')=="local")
-                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre));
+                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                     else {
                         if ($incidencia->area_solicitante = 'ESP')
                             $correos = DB::table('vista_permisos_empleados')
@@ -58,13 +58,13 @@ class EnviarCorreosInci Implements ShouldQueue
                                 ->groupBy('id_usuario')
                                 ->get();
                         foreach ($correos as $correo){
-                            Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
+                            Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                         }
                     }
                     break;
                 case 'noti_cv':
                     if (config('app.env')=="local")
-                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre));
+                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                     else {
                         if ($incidencia->area_solicitante = 'ESP')
                             $correos = DB::table('vista_permisos_empleados')
@@ -79,13 +79,13 @@ class EnviarCorreosInci Implements ShouldQueue
                                 ->groupBy('id_usuario')
                                 ->get();
                         foreach ($correos as $correo){
-                            Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
+                            Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                         }
                     }
                     break;
                 case 'noti_sv':
                     if (config('app.env')=="local")
-                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre));
+                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                     else {
                         if ($incidencia->area_solicitante = 'ESP')
                             $correos = DB::table('vista_permisos_empleados')
@@ -100,7 +100,7 @@ class EnviarCorreosInci Implements ShouldQueue
                                 ->groupBy('id_usuario')
                                 ->get();
                         foreach ($correos as $correo){
-                            Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre));
+                            Mail::to($correo->email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                         }
                     }
                     break;

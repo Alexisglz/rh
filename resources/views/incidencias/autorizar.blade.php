@@ -19,6 +19,19 @@
                             Incidencias-autorizar
                         </h3>
                     </div>
+                    <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">
+                        <div class="form-group mb-1 col-sm-1">
+                            <input id="search_id" name="search_id" class="form-control col-sm-12 text-center" value="{{$id == 0 ? null:$id}}" placeholder="ID" title="Buscar por el numero del id de la incidencia">
+                        </div>
+                        <div class="form-group mb-1 col-sm-2">
+                            <input id="search_emp" name="search_emp" class="form-control col-sm-12 text-center" placeholder="EMPLEADO" title="Buscar por el nombre del empleado">
+                        </div>
+                        <div class="col-sm">
+                            <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                        </div>
+                    </div>
                     <div class="card-body table-responsive">
                         <table class="table table-active" style="font-size:12px;text-align: center; width: 100%;"
                                id="incidencias-table">
@@ -82,6 +95,7 @@
         var inc_s_v     = '<?php echo $inc_s_v ?>';
         var inc_ded     = '<?php echo $inc_ded ?>';
         var area        = '<?php echo auth()->user()->getRol->Rol ?>';
+        var id_post     = '{{$id}}';
     </script>
     <style>
         .iconInfo{

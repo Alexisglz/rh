@@ -122,7 +122,11 @@ class DatatablesController extends Controller
         $usuario     = auth()->user(); // Obtener el usuario mediante los metodos de autenticacion de laravel
         $solicitudes = VistaSolAltas::query(); // Iniciar query de consulta de solicitudes
         if ($usuario->listarTodo == null) { // Verificar que no tenga el permiso de listar todos
-            if ($usuario->getCoordinador) { // verificar que sea coordinador
+            $directivo = $usuario->getDirectorNoti;
+            if ($directivo){ // Verificar que pueda autorizar las solicitudes por area
+                $solicitudes->where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$directivo->cliente.'-'.$directivo->servicio);
+            }
+            elseif ($usuario->getCoordinador) { // verificar que sea coordinador
                 $this->recursivoCoordinadores($usuario->id_usuario); // Llamar la funcion recursiva para obtener el id de los coordinadores
                 $this->coords[] = $usuario->getCoordinador->id; // Agregar el id_coordinador del usuario autenticado
                 $coords         = array_values(array_unique($this->coords)); // Ordenar el arreglo de ids para que no se repitan y organizar los indices

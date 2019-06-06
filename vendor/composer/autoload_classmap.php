@@ -14,6 +14,7 @@ return array(
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
+    'DirectoresAreas' => $baseDir . '/database/migrations/2019_06_06_095159_directores_areas.php',
     'EntidadesMexico' => $baseDir . '/database/migrations/2018_05_22_172525_EntidadesMexico.php',
     'Estados' => $baseDir . '/database/seeds/Estados.php',
     'Hamcrest\\Arrays\\IsArray' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',

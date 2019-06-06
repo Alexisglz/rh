@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\CatalogoCoordinadores;
 use App\Models\CoordinadorPD;
+use App\Models\DirectorArea;
 use App\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,6 +64,10 @@ class User extends Authenticatable
         return $this
             ->hasOne(CatalogoCoordinadores::class,'user_id','id_usuario')
             ->with('getMovimientos');// Llamar a la funcion que obtinene los moviementos del coordinador del modelo CatalogoCoordinadores
+    }
+
+    public function getDirectorNoti(){
+        return $this->hasOne(DirectorArea::class,'id_usuario','id_usuario');
     }
 
     public function getCoordPD(){

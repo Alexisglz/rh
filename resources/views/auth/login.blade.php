@@ -3,7 +3,7 @@
 @section('content')
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <div class="container">
-    <div class="row justify-content-center" style="margin-top: 10%">
+    <div class="row justify-content-center" style="margin-top: 5%">
         <div class="col-md-3"></div>
         <div class="col-md-6 panel-login">
             <div class="card">

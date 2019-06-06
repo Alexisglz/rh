@@ -40,7 +40,7 @@ class AltasController extends Controller
         $this->date = date('Y-m-d H:i:s');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('access',[User::class, 'listado_solicitudes']);
         $clientes       = CatalogoWbs::Clientes();
@@ -54,6 +54,7 @@ class AltasController extends Controller
             '2' => 'Secretaria',
             '3' => 'Puesto 3'
         ];
+        $id = isset($request->id) ? $request->id : 0;
 
         return view('altas.index', [
             'clientes'      => $clientes,
@@ -61,7 +62,8 @@ class AltasController extends Controller
             'coordinadores' => $coordinadores,
             'planes'        => $planes,
             'costos'        => $costos,
-            'puestos'       => $puestos
+            'puestos'       => $puestos,
+            'id'            => $id
         ]);
     }
 

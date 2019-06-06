@@ -36,7 +36,7 @@
             <input type="text" name="" value="{{auth()->user()->id_usuario}}" id="index_user" hidden="true">
             <div class="form-inline">
                 <div class="form-group mb-2 col-sm-1">
-                    <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por ID">
+                    <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por ID" value="{{ $id == 0 ? null : $id}}">
                 </div>
                 <div class="form-group mb-2 col-sm-2">
                     <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="Nombre" title="Buscar por el nombre">
@@ -177,6 +177,7 @@
         var auth_herramientas = '<?php echo $auth_herramientas?>';
         var ver_checks        = '<?php echo $ver_checks?>';
         var cont_firm         = '<?php echo $cont_firm?>';
+        var id_post           = '{{$id}}';
         $(function () {
             $("#computadora_check").bootstrapToggle({
                 on: 'SI',

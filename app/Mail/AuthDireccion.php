@@ -12,16 +12,20 @@ class AuthDireccion extends Mailable
 
     protected  $msg;
     protected  $emp;
+    protected $id;
+
     /**
      * Create a new message instance.
      *
-     * @param $msg
+     * @param string $msg
      * @param $emp
+     * @param $id
      */
-    public function __construct(string $msg, $emp)
+    public function __construct(string $msg, $emp,$id)
     {
         $this->msg = $msg;
         $this->emp = $emp;
+        $this->id = $id;
     }
 
     /**
@@ -34,6 +38,7 @@ class AuthDireccion extends Mailable
         return $this
             ->subject(__('Autorizacion de Alta y Firma'))
             ->markdown('emails.auth_direccion')
+            ->with('id', $this->id)
             ->with('msg', $this->msg)
             ->with('emp', $this->emp);
     }

@@ -145,7 +145,7 @@ class DatatablesController extends Controller
             if ($request->rh_no_auth != 0)
                 $solicitudes->where('Auth RH', '=', 'x');
             if($request->search_id != null)
-                $solicitudes->where('id','LIKE','%'.$request->search_id.'%');
+                $solicitudes->where('id','=',$request->search_id);
             if($request->search_nombre != null)
                 $solicitudes->where('Nombre','LIKE','%'.$request->search_nombre.'%');
             if($request->search_wbs != null)

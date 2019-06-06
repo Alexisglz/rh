@@ -12,16 +12,20 @@ class AuthRH extends Mailable
 
     protected  $msg;
     protected  $emp;
+    protected  $id;
+
     /**
      * Create a new message instance.
      *
      * @param $msg
      * @param $emp
+     * @param $id
      */
-    public function __construct($msg, $emp)
+    public function __construct($msg, $emp, $id)
     {
         $this->msg = $msg;
         $this->emp = $emp;
+        $this->id = $id;
     }
 
     /**
@@ -34,6 +38,7 @@ class AuthRH extends Mailable
         return $this
             ->subject(__('Asignacion de equipo'))
             ->markdown('emails.auth_rh')
+            ->with('id', $this->id)
             ->with('msg', $this->msg)
             ->with('emp', $this->emp);
     }

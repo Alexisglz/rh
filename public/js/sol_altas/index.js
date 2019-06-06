@@ -4,7 +4,7 @@ var no_auth    = 0;
 var rh_auth    = 0;
 var rh_no_auth = 0;
 var reset      = 0;
-var s_id       = null;
+var s_id       = $('#search_id').val();
 var s_nombre   = null;
 var s_wbs      = null;
 var s_coord    = null;
@@ -1618,6 +1618,8 @@ rh_sin_autorizar.on('click', function (e) {
 });
 
 $('#reset').on('click', function (e) {
+    if (id_post != 0)
+        window.location = '/altas';
     reset      = 1;
     auth       = 0;
     no_auth    = 0;

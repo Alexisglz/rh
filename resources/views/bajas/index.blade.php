@@ -17,7 +17,7 @@
             </div>
             <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">
                 <div class="form-group mb-2 col-sm-1">
-                    <input id="search_id" name="search_id" class="form-control col-sm-12 text-center" placeholder="ID" title="Buscar por el numero de id de la baja">
+                    <input id="search_id" name="search_id" class="form-control col-sm-12 text-center" value="{{$id == 0 ? null:$id}}" placeholder="ID" title="Buscar por el numero de id de la baja">
                 </div>
                 <div class="form-group mb-2 col-sm-2">
                     <input id="search_rec" name="search_rec" class="form-control col-sm-12 text-center" placeholder="RECURSO" title="Buscar por el nombre del recurso">
@@ -364,6 +364,7 @@
         var baja_def    = '<?php echo $baja_def ?>';
         var area        = '<?php echo auth()->user()->getRol->Rol ?>';
         var ver_checks  = '<?php echo $ver_checks?>';
+        var id_post     = '{{$id}}';
         $(function () {
             $("#computadora_check").bootstrapToggle({
                 on: 'SI',

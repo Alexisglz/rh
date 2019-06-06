@@ -28,41 +28,13 @@ class BajasController extends Controller
     ];
 
 
-    public function index()
+    public function index(Request $request)
     {
+        $id = isset($request->id) ? $request->id:0;
         $this->authorize('access',[User::class, 'listado_bajas']);
-        return view('bajas.index');
-    }
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function getDataBajas()
-    {
-        $sol = DB::select(DB::raw("call rh.sp_Solicitud_Baja();"));
-        //$sol = DB::table('solicitud_alta')->select('id','nombre','apaterno','amaterno','fecha_inicio','puesto');
-        return DataTables::of($sol)
-            /*->addColumn('action', function ($sol) {
-                $btn = "";
-                $btn .= '<button onClick="editarCliente('.$sol->id.')" class="btn btn-xs btn-primary" style="margin-rigth: 5px;margin-left: 5px"><i class="fa fa-pencil-square-o"></i></button>';
-                $btn .= '<button onClick="darBajaCliente('.$sol->id.')" class="btn btn-xs btn-danger" style="margin-rigth: 5px;margin-left: 5px"><i class="fa fa-trash-o"></i></button>';
-                $btn .= '<button onClick="autorizaCliente('.$sol->id.')" class="auth btn btn-xs btn-success" style="margin-rigth: 5px;margin-left: 5px"> <i class="fa fa-thumbs-up nav-icon"></i></button>';
-                // $btn .= '<input type="checkbox" checked data-toggle="toggle" data-onstyle="success">';
-                return $btn;
-            })*/
-            ->make(true);
+        return view('bajas.index',[
+            'id' => $id
+        ]);
     }
 
     public function EliminarSolicitud($id)
@@ -76,45 +48,6 @@ class BajasController extends Controller
         );
         //Devolvemos el array pasado a JSON como objeto
         return json_encode($data, JSON_FORCE_OBJECT);
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
 

@@ -1,6 +1,6 @@
 var tabla;
 var CSRF_TOKEN = $('#token').val();
-var s_id       = null;
+var s_id       = $('#search_id').val();
 var s_rec      = null;
 var s_wbs      = null;
 var s_est      = null;
@@ -940,6 +940,8 @@ search_est.on('change', function () {
 });
 
 $('#reset').on('click', function (e) {
+    if (id_post != 0)
+        window.location = '/bajas';
     reset    = 1;
     s_id     = null;
     s_rec    = null;

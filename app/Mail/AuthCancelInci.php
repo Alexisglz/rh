@@ -13,6 +13,7 @@ class AuthCancelInci extends Mailable
     private $tipo;
     private $msg;
     private $emp;
+    private $id;
 
     /**
      * Create a new message instance.
@@ -20,12 +21,14 @@ class AuthCancelInci extends Mailable
      * @param $tipo
      * @param $msg
      * @param $emp
+     * @param $id
      */
-    public function __construct($tipo,$msg,$emp)
+    public function __construct($tipo,$msg,$emp,$id)
     {
         $this->tipo = $tipo;
         $this->msg  = $msg;
         $this->emp  = $emp;
+        $this->id   = $id;
     }
 
     /**
@@ -43,6 +46,7 @@ class AuthCancelInci extends Mailable
         return $this
             ->subject($subject)
             ->markdown('emails.auth_cancel_inci')
+            ->with('id', $this->id)
             ->with('msg', $this->msg)
             ->with('estatus', $this->tipo)
             ->with('emp', $this->emp);

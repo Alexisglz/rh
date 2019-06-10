@@ -8,7 +8,7 @@
 Para el Recurso: <strong>{{ $emp }}</strong>.<br><br>
 Fue: <strong>{{$estatus}}</strong>.
 
-@component('mail::button', ['url' => url('/altas'), 'color' => 'green'])
+@component('mail::button', ['url' => url('/incidencias?id='.$id), 'color' => 'green'])
     {{ __("Ir al portal") }}
 @endcomponent
 {{ __("Saludos") }}.<br>

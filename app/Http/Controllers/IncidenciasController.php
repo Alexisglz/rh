@@ -64,10 +64,11 @@ class IncidenciasController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $id = isset($request->id) ? $request->id:0;
         $this->authorize('access',[User::class, 'listado_incidencias']);
-        return view('incidencias.index');
+        return view('incidencias.index',['id' => $id]);
     }
 
     public function Eliminar(Request $request)

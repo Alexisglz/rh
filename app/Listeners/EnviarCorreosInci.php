@@ -107,23 +107,23 @@ class EnviarCorreosInci Implements ShouldQueue
                 case 'autorizar':
                     $msg = "La incidencias con el id: ".$incidencia->id." de tipo: ".$inc_tipo->alias;
                     if (config('app.env')=="local")
-                        Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre));
+                        Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre, $incidencia->id));
                     else{
                         $solicitante = User::find($incidencia->id_solicitante);
                         if ($solicitante->correo != null)
                             $email = $solicitante->correo;
-                        Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre));
+                        Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre, $incidencia->id));
                     }
                     break;
                 case 'cancelar':
                     $msg = "La incidencias con el id: ".$incidencia->id." de tipo: ".$inc_tipo->alias;
                     if (config('app.env')=="local")
-                        Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre));
+                        Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre, $incidencia->id));
                     else{
                         $solicitante = User::find($incidencia->id_solicitante);
                         if ($solicitante->correo != null)
                             $email = $solicitante->correo;
-                        Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre));
+                        Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre, $incidencia->id));
                     }
                     break;
             }

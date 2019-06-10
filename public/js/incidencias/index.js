@@ -1,5 +1,5 @@
 var solicit  = $("#NombreUsuario").val();
-var s_id     = null;
+var s_id     = $('#search_id').val();
 var s_nombre = null;
 var s_tipo   = null;
 var table    = $('#incidencias-table').DataTable({
@@ -164,6 +164,8 @@ search_tipo.on('change', function () {
 });
 
 $('#reset').on('click', function (e) {
+    if (id_post != 0)
+        window.location = '/incidencias';
     reset    = 1;
     s_id     = null;
     s_nombre = null;

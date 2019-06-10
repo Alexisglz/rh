@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">
                         <div class="form-group mb-1 col-sm-1">
-                            <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar incidencia por ID" autocomplete="off">
+                            <input id="search_id" name="search_id" class="form-control col-sm-12" value="{{$id == 0 ? null:$id}}" placeholder="ID" title="Buscar incidencia por ID" autocomplete="off">
                         </div>
                         <div class="form-group mb-2 col-sm-2">
                             <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="EMPLEADO" title="Buscar por el nombre del empleado" autocomplete="off">
@@ -64,6 +64,9 @@
             </div>
         </div>
     </div>
+    <script>
+        var id_post     = '{{$id}}';
+    </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {!! Html::script('js/MensajesJS.js') !!}
     {!! Html::script('js/incidencias/index.js') !!}

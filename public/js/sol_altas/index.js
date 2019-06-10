@@ -915,7 +915,12 @@ $('#Modal').on('show.bs.modal', function (event) {
         var tabla = $('<table>').addClass('table table-bordered');
 
         for (var k in data) {
-            var ocultas;
+            var ocultas = [
+                'id_puesto','lugar_trabajo','id_rechazo','computadora_check','celular_check','coche_check','herramientas_check',
+                'cita','id_solicitante','status_cita','coordinador_id','descargado','alta','Contrato firmado'
+            ];
+            if (ocultas.indexOf(k) != -1)
+                continue;
             var tr           = document.createElement("tr");
             var nombre       = document.createElement("td");
             var dato         = document.createElement("td");

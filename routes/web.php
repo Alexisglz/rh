@@ -167,6 +167,8 @@ Route::group(["prefix" => "incidencias", "middleware" => ["auth"]], function() {
     Route::get('/get_user', 'IncidenciasController@GetUser')->name('incidencias.get_user');
     Route::get('/filtro', 'IncidenciasController@catalogoFiltro')->name('incidencias.filtro');
     Route::get('/get_risk', 'IncidenciasController@getRisk')->name('incidencias.get_risk');
+    Route::get('/aprobar', 'IncidenciasController@aprobar')->name('incidencias.aprobar');
+    Route::post('/save_aprobar', 'IncidenciasController@saveAprobar')->name('incidencias.save_aprobar');
 });
 
 Route::group(["prefix" => "mail", "middleware" => ["auth"]], function() {

@@ -11,7 +11,9 @@ use App\Models\IncidenciaPeriodo;
 use App\Models\IncidenciasCatalogo;
 use App\Models\ProyectosIndeplo;
 use App\Models\ProyectosIndeploRecurso;
+use App\Models\VistaIncidenciasPeriodo;
 use App\User;
+use App\VistaIncidenciasSinLote;
 use DateTime;
 use DB;
 use Exception;
@@ -353,6 +355,102 @@ class IncidenciasController extends Controller
             return response()->json($data);
         }catch (\Exception $e){
             return $e;
+        }
+    }
+
+    public function aprobar(Request $request){
+        if (!isset($request->id))
+            return redirect()->route('autorizar.index');
+        $incidencia = VistaIncidenciasSinLote::find($request->id);
+        return view('incidencias.aprobar',[
+            'incidencia' => $incidencia
+        ]);
+    }
+
+    public function saveAprobar(Request $request){
+        $this->authorize('access',[User::class, 'aut_cancel_incidencia']);
+        try{
+            DB::beginTransaction();
+            $mensaje    = "";
+            $Tipo_bita  = "incidencia";
+            $rol        = auth()->user()->getRol->Rol;
+            $incidencia = Incidencias::find($request->id);
+            $venta      = VistaIncidenciasSinLote::find($incidencia->id);
+            $accion     = $request->tipo;
+            GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$accion");
+            if ($venta->tipo_incidencia == 'DEDUCCION')
+                $type = 'deduc';
+            else {
+            if ($venta->venta > 0)
+                $type = 'c_venta';
+            else
+                $type = 's_venta';
+            }
+            if ($accion == 'autorizar') {
+                switch ($type){
+                    case 'deduc':
+                        $incidencia->auth_rh           = $this->date;
+                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
+                        break;
+                    case 's_venta':
+                        $incidencia->auth_direccion    = $this->date;
+                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
+                        break;
+                    case 'c_venta':
+                        $incidencia->id_auth_venta     = auth()->user()->id_usuario;
+                        $incidencia->auth_venta        = $this->date;
+                        break;
+                    case 'ADMIN':
+                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
+                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
+                        $incidencia->auth_capital      = $this->date;
+                        $incidencia->auth_direccion    = $this->date;
+                        $incidencia->auth_rh           = $this->date;
+                        break;
+                }
+            } else {
+                switch ($type){
+                    case 'deduc':
+                        $incidencia->auth_rh       = $this->date;
+                        $incidencia->id_rh_auth    = auth()->user()->id_usuario;
+                        $incidencia->status_auth   = 'CANCELAR';
+                        $incidencia->area_cancelar = $rol;
+                        break;
+                    case 's_venta':
+                        $incidencia->auth_direccion    = $this->date;
+                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
+                        $incidencia->status_auth       = 'CANCELAR';
+                        $incidencia->area_cancelar     = $rol;
+                        break;
+                    case 'c_venta':
+                        $incidencia->id_auth_venta     = auth()->user()->id_usuario;
+                        $incidencia->auth_venta        = $this->date;
+                        $incidencia->status_auth       = 'CANCELAR';
+                        $incidencia->area_cancelar     = $rol;
+                        break;
+                    case 'ADMIN':
+                        $incidencia->auth_capital      = $this->date;
+                        $incidencia->auth_rh           = $this->date;
+                        $incidencia->auth_direccion    = $this->date;
+                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
+                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
+                        $incidencia->status_auth       = 'CANCELAR';
+                        $incidencia->area_cancelar     = $rol;
+                        break;
+                }
+            }
+            if($incidencia->status_auth != 'CANCELAR')
+                $incidencia->status_auth = 'POR ENVIAR';
+            $incidencia->save();
+            DB::commit();
+            if($accion == 'autorizar')
+                event(new IncidenciasEvents($incidencia, 'autorizar'));
+            else
+                event(new IncidenciasEvents($incidencia, 'cancelar'));
+            return redirect()->route('incidencias.aprobar')->with('success','Incidencia actualizada correctamente');
+        }catch (\Exception $e){
+            DB::rollBack();
+            return back()->with('Error', 'Ocurrio un error');
         }
     }
 }

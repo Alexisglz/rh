@@ -18,6 +18,26 @@
                             </button>
                         @endcan
                     </div>
+                    <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">
+                        <div class="form-group mb-1 col-sm-1">
+                            <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar incidencia por ID" autocomplete="off">
+                        </div>
+                        <div class="form-group mb-2 col-sm-2">
+                            <input id="search_nombre" name="search_nombre" class="form-control col-sm-12" placeholder="EMPLEADO" title="Buscar por el nombre del empleado" autocomplete="off">
+                        </div>
+                        <div class="form-group mb-2 col-sm-1">
+                            <select id="search_tipo" name="search" class="form-control col-sm-12" title="Filtrar incidencias por tipo">
+                                <option value="">{{__('TIPO')}}</option>
+                                <option value="PERCEPCION">{{__('PERCEPCION')}}</option>
+                                <option value="DEDUCCION">{{__('DEDUCCION')}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                                <i class="fa fa-refresh"></i>
+                            </a>
+                        </div>
+                    </div>
                     <div class="card-body table-responsive">
                         <table class="table table-active text-center" id="incidencias-table" style="width: 100%">
                             <thead>

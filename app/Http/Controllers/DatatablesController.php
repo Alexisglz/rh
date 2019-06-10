@@ -373,6 +373,14 @@ class DatatablesController extends Controller
                     ->select();
                 break;
         }
+        if ($request->reset == 0){
+            if($request->search_id)
+                $incidencias->where('id','LIKE','%'.$request->search_id.'%');
+            if($request->search_nombre)
+                $incidencias->where('empleado','LIKE','%'.$request->search_nombre.'%');
+            if($request->search_tipo)
+                $incidencias->where('tipo_incidencia','=',$request->search_tipo);
+        }
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
                 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])

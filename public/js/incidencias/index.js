@@ -1,10 +1,21 @@
-var solicit = $("#NombreUsuario").val();
-var table = $('#incidencias-table').DataTable({
+var solicit  = $("#NombreUsuario").val();
+var s_id     = null;
+var s_nombre = null;
+var s_tipo   = null;
+var table    = $('#incidencias-table').DataTable({
     processing: true,
     serverSide: true,
     order: [[0, "desc"]],
     responsive: true,
-    ajax: '/datatables/get_incidencias/',
+    ajax: {
+        url: '/datatables/get_incidencias/',
+        type: 'GET',
+        data: function (data) {
+            data.search_id     = s_id;
+            data.search_nombre = s_nombre;
+            data.search_tipo   = s_tipo;
+        }
+    },
     columns: [
         {data: 'id', name: 'id'},
         {},
@@ -131,9 +142,36 @@ function ExcelIncidencias() {
                 location.href = "/excel/export_incidencias/";
             }
         });
-
-
 }
 
 new $.fn.dataTable.FixedHeader(table);
-  
+
+var search_id     = $('#search_id');
+var search_nombre = $('#search_nombre');
+var search_tipo   = $('#search_tipo');
+
+search_id.on('keyup', function () {
+    s_id = $(this).val();
+    table.draw();
+});
+search_nombre.on('keyup', function () {
+    s_nombre = $(this).val();
+    table.draw();
+});
+search_tipo.on('change', function () {
+    s_tipo = $(this).val();
+    table.draw();
+});
+
+$('#reset').on('click', function (e) {
+    reset    = 1;
+    s_id     = null;
+    s_nombre = null;
+    s_tipo   = null;
+    search_id.val("");
+    search_nombre.val("");
+    search_tipo.val("");
+    table.draw();
+    e.preventDefault();
+    reset = 0;
+});

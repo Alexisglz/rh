@@ -16,6 +16,7 @@ use App\Mail\SolicitudAlta;
 use App\Models\Area;
 use App\Models\CatalogoCoordinadores;
 use App\Models\Puesto;
+use App\Models\VistaSolAltas;
 use App\Solicitudes;
 use App\SolicitudesAltasAuth;
 use App\User;
@@ -874,5 +875,57 @@ class AltasController extends Controller
             'ok' => true,
             'data' => $coords
         ]);
+    }
+
+    public function aprobar(Request $request){
+        if(!isset($request->id))
+            return redirect()->route('altas.index');
+        $solicitud = VistaSolAltas::find($request->id);
+        $puesto  = Puesto::find($solicitud->id_puesto);
+        $estado = Estados::find($solicitud->lugar_trabajo);
+        return view('altas.aprobar',[
+            'solicitud' => $solicitud, 'puesto' => $puesto,
+            'estado' => $estado
+        ]);
+    }
+
+    public function autorizarDireccion(Request $request)
+    {
+        $date     = date('Y-m-d H:i:s');
+        try {
+            DB::begintransaction();
+            $sol            = Solicitudes::find($request->id);
+            $auth           = SolicitudesAltasAuth::where('id_solicitud', '=', $sol->id)->first();
+
+            $mensaje   = 'Autorizar Solicitud';
+            $Tipo_bita = 'solicitud_alta';
+            $opcional  = '';
+
+            if ($request->tipo == 'autorizar'){
+                $auth->listo_cita       = 'cita';
+                $auth->auth_entregables = $date;
+                $auth->auth_direccion   = $date;
+                $auth->id_dir_user      = auth()->user()->id_usuario;
+                $opcional               = 'Autorizar solicitud por Direccion';
+            }
+            else{
+                $sol->usuario_rechazar = auth()->user()->id_usuario;
+                $auth->auth_entregables = $date;
+                $auth->auth_direccion   = $date;
+                $auth->id_dir_user      = auth()->user()->id_usuario;
+                $opcional               = 'Cancelar solicitud por Direccion';
+                $sol->save();
+            }
+
+            GlobalModel::SetBitacoras("$Tipo_bita", $sol->id, auth()->user()->id_usuario, 0, "$mensaje", "$opcional");
+            $auth->save();
+            DB::commit();
+            event(new AltaEvents($sol, 'notificar_auth_rh'));
+            return redirect()->route('altas.index')->with('success','Solicitud Actualizada correctamente');
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            return back()->with('Error', 'Ocurrio un error');
+        }
     }
 }

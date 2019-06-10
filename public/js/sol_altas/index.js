@@ -110,6 +110,8 @@ var table      = $('#altas-table').DataTable({
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
+                if (row.id_rechazo != null)
+                    return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
                 if (auth_sol == 1) {
                     switch (data['Auth direccion']) {
                         case "x"  :

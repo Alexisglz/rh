@@ -41,6 +41,10 @@
                                     <td><i class="fa fa-book iconBitacora" style="font-size:20px"></i></td>
                                     <td>Revisar bitacora</td>
                                 </tr>
+                                <tr>
+                                    <td><i class="fas fa-close" style="color:red;font-size:20px"></i></td>
+                                    <td>Solicitud Rechazada</td>
+                                </tr>
                             </table>
                         </div>
                     </div>

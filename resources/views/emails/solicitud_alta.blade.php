@@ -7,7 +7,7 @@
 {{ $msg }}<br>
 <strong>{{ $emp }}</strong>
 
-@component('mail::button', ['url' => url('/altas?id='.$id), 'color' => 'green'])
+@component('mail::button', ['url' => url('/altas/aprobar?id='.$id), 'color' => 'green'])
     {{ __("Ir al portal") }}
 @endcomponent
 {{ __("Saludos") }}.<br>

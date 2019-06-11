@@ -46,7 +46,7 @@
 
                             <div id="div_risk" style="display:none;">
                                 {!! Form::label('risk', '*Risk Order:', []) !!}
-                                {!! Form::text('risk', null, ['class'=>'form-control','id'=>'risk']) !!}
+                                {!! Form::text('risk', null, ['class'=>'form-control','id'=>'risk','autocomplete' => 'off']) !!}
                                 {!! Form::hidden('id_risk', null, ['id'=>'id_risk']) !!}
                                 {!! Form::hidden('venta', null, ['id'=>'venta']) !!}
                             </div>

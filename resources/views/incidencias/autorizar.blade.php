@@ -41,9 +41,9 @@
                                 <th>Info</th>
                                 <th>Bitacora</th>
                                 <th>Vobo</th>
-                                <th>Autorizar</th>
-                                <th>Autorizar</th>
-                                <th>Autorizar</th>
+                                <th>Autorizar DEDUC.</th>
+                                <th>Autorizar C/V</th>
+                                <th>Autorizar S/V</th>
                                 <th>Empleado</th>
                                 <th>Incidencia</th>
                                 <th>Solicitante</th>

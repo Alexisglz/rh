@@ -39,7 +39,7 @@ class EnviarCorreosBajas implements ShouldQueue
             case 'nueva_baja':
                 if (config('app.env')=="local")
                     Mail::to($email)->send(new NuevaBaja($solicitud, $nombre));
-                else{
+                if (config('app.env')=="production") {
                     $correos = DB::table('vista_permisos_empleados')
                         ->where('codigo', '=','cita_baja')
                         ->groupBy('id_usuario')

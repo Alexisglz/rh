@@ -47,7 +47,7 @@ class EnviarCorreos implements ShouldQueue
                     $message  = 'Se ha registrado una solicitud de alta con el id: '.$solicitud->id;
                     if (config('app.env')=="local")
                         Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
-                    else {
+                    if (config('app.env')=="production") {
                         if ($solicitud->cliente == 'IND'){
                             $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
                             foreach ($models  as $model){
@@ -71,7 +71,7 @@ class EnviarCorreos implements ShouldQueue
                     $message  = 'Direccion autorizo una solicitud de alta con el id: '.$solicitud->id.' ahora puede entrar a agendar la cita.';
                     if (config('app.env')=="local")
                         Mail::to($email)->bcc($oculto)->send(new AuthDireccion($message, $nombre, $solicitud->id));
-                    else {
+                    if (config('app.env')=="production") {
                         $correos = DB::table('vista_permisos_empleados')
                             ->where('codigo', '=','agendar_cita')
                             ->groupBy('id_usuario')
@@ -86,7 +86,7 @@ class EnviarCorreos implements ShouldQueue
                         $message  = 'Se ha registrado una solicitud de alta con el id '.$solicitud->id.', con cita para el: '.$solicitud->fecha_cita.' que requiere celular/bam:';
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new AuthRH($message, $nombre, $solicitud->id));
-                        else {
+                        if (config('app.env')=="production") {
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','autorizar_celular')
                                 ->get();
@@ -99,7 +99,7 @@ class EnviarCorreos implements ShouldQueue
                         $message  = 'Se ha registrado una solicitud de alta con el id '.$solicitud->id.', con cita para el: '.$solicitud->fecha_cita.' que requiere computadora/software:';
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new AuthRH($message, $nombre, $solicitud->id));
-                        else {
+                        if (config('app.env')=="production") {
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','autorizar_computadora')
                                 ->get();
@@ -112,7 +112,7 @@ class EnviarCorreos implements ShouldQueue
                         $message  = 'Se ha registrado una solicitud de alta con el id '.$solicitud->id.', con cita para el: '.$solicitud->fecha_cita.' que requiere auto:';
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new AuthRH($message, $nombre, $solicitud->id));
-                        else {
+                        if (config('app.env')=="production") {
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','autorizar_coche')
                                 ->get();
@@ -125,7 +125,7 @@ class EnviarCorreos implements ShouldQueue
                         $message  = 'Se ha registrado una solicitud de alta con el id '.$solicitud->id.', con cita para el: '.$solicitud->fecha_cita.' que requiere herramientas:';
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new AuthRH($message, $nombre, $solicitud->id));
-                        else {
+                        if (config('app.env')=="production") {
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','autorizar_herramientas')
                                 ->get();
@@ -163,7 +163,7 @@ class EnviarCorreos implements ShouldQueue
                     }
                     if (config('app.env')=="local")
                         Mail::to($email)->bcc($oculto)->send(new ListoHerramienta($message, $nombre));
-                    else {
+                    if (config('app.env')=="production") {
                         $correos = DB::table('vista_permisos_empleados')
                             ->where('codigo', '=', 'autorizar_herramientas')
                             ->get();

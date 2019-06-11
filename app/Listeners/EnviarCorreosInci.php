@@ -44,7 +44,7 @@ class EnviarCorreosInci Implements ShouldQueue
                 case 'noti_deduc':
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
-                    else {
+                    if (config('app.env')=="production") {
                         if ($incidencia->area_solicitante = 'ESP')
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','aut_cancel_inci_dec')
@@ -65,7 +65,7 @@ class EnviarCorreosInci Implements ShouldQueue
                 case 'noti_cv':
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
-                    else {
+                    if (config('app.env')=="production") {
                         if ($incidencia->area_solicitante = 'ESP')
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','aut_cancel_inci_c_v')
@@ -86,7 +86,7 @@ class EnviarCorreosInci Implements ShouldQueue
                 case 'noti_sv':
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
-                    else {
+                    if (config('app.env')=="production") {
                         if ($incidencia->area_solicitante = 'ESP')
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','aut_cancel_inci_s_v')
@@ -108,7 +108,7 @@ class EnviarCorreosInci Implements ShouldQueue
                     $msg = "La incidencias con el id: ".$incidencia->id." de tipo: ".$inc_tipo->alias;
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new AuthCancelInci("APROBADA", $msg, $nombre, $incidencia->id));
-                    else{
+                    if (config('app.env')=="production") {
                         $solicitante = User::find($incidencia->id_solicitante);
                         if ($solicitante->correo != null)
                             $email = $solicitante->correo;
@@ -119,7 +119,7 @@ class EnviarCorreosInci Implements ShouldQueue
                     $msg = "La incidencias con el id: ".$incidencia->id." de tipo: ".$inc_tipo->alias;
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre, $incidencia->id));
-                    else{
+                    if (config('app.env')=="production") {
                         $solicitante = User::find($incidencia->id_solicitante);
                         if ($solicitante->correo != null)
                             $email = $solicitante->correo;

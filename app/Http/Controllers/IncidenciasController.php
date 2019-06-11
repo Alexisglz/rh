@@ -298,7 +298,7 @@ class IncidenciasController extends Controller
             $empleado     = Empleados::find($request->id);
             $rec_proyecto = ProyectosIndeploRecurso::where('empleado_id', $empleado->empleado_id)
                             ->orderByDesc('id')->first();
-            if ($rec_proyecto) {//Buscar si el usuario esta relacionado a una RO
+           /* if ($rec_proyecto) {//Buscar si el usuario esta relacionado a una RO
                 $proyecto_ind = ProyectosIndeplo::where('id', '=', $rec_proyecto->proyecto_id)
                     ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '=', date('m'))->first();
                 if ($proyecto_ind) { //validar que la RO sea valida
@@ -328,7 +328,7 @@ class IncidenciasController extends Controller
                     }
                     return response()->json($data);
                 }
-            }
+            }*/
             $proyecto = ProyectosIndeplo::query();
             $proyecto->where(DB::raw('CONCAT(pedido,proyecto_nombre,sitio)'),'LIKE', '%'.strval($request->term).'%');
             if ($usuario->listarTodo == null) {

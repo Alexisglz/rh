@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => 'notificaciones@indeplo.com',
-        'name' => 'Indeplo RRHH',
+        'name' => 'Indeplo',
     ],
 
     /*

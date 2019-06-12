@@ -346,8 +346,8 @@ class IncidenciasController extends Controller
                     }
                 }
             }
-            $proyecto->whereNull('fecha_termino');
-            $proyecto->where(DB::raw('MONTH(fecha_fin)'),'=',date('m'));
+            //$proyecto->whereNull('fecha_termino');
+            //$proyecto->where(DB::raw('MONTH(fecha_fin)'),'=',date('m'));
             $proyectos = $proyecto->get();
             foreach ($proyectos as $proyecto){
                 $text = $proyecto->pedido.' '.$proyecto->proyecto_nombre.' '.$proyecto->sitio;

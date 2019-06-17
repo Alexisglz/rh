@@ -47,7 +47,7 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                     if (config('app.env')=="production") {
-                        if ($incidencia->area_solicitante = 'ESP'){
+                        if ($incidencia->area_solicitante == 'ESP'){
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','aut_cancel_inci_dec')
                                 ->whereIn('area', ['ESP','ADMIN'])
@@ -70,7 +70,7 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                     if (config('app.env')=="production") {
-                        if ($incidencia->area_solicitante = 'ESP'){
+                        if ($incidencia->area_solicitante == 'ESP'){
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','aut_cancel_inci_c_v')
                                 ->whereIn('area', ['ESP','ADMIN'])
@@ -93,7 +93,7 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                     if (config('app.env')=="production") {
-                        if ($incidencia->area_solicitante = 'ESP'){
+                        if ($incidencia->area_solicitante == 'ESP'){
                             $correos = DB::table('vista_permisos_empleados')
                                 ->where('codigo', '=','aut_cancel_inci_s_v')
                                 ->whereIn('area', ['ESP','ADMIN'])

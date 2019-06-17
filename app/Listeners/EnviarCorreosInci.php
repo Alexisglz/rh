@@ -41,6 +41,7 @@ class EnviarCorreosInci Implements ShouldQueue
             $nombre     = $empleado->empleado_nombre.' '.$empleado->empleado_apaterno.' '.$empleado->empleado_amaterno;
             $email      = config('app.mail_dev');
             $oculto     = config('app.mail_dev');
+            $correos    = [];
             switch ($tipo){
                 case 'noti_deduc':
                     if (config('app.env')=="local")

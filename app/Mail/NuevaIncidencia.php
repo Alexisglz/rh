@@ -12,7 +12,7 @@ class NuevaIncidencia extends Mailable
 
     protected $tipo;
     protected $emp;
-    private $id;
+    protected $id;
 
     /**
      * Create a new message instance.

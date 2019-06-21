@@ -40,7 +40,7 @@ class EnviarCorreosSueldos implements ShouldQueue
                         Mail::to($email)->bcc($oculto)->send(new AjusteSueldo($doc));
                     if (config('app.env')=="production") {
                         $correos = DB::table('vista_permisos_empleados')
-                            ->whereIn('area', ['ENTR','ESP'])
+                            ->whereIn('area', ['ENTR','ESP','ADMIN'])
                             ->groupBy('id_usuario')
                             ->get();
                         foreach ($correos as $correo){

@@ -327,7 +327,7 @@ $('#reset').on('click', function (e) {
     s_est    = null;
     search_id.val("");
     search_nombre.val("");
-    search_est.val("1");
+    search_est.val("");
     table.draw();
     e.preventDefault();
     reset = 0;

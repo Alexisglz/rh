@@ -13,7 +13,7 @@ var table = $('#table_ajustes').DataTable({
     order: [[0, "desc"]],
     columns: [
         {data: 'id', name: 'id', className:'text-center'},
-        {data: 'enviado', name: 'check', className:'text-center'},
+        {data: 'enviado', name: 'check', className:'text-center envio_as'},
         {data: 'url', name: 'url', className:'text-center'},
         {data: 'nombre', name: 'nombre', className:'text-center'},
         {data: 'num_empleado', name: 'tradicional', className:'text-center'},
@@ -21,7 +21,7 @@ var table = $('#table_ajustes').DataTable({
         {data: 'asimilado', name: 'asimilado', className:'text-center'},
         {data: 'observaciones', name: 'observaciones', className:'text-center'},
         {data: 'fecha', name: 'fecha', className:'text-center'},
-        {data: null, name:'acciones', className:'text-center', orderable: false, searchable: false,}
+        {data: null, name:'acciones', className:'text-center acciones_as', orderable: false, searchable: false,}
     ],
     language: {
         "lengthMenu": "Mostrando _MENU_ registros por página",
@@ -67,12 +67,12 @@ var table = $('#table_ajustes').DataTable({
                 var del  = '';
                 var edit = '';
                 if (row.enviado == 'SI'){
-                    del  = '<button title="Eliminar Ajuste" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>';
-                    edit = '<button title="Editar Ajuste" disabled="disabled" class="btn btn-sm btn-primary text-white"><i class="fa fa-edit fa-sm"></i></button>';
+                    edit = editar_ajustes_s == 1 ? '<button title="Editar Ajuste" disabled="disabled" class="btn btn-sm btn-primary text-white"><i class="fa fa-edit fa-sm"></i></button>':'';
+                    del  = eliminar_ajuste_s == 1 ? '<button title="Eliminar Ajuste" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>':'';
                 }
                 else{
-                    edit = '<a title="Editar Ajuste" class="btn btn-sm btn-primary text-white edit_ajuste"><i class="fa fa-edit fa-sm"></i></a>';
-                    del  = '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>';
+                    edit = editar_ajustes_s == 1 ? '<a title="Editar Ajuste" class="btn btn-sm btn-primary text-white edit_ajuste"><i class="fa fa-edit fa-sm"></i></a>':'';
+                    del  = eliminar_ajuste_s == 1 ? '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>':'';
                 }
                 return edit + del;
             }
@@ -295,3 +295,9 @@ $('#enviar_ajustes').on('click', function () {
         }
     });
 });
+
+if (enviar_ajuste_s != 1)
+    table.columns( '.envio_as' ).visible( false );
+
+if (eliminar_ajuste_s != 1 && editar_ajustes_s != 1)
+    table.columns( '.acciones_as' ).visible( false );

@@ -320,6 +320,10 @@ to get the desired effect
                         </li>
                     </div>
                     @endif
+                    @php
+                        $list_ajus = auth()->user()->can('access',[\App\User::class,'listado_ajuste_s'])? 1:0;
+                    @endphp
+                    @if($list_ajus == 1)
                     <div id="incidencias">
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
@@ -330,16 +334,18 @@ to get the desired effect
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                @can('access',[\App\User::class,'listado_ajuste_s'])
                                 <li class="nav-item">
                                     <a href="{!! route('ajuste.index') !!}" class="nav-link">
                                         <i class="fa  fa-list-ul nav-icon iconMenu"></i>
                                         <p class="labelMenu">{{__('Ajustes')}}</p>
                                     </a>
                                 </li>
+                                @endcan
                             </ul>
                         </li>
                     </div>
-
+                    @endif
                 </ul>
             </nav>
         </div>

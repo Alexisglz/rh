@@ -13,20 +13,26 @@
             <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="row mb-3 col-12">
-                <a id="nuevo_ajuste" class="btn btn-primary ml-2 text-white">{{__('Nuevo Ajuste')}}</a>
-                <div class="col-sm">
-                    <a id="enviar_ajustes" class="btn btn-success ml-2 text-white pull-right">{{__('Enviar')}}</a>
-                </div>
+                @can('access',[\App\User::class,'nuevo_ajuste_s'])
+                    <a id="nuevo_ajuste" class="btn btn-primary ml-2 text-white">{{__('Nuevo Ajuste')}}</a>
+                @endcan
+                @can('access',[\App\User::class,'enviar_ajuste_s'])
+                    <div class="col-sm">
+                        <a id="enviar_ajustes" class="btn btn-success ml-2 text-white pull-right">{{__('Enviar')}}</a>
+                    </div>
+                @endcan
             </div>
 
-            <div class="row mb-3 col-12">
-                <div class="col-sm">
-                    <div class="form-check check-todo pull-right">
-                        <input type="checkbox" class="form-check-input" id="marcar">
-                        <label class="form-check-label" for="marcar"><strong>{{__('Marcar Todos')}}</strong></label>
+            @can('access',[\App\User::class,'enviar_ajuste_s'])
+                <div class="row mb-3 col-12">
+                    <div class="col-sm">
+                        <div class="form-check check-todo pull-right">
+                            <input type="checkbox" class="form-check-input" id="marcar">
+                            <label class="form-check-label" for="marcar"><strong>{{__('Marcar Todos')}}</strong></label>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endcan
 
             @can('access',[\App\User::class,'exportar_solicitudes1'])
                 <form class="form-inline">
@@ -69,7 +75,17 @@
     @include('ajustes.modals.edit')
 
     @php
+        $nuevo_ajuste_s    = auth()->user()->can('access',[\App\User::class,'nuevo_ajuste_s'])? 1:0;
+        $editar_ajustes_s  = auth()->user()->can('access',[\App\User::class,'editar_ajustes_s'])? 1:0;
+        $eliminar_ajuste_s = auth()->user()->can('access',[\App\User::class,'eliminar_ajuste_s'])? 1:0;
+        $enviar_ajuste_s   = auth()->user()->can('access',[\App\User::class,'enviar_ajuste_s'])? 1:0;
     @endphp
+    <script>
+        var nuevo_ajuste_s    = '{{ $nuevo_ajuste_s }}';
+        var editar_ajustes_s  = '{{ $editar_ajustes_s }}';
+        var eliminar_ajuste_s = '{{ $eliminar_ajuste_s }}';
+        var enviar_ajuste_s   = '{{ $enviar_ajuste_s }}';
+    </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {!! Html::script('js/validador.js') !!}
     {!! Html::script('js/ajustes/index.js') !!}

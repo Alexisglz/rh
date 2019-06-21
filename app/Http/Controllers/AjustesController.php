@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empleados;
 use App\Events\SueldosEvents;
 use App\Models\AjusteSueldo;
+use App\User;
 use DB;
 use File;
 use Illuminate\Http\Request;
@@ -14,10 +15,12 @@ use Storage;
 class AjustesController extends Controller
 {
     public function index(){
+        $this->authorize('access',[User::class, 'listado_ajuste_s']);
         return view('ajustes.index');
     }
 
     public function save(Request $request){
+        $this->authorize('access',[User::class, 'nuevo_ajuste_s']);
         try{
             DB::beginTransaction();
             $empleado              = Empleados::find($request->id);

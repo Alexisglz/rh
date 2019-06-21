@@ -49,6 +49,27 @@
                 </form>
             @endcan
 
+            <div class="form-inline" style="border-top: 1px solid #dfdfdf; padding-top: 10px;">
+                <div class="form-group col-sm-1">
+                    <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por ID">
+                </div>
+                <div class="form-group col-sm-2">
+                    <input id="search_emp" name="search_emp" class="form-control col-sm-12" placeholder="Empleado" title="Buscar por Empleado">
+                </div>
+                <div class="form-group col-sm-2">
+                    <select id="search_est" name="search_est" class="form-control col-sm-12" placeholder="Estatus" title="Buscar por estatus">
+                        <option value="">{{__('Seleccione')}}</option>
+                        <option value="SI">{{__('Enviado')}}</option>
+                        <option value="NO">{{__('No enviado')}}</option>
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
+
         </div>
         <div class="card-body">
             <input type="text" name="" value="{{auth()->user()->id_usuario}}" id="index_user" hidden="true">

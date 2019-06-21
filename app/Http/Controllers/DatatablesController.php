@@ -542,6 +542,14 @@ class DatatablesController extends Controller
 
     public function getDataAjustes(Request $request){
         $ajustes = VistaAjusteSueldo::query();
+        if ($request->reset == 0){
+            if($request->search_id)
+                $ajustes->where('id','=',$request->search_id);
+            if($request->search_nombre)
+                $ajustes->where('nombre','LIKE','%'.$request->search_nombre.'%');
+            if($request->search_est)
+                $ajustes->where('enviado','=',$request->search_est);
+        }
         $ajustes = $ajustes->get();
         return DataTables::of($ajustes)
             ->make(true);

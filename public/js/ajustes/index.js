@@ -1,5 +1,9 @@
 var CSRF_TOKEN = $('#token').val();
-var table = $('#table_ajustes').DataTable({
+var s_id       = null;
+var s_nombre   = null;
+var s_est      = null;
+var reset      = 0;
+var table      = $('#table_ajustes').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
@@ -8,6 +12,9 @@ var table = $('#table_ajustes').DataTable({
         type: 'GET',
         dataType: 'JSON',
         data:function (data) {
+            data.search_id     = s_id;
+            data.search_nombre = s_nombre;
+            data.search_est    = s_est;
         }
     },
     order: [[0, "desc"]],
@@ -294,6 +301,36 @@ $('#enviar_ajustes').on('click', function () {
             });
         }
     });
+});
+
+var search_id     = $('#search_id');
+var search_nombre = $('#search_emp');
+var search_est    = $('#search_est');
+
+search_id.on('keyup', function () {
+    s_id = $(this).val();
+    table.draw();
+});
+search_nombre.on('keyup', function () {
+    s_nombre = $(this).val();
+    table.draw();
+});
+search_est.on('change', function () {
+    s_est = $(this).val();
+    table.draw();
+});
+
+$('#reset').on('click', function (e) {
+    reset    = 1;
+    s_id     = null;
+    s_nombre = null;
+    s_est    = null;
+    search_id.val("");
+    search_nombre.val("");
+    search_est.val("1");
+    table.draw();
+    e.preventDefault();
+    reset = 0;
 });
 
 if (enviar_ajuste_s != 1)

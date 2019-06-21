@@ -25,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\BajasEvents::class => [
             \App\Listeners\EnviarCorreosBajas::class,
         ],
+        \App\Events\SueldosEvents::class => [
+            \App\Listeners\EnviarCorreosSueldos::class,
+        ],
     ];
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empleados;
+use App\Events\SueldosEvents;
 use App\Models\AjusteSueldo;
 use DB;
 use File;
@@ -50,7 +51,21 @@ class AjustesController extends Controller
                 Storage::makeDirectory($dir, 0775, true);
             }
             $name = $dir.$id.'_'.$num.'_'.date('Ymd').'.xlsx';
-            Excel::store(new \App\Exports\AjusteSueldo($id),$name,'public');
+            Excel::store(new \App\Exports\AjusteSueldo([$id]),$name,'public');
+            return $name;
+        }catch (\Exception $e){
+            return $e;
+        }
+    }
+
+    public function createExcel($ids){
+        try{
+            $dir = 'ajustes/enviados_'.date('Ymd').'/';
+            if (!Storage::exists($dir)){
+                Storage::makeDirectory($dir, 0775, true);
+            }
+            $name = $dir.'ajustes_'.date('Ymd').'.xlsx';
+            Excel::store(new \App\Exports\AjusteSueldo($ids),$name,'public');
             return $name;
         }catch (\Exception $e){
             return $e;
@@ -75,6 +90,31 @@ class AjustesController extends Controller
             DB::rollBack();
             return response()->json([
                 'ok' => false,
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function send(Request $request){
+        try{
+            DB::beginTransaction();
+            $url = $this->createExcel($request->ajustes);
+            foreach ($request->ajustes as $item){
+                $ajuste            = AjusteSueldo::find($item);
+                $ajuste->enviado   = 'SI';
+                $ajuste->url_envio = $url;
+                $ajuste->save();
+            }
+            DB::commit();
+            event(new SueldosEvents($url,'envio_ajustes'));
+            return response()->json([
+                'ok'   => true,
+                'data' => []
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok'   => false,
                 'data' => $e->getMessage()
             ]);
         }

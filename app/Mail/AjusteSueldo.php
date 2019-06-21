@@ -10,15 +10,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class AjusteSueldo extends Mailable
 {
     use Queueable, SerializesModels;
+    public $url;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $url
      */
-    public function __construct()
+    public function __construct($url)
     {
-        //
+        $this->url = $url;
     }
 
     /**
@@ -28,6 +29,9 @@ class AjusteSueldo extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this
+            ->subject(__('Solicitudes de Cambio de Sueldo'))
+            ->markdown('emails.cambio_sueldo')
+            ->with('url', $this->url);
     }
 }

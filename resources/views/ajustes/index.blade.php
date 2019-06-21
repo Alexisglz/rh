@@ -9,12 +9,23 @@
                 <i class="fa fa-plus"></i>
                 {{__('LISTADO DE AJUSTES DE SUELDO')}}
             </h3>
-            <a class="btn btn-primary btn-sm pull-right btn-circle" title="Informacion de los checks" onclick="$('#infoCheck').modal('toggle')"><i class="fa fa-info"></i></a>
             <br>
             <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div class="row mb-3">
+            <div class="row mb-3 col-12">
                 <a id="nuevo_ajuste" class="btn btn-primary ml-2 text-white">{{__('Nuevo Ajuste')}}</a>
+                <div class="col-sm">
+                    <a id="enviar_ajustes" class="btn btn-success ml-2 text-white pull-right">{{__('Enviar')}}</a>
+                </div>
+            </div>
+
+            <div class="row mb-3 col-12">
+                <div class="col-sm">
+                    <div class="form-check check-todo pull-right">
+                        <input type="checkbox" class="form-check-input" id="marcar">
+                        <label class="form-check-label" for="marcar"><strong>{{__('Marcar Todos')}}</strong></label>
+                    </div>
+                </div>
             </div>
 
             @can('access',[\App\User::class,'exportar_solicitudes1'])
@@ -40,14 +51,15 @@
                 <thead>
                 <tr>
                     <th data-priority="1">{{__('ID')}}</th>
-                    <th data-priority="3">{{__('DOCUMENTO')}}</th>
-                    <th data-priority="2">{{__('EMPLEADO')}}</th>
+                    <th data-priority="2">{{__('ENVIAR')}}</th>
+                    <th data-priority="4">{{__('DOCUMENTO')}}</th>
+                    <th data-priority="3">{{__('EMPLEADO')}}</th>
                     <th>{{__('NUMERO EMP')}}</th>
                     <th>{{__('TRADICIONAL')}}</th>
                     <th>{{__('ASIMILADO')}}</th>
                     <th>{{__('OBSERVACIONES')}}</th>
                     <th>{{__('FECHA SOLICITUD')}}</th>
-                    <th data-priority="4">{{__('ACCIONES')}}</th>
+                    <th data-priority="5">{{__('ACCIONES')}}</th>
                 </tr>
                 </thead>
             </table>

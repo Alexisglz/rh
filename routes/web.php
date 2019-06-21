@@ -28,6 +28,7 @@ Route::group(["prefix" => "ajuste", "middleware" => ["auth"]], function() {
     Route::get('/', 'AjustesController@index')->name('ajuste.index');
     Route::post('/save', 'AjustesController@save')->name('ajuste.save');
     Route::post('/delete', 'AjustesController@delete')->name('ajuste.delete');
+    Route::post('/send', 'AjustesController@send')->name('ajuste.send');
 });
 
 Route::group(["prefix" => "asignacion", "middleware" => ["auth"]], function() {

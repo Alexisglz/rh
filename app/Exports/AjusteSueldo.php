@@ -12,17 +12,21 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class AjusteSueldo implements FromCollection, WithHeadings, ShouldAutoSize
 {
 
-    private $id;
+    private $ids;
 
-    public function __construct($id)
+    /**
+     * AjusteSueldo constructor.
+     * @param array $ids
+     */
+    public function __construct(array $ids)
     {
-        $this->id = $id;
+        $this->ids = $ids;
     }
 
     public function collection()
     {
         $models  = VistaAjusteSueldo::select('id','nombre','num_empleado','tradicional','asimilado','observaciones','fecha')
-            ->where('id','=',$this->id)
+            ->whereIn('id',$this->ids)
             ->get();
         return collect($models);
     }

@@ -13,6 +13,7 @@ var table = $('#table_ajustes').DataTable({
     order: [[0, "desc"]],
     columns: [
         {data: 'id', name: 'id', className:'text-center'},
+        {data: 'enviado', name: 'check', className:'text-center'},
         {data: 'url', name: 'url', className:'text-center'},
         {data: 'nombre', name: 'nombre', className:'text-center'},
         {data: 'num_empleado', name: 'tradicional', className:'text-center'},
@@ -39,7 +40,16 @@ var table = $('#table_ajustes').DataTable({
     },
     'columnDefs': [
         {
-            targets: 1,
+            "targets": 1,
+            "data": null,
+            "render": function (data, type, row) {
+                if (data == 'SI')
+                    return "<input type='checkbox' disabled checked style='color:#007bffcc;font-size:20px'>";
+                return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
+            },
+        },
+        {
+            targets: 2,
             data: null,
             className: "text-center",
             render: function (data, type, row) {
@@ -50,7 +60,7 @@ var table = $('#table_ajustes').DataTable({
             }
         },
         {
-            targets: 8,
+            targets: 9,
             data: null,
             className: "text-center",
             render: function (data, type, row) {
@@ -151,6 +161,78 @@ $('#table_ajustes tbody').on('click', '.del_ajuste', function () {
                     }
                     else {
                         swal("Error!", "Ocurrio un error al eliminar el ajuste!", "error");
+                    }
+                }
+            });
+        }
+    });
+});
+
+var rows_selected = [];
+$('#table_ajustes tbody').on('click', 'input[type="checkbox"]', function(e){
+    var row = $(this).closest('tr');
+    var data = table.row(row).data();
+    var rowId = data.id;
+    var index = $.inArray(rowId, rows_selected);
+    if(this.checked && index === -1){
+        rows_selected.push(rowId);
+    }
+    else rows_selected.splice(index, 1);
+
+});
+
+$('#marcar').on('click', function () {
+    if ($(this).is( ":checked" ))
+        $('.selects').each(function () {
+            if (!$(this).is( ":checked" ))
+                $(this).trigger('click');
+        });
+    else
+        $('.selects').each(function () {
+            if ($(this).is( ":checked" ))
+                $(this).trigger('click');
+        });
+});
+
+$('#enviar_ajustes').on('click', function () {
+    if (rows_selected.length == 0){
+        Swal.fire({
+            title: "No se ha seleccionado ninguna solicitud",
+            type: 'error'
+        });
+        return false;
+    }
+    swal({
+        title: '¿Deseas enviar las solicitudes de ajuste de sueldo?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true
+    }) .then((confirm) => {
+        if (confirm){
+            var object = {
+                _token: CSRF_TOKEN,
+                ajustes: rows_selected
+            };
+            $.ajax({
+                url: 'ajuste/send',
+                type: 'POST',
+                dataType: 'JSON',
+                data: object,
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success: function (data) {
+                    if (data.ok == true){
+                        swal("Solicitudes enviadas con éxito", {
+                            icon: "success",
+                        });
+                        table.ajax.reload();
+                    }
+                    else {
+                        swal("Error!", "Ocurrio un error al enviar los ajustes!", "error");
                     }
                 }
             });

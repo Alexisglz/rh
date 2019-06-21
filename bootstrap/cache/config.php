@@ -2,8 +2,8 @@
   'app' => 
   array (
     'name' => 'Indeplo RRHH',
-    'env' => 'production',
-    'debug' => false,
+    'env' => 'local',
+    'debug' => true,
     'url' => 'http://localhost:8002',
     'timezone' => 'America/Mexico_City',
     'locale' => 'es',
@@ -421,7 +421,7 @@
     'port' => '465',
     'from' => 
     array (
-      'address' => 'sam.guzman140390@gmail.com',
+      'address' => 'notificaciones@indeplo.com',
       'name' => 'Indeplo',
     ),
     'encryption' => 'ssl',

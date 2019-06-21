@@ -320,6 +320,26 @@ to get the desired effect
                         </li>
                     </div>
                     @endif
+                    <div id="incidencias">
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-usd"></i>
+                                <p class="labelMenu">
+                                    {{__('Ajuste de sueldos')}}
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{!! route('ajuste.index') !!}" class="nav-link">
+                                        <i class="fa  fa-list-ul nav-icon iconMenu"></i>
+                                        <p class="labelMenu">{{__('Ajustes')}}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </div>
+
                 </ul>
             </nav>
         </div>

@@ -24,6 +24,11 @@ Route::group(["prefix" => "altas", "middleware" => ["auth"]], function() {
     Route::post('/aprobar_dir', 'AltasController@autorizarDireccion')->name('altas.aprobar_dir');
 });
 
+Route::group(["prefix" => "ajuste", "middleware" => ["auth"]], function() {
+    Route::get('/', 'AjustesController@index')->name('ajuste.index');
+    Route::post('/save', 'AjustesController@save')->name('ajuste.save');
+});
+
 Route::group(["prefix" => "asignacion", "middleware" => ["auth"]], function() {
     Route::get('/', 'AsignacionHerramientasController@index')->name('asignacion.index');
     Route::get('/computo', 'AsignacionHerramientasController@getComputo')->name('asignacion.computo');
@@ -103,6 +108,7 @@ Route::group(["prefix" => "datatables", "middleware" => ["auth"]], function() {
     Route::get('/get_incidencias_auth', 'DatatablesController@getIncidenciasAuth')->name('datatables.get_incidencias_auth');
     Route::get('/get_incidencias_finalizadas', 'DatatablesController@getIncidenciasFinalizadas')->name('autorizar.get_incidencias_finalizadas');
     Route::get('/get_incidencias_periodo', 'DatatablesController@getIncidenciasPeriodo')->name('autorizar.get_incidencias_periodo');
+    Route::get('/get_data_ajustes', 'DatatablesController@getDataAjustes')->name('autorizar.get_data_ajustes');
 });
 
 Route::group(["prefix" => "empleados", "middleware" => ["auth"]], function() {

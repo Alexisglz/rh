@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AjustesSueldos' => $baseDir . '/database/migrations/2019_06_20_103228_ajustes_sueldos.php',
     'CatalogoCodigos' => $baseDir . '/database/migrations/2018_05_18_162514_catalogoCodigos.php',
     'CatalogoCoordinadores' => $baseDir . '/database/migrations/2018_05_22_164624_CatalogoCoordinadores.php',
     'CatalogoWBS' => $baseDir . '/database/migrations/2018_05_15_184135_CatalogoWBS.php',

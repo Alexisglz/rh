@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Coordinador;
+use App\Empleados;
 use App\Http\Requests;
+use App\Models\AjusteSueldo;
 use App\Models\CatalogoCoordinadores;
 use App\Models\IncidenciaPeriodo;
+use App\Models\VistaAjusteSueldo;
 use App\Models\VistaCitasFirma;
 use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaIncidenciasPeriodo;
@@ -534,6 +537,13 @@ class DatatablesController extends Controller
             ->with(['sql' => $sql])
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
                 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
+    public function getDataAjustes(Request $request){
+        $ajustes = VistaAjusteSueldo::query();
+        $ajustes = $ajustes->get();
+        return DataTables::of($ajustes)
             ->make(true);
     }
 }

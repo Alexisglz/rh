@@ -64,7 +64,12 @@ var table = $('#table_ajustes').DataTable({
             data: null,
             className: "text-center",
             render: function (data, type, row) {
-                var del = '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>';
+                var del = '';
+                console.log(row.enviado);
+                if (row.enviado == 'SI')
+                    del = '<button title="Eliminar Ajuste" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>';
+                else
+                    del = '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>';
                 return del;
             }
         },

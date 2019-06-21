@@ -406,11 +406,11 @@ class DatatablesController extends Controller
         }
         else{
             if ($inc_s_v == 1)
-                $incidencias->where('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
+                $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_c_v == 1)
-                $incidencias->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION');
+                $incidencias->orWhere('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_ded == 1)
-                $incidencias->where('tipo_incidencia','=','DEDUCCION');
+                $incidencias->orWhere('tipo_incidencia','=','DEDUCCION');
         }
         switch ($area){
             case 'ESP':

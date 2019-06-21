@@ -13,12 +13,14 @@ var table = $('#table_ajustes').DataTable({
     order: [[0, "desc"]],
     columns: [
         {data: 'id', name: 'id', className:'text-center'},
+        {data: 'url', name: 'url', className:'text-center'},
         {data: 'nombre', name: 'nombre', className:'text-center'},
         {data: 'num_empleado', name: 'tradicional', className:'text-center'},
         {data: 'tradicional', name: 'tradicional', className:'text-center'},
         {data: 'asimilado', name: 'asimilado', className:'text-center'},
         {data: 'observaciones', name: 'observaciones', className:'text-center'},
         {data: 'fecha', name: 'fecha', className:'text-center'},
+        {data: null, name:'acciones', className:'text-center', orderable: false, searchable: false,}
     ],
     language: {
         "lengthMenu": "Mostrando _MENU_ registros por página",
@@ -36,6 +38,26 @@ var table = $('#table_ajustes').DataTable({
         processing: '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>'
     },
     'columnDefs': [
+        {
+            targets: 1,
+            data: null,
+            className: "text-center",
+            render: function (data, type, row) {
+                if (data != null)
+                    return '<a href="/files/'+data+'" title="Descargar"><i class="fa fa-download" style="color:#007bffcc;font-size:20px"></i></a>';
+                else
+                    return '';
+            }
+        },
+        {
+            targets: 8,
+            data: null,
+            className: "text-center",
+            render: function (data, type, row) {
+                var del = '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>';
+                return del;
+            }
+        },
     ]
 });
 
@@ -46,6 +68,7 @@ $('#nuevo_ajuste').on('click',function () {
     $('#id_emp').val('');
     $('#tradicional').val(0);
     $('#asimilado').val(0);
+    $('#observaciones').val('');
     $('#save_ajuste').modal('show');
 });
 
@@ -94,3 +117,43 @@ function saveAjuste() {
         }
     });
 }
+
+$('#table_ajustes tbody').on('click', '.del_ajuste', function () {
+    data = table.row($(this).parent()).data();
+    swal({
+        title: '¿Deseas eliminar el ajuste?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true
+    }) .then((confirm) => {
+        if (confirm) {
+            var object = {
+                _token: CSRF_TOKEN,
+                id: data.id
+            };
+            $.ajax({
+                url: 'ajuste/delete',
+                type: 'POST',
+                dataType: 'JSON',
+                data: object,
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success: function (data) {
+                    if (data.ok == true){
+                        swal("Solicitud de ajuste de Sueldo eliminado con éxito", {
+                            icon: "success",
+                        });
+                        table.ajax.reload();
+                    }
+                    else {
+                        swal("Error!", "Ocurrio un error al eliminar el ajuste!", "error");
+                    }
+                }
+            });
+        }
+    });
+});

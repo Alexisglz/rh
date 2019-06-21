@@ -39,13 +39,15 @@
             <table class="table table-active table-altas" width="100%" id="table_ajustes">
                 <thead>
                 <tr>
-                    <th>{{__('ID')}}</th>
-                    <th>{{__('EMPLEADO')}}</th>
+                    <th data-priority="1">{{__('ID')}}</th>
+                    <th data-priority="3">{{__('DOCUMENTO')}}</th>
+                    <th data-priority="2">{{__('EMPLEADO')}}</th>
                     <th>{{__('NUMERO EMP')}}</th>
                     <th>{{__('TRADICIONAL')}}</th>
                     <th>{{__('ASIMILADO')}}</th>
                     <th>{{__('OBSERVACIONES')}}</th>
                     <th>{{__('FECHA SOLICITUD')}}</th>
+                    <th data-priority="4">{{__('ACCIONES')}}</th>
                 </tr>
                 </thead>
             </table>

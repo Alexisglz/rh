@@ -20,6 +20,7 @@ class AjustesSueldos extends Migration
             $table->float('tradicional')->default(0);
             $table->float('asimilado')->default(0);
             $table->text('observaciones')->nullable();
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }

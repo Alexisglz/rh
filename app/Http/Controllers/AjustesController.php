@@ -44,6 +44,28 @@ class AjustesController extends Controller
         }
     }
 
+    public function edit(Request $request){
+        try{
+            DB::beginTransaction();
+            $ajuste = AjusteSueldo::find($request->id);
+            $ajuste->tradicional   = $request->tradicional;
+            $ajuste->asimilado     = $request->asimilado;
+            $ajuste->observaciones = $request->observaciones;
+            $ajuste->save();
+            DB::commit();
+            return response()->json([
+                'ok' => true,
+                'data' => $ajuste
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
+
     public function createFile($id, $num){
         try{
             $dir = 'ajustes/'.$id.'_'.$num.'/';

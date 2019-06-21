@@ -64,13 +64,17 @@ var table = $('#table_ajustes').DataTable({
             data: null,
             className: "text-center",
             render: function (data, type, row) {
-                var del = '';
-                console.log(row.enviado);
-                if (row.enviado == 'SI')
-                    del = '<button title="Eliminar Ajuste" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>';
-                else
-                    del = '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>';
-                return del;
+                var del  = '';
+                var edit = '';
+                if (row.enviado == 'SI'){
+                    del  = '<button title="Eliminar Ajuste" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>';
+                    edit = '<button title="Editar Ajuste" disabled="disabled" class="btn btn-sm btn-primary text-white"><i class="fa fa-edit fa-sm"></i></button>';
+                }
+                else{
+                    edit = '<a title="Editar Ajuste" class="btn btn-sm btn-primary text-white edit_ajuste"><i class="fa fa-edit fa-sm"></i></a>';
+                    del  = '<a title="Eliminar Ajuste" class="btn btn-sm btn-danger text-white del_ajuste"><i class="fa fa-close"></i></a>';
+                }
+                return edit + del;
             }
         },
     ]
@@ -125,6 +129,53 @@ function saveAjuste() {
                 });
                 table.ajax.reload();
                 $('#save_ajuste').modal('toggle');
+            }
+            else {
+                swal("Error!", "Ocurrio un error al actualizar la solicitud!", "error");
+            }
+        }
+    });
+}
+
+$('#table_ajustes tbody').on('click', '.edit_ajuste', function () {
+    data = table.row($(this).parent()).data();
+    $('#e_empleado').val(data.nombre);
+    $('#e_id_emp').val(data.id);
+    $('#e_tradicional').val(data.tradicional);
+    $('#e_asimilado').val(data.asimilado);
+    $('#e_observaciones').val(data.observaciones);
+    $('#edit_ajuste').modal('show');
+});
+
+function saveEdit(){
+    var exist = existe('edit_ajus',['e_observaciones']);
+    if (exist == false)
+        return false;
+    var data = {
+        _token: CSRF_TOKEN,
+        id: $('#e_id_emp').val(),
+        tradicional: $('#e_tradicional').val(),
+        asimilado: $('#e_asimilado').val(),
+        observaciones: $('#e_observaciones').val(),
+    };
+    $.ajax({
+        url: '/ajuste/edit',
+        type: 'POST',
+        dataType: 'JSON',
+        data:data,
+        beforeSend: function () {
+            $().loader("show");
+        },
+        complete: function () {
+            $().loader("hide");
+        },
+        success: function (data) {
+            if (data.ok == true){
+                swal("Solicitud de ajuste editada con éxito", {
+                    icon: "success",
+                });
+                table.ajax.reload();
+                $('#edit_ajuste').modal('toggle');
             }
             else {
                 swal("Error!", "Ocurrio un error al actualizar la solicitud!", "error");

@@ -66,6 +66,7 @@
         </div>
     </div>
     @include('ajustes.modals.create')
+    @include('ajustes.modals.edit')
 
     @php
     @endphp

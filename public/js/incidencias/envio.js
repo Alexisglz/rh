@@ -4,7 +4,7 @@ var table_ = $('#envio_lote').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
-    pageLength: 50,
+    pageLength: 100,
     order: [[0, "desc"]],
     ajax: {
         url: '/datatables/get_incidencias_periodo',

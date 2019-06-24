@@ -18,6 +18,7 @@ var table      = $('#table_ajustes').DataTable({
         }
     },
     order: [[0, "desc"]],
+    pageLength: 100,
     columns: [
         {data: 'id', name: 'id', className:'text-center'},
         {data: 'enviado', name: 'check', className:'text-center envio_as'},

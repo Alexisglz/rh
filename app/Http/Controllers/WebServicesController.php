@@ -38,21 +38,25 @@ class WebServicesController extends Controller
             ->where('actualizado','=',0)
             ->whereNull('empleado_fecha_baja')
             ->whereNull('baja_rh')
-            ->orderByDesc('empleado_id')
+            ->orderBy('empleado_id')
             ->get();
-        //dd($response, $no_actualizados);
+        //dd($no_actualizados);
         $actualizados = [];
         foreach ($no_actualizados as $empleado){
             try{
-                $conn->beginTransaction();
                 $response = $this->getRango($empleado->empleado_id);
                 if (!empty($response)){
+                    $conn->beginTransaction();
                     $empleado->empleado_num = $response[0]->num_emp;
+                    $empleado->curp         = $response[0]->s_mex->curp;
+                    $empleado->nss          = $response[0]->s_mex->afil_imss;
+                    $empleado->cp           = $response[0]->s_mex->cod_pos;
+                    $empleado->mail         = $response[0]->s_mex->email_1 != null && $response[0]->s_mex->email_1 != "" ? strtoupper($response[0]->s_mex->email_1):$empleado->mail;
                     $empleado->actualizado  = 1;
                     $empleado->save();
                     $actualizados[] = [$response[0]->num_emp,$empleado->empleado_id];
+                    $conn->commit();
                 }
-                $conn->commit();
             }catch (\Exception $e){
                 $conn->rollBack();
             }
@@ -137,6 +141,9 @@ class WebServicesController extends Controller
             if (!empty($array[0][2])){
                 foreach ($array[0][2] as $item){
                     if ($item->s_mex->curp == $empleado->curp){
+                        return [$item];
+                    }
+                    elseif ($item->s_mex->afil_imss == $empleado->nss){
                         return [$item];
                     }
                 }

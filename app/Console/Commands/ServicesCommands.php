@@ -23,6 +23,12 @@ class ServicesCommands extends Command
      * @var string
      */
     protected $description = 'Comando para actualizar los numeros de empleados de Web Service';
+    /**
+     * @var \Illuminate\Config\Repository
+     */
+    private $user;
+    private $password;
+    private $language;
 
     /**
      * Create a new command instance.
@@ -31,6 +37,9 @@ class ServicesCommands extends Command
      */
     public function __construct()
     {
+        $this->user     = config('app.soap_user');
+        $this->password = config('app.soap_password');
+        $this->language = config('app.soap_language');
         parent::__construct();
     }
 
@@ -55,26 +64,31 @@ class ServicesCommands extends Command
             ->where('actualizado','=',0)
             ->whereNull('empleado_fecha_baja')
             ->whereNull('baja_rh')
-            ->orderByDesc('empleado_id')
+            ->orderBy('empleado_id')
             ->get();
         $actualizados = [];
         foreach ($no_actualizados as $empleado){
             try{
-                $conn->beginTransaction();
                 $response = $this->getRango($empleado->empleado_id);
                 if (!empty($response)){
+                    $conn->beginTransaction();
                     $empleado->empleado_num = $response[0]->num_emp;
+                    $empleado->curp         = $response[0]->s_mex->curp;
+                    $empleado->nss          = $response[0]->s_mex->afil_imss;
+                    $empleado->cp           = $response[0]->s_mex->cod_pos;
+                    $empleado->mail         = $response[0]->s_mex->email_1 != null && $response[0]->s_mex->email_1 != "" ? strtoupper($response[0]->s_mex->email_1):$empleado->mail;
                     $empleado->actualizado  = 1;
                     $empleado->save();
                     $actualizados[] = [$response[0]->num_emp,$empleado->empleado_id];
+                    $conn->commit();
                 }
-                $conn->commit();
             }catch (\Exception $e){
                 $conn->rollBack();
+                echo json_encode($e->getMessage());
             }
         }
         echo json_encode($actualizados);
-        echo json_encode($no_actualizados);
+        echo json_encode(count($no_actualizados));
     }
 
     public function getRango($id){
@@ -118,10 +132,14 @@ class ServicesCommands extends Command
                     if ($item->s_mex->curp == $empleado->curp){
                         return [$item];
                     }
+                    elseif ($item->s_mex->afil_imss == $empleado->nss){
+                        return [$item];
+                    }
                 }
             }
             return [];
         }catch (Exception $e){
+            echo json_encode($e->getMessage());
         }
     }
 }

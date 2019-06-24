@@ -22,9 +22,9 @@ class WebServicesController extends Controller
     public function actualizarEmpleados(Request $request){
         // dd($this->firstUpdate()); // Ejecutar esta funcion solo la primer vez que se suba a produccion
         $conn = DB::connection('incore');
-        $response = $this->getRango(1853);
+        /*$response = $this->getRango(1853);
         $response = $this->getEspecifico(1179);
-        dd($response);
+        dd($response);*/
         $no_actualizados = Empleados::with('getMovimientoRecurso')
             ->whereHas('getMovimientoRecurso', function ($q){
                 $q->with('getRazonRH');
@@ -40,7 +40,7 @@ class WebServicesController extends Controller
             ->whereNull('baja_rh')
             ->orderByDesc('empleado_id')
             ->get();
-        dd($response, $no_actualizados);
+        //dd($response, $no_actualizados);
         $actualizados = [];
         foreach ($no_actualizados as $empleado){
             try{
@@ -123,7 +123,7 @@ class WebServicesController extends Controller
                 "usuario"     => $user,
                 "password"    => $pass,
                 "numEmp"      => $numEmp,
-                "fechainicio" => '01/01/2019',
+                "fechainicio" => '01/01/2016',
                 "fechafin"    => $fechafin,
             ];
             $response = $client->__soapCall("getFechas", array($params));

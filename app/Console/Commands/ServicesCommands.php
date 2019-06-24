@@ -102,7 +102,7 @@ class ServicesCommands extends Command
                 "usuario"     => $user,
                 "password"    => $pass,
                 "numEmp"      => $numEmp,
-                "fechainicio" => '01/01/2019',
+                "fechainicio" => '01/01/2016',
                 "fechafin"    => $fechafin,
             ];
             $response = $client->__soapCall("getFechas", array($params));

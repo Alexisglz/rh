@@ -31,6 +31,8 @@ Route::group(["prefix" => "ajuste", "middleware" => ["auth"]], function() {
     Route::post('/delete', 'AjustesController@delete')->name('ajuste.delete');
     Route::post('/send', 'AjustesController@send')->name('ajuste.send');
     Route::get('/autorizar', 'AjustesController@autorizar')->name('ajuste.autorizar');
+    Route::get('/validar', 'AjustesController@validar')->name('ajuste.validar');
+    Route::post('/save_aprobar', 'AjustesController@saveAprobar')->name('ajuste.save_aprobar');
     Route::post('/validar_ajuste', 'AjustesController@validarAjuste')->name('autorizar.validar_ajuste');
 });
 

@@ -15,7 +15,7 @@ Sueldo Tradicional: <strong>{{$ajuste->tradicional}}</strong>
 Sueldo Tradicional: <strong>{{$ajuste->asimilado}}</strong>
 @endif
 
-@component('mail::button', ['url' => url('/ajuste/autorizar?id='.$ajuste->id), 'color' => 'green'])
+@component('mail::button', ['url' => url('/ajuste/validar?id='.$ajuste->id), 'color' => 'green'])
 {{ __("Ir al portal") }}
 @endcomponent
 {{ __("Saludos") }}.<br>

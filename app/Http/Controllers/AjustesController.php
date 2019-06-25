@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empleados;
 use App\Events\SueldosEvents;
 use App\Models\AjusteSueldo;
+use App\Models\VistaAjusteSueldo;
 use App\User;
 use DB;
 use Illuminate\Http\Request;
@@ -169,6 +170,40 @@ class AjustesController extends Controller
                 'ok' => true,
                 'data' => $ajuste
             ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function validar(Request $request){
+        if (!isset($request->id))
+            return redirect()->route('ajuste.index');
+        $ajuste = VistaAjusteSueldo::find($request->id);
+        return view('ajustes.aprobar',[
+            'ajuste' => $ajuste
+        ]);
+    }
+
+    public function saveAprobar(Request $request){
+        try{
+            DB::beginTransaction();
+            $ajuste = AjusteSueldo::find($request->id);
+            $ajuste->fecha_validacion = date('Y-m-d H:i:s');
+            if ($request->accion == 'autorizar'){
+                $ajuste->estatus = 'autorizado';
+                $ajuste->usuario_auth = auth()->user()->id_usuario;
+            }
+            else{
+                $ajuste->estatus = 'rechazado';
+                $ajuste->usuario_cancel = auth()->user()->id_usuario;
+            }
+            $ajuste->save();
+            DB::commit();
+            return redirect()->route('ajuste.autorizar')->with('success','Solicitud actualizada correctamente');
         }catch (\Exception $e){
             DB::rollBack();
             return response()->json([

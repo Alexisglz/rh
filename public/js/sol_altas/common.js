@@ -56,7 +56,7 @@ $("#esquema").change(function () {
         if (($("#sueldo_variable").hasClass("req_common"))) {
             $("#sueldo_variable").removeClass("req_common");
         }
-    } else if (esquema == "ASIMILADO" || esquema == "EFECTIVO" || esquema == "VIATICOS") {
+    } else if (esquema == "MIXTO") {
         if ($("#v_imss").hasClass("hide")) {
             $("#v_imss").removeClass("hide");
         }
@@ -65,6 +65,24 @@ $("#esquema").change(function () {
         }
         if (!($("#sueldo_variable").hasClass("req_common"))) {
             $("#sueldo_variable").addClass("req_common");
+        }
+        if (!($("#sueldo_imss").hasClass("req_common"))) {
+            $("#sueldo_imss").addClass("req_common");
+        }
+    } else if (esquema == "ASIMILADO") {
+        if (!$("#v_imss").hasClass("hide")) {
+            $("#v_imss").addClass("hide");
+        }
+
+        if (($("#v_variable").hasClass("hide"))) {
+            $("#v_variable").removeClass("hide");
+        }
+
+        if (!($("#sueldo_variable").hasClass("req_common"))) {
+            $("#sueldo_variable").addClass("req_common");
+        }
+        if (($("#sueldo_imss").hasClass("req_common"))) {
+            $("#sueldo_imss").removeClass("req_common");
         }
     }
     costoVenta();

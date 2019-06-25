@@ -222,8 +222,7 @@
                                     $esquema_sueldos = [
                                         'TRADICIONAL'=>'TRADICIONAL',
                                         'ASIMILADO'=>'ASIMILADO',
-                                        'EFECTIVO'=>'EFECTIVO',
-                                        'VIATICOS'=>'VIATICOS',
+                                        'MIXTO'=>'MIXTO',
                                     ];
                                 @endphp
                                 {!! Form::label('esquema', 'Esquema de contratación: ') !!}

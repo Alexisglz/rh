@@ -194,7 +194,6 @@ class AltasController extends Controller
             $sol->talla_playera    = 0;
             $sol->actividad        = $request->actividad;
             $sol->coordinador_id   = $request->coordinador_id;
-            $sol->pm               = $request->pm;
             $sol->lugar_trabajo    = $request->lugar_trabajo;
             $sol->cotizacion_url   = null;
             $sol->caso_negocio_url = null;

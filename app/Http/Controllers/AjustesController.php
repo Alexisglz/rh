@@ -126,7 +126,7 @@ class AjustesController extends Controller
             $url = $this->createExcel($request->ajustes);
             foreach ($request->ajustes as $item){
                 $ajuste            = AjusteSueldo::find($item);
-                $ajuste->enviado   = 'SI';
+                $ajuste->estatus   = 'enviado';
                 $ajuste->url_envio = $url;
                 $ajuste->save();
             }
@@ -140,6 +140,38 @@ class AjustesController extends Controller
             DB::rollBack();
             return response()->json([
                 'ok'   => false,
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function autorizar(){
+        return view('ajustes.autorizar');
+    }
+
+    public function validarAjuste(Request $request){
+        try{
+            DB::beginTransaction();
+            $ajuste = AjusteSueldo::find($request->id);
+            $ajuste->fecha_validacion = date('Y-m-d H:i:s');
+            if ($request->accion == 'autorizar'){
+                $ajuste->estatus = 'autorizado';
+                $ajuste->usuario_auth = auth()->user()->id_usuario;
+            }
+            else{
+                $ajuste->estatus = 'rechazado';
+                $ajuste->usuario_cancel = auth()->user()->id_usuario;
+            }
+            $ajuste->save();
+            DB::commit();
+            return response()->json([
+                'ok' => true,
+                'data' => $ajuste
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
                 'data' => $e->getMessage()
             ]);
         }

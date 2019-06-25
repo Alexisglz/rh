@@ -30,6 +30,8 @@ Route::group(["prefix" => "ajuste", "middleware" => ["auth"]], function() {
     Route::post('/edit', 'AjustesController@edit')->name('ajuste.edit');
     Route::post('/delete', 'AjustesController@delete')->name('ajuste.delete');
     Route::post('/send', 'AjustesController@send')->name('ajuste.send');
+    Route::get('/autorizar', 'AjustesController@autorizar')->name('ajuste.autorizar');
+    Route::post('/validar_ajuste', 'AjustesController@validarAjuste')->name('autorizar.validar_ajuste');
 });
 
 Route::group(["prefix" => "asignacion", "middleware" => ["auth"]], function() {
@@ -112,6 +114,7 @@ Route::group(["prefix" => "datatables", "middleware" => ["auth"]], function() {
     Route::get('/get_incidencias_finalizadas', 'DatatablesController@getIncidenciasFinalizadas')->name('autorizar.get_incidencias_finalizadas');
     Route::get('/get_incidencias_periodo', 'DatatablesController@getIncidenciasPeriodo')->name('autorizar.get_incidencias_periodo');
     Route::get('/get_data_ajustes', 'DatatablesController@getDataAjustes')->name('autorizar.get_data_ajustes');
+    Route::get('/get_vali_ajustes', 'DatatablesController@getValiAjustes')->name('autorizar.get_vali_ajustes');
 });
 
 Route::group(["prefix" => "empleados", "middleware" => ["auth"]], function() {

@@ -75,7 +75,6 @@ use Illuminate\Http\Request;
 
 	Route::post('/getBitacoraIncidentes/{id}','AutorizarController@getBitacoraIncidentes');
 	Route::post('/AutIncidencia','AutorizarController@AuthIncidencia');
-	Route::post('/send-file-temp',['uses'=>'UsersController@postSendFileTemp']);
 	Route::post('/mail','MailController@store');
 	Route::post('/citaFirma','MailController@citaFirma');
 

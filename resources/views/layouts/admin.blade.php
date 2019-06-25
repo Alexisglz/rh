@@ -342,6 +342,14 @@ to get the desired effect
                                     </a>
                                 </li>
                                 @endcan
+                                    @can('access',[\App\User::class,'validar_ajuste_s'])
+                                        <li class="nav-item">
+                                            <a href="{!! route('ajuste.autorizar') !!}" class="nav-link">
+                                                <i class="fa  fa-check nav-icon iconMenu"></i>
+                                                <p class="labelMenu">{{__('Autorizar Ajustes')}}</p>
+                                            </a>
+                                        </li>
+                                    @endcan
                             </ul>
                         </li>
                     </div>

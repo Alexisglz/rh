@@ -16,12 +16,22 @@ class AjustesSueldos extends Migration
         Schema::create('ajustes_sueldos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_empleado');
+            $table->unsignedInteger('usuario_auth')->nullable();
+            $table->unsignedInteger('usuario_cancel')->nullable();
+            $table->dateTime('fecha_validacion')->nullable();
             $table->integer('num_empleado');
             $table->float('tradicional')->default(0);
             $table->float('asimilado')->default(0);
-            $table->string('enviado')->nullable();
+            $table->enum('estatus',[
+                'solicitado',
+                'autorizado',
+                'rechazado',
+                'enviado',
+                'cancelado'
+            ])->default('solicitado');
             $table->text('observaciones')->nullable();
             $table->text('url')->nullable();
+            $table->text('url_envio')->nullable();
             $table->timestamps();
         });
     }

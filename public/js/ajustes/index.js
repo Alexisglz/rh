@@ -21,7 +21,7 @@ var table      = $('#table_ajustes').DataTable({
     pageLength: 100,
     columns: [
         {data: 'id', name: 'id', className:'text-center'},
-        {data: 'enviado', name: 'check', className:'text-center envio_as'},
+        {data: 'estatus', name: 'estatus', className:'text-center envio_as'},
         {data: 'url', name: 'url', className:'text-center'},
         {data: 'nombre', name: 'nombre', className:'text-center'},
         {data: 'num_empleado', name: 'tradicional', className:'text-center'},
@@ -51,9 +51,23 @@ var table      = $('#table_ajustes').DataTable({
             "targets": 1,
             "data": null,
             "render": function (data, type, row) {
-                if (data == 'SI')
-                    return "<input type='checkbox' disabled checked style='color:#007bffcc;font-size:20px'>";
-                return "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
+                var view = '';
+                switch (data) {
+                    case 'autorizado':
+                        view = "<input type='checkbox' class='selects' style='color:#007bffcc;font-size:20px'>";
+                        break;
+                    case 'solicitado':
+                        view = '<i title="Solicitud Pendiente de Autorizacion" class="fas fa-hourglass-half" style="color:#007bff;font-size:20px"></i>';
+                        break;
+                    case 'rechazado':
+                    case 'cancelado':
+                        view = '<i title="Solicitud Rechazada" class="fas fa-close" style="color:red;font-size:20px"></i>';
+                        break;
+                    case 'enviado':
+                        view = '<i title="Solicitud Enviada" class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                        break;
+                }
+                return view;
             },
         },
         {
@@ -74,7 +88,7 @@ var table      = $('#table_ajustes').DataTable({
             render: function (data, type, row) {
                 var del  = '';
                 var edit = '';
-                if (row.enviado == 'SI'){
+                if (row.estatus != 'solicitado'){
                     edit = editar_ajustes_s == 1 ? '<button title="Editar Ajuste" disabled="disabled" class="btn btn-sm btn-primary text-white"><i class="fa fa-edit fa-sm"></i></button>':'';
                     del  = eliminar_ajuste_s == 1 ? '<button title="Eliminar Ajuste" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>':'';
                 }

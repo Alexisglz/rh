@@ -547,6 +547,26 @@ class DatatablesController extends Controller
                 $ajustes->where('id','=',$request->search_id);
             if($request->search_nombre)
                 $ajustes->where('nombre','LIKE','%'.$request->search_nombre.'%');
+            if($request->search_est){
+                if ($request->search_est == 'cancelado')
+                    $ajustes->whereIn('estatus',['cancelado','rechazado']);
+                else
+                    $ajustes->where('estatus','=',$request->search_est);
+            }
+        }
+        $ajustes = $ajustes->get();
+        return DataTables::of($ajustes)
+            ->make(true);
+    }
+
+    public function getValiAjustes(Request $request){
+        $ajustes = VistaAjusteSueldo::query();
+        $ajustes->where('estatus','=','solicitado');
+        if ($request->reset == 0){
+            if($request->search_id)
+                $ajustes->where('id','=',$request->search_id);
+            if($request->search_nombre)
+                $ajustes->where('nombre','LIKE','%'.$request->search_nombre.'%');
             if($request->search_est)
                 $ajustes->where('enviado','=',$request->search_est);
         }

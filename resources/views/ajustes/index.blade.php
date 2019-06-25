@@ -59,8 +59,10 @@
                 <div class="form-group col-sm-2">
                     <select id="search_est" name="search_est" class="form-control col-sm-12" placeholder="Estatus" title="Buscar por estatus">
                         <option value="">{{__('Seleccione')}}</option>
-                        <option value="SI">{{__('Enviado')}}</option>
-                        <option value="NO">{{__('No enviado')}}</option>
+                        <option value="solicitado">{{__('Pendientes')}}</option>
+                        <option value="autorizado">{{__('Autorizadas')}}</option>
+                        <option value="cancelado">{{__('Canceladas')}}</option>
+                        <option value="enviado">{{__('Enviadas')}}</option>
                     </select>
                 </div>
                 <div class="col-sm">

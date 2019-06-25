@@ -10,15 +10,20 @@
                     <legend>Datos</legend>
                     <div class="form-row">
                         <input id="id_emp" hidden>
-                        <div class="form-group col-md-4">
+                        <input id="id_risk" hidden>
+                        <div class="form-group col-md-3">
                             <label for="empleado">Empleado:</label>
-                            <input class="form-control" name="empleado" type="text" id="empleado">
+                            <input class="form-control" name="empleado" type="text" id="empleado" autocomplete="off">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
+                            <label for="asimilado">Risk Order:</label>
+                            <input class="form-control" class="validar" name="ro" type="text" id="ro" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-3">
                             <label for="tradicional">Sueldo Tradicional:</label>
                             <input class="form-control" name="tradicional" type="number" id="tradicional" value="0">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="asimilado">Sueldo Asimilado:</label>
                             <input class="form-control" class="validar" name="asimilado" type="number" id="asimilado" value="0">
                         </div>

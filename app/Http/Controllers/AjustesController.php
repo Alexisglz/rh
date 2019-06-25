@@ -7,7 +7,6 @@ use App\Events\SueldosEvents;
 use App\Models\AjusteSueldo;
 use App\User;
 use DB;
-use File;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Storage;
@@ -26,6 +25,7 @@ class AjustesController extends Controller
             $empleado              = Empleados::find($request->id);
             $ajuste                = new AjusteSueldo();
             $ajuste->id_empleado   = $empleado->empleado_id;
+            $ajuste->ro            = $request->ro;
             $ajuste->num_empleado  = $empleado->empleado_num;
             $ajuste->tradicional   = $request->tradicional;
             $ajuste->asimilado     = $request->asimilado;
@@ -34,6 +34,7 @@ class AjustesController extends Controller
             $ajuste->url = $this->createFile($ajuste->id, $ajuste->num_empleado);
             $ajuste->save();
             DB::commit();
+            event(new SueldosEvents(null,'auth_ajuste', $ajuste->id));
             return response()->json([
                 'ok' => true,
                 'data' => $empleado

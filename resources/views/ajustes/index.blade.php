@@ -84,8 +84,10 @@
                     <th data-priority="4">{{__('DOCUMENTO')}}</th>
                     <th data-priority="3">{{__('EMPLEADO')}}</th>
                     <th>{{__('NUMERO EMP')}}</th>
-                    <th>{{__('TRADICIONAL')}}</th>
-                    <th>{{__('ASIMILADO')}}</th>
+                    <th data-priority="5">{{__('TRADICIONAL')}}</th>
+                    <th data-priority="6">{{__('ASIMILADO')}}</th>
+                    <th data-priority="7">{{__('RO')}}</th>
+                    <th data-priority="8">{{__('Venta')}}</th>
                     <th>{{__('OBSERVACIONES')}}</th>
                     <th>{{__('FECHA SOLICITUD')}}</th>
                     <th data-priority="5">{{__('ACCIONES')}}</th>

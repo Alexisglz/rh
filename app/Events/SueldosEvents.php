@@ -15,18 +15,20 @@ class SueldosEvents
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $doc;
     public $tipo;
+    public $id;
 
     /**
      * Create a new event instance.
      *
-     * @param $doc
+     * @param null $doc
      * @param $tipo
+     * @param null $id
      */
-    public function __construct($doc, $tipo)
+    public function __construct($doc = null, $tipo, $id = null)
     {
-        //
         $this->doc = $doc;
         $this->tipo = $tipo;
+        $this->id = $id;
     }
 
     /**

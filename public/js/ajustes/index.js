@@ -27,6 +27,8 @@ var table      = $('#table_ajustes').DataTable({
         {data: 'num_empleado', name: 'tradicional', className:'text-center'},
         {data: 'tradicional', name: 'tradicional', className:'text-center'},
         {data: 'asimilado', name: 'asimilado', className:'text-center'},
+        {data: 'pedido', name: 'pedido', className:'text-center'},
+        {data: 'monto', name: 'monto', className:'text-center'},
         {data: 'observaciones', name: 'observaciones', className:'text-center'},
         {data: 'fecha', name: 'fecha', className:'text-center'},
         {data: null, name:'acciones', className:'text-center acciones_as', orderable: false, searchable: false,}
@@ -82,7 +84,7 @@ var table      = $('#table_ajustes').DataTable({
             }
         },
         {
-            targets: 9,
+            targets: 11,
             data: null,
             className: "text-center",
             render: function (data, type, row) {
@@ -110,6 +112,8 @@ $('#nuevo_ajuste').on('click',function () {
     $('#tradicional').val(0);
     $('#asimilado').val(0);
     $('#observaciones').val('');
+    $('#ro').val('');
+    $('#id_risk').val('');
     $('#save_ajuste').modal('show');
 });
 
@@ -122,6 +126,40 @@ $("#empleado").autocomplete({
     }
 });
 
+var risk = $('#ro');
+
+risk.on('keyup',function () {
+    if ($('#id_emp').val() != ""){
+        risk.autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/incidencias/get_risk',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: {
+                        term: request.term,
+                        id: $('#id_emp').val()
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function(event, ui) {
+                $('#id_risk').val(ui.item.id);
+            }
+        });
+    }
+    else{
+        $(this).val("");
+        Swal.fire({
+            title: "Debe seleccionar un empleado",
+            type: "warning"
+        });
+    }
+});
+
 function saveAjuste() {
     var exist = existe('nuevo_ajus',['observaciones']);
     if (exist == false)
@@ -129,6 +167,7 @@ function saveAjuste() {
     var data = {
         _token: CSRF_TOKEN,
         id: $('#id_emp').val(),
+        ro: $('#id_risk').val(),
         tradicional: $('#tradicional').val(),
         asimilado: $('#asimilado').val(),
         observaciones: $('#observaciones').val(),

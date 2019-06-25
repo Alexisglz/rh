@@ -16,6 +16,7 @@ class AjustesSueldos extends Migration
         Schema::create('ajustes_sueldos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_empleado');
+            $table->unsignedInteger('ro');
             $table->unsignedInteger('usuario_auth')->nullable();
             $table->unsignedInteger('usuario_cancel')->nullable();
             $table->dateTime('fecha_validacion')->nullable();

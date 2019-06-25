@@ -236,7 +236,6 @@
                                     $trabajo_riesgo = [
                                         '1'=>'RIESGO 1',
                                         '2'=>'RIESGO 2',
-                                        '3'=>'RIESGO 3',
                                         '4'=>'RIESGO 4',
                                         '5'=>'RIESGO 5',
                                     ];
@@ -484,6 +483,10 @@
                                 {!! Form::label('coord_nuevo', 'Coordinador Nuevo: ',['style'=>' margin-top:27px;']) !!}
                                 {!! Form::checkbox('coord_nuevo', 'value', false,['id'=>'coord_nuevo','data-toggle'=>'toggle','data-on'=>'SI','data-off'=>'NO','data-onstyle'=>'primary','data-offstyle'=>'success']); !!}
                             </div>
+                            <div class="col-md-6">
+                                {!! Form::label('lugar_trabajo', 'Lugar de trabajo: ') !!}
+                                {!! Form::select('lugar_trabajo',$estados,null,['class'=>'form-control req_common','id'=>'lugar_trabajo','style'=>'width: 100%;']) !!}
+                            </div>
                         </div>
 
                         <div class="row hide" id="datos_coord_nuevo_div">
@@ -501,16 +504,6 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                {!! Form::label('lugar_trabajo', 'Lugar de trabajo: ') !!}
-                                {!! Form::select('lugar_trabajo',$estados,null,['class'=>'form-control req_common','id'=>'lugar_trabajo','style'=>'width: 100%;']) !!}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="pm"><abbr title="Este campo es obligatorio">*</abbr>PM:</label>
-                                {!! Form::text('pm', null, ['class' => 'form-control req_common upper','id'=>'pm']) !!}
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {!! Form::label('direccion', 'Direccion: ') !!}

@@ -47,16 +47,17 @@
                                 <th>{{__('Bitacora')}}</th>
                                 <th>{{__('Vobo Jefe')}}</th>
                                 <th data-priority="2">{{__('Empleado')}}</th>
-                                <th data-priority="3">{{__('Tipo de incidencia')}}</th>
-                                <th data-priority="8">{{__('Fecha de solicitud')}}</th>
-                                <th data-priority="4">{{__('Fecha inicio')}}</th>
-                                <th data-priority="5">{{__('Duracion (Días)')}}</th>
-                                <th data-priority="6">{{__('Monto')}}</th>
+                                <th data-priority="3">{{__('Incidencia')}}</th>
+                                <th data-priority="4">{{__('Tipo de incidencia')}}</th>
+                                <th data-priority="9">{{__('Fecha de solicitud')}}</th>
+                                <th data-priority="5">{{__('Fecha inicio')}}</th>
+                                <th data-priority="6">{{__('Duracion (Días)')}}</th>
+                                <th data-priority="7">{{__('Monto')}}</th>
                                 <th>{{__('RO')}}</th>
                                 <th>{{__('Solicitante')}}</th>
                                 <th>{{__('Motivo')}}</th>
                                 <th>{{__('Lote')}}</th>
-                                <th data-priority="7">{{__('Acciones')}}</th>
+                                <th data-priority="8">{{__('Acciones')}}</th>
                             </tr>
                             </thead>
                         </table>

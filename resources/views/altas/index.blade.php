@@ -82,8 +82,8 @@
                     <th>{{__('BITACORA')}}</th>
                     <th>{{__('WBS')}}</th>
                     <th>{{__('RECURSO')}}</th>
-                    <th>{{__('FECHA SOL')}}</th>
-                    <th>{{__('CREACION')}}</th>
+                    <th>{{__('FECHA SOLICITUD')}}</th>
+                    <th>{{__('FECHA CREACION SOLICITUD')}}</th>
                     <th>{{__('COORDINADOR')}}</th>
                     <th>{{__('AUTORIZAR DIRECCION')}}</th>
                     <th>{{__('AUTORIZAR RH')}}</th>

@@ -92,10 +92,8 @@
                     <th>{{__('AUTH AUTO')}}</th>
                     <th>{{__('AUTH ALMACEN')}}</th>
                     <th>{{__('CONTRATO FIRMADO')}}</th>
-                    <th>{{__('COR-NOKIA-INDE')}}</th>
                     <th>{{__('PM')}}</th>
                     <th>{{__('IMSS')}}</th>
-                    <th>{{__('VARIABLE')}}</th>
                     <th>{{__('ASIMILADO')}}</th>
                     <th>{{__('COSTO')}}</th>
                     <th>{{__('VENTA')}}</th>

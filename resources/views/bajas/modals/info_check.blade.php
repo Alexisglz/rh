@@ -14,12 +14,20 @@
                                     <td>Se completo la autorizacion</td>
                                 </tr>
                                 <tr>
+                                    <td><i class="fas fa-check-circle" style="color:#007bff;font-size:20px"></i></td>
+                                    <td>Se autorizo automaticamente al no deber herramienta</td>
+                                </tr>
+                                <tr>
                                     <td><i class="fa fa-ban" style="color:orange;font-size:20px"></i></td>
                                     <td>No tiene permisos para realizar la autorizacion</td>
                                 </tr>
                                 <tr>
                                     <td><i class='fa fa-wrench nav-icon nav-icon nav-icon' style="color:green;"></i></td>
                                     <td>Pendiente de realizar la autorizacion</td>
+                                </tr>
+                                <tr>
+                                    <td><i class='fa fa-wrench nav-icon nav-icon nav-icon' style="color:orange;"></i></td>
+                                    <td>Pendiente de agendar la cita</td>
                                 </tr>
                                 <tr>
                                     <td><i class='fas fa-ban' style="font-size: 20px"></i></td>

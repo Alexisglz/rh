@@ -141,14 +141,21 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    if(row.adeudo_accesorios == 'SI' || row.adeudo_compu == 'SI')
+                        view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    else
+                        view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 else {
-                    if (baja_compu == 1 && (row.fecha_cita != null))
-                        if(row.adeudo_accesorios == 'NO' && row.adeudo_compu == 'NO')
-                            view = "<button data-tipo='Autorizar' class='Compu btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                    if (baja_compu == 1){
+                        if (row.fecha_cita != null)
+                            if(row.adeudo_accesorios == 'SI' || row.adeudo_compu == 'SI')
+                                view = "<button data-tipo='Autorizar' class='Compu btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                            else
+                                view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                         else
                             view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                    }
                     else
                         view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                 }
@@ -161,14 +168,21 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    if(row.adeudo_celular == 'SI' || row.adeudo_lin == 'SI')
+                        view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    else
+                        view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 else {
-                    if (baja_cel == 1 && (row.fecha_cita != null))
-                        if(row.adeudo_celular == 'NO' && row.adeudo_lin == 'NO')
-                            view = "<button data-tipo='Autorizar' class='Celu btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                    if(baja_cel == 1){
+                        if (row.fecha_cita != null)
+                            if(row.adeudo_celular == 'SI' || row.adeudo_lin == 'SI')
+                                view = "<button data-tipo='Autorizar' class='Celu btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                            else
+                                view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                         else
                             view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                    }
                     else
                         view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                 }
@@ -181,14 +195,21 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    if(row.adeudo_auto == 'SI')
+                        view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    else
+                        view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 else {
-                    if (baja_coche == 1 && (row.fecha_cita != null))
-                        if(row.adeudo_auto == 'NO')
-                            view = "<button data-tipo='Autorizar' class='Auto btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                    if (baja_coche == 1){
+                        if (row.fecha_cita != null)
+                            if(row.adeudo_auto == 'SI')
+                                view = "<button data-tipo='Autorizar' class='Auto btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                            else
+                                view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                         else
                             view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                    }
                     else
                         view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                 }
@@ -201,14 +222,21 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    if(row.adeudo_herra == 'SI' )
+                        view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    else
+                        view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 else {
-                    if (baja_herra == 1 && (row.fecha_cita != null))
-                        if(row.adeudo_herra == 'NO' )
-                            view = "<button data-tipo='Autorizar' class='Herra btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                    if (baja_herra == 1){
+                        if (row.fecha_cita != null)
+                            if(row.adeudo_herra == 'SI' )
+                                view = "<button data-tipo='Autorizar' class='Herra btn btn-xs btn-success iconAutorizar'><i class='fa fa-wrench nav-icon nav-icon nav-icon'></i></button>";
+                            else
+                                view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                         else
                             view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                    }
                     else
                         view = '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                 }

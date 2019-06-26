@@ -55,6 +55,7 @@
                         <th>{{__('BAJA ALMACEN')}}</th>
                         <th>{{__('BAJA CREDENCIAL')}}</th>
                         <th>{{__('PAGO FINIQUITO LIQUIDACION')}}</th>
+                        <th>{{__('ADEUDOS')}}</th>
                         <th>{{__('BAJA DEFINITIVA')}}</th>
                         <th>{{__('COORDINADOR')}}</th>
                         <th>{{__('COORDINADOR NOKIA INDEPLO')}}</th>

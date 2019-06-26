@@ -35,6 +35,7 @@ var table      = $('#darbaja-table').DataTable({
         {data: 'baja_almacen',name: 'baja_almacen',orderable: false, searchable: false, className: " alma_v text-center common"},
         {data: 'baja_credencial',name: 'baja_credencial',orderable: false, searchable: false, className: "cred_v text-center common"},
         {data: 'pago_finiquito',name: 'pago_finiquito',orderable: false, searchable: false, className: "fini_v text-center common"},
+        {data: null, name: 'adeudos',orderable: false, searchable: false, className:'text-center common'},
         {data: 'baja_definitiva',name: 'baja_definitiva', className:'text-center common'},
         {data: 'coordinador',name: 'coordinador', className:'text-center common'},
         {data: 'coordinador nokia',name: 'coordinador nokia', className:'text-center common'},
@@ -249,7 +250,25 @@ var table      = $('#darbaja-table').DataTable({
             }
         },
         {
-            'targets': 21,
+            'targets': 13,
+            'data':null,
+            'render': function (data, type, row) {
+                var view = '';
+                if (row.deuda_compu > 0)
+                    view += 'computo: $'+row.deuda_compu+'<br>';
+                if (row.deuda_cel> 0)
+                    view += 'celular: $'+row.deuda_cel+'<br>';
+                if (row.deuda_auto > 0)
+                    view += 'auto: $'+row.deuda_auto+'<br>';
+                if (row.deuda_alma > 0)
+                    view += 'almacen: $'+row.deuda_alma+'<br>';
+                if (row.deuda_cred > 0)
+                    view += 'credencial: $'+row.deuda_cred;
+                return view;
+            }
+        },
+        {
+            'targets': 22,
             'data':null,
             'render': function (data, type, row) {
                 var view = '';
@@ -593,6 +612,7 @@ $('#modalCita').on('hidden.bs.modal', function() {
 $('#darbaja-table tbody').on('click', '.Cita', function () {
     data    = tabla.row($(this).parent()).data();
     var modal = $('#modalCita');
+    $('#fecha_cita').val(data.fecha_baja_sol);
     modal.modal('toggle');
 });
 

@@ -339,6 +339,7 @@ class BajasController extends Controller
             DB::beginTransaction();
             $sol_baja             = SolBajaNomina::find($request->id);
             $sol_baja->fecha_cita = $request->cita;
+            $sol_baja->obs_cita   = $request->obs;
             $sol_baja->save();
             DB::commit();
             event(new BajasEvents($sol_baja, 'confirmar_herra'));
@@ -358,6 +359,8 @@ class BajasController extends Controller
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
             $sol_baja->baja_computo = "true";
+            $sol_baja->obs_compu    = $request->obs;
+            $sol_baja->adeudo_compu = $request->cantidad;
             $sol_baja->save();
             DB::commit();
             return response()->json([
@@ -376,6 +379,8 @@ class BajasController extends Controller
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
             $sol_baja->baja_celular = "true";
+            $sol_baja->obs_cel      = $request->obs;
+            $sol_baja->adeudo_cel   = $request->cantidad;
             $sol_baja->save();
             DB::commit();
             return response()->json([
@@ -392,8 +397,10 @@ class BajasController extends Controller
         $this->authorize('access',[User::class, 'baja_coche']);
         try{
             DB::beginTransaction();
-            $sol_baja            = solicitudbaja::find($request->id);
-            $sol_baja->baja_auto = "true";
+            $sol_baja               = solicitudbaja::find($request->id);
+            $sol_baja->baja_auto    = "true";
+            $sol_baja->obs_auto     = $request->obs;
+            $sol_baja->adeudo_auto  = $request->cantidad;
             $sol_baja->save();
             DB::commit();
             return response()->json([
@@ -412,6 +419,8 @@ class BajasController extends Controller
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
             $sol_baja->baja_almacen = "true";
+            $sol_baja->obs_alma     = $request->obs;
+            $sol_baja->adeudo_alma  = $request->cantidad;
             $sol_baja->save();
             DB::commit();
             return response()->json([
@@ -430,6 +439,8 @@ class BajasController extends Controller
             DB::beginTransaction();
             $sol_baja                  = solicitudbaja::find($request->id);
             $sol_baja->baja_credencial = "true";
+            $sol_baja->obs_cred        = $request->obs;
+            $sol_baja->adeudo_cred     = $request->cantidad;
             $sol_baja->save();
             DB::commit();
             return response()->json([

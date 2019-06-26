@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Incidencias extends Model
 {
-	 use SoftDeletes;
+	 //use SoftDeletes;
 	 protected $table = 'incidencias';   
 	 protected $dates = ['deleted_at'];
 }

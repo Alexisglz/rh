@@ -191,8 +191,47 @@ function enviarIncidencia() {
                 });
         }
     });
-    console.log(object);
 }
+
+$('#incidencias-table tbody').on('click', '.del_incidencia', function () {
+    data = table.row($(this).parent()).data();
+    swal({
+        title: '¿Deseas eliminar la incidencia?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true
+    }) .then((confirm) => {
+        if (confirm) {
+            var object = {
+                _token: CSRF_TOKEN,
+                id: data.id
+            };
+            $.ajax({
+                url: 'incidencias/delete',
+                type: 'POST',
+                dataType: 'JSON',
+                data: object,
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success: function (data) {
+                    if (data.ok == true){
+                        swal("Incidencia eliminada con éxito", {
+                            icon: "success",
+                        });
+                        table.ajax.reload();
+                    }
+                    else {
+                        swal("Error!", "Ocurrio un error al eliminar el ajuste!", "error");
+                    }
+                }
+            });
+        }
+    });
+});
 
 
 function MostrarBitacora(data) {

@@ -19,6 +19,7 @@ use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Storage;
 use Validator;
 
 class IncidenciasController extends Controller
@@ -452,6 +453,31 @@ class IncidenciasController extends Controller
         }catch (\Exception $e){
             DB::rollBack();
             return back()->with('Error', 'Ocurrio un error');
+        }
+    }
+
+    public function delete(Request $request){
+        try{
+            DB::beginTransaction();
+            $incidencia = Incidencias::find($request->id);
+            if ($incidencia->vobo != null){
+                $dir = 'incidencias/vobo_jefe_'.$incidencia->id;
+                if (Storage::disk('public')->exists($dir)){
+                    Storage::disk('public')->deleteDirectory($dir);
+                }
+            }
+            $incidencia->delete();
+            DB::commit();
+            return response()->json([
+                'ok' => true,
+                'data' => $incidencia
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
+                'data' => $e->getMessage()
+            ]);
         }
     }
 }

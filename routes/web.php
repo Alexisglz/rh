@@ -185,6 +185,7 @@ Route::group(["prefix" => "incidencias", "middleware" => ["auth"]], function() {
     Route::get('/get_risk', 'IncidenciasController@getRisk')->name('incidencias.get_risk');
     Route::get('/aprobar', 'IncidenciasController@aprobar')->name('incidencias.aprobar');
     Route::post('/save_aprobar', 'IncidenciasController@saveAprobar')->name('incidencias.save_aprobar');
+    Route::post('/delete', 'IncidenciasController@delete')->name('incidencias.delete');
 });
 
 Route::group(["prefix" => "mail", "middleware" => ["auth"]], function() {

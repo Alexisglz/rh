@@ -27,7 +27,11 @@
                     </div>
                     <div id="div_playera" class="row">
                         <label>Talla playera</label>
-                        <input id="playera1" type="number" name="playera1" class="form-control">
+                        <select id="playera1" name="playera1" class="form-control">
+                            <option value="chica">{{__('Chica')}}</option>
+                            <option value="mediana">{{__('Mediana')}}</option>
+                            <option value="grande">{{__('Grande')}}</option>
+                        </select>
                     </div>
                     <div class="row">
                         <label>Correo solicitante</label>

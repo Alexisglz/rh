@@ -307,6 +307,7 @@ $('#altas-table tbody').on('click', '.AutorizarHerraHerra', function () {
 
 $('#altas-table tbody').on('click', '.cita', function () {
     data       = table.row($(this).parent()).data();
+    $('#fecha_cita').val(data['fecha solicitud']);
     data_table = data;
     iduatCoche = data['id'];
 });

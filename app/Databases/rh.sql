@@ -1,21 +1,44 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Local
+ Source Server         : Productivo
  Source Server Type    : MariaDB
- Source Server Version : 100315
- Source Host           : localhost:3306
+ Source Server Version : 100213
+ Source Host           : 104.214.68.6:3306
  Source Schema         : rh
 
  Target Server Type    : MariaDB
- Target Server Version : 100315
+ Target Server Version : 100213
  File Encoding         : 65001
 
- Date: 31/05/2019 14:55:59
+ Date: 26/06/2019 18:06:42
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for ajustes_sueldos
+-- ----------------------------
+DROP TABLE IF EXISTS `ajustes_sueldos`;
+CREATE TABLE `ajustes_sueldos`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_empleado` int(10) UNSIGNED NOT NULL,
+  `ro` int(10) UNSIGNED NOT NULL,
+  `usuario_auth` int(10) UNSIGNED NULL DEFAULT NULL,
+  `usuario_cancel` int(10) UNSIGNED NULL DEFAULT NULL,
+  `fecha_validacion` datetime(0) NULL DEFAULT NULL,
+  `num_empleado` int(11) NOT NULL,
+  `tradicional` double(8, 2) NOT NULL DEFAULT 0.00,
+  `asimilado` double(8, 2) NOT NULL DEFAULT 0.00,
+  `estatus` enum('solicitado','autorizado','rechazado','enviado','cancelado') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'solicitado',
+  `observaciones` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `url` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `url_envio` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for baja_comentarios
@@ -51,277 +74,7 @@ CREATE TABLE `bitacoras`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 341 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of bitacoras
--- ----------------------------
-INSERT INTO `bitacoras` VALUES (1, 'solicitud_alta', 1, 750, 0, '\'Registro de solicitud\'', '2019-05-10', '11:03:21', 1, '\'alta\'', '2019-05-10 11:03:21', '2019-05-10 11:03:21');
-INSERT INTO `bitacoras` VALUES (2, 'solicitud_alta', 1, 750, 0, '\'Autorizar Solicitud\'', '2019-05-10', '11:16:39', 1, '\'Autorizar solicitud\'', '2019-05-10 11:16:39', '2019-05-10 11:16:39');
-INSERT INTO `bitacoras` VALUES (3, 'solicitud_alta', 1, 750, 0, '\'Autorizar Solicitud\'', '2019-05-10', '11:18:58', 1, '\'Autorizar solicitud\'', '2019-05-10 11:18:58', '2019-05-10 11:18:58');
-INSERT INTO `bitacoras` VALUES (5, 'solicitud_alta', 1, 750, 0, '\'Agendar cita de firma\'', '2019-05-10', '11:36:05', 1, '\'CITA FIRMA\'', '2019-05-10 11:36:05', '2019-05-10 11:36:05');
-INSERT INTO `bitacoras` VALUES (6, 'solicitud_alta', 2, 750, 0, '\'Registro de solicitud\'', '2019-05-13', '09:07:23', 1, '\'alta\'', '2019-05-13 09:07:23', '2019-05-13 09:07:23');
-INSERT INTO `bitacoras` VALUES (7, 'solicitud_alta', 3, 5, 0, '\'Registro de solicitud\'', '2019-05-13', '10:29:02', 1, '\'alta\'', '2019-05-13 10:29:02', '2019-05-13 10:29:02');
-INSERT INTO `bitacoras` VALUES (8, 'incidencia', 1, 1, 0, '\'Se ha creado una incidencia\'', '2019-05-13', '11:33:47', 1, '\'Creacion de incidencia\'', '2019-05-13 11:33:47', '2019-05-13 11:33:47');
-INSERT INTO `bitacoras` VALUES (9, 'incidencia', 2, 1, 0, '\'Se ha creado una incidencia\'', '2019-05-13', '11:34:53', 1, '\'Creacion de incidencia\'', '2019-05-13 11:34:53', '2019-05-13 11:34:53');
-INSERT INTO `bitacoras` VALUES (10, 'incidencia', 3, 1, 0, '\'Se ha creado una incidencia\'', '2019-05-13', '13:20:59', 1, '\'Creacion de incidencia\'', '2019-05-13 13:20:59', '2019-05-13 13:20:59');
-INSERT INTO `bitacoras` VALUES (11, 'incidencia', 5, 1, 0, '\'Se ha creado una incidencia\'', '2019-05-13', '13:25:22', 1, '\'Creacion de incidencia\'', '2019-05-13 13:25:22', '2019-05-13 13:25:22');
-INSERT INTO `bitacoras` VALUES (12, 'auth_incidencia', 2, 2, 1418, '\'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO\'', '2019-05-13', '14:11:16', 1, '\'AUTORIZAR\'', '2019-05-13 14:11:16', '2019-05-13 14:11:16');
-INSERT INTO `bitacoras` VALUES (13, 'auth_incidencia', 5, 750, 1418, '\'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO\'', '2019-05-13', '14:12:57', 1, '\'AUTORIZAR\'', '2019-05-13 14:12:57', '2019-05-13 14:12:57');
-INSERT INTO `bitacoras` VALUES (14, 'incidencia', 6, 1, 0, '\'Se ha creado una incidencia\'', '2019-05-13', '16:52:33', 1, '\'Creacion de incidencia\'', '2019-05-13 16:52:33', '2019-05-13 16:52:33');
-INSERT INTO `bitacoras` VALUES (15, 'incidencia', 7, 2, 1889, 'Se ha creado una incidencia', '2019-05-13', '17:12:16', 1, 'Creacion de incidencia', '2019-05-13 17:12:16', '2019-05-13 17:12:16');
-INSERT INTO `bitacoras` VALUES (16, 'auth_incidencia', 1, NULL, 115, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: CANCELAR PARA ESTE USUARIO', '2019-05-14', '09:10:27', 1, 'CANCELAR', '2019-05-14 09:10:27', '2019-05-14 09:10:27');
-INSERT INTO `bitacoras` VALUES (17, 'incidencia', 8, NULL, 943, 'Se ha creado una incidencia', '2019-05-14', '10:24:50', 1, 'Creacion de incidencia', '2019-05-14 10:24:50', '2019-05-14 10:24:50');
-INSERT INTO `bitacoras` VALUES (18, 'auth_incidencia', 3, NULL, 2150, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-14', '10:42:54', 1, 'AUTORIZAR', '2019-05-14 10:42:54', '2019-05-14 10:42:54');
-INSERT INTO `bitacoras` VALUES (19, 'auth_incidencia', 8, NULL, 943, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-14', '10:45:20', 1, 'AUTORIZAR', '2019-05-14 10:45:20', '2019-05-14 10:45:20');
-INSERT INTO `bitacoras` VALUES (20, 'auth_incidencia', 7, NULL, 1889, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-14', '11:53:10', 1, 'AUTORIZAR', '2019-05-14 11:53:10', '2019-05-14 11:53:10');
-INSERT INTO `bitacoras` VALUES (21, 'solicitud_alta', 4, NULL, 0, 'Registro de solicitud', '2019-05-14', '13:37:10', 1, 'alta', '2019-05-14 13:37:10', '2019-05-14 13:37:10');
-INSERT INTO `bitacoras` VALUES (22, 'solicitud_alta', 4, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '13:37:33', 1, 'Autorizar solicitud', '2019-05-14 13:37:33', '2019-05-14 13:37:33');
-INSERT INTO `bitacoras` VALUES (23, 'solicitud_alta', 4, NULL, 0, 'Agendar cita de firma', '2019-05-14', '13:37:52', 1, 'CITA FIRMA', '2019-05-14 13:37:52', '2019-05-14 13:37:52');
-INSERT INTO `bitacoras` VALUES (24, 'solicitud_alta', 4, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '13:38:03', 1, 'Autorizar computadora', '2019-05-14 13:38:03', '2019-05-14 13:38:03');
-INSERT INTO `bitacoras` VALUES (25, 'solicitud_alta', 4, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '13:38:09', 1, 'Autorizar celular', '2019-05-14 13:38:09', '2019-05-14 13:38:09');
-INSERT INTO `bitacoras` VALUES (26, 'incidencia', 9, NULL, 1179, 'Se ha creado una incidencia', '2019-05-14', '16:01:51', 1, 'Creacion de incidencia', '2019-05-14 16:01:51', '2019-05-14 16:01:51');
-INSERT INTO `bitacoras` VALUES (27, 'auth_incidencia', 9, NULL, 1179, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-14', '16:03:05', 1, 'AUTORIZAR', '2019-05-14 16:03:05', '2019-05-14 16:03:05');
-INSERT INTO `bitacoras` VALUES (28, 'solicitud_alta', 5, NULL, 0, 'Registro de solicitud', '2019-05-14', '16:55:26', 1, 'alta', '2019-05-14 16:55:26', '2019-05-14 16:55:26');
-INSERT INTO `bitacoras` VALUES (29, 'solicitud_alta', 5, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '16:55:58', 1, 'Autorizar solicitud', '2019-05-14 16:55:58', '2019-05-14 16:55:58');
-INSERT INTO `bitacoras` VALUES (30, 'solicitud_alta', 5, NULL, 0, 'Agendar cita de firma', '2019-05-14', '16:56:28', 1, 'CITA FIRMA', '2019-05-14 16:56:28', '2019-05-14 16:56:28');
-INSERT INTO `bitacoras` VALUES (31, 'solicitud_alta', 5, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '16:56:42', 1, 'Autorizar computadora', '2019-05-14 16:56:42', '2019-05-14 16:56:42');
-INSERT INTO `bitacoras` VALUES (32, 'solicitud_alta', 5, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '16:56:58', 1, 'Autorizar celular', '2019-05-14 16:56:58', '2019-05-14 16:56:58');
-INSERT INTO `bitacoras` VALUES (33, 'solicitud_alta', 5, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '16:57:04', 1, 'Autorizar coche', '2019-05-14 16:57:04', '2019-05-14 16:57:04');
-INSERT INTO `bitacoras` VALUES (34, 'solicitud_alta', 5, NULL, 0, 'Autorizar Solicitud', '2019-05-14', '16:57:11', 1, 'Autorizar herramientas', '2019-05-14 16:57:11', '2019-05-14 16:57:11');
-INSERT INTO `bitacoras` VALUES (35, 'solicitud_alta', 6, NULL, 0, 'Registro de solicitud', '2019-05-15', '09:56:53', 1, 'alta', '2019-05-15 09:56:53', '2019-05-15 09:56:53');
-INSERT INTO `bitacoras` VALUES (36, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '09:57:04', 1, 'Autorizar solicitud', '2019-05-15 09:57:04', '2019-05-15 09:57:04');
-INSERT INTO `bitacoras` VALUES (37, 'solicitud_alta', 6, NULL, 0, 'Agendar cita de firma', '2019-05-15', '10:16:02', 1, 'CITA FIRMA', '2019-05-15 10:16:02', '2019-05-15 10:16:02');
-INSERT INTO `bitacoras` VALUES (38, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '12:24:56', 1, 'Autorizar computadora', '2019-05-15 12:24:56', '2019-05-15 12:24:56');
-INSERT INTO `bitacoras` VALUES (39, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '12:31:28', 1, 'Autorizar computadora', '2019-05-15 12:31:28', '2019-05-15 12:31:28');
-INSERT INTO `bitacoras` VALUES (40, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '12:38:15', 1, 'Autorizar computadora', '2019-05-15 12:38:15', '2019-05-15 12:38:15');
-INSERT INTO `bitacoras` VALUES (41, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '12:51:32', 1, 'Autorizar herramientas', '2019-05-15 12:51:32', '2019-05-15 12:51:32');
-INSERT INTO `bitacoras` VALUES (42, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '12:57:46', 1, 'Autorizar celular', '2019-05-15 12:57:46', '2019-05-15 12:57:46');
-INSERT INTO `bitacoras` VALUES (43, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '13:17:58', 1, 'Autorizar coche', '2019-05-15 13:17:58', '2019-05-15 13:17:58');
-INSERT INTO `bitacoras` VALUES (44, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '13:21:06', 1, 'Autorizar coche', '2019-05-15 13:21:06', '2019-05-15 13:21:06');
-INSERT INTO `bitacoras` VALUES (45, 'solicitud_alta', 6, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '13:21:12', 1, 'Autorizar celular', '2019-05-15 13:21:12', '2019-05-15 13:21:12');
-INSERT INTO `bitacoras` VALUES (46, 'solicitud_alta', 7, NULL, 0, 'Registro de solicitud', '2019-05-15', '13:50:52', 1, 'alta', '2019-05-15 13:50:52', '2019-05-15 13:50:52');
-INSERT INTO `bitacoras` VALUES (47, 'solicitud_alta', 7, NULL, 0, 'Registro de solicitud', '2019-05-15', '14:01:23', 1, 'alta', '2019-05-15 14:01:23', '2019-05-15 14:01:23');
-INSERT INTO `bitacoras` VALUES (48, 'solicitud_alta', 7, NULL, 0, 'Autorizar Solicitud', '2019-05-15', '14:11:07', 1, 'Autorizar solicitud', '2019-05-15 14:11:07', '2019-05-15 14:11:07');
-INSERT INTO `bitacoras` VALUES (49, 'solicitud_alta', 7, NULL, 0, 'Agendar cita de firma', '2019-05-15', '14:11:28', 1, 'CITA FIRMA', '2019-05-15 14:11:28', '2019-05-15 14:11:28');
-INSERT INTO `bitacoras` VALUES (50, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '09:06:28', 1, 'Autorizar computadora', '2019-05-16 09:06:28', '2019-05-16 09:06:28');
-INSERT INTO `bitacoras` VALUES (51, 'solicitud_alta', 3, 750, 0, 'Autorizar Solicitud', '2019-05-16', '10:23:42', 1, 'Autorizar solicitud', '2019-05-16 10:23:42', '2019-05-16 10:23:42');
-INSERT INTO `bitacoras` VALUES (52, 'solicitud_alta', 2, 750, 0, 'Autorizar Solicitud', '2019-05-16', '10:33:35', 1, 'Autorizar solicitud', '2019-05-16 10:33:35', '2019-05-16 10:33:35');
-INSERT INTO `bitacoras` VALUES (53, 'solicitud_alta', 3, 750, 0, 'Autorizar Solicitud', '2019-05-16', '10:35:03', 1, 'Autorizar solicitud', '2019-05-16 10:35:03', '2019-05-16 10:35:03');
-INSERT INTO `bitacoras` VALUES (55, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '10:37:26', 1, 'CITA FIRMA', '2019-05-16 10:37:26', '2019-05-16 10:37:26');
-INSERT INTO `bitacoras` VALUES (56, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '10:44:58', 1, 'CITA FIRMA', '2019-05-16 10:44:58', '2019-05-16 10:44:58');
-INSERT INTO `bitacoras` VALUES (57, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:06:58', 1, 'CITA FIRMA', '2019-05-16 11:06:58', '2019-05-16 11:06:58');
-INSERT INTO `bitacoras` VALUES (58, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:08:33', 1, 'CITA FIRMA', '2019-05-16 11:08:33', '2019-05-16 11:08:33');
-INSERT INTO `bitacoras` VALUES (59, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:13:34', 1, 'CITA FIRMA', '2019-05-16 11:13:34', '2019-05-16 11:13:34');
-INSERT INTO `bitacoras` VALUES (60, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:15:13', 1, 'CITA FIRMA', '2019-05-16 11:15:13', '2019-05-16 11:15:13');
-INSERT INTO `bitacoras` VALUES (61, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:18:18', 1, 'CITA FIRMA', '2019-05-16 11:18:18', '2019-05-16 11:18:18');
-INSERT INTO `bitacoras` VALUES (62, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:21:12', 1, 'CITA FIRMA', '2019-05-16 11:21:12', '2019-05-16 11:21:12');
-INSERT INTO `bitacoras` VALUES (63, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '11:24:26', 1, 'CITA FIRMA', '2019-05-16 11:24:26', '2019-05-16 11:24:26');
-INSERT INTO `bitacoras` VALUES (64, 'solicitud_alta', 3, 750, 0, 'Autorizar Solicitud', '2019-05-16', '11:26:22', 1, 'Autorizar solicitud', '2019-05-16 11:26:22', '2019-05-16 11:26:22');
-INSERT INTO `bitacoras` VALUES (65, 'solicitud_alta', 3, 750, 0, 'Autorizar Solicitud', '2019-05-16', '11:29:12', 1, 'Autorizar solicitud', '2019-05-16 11:29:12', '2019-05-16 11:29:12');
-INSERT INTO `bitacoras` VALUES (67, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '12:23:56', 1, 'CITA FIRMA', '2019-05-16 12:23:56', '2019-05-16 12:23:56');
-INSERT INTO `bitacoras` VALUES (68, 'solicitud_alta', 3, 750, 0, 'Agendar cita de firma', '2019-05-16', '12:27:13', 1, 'CITA FIRMA', '2019-05-16 12:27:13', '2019-05-16 12:27:13');
-INSERT INTO `bitacoras` VALUES (69, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '12:41:06', 1, 'Autorizar celular', '2019-05-16 12:41:06', '2019-05-16 12:41:06');
-INSERT INTO `bitacoras` VALUES (70, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '12:44:42', 1, 'Autorizar computadora', '2019-05-16 12:44:42', '2019-05-16 12:44:42');
-INSERT INTO `bitacoras` VALUES (71, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '12:44:59', 1, 'Autorizar celular', '2019-05-16 12:44:59', '2019-05-16 12:44:59');
-INSERT INTO `bitacoras` VALUES (72, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '12:45:09', 1, 'Autorizar coche', '2019-05-16 12:45:09', '2019-05-16 12:45:09');
-INSERT INTO `bitacoras` VALUES (73, 'solicitud_alta', 7, 750, 0, 'Agendar cita de firma', '2019-05-16', '16:26:35', 1, 'CITA FIRMA', '2019-05-16 16:26:35', '2019-05-16 16:26:35');
-INSERT INTO `bitacoras` VALUES (74, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '16:49:40', 1, 'Autorizar computadora', '2019-05-16 16:49:40', '2019-05-16 16:49:40');
-INSERT INTO `bitacoras` VALUES (75, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '16:49:48', 1, 'Autorizar celular', '2019-05-16 16:49:48', '2019-05-16 16:49:48');
-INSERT INTO `bitacoras` VALUES (76, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '16:49:53', 1, 'Autorizar coche', '2019-05-16 16:49:53', '2019-05-16 16:49:53');
-INSERT INTO `bitacoras` VALUES (77, 'solicitud_alta', 7, 750, 0, 'Autorizar Solicitud', '2019-05-16', '16:50:08', 1, 'Autorizar herramientas', '2019-05-16 16:50:08', '2019-05-16 16:50:08');
-INSERT INTO `bitacoras` VALUES (78, 'solicitud_alta', 8, 750, 0, 'Registro de solicitud', '2019-05-16', '16:58:05', 1, 'alta', '2019-05-16 16:58:05', '2019-05-16 16:58:05');
-INSERT INTO `bitacoras` VALUES (79, 'solicitud_alta', 8, 750, 0, 'Autorizar Solicitud', '2019-05-16', '16:58:31', 1, 'Autorizar solicitud', '2019-05-16 16:58:31', '2019-05-16 16:58:31');
-INSERT INTO `bitacoras` VALUES (80, 'solicitud_alta', 8, 750, 0, 'Agendar cita de firma', '2019-05-16', '17:00:00', 1, 'CITA FIRMA', '2019-05-16 17:00:00', '2019-05-16 17:00:00');
-INSERT INTO `bitacoras` VALUES (81, 'solicitud_alta', 8, 750, 0, 'Autorizar Solicitud', '2019-05-16', '17:00:24', 1, 'Autorizar computadora', '2019-05-16 17:00:24', '2019-05-16 17:00:24');
-INSERT INTO `bitacoras` VALUES (82, 'solicitud_alta', 8, 750, 0, 'Autorizar Solicitud', '2019-05-16', '17:00:29', 1, 'Autorizar celular', '2019-05-16 17:00:29', '2019-05-16 17:00:29');
-INSERT INTO `bitacoras` VALUES (83, 'solicitud_alta', 8, 750, 0, 'Autorizar Solicitud', '2019-05-16', '17:00:33', 1, 'Autorizar coche', '2019-05-16 17:00:33', '2019-05-16 17:00:33');
-INSERT INTO `bitacoras` VALUES (84, 'incidencia', NULL, NULL, 272, 'Se ha creado una incidencia', '2019-05-16', '17:03:41', 1, 'Creacion de incidencia', '2019-05-16 17:03:41', '2019-05-16 17:03:41');
-INSERT INTO `bitacoras` VALUES (85, 'incidencia', NULL, NULL, 1179, 'Se ha creado una incidencia', '2019-05-16', '17:05:48', 1, 'Creacion de incidencia', '2019-05-16 17:05:48', '2019-05-16 17:05:48');
-INSERT INTO `bitacoras` VALUES (86, 'auth_incidencia', 11, 750, 1179, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-16', '17:06:00', 1, 'AUTORIZAR', '2019-05-16 17:06:00', '2019-05-16 17:06:00');
-INSERT INTO `bitacoras` VALUES (87, 'solicitud_alta', 9, 750, 0, 'Registro de solicitud', '2019-05-20', '09:03:54', 1, 'alta', '2019-05-20 09:03:54', '2019-05-20 09:03:54');
-INSERT INTO `bitacoras` VALUES (88, 'solicitud_alta', 9, 750, 0, 'Autorizar Solicitud', '2019-05-20', '09:04:30', 1, 'Autorizar solicitud', '2019-05-20 09:04:30', '2019-05-20 09:04:30');
-INSERT INTO `bitacoras` VALUES (89, 'solicitud_alta', 9, 750, 0, 'Agendar cita de firma', '2019-05-20', '09:04:50', 1, 'CITA FIRMA', '2019-05-20 09:04:50', '2019-05-20 09:04:50');
-INSERT INTO `bitacoras` VALUES (90, 'solicitud_alta', 9, 750, 0, 'Autorizar Solicitud', '2019-05-20', '09:05:14', 1, 'Autorizar computadora', '2019-05-20 09:05:14', '2019-05-20 09:05:14');
-INSERT INTO `bitacoras` VALUES (91, 'solicitud_alta', 9, 750, 0, 'Autorizar Solicitud', '2019-05-20', '09:05:20', 1, 'Autorizar celular', '2019-05-20 09:05:20', '2019-05-20 09:05:20');
-INSERT INTO `bitacoras` VALUES (92, 'incidencia', NULL, NULL, 2150, 'Se ha creado una incidencia', '2019-05-20', '17:00:56', 1, 'Creacion de incidencia', '2019-05-20 17:00:56', '2019-05-20 17:00:56');
-INSERT INTO `bitacoras` VALUES (93, 'incidencia', 13, 750, 272, 'Se ha creado una incidencia', '2019-05-20', '17:04:04', 1, 'Creacion de incidencia', '2019-05-20 17:04:04', '2019-05-20 17:04:04');
-INSERT INTO `bitacoras` VALUES (94, 'incidencia', 13, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:06:53', 1, 'AUTORIZAR', '2019-05-20 17:06:53', '2019-05-20 17:06:53');
-INSERT INTO `bitacoras` VALUES (95, 'incidencia', 13, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:06:57', 1, 'AUTORIZAR', '2019-05-20 17:06:57', '2019-05-20 17:06:57');
-INSERT INTO `bitacoras` VALUES (96, 'incidencia', 13, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:07:02', 1, 'AUTORIZAR', '2019-05-20 17:07:02', '2019-05-20 17:07:02');
-INSERT INTO `bitacoras` VALUES (97, 'incidencia', 13, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:07:27', 1, 'AUTORIZAR', '2019-05-20 17:07:27', '2019-05-20 17:07:27');
-INSERT INTO `bitacoras` VALUES (98, 'incidencia', 13, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:08:04', 1, 'AUTORIZAR', '2019-05-20 17:08:04', '2019-05-20 17:08:04');
-INSERT INTO `bitacoras` VALUES (99, 'incidencia', 12, 750, 2150, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:08:52', 1, 'AUTORIZAR', '2019-05-20 17:08:52', '2019-05-20 17:08:52');
-INSERT INTO `bitacoras` VALUES (100, 'incidencia', 10, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-20', '17:09:00', 1, 'AUTORIZAR', '2019-05-20 17:09:00', '2019-05-20 17:09:00');
-INSERT INTO `bitacoras` VALUES (101, 'incidencia', 14, 750, 272, 'Se ha creado una incidencia', '2019-05-20', '18:44:02', 1, 'Creacion de incidencia', '2019-05-20 18:44:02', '2019-05-20 18:44:02');
-INSERT INTO `bitacoras` VALUES (102, 'incidencia', 15, 235, 1418, 'Se ha creado una incidencia', '2019-05-21', '11:22:00', 1, 'Creacion de incidencia', '2019-05-21 11:22:00', '2019-05-21 11:22:00');
-INSERT INTO `bitacoras` VALUES (103, 'incidencia', 16, 750, 2150, 'Se ha creado una incidencia', '2019-05-21', '12:35:38', 1, 'Creacion de incidencia', '2019-05-21 12:35:38', '2019-05-21 12:35:38');
-INSERT INTO `bitacoras` VALUES (104, 'incidencia', 16, 750, 2150, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-21', '12:39:57', 1, 'AUTORIZAR', '2019-05-21 12:39:57', '2019-05-21 12:39:57');
-INSERT INTO `bitacoras` VALUES (105, 'incidencia', 15, 750, 1418, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-21', '12:40:00', 1, 'AUTORIZAR', '2019-05-21 12:40:01', '2019-05-21 12:40:01');
-INSERT INTO `bitacoras` VALUES (106, 'incidencia', 17, 750, 2275, 'Se ha creado una incidencia', '2019-05-21', '14:01:46', 1, 'Creacion de incidencia', '2019-05-21 14:01:46', '2019-05-21 14:01:46');
-INSERT INTO `bitacoras` VALUES (107, 'solicitud_alta', 10, 45, 0, 'Registro de solicitud', '2019-05-21', '14:22:22', 1, 'alta', '2019-05-21 14:22:22', '2019-05-21 14:22:22');
-INSERT INTO `bitacoras` VALUES (108, 'solicitud_alta', 11, 45, 0, 'Registro de solicitud', '2019-05-21', '14:24:16', 1, 'alta', '2019-05-21 14:24:16', '2019-05-21 14:24:16');
-INSERT INTO `bitacoras` VALUES (109, 'solicitud_alta', 12, 45, 0, 'Registro de solicitud', '2019-05-21', '14:27:00', 1, 'alta', '2019-05-21 14:27:00', '2019-05-21 14:27:00');
-INSERT INTO `bitacoras` VALUES (110, 'solicitud_alta', 13, 45, 0, 'Registro de solicitud', '2019-05-21', '14:29:59', 1, 'alta', '2019-05-21 14:29:59', '2019-05-21 14:29:59');
-INSERT INTO `bitacoras` VALUES (111, 'incidencia', 18, 706, 272, 'Se ha creado una incidencia', '2019-05-21', '14:37:24', 1, 'Creacion de incidencia', '2019-05-21 14:37:24', '2019-05-21 14:37:24');
-INSERT INTO `bitacoras` VALUES (112, 'solicitud_alta', 12, 82, 0, 'Autorizar Solicitud', '2019-05-21', '16:45:59', 1, 'Autorizar solicitud', '2019-05-21 16:45:59', '2019-05-21 16:45:59');
-INSERT INTO `bitacoras` VALUES (113, 'solicitud_alta', 13, 82, 0, 'Autorizar Solicitud', '2019-05-21', '16:46:04', 1, 'Autorizar solicitud', '2019-05-21 16:46:04', '2019-05-21 16:46:04');
-INSERT INTO `bitacoras` VALUES (114, 'solicitud_alta', 11, 82, 0, 'Autorizar Solicitud', '2019-05-21', '16:46:13', 1, 'Autorizar solicitud', '2019-05-21 16:46:13', '2019-05-21 16:46:13');
-INSERT INTO `bitacoras` VALUES (115, 'solicitud_alta', 10, 82, 0, 'Autorizar Solicitud', '2019-05-21', '16:46:19', 1, 'Autorizar solicitud', '2019-05-21 16:46:19', '2019-05-21 16:46:19');
-INSERT INTO `bitacoras` VALUES (116, 'solicitud_alta', 13, 45, 0, 'Agendar cita de firma', '2019-05-21', '16:46:56', 1, 'CITA FIRMA', '2019-05-21 16:46:56', '2019-05-21 16:46:56');
-INSERT INTO `bitacoras` VALUES (117, 'solicitud_alta', 12, 45, 0, 'Agendar cita de firma', '2019-05-21', '16:47:06', 1, 'CITA FIRMA', '2019-05-21 16:47:06', '2019-05-21 16:47:06');
-INSERT INTO `bitacoras` VALUES (118, 'solicitud_alta', 11, 45, 0, 'Agendar cita de firma', '2019-05-21', '16:47:23', 1, 'CITA FIRMA', '2019-05-21 16:47:23', '2019-05-21 16:47:23');
-INSERT INTO `bitacoras` VALUES (119, 'solicitud_alta', 10, 45, 0, 'Agendar cita de firma', '2019-05-21', '16:47:38', 1, 'CITA FIRMA', '2019-05-21 16:47:38', '2019-05-21 16:47:38');
-INSERT INTO `bitacoras` VALUES (120, 'solicitud_alta', 13, 731, 0, 'Autorizar Solicitud', '2019-05-21', '16:50:04', 1, 'Autorizar computadora', '2019-05-21 16:50:04', '2019-05-21 16:50:04');
-INSERT INTO `bitacoras` VALUES (121, 'solicitud_alta', 10, 731, 0, 'Autorizar Solicitud', '2019-05-21', '16:50:09', 1, 'Autorizar computadora', '2019-05-21 16:50:09', '2019-05-21 16:50:09');
-INSERT INTO `bitacoras` VALUES (122, 'solicitud_alta', 13, 711, 0, 'Autorizar Solicitud', '2019-05-21', '16:54:41', 1, 'Autorizar celular', '2019-05-21 16:54:41', '2019-05-21 16:54:41');
-INSERT INTO `bitacoras` VALUES (123, 'solicitud_alta', 12, 711, 0, 'Autorizar Solicitud', '2019-05-21', '16:54:46', 1, 'Autorizar celular', '2019-05-21 16:54:46', '2019-05-21 16:54:46');
-INSERT INTO `bitacoras` VALUES (124, 'solicitud_alta', 11, 744, 0, 'Autorizar Solicitud', '2019-05-21', '16:56:29', 1, 'Autorizar herramientas', '2019-05-21 16:56:29', '2019-05-21 16:56:29');
-INSERT INTO `bitacoras` VALUES (125, 'solicitud_alta', 14, 45, 0, 'Registro de solicitud', '2019-05-21', '17:18:00', 1, 'alta', '2019-05-21 17:18:00', '2019-05-21 17:18:00');
-INSERT INTO `bitacoras` VALUES (126, 'solicitud_alta', 15, 45, 0, 'Registro de solicitud', '2019-05-21', '17:19:44', 1, 'alta', '2019-05-21 17:19:44', '2019-05-21 17:19:44');
-INSERT INTO `bitacoras` VALUES (127, 'solicitud_alta', 16, 45, 0, 'Registro de solicitud', '2019-05-21', '17:21:30', 1, 'alta', '2019-05-21 17:21:30', '2019-05-21 17:21:30');
-INSERT INTO `bitacoras` VALUES (128, 'solicitud_alta', 17, 45, 0, 'Registro de solicitud', '2019-05-21', '17:22:43', 1, 'alta', '2019-05-21 17:22:43', '2019-05-21 17:22:43');
-INSERT INTO `bitacoras` VALUES (129, 'solicitud_alta', 17, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:23:34', 1, 'Autorizar solicitud', '2019-05-21 17:23:34', '2019-05-21 17:23:34');
-INSERT INTO `bitacoras` VALUES (130, 'solicitud_alta', 16, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:23:41', 1, 'Autorizar solicitud', '2019-05-21 17:23:41', '2019-05-21 17:23:41');
-INSERT INTO `bitacoras` VALUES (131, 'solicitud_alta', 15, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:23:45', 1, 'Autorizar solicitud', '2019-05-21 17:23:45', '2019-05-21 17:23:45');
-INSERT INTO `bitacoras` VALUES (132, 'solicitud_alta', 14, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:23:50', 1, 'Autorizar solicitud', '2019-05-21 17:23:50', '2019-05-21 17:23:50');
-INSERT INTO `bitacoras` VALUES (133, 'solicitud_alta', 17, 750, 0, 'Agendar cita de firma', '2019-05-21', '17:24:09', 1, 'CITA FIRMA', '2019-05-21 17:24:09', '2019-05-21 17:24:09');
-INSERT INTO `bitacoras` VALUES (134, 'solicitud_alta', 16, 750, 0, 'Agendar cita de firma', '2019-05-21', '17:24:14', 1, 'CITA FIRMA', '2019-05-21 17:24:14', '2019-05-21 17:24:14');
-INSERT INTO `bitacoras` VALUES (135, 'solicitud_alta', 15, 750, 0, 'Agendar cita de firma', '2019-05-21', '17:24:20', 1, 'CITA FIRMA', '2019-05-21 17:24:20', '2019-05-21 17:24:20');
-INSERT INTO `bitacoras` VALUES (136, 'solicitud_alta', 14, 750, 0, 'Agendar cita de firma', '2019-05-21', '17:24:25', 1, 'CITA FIRMA', '2019-05-21 17:24:25', '2019-05-21 17:24:25');
-INSERT INTO `bitacoras` VALUES (137, 'solicitud_alta', 15, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:24:43', 1, 'Autorizar computadora', '2019-05-21 17:24:43', '2019-05-21 17:24:43');
-INSERT INTO `bitacoras` VALUES (138, 'solicitud_alta', 16, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:25:28', 1, 'Autorizar computadora', '2019-05-21 17:25:28', '2019-05-21 17:25:28');
-INSERT INTO `bitacoras` VALUES (139, 'solicitud_alta', 18, 750, 0, 'Registro de solicitud', '2019-05-21', '17:27:41', 1, 'alta', '2019-05-21 17:27:41', '2019-05-21 17:27:41');
-INSERT INTO `bitacoras` VALUES (140, 'solicitud_alta', 18, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:27:51', 1, 'Autorizar solicitud', '2019-05-21 17:27:51', '2019-05-21 17:27:51');
-INSERT INTO `bitacoras` VALUES (141, 'solicitud_alta', 18, 750, 0, 'Agendar cita de firma', '2019-05-21', '17:28:06', 1, 'CITA FIRMA', '2019-05-21 17:28:06', '2019-05-21 17:28:06');
-INSERT INTO `bitacoras` VALUES (142, 'solicitud_alta', 18, 750, 0, 'Autorizar Solicitud', '2019-05-21', '17:28:19', 1, 'Autorizar computadora', '2019-05-21 17:28:19', '2019-05-21 17:28:19');
-INSERT INTO `bitacoras` VALUES (143, 'solicitud_alta', 17, 750, 0, 'Autorizar Solicitud', '2019-05-22', '08:56:02', 1, 'Autorizar herramientas', '2019-05-22 08:56:02', '2019-05-22 08:56:02');
-INSERT INTO `bitacoras` VALUES (144, 'solicitud_alta', 16, 750, 0, 'Autorizar Solicitud', '2019-05-22', '08:56:06', 1, 'Autorizar celular', '2019-05-22 08:56:06', '2019-05-22 08:56:06');
-INSERT INTO `bitacoras` VALUES (145, 'solicitud_alta', 19, 750, 0, 'Registro de solicitud', '2019-05-22', '09:13:56', 1, 'alta', '2019-05-22 09:13:56', '2019-05-22 09:13:56');
-INSERT INTO `bitacoras` VALUES (146, 'solicitud_alta', 20, 750, 0, 'Registro de solicitud', '2019-05-22', '09:16:06', 1, 'alta', '2019-05-22 09:16:06', '2019-05-22 09:16:06');
-INSERT INTO `bitacoras` VALUES (147, 'solicitud_alta', 20, 750, 0, 'Autorizar Solicitud', '2019-05-22', '09:17:49', 1, 'Autorizar solicitud', '2019-05-22 09:17:49', '2019-05-22 09:17:49');
-INSERT INTO `bitacoras` VALUES (148, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '09:17:55', 1, 'Autorizar solicitud', '2019-05-22 09:17:55', '2019-05-22 09:17:55');
-INSERT INTO `bitacoras` VALUES (150, 'solicitud_alta', 19, 750, 0, 'Agendar cita de firma', '2019-05-22', '09:20:09', 1, 'CITA FIRMA', '2019-05-22 09:20:09', '2019-05-22 09:20:09');
-INSERT INTO `bitacoras` VALUES (151, 'incidencia', 18, 750, 272, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-22', '09:52:08', 1, 'AUTORIZAR', '2019-05-22 09:52:08', '2019-05-22 09:52:08');
-INSERT INTO `bitacoras` VALUES (152, 'incidencia', 17, 750, 2275, 'SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: AUTORIZAR PARA ESTE USUARIO', '2019-05-22', '09:54:08', 1, 'AUTORIZAR', '2019-05-22 09:54:08', '2019-05-22 09:54:08');
-INSERT INTO `bitacoras` VALUES (153, 'solicitud_alta', 2, 750, 0, 'Autorizar Solicitud', '2019-05-22', '13:42:16', 1, 'Autorizar solicitud', '2019-05-22 13:42:16', '2019-05-22 13:42:16');
-INSERT INTO `bitacoras` VALUES (162, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '17:20:30', 1, 'Autorizar computadora', '2019-05-22 17:20:30', '2019-05-22 17:20:30');
-INSERT INTO `bitacoras` VALUES (164, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '17:22:36', 1, 'Autorizar computadora', '2019-05-22 17:22:36', '2019-05-22 17:22:36');
-INSERT INTO `bitacoras` VALUES (168, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '17:33:38', 1, 'Autorizar celular', '2019-05-22 17:33:38', '2019-05-22 17:33:38');
-INSERT INTO `bitacoras` VALUES (197, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '18:23:19', 1, 'Autorizar computadora', '2019-05-22 18:23:19', '2019-05-22 18:23:19');
-INSERT INTO `bitacoras` VALUES (198, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '18:23:34', 1, 'Autorizar celular', '2019-05-22 18:23:34', '2019-05-22 18:23:34');
-INSERT INTO `bitacoras` VALUES (199, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '18:23:40', 1, 'Autorizar coche', '2019-05-22 18:23:40', '2019-05-22 18:23:40');
-INSERT INTO `bitacoras` VALUES (200, 'solicitud_alta', 19, 750, 0, 'Autorizar Solicitud', '2019-05-22', '18:23:48', 1, 'Autorizar herramientas', '2019-05-22 18:23:48', '2019-05-22 18:23:48');
-INSERT INTO `bitacoras` VALUES (229, 'solicitud_alta', 20, 750, 0, 'Agendar cita de firma', '2019-05-23', '09:54:11', 1, 'CITA FIRMA', '2019-05-23 09:54:11', '2019-05-23 09:54:11');
-INSERT INTO `bitacoras` VALUES (230, 'solicitud_alta', 20, 750, 0, 'Autorizar Solicitud', '2019-05-23', '10:06:35', 1, 'Autorizar computadora', '2019-05-23 10:06:35', '2019-05-23 10:06:35');
-INSERT INTO `bitacoras` VALUES (231, 'solicitud_alta', 20, 750, 0, 'Autorizar Solicitud', '2019-05-23', '10:48:41', 1, 'Autorizar firmado', '2019-05-23 10:48:41', '2019-05-23 10:48:41');
-INSERT INTO `bitacoras` VALUES (232, 'solicitud_alta', 21, 750, 0, 'Registro de solicitud', '2019-05-23', '12:59:23', 1, 'alta', '2019-05-23 12:59:23', '2019-05-23 12:59:23');
-INSERT INTO `bitacoras` VALUES (233, 'solicitud_alta', 21, 750, 0, 'Autorizar Solicitud', '2019-05-23', '13:01:22', 1, 'Autorizar solicitud', '2019-05-23 13:01:22', '2019-05-23 13:01:22');
-INSERT INTO `bitacoras` VALUES (234, 'incidencia', 19, 750, 2150, 'Se ha creado una incidencia', '2019-05-23', '13:33:12', 1, 'Creacion de incidencia', '2019-05-23 13:33:12', '2019-05-23 13:33:12');
-INSERT INTO `bitacoras` VALUES (235, 'incidencia', 20, 750, 2283, 'Se ha creado una incidencia', '2019-05-23', '13:34:31', 1, 'Creacion de incidencia', '2019-05-23 13:34:31', '2019-05-23 13:34:31');
-INSERT INTO `bitacoras` VALUES (236, 'incidencia', 21, 750, 2150, 'Se ha creado una incidencia', '2019-05-23', '13:37:20', 1, 'Creacion de incidencia', '2019-05-23 13:37:20', '2019-05-23 13:37:20');
-INSERT INTO `bitacoras` VALUES (237, 'incidencia', 19, 750, 2150, '', '2019-05-23', '16:39:09', 1, 'autorizar', '2019-05-23 16:39:09', '2019-05-23 16:39:09');
-INSERT INTO `bitacoras` VALUES (239, 'incidencia', 20, 750, 2283, '', '2019-05-23', '16:40:26', 1, 'autorizar', '2019-05-23 16:40:26', '2019-05-23 16:40:26');
-INSERT INTO `bitacoras` VALUES (240, 'incidencia', 21, 750, 2150, '', '2019-05-23', '16:44:16', 1, 'autorizar', '2019-05-23 16:44:16', '2019-05-23 16:44:16');
-INSERT INTO `bitacoras` VALUES (241, 'incidencia', 19, 750, 2150, '', '2019-05-23', '16:46:41', 1, 'cancelar', '2019-05-23 16:46:41', '2019-05-23 16:46:41');
-INSERT INTO `bitacoras` VALUES (243, 'incidencia', 20, 750, 2283, '', '2019-05-23', '16:47:25', 1, 'cancelar', '2019-05-23 16:47:25', '2019-05-23 16:47:25');
-INSERT INTO `bitacoras` VALUES (244, 'incidencia', 21, 750, 2150, '', '2019-05-23', '16:47:29', 1, 'cancelar', '2019-05-23 16:47:29', '2019-05-23 16:47:29');
-INSERT INTO `bitacoras` VALUES (245, 'incidencia', 19, 750, 2150, '', '2019-05-23', '16:48:55', 1, 'autorizar', '2019-05-23 16:48:56', '2019-05-23 16:48:56');
-INSERT INTO `bitacoras` VALUES (246, 'incidencia', 20, 750, 2283, '', '2019-05-23', '16:50:32', 1, 'autorizar', '2019-05-23 16:50:32', '2019-05-23 16:50:32');
-INSERT INTO `bitacoras` VALUES (247, 'incidencia', 21, 750, 2150, '', '2019-05-23', '16:57:10', 1, 'autorizar', '2019-05-23 16:57:10', '2019-05-23 16:57:10');
-INSERT INTO `bitacoras` VALUES (248, 'incidencia', 22, 750, 2150, 'Se ha creado una incidencia', '2019-05-24', '09:19:42', 1, 'Creacion de incidencia', '2019-05-24 09:19:42', '2019-05-24 09:19:42');
-INSERT INTO `bitacoras` VALUES (249, 'incidencia', 23, 750, 2150, 'Se ha creado una incidencia', '2019-05-24', '09:19:45', 1, 'Creacion de incidencia', '2019-05-24 09:19:45', '2019-05-24 09:19:45');
-INSERT INTO `bitacoras` VALUES (250, 'incidencia', 24, 750, 2271, 'Se ha creado una incidencia', '2019-05-24', '09:22:52', 1, 'Creacion de incidencia', '2019-05-24 09:22:52', '2019-05-24 09:22:52');
-INSERT INTO `bitacoras` VALUES (251, 'incidencia', 25, 750, 2150, 'Se ha creado una incidencia', '2019-05-24', '09:24:52', 1, 'Creacion de incidencia', '2019-05-24 09:24:52', '2019-05-24 09:24:52');
-INSERT INTO `bitacoras` VALUES (252, 'solicitud_alta', 22, 750, 0, 'Registro de solicitud', '2019-05-24', '09:51:49', 1, 'alta', '2019-05-24 09:51:49', '2019-05-24 09:51:49');
-INSERT INTO `bitacoras` VALUES (253, 'incidencia', 26, 750, 1690, 'Se ha creado una incidencia', '2019-05-24', '10:59:13', 1, 'Creacion de incidencia', '2019-05-24 10:59:13', '2019-05-24 10:59:13');
-INSERT INTO `bitacoras` VALUES (254, 'incidencia', 26, 750, 1690, '', '2019-05-24', '11:03:24', 1, 'autorizar', '2019-05-24 11:03:24', '2019-05-24 11:03:24');
-INSERT INTO `bitacoras` VALUES (255, 'incidencia', 27, 750, 677, 'Se ha creado una incidencia', '2019-05-24', '14:06:43', 1, 'Creacion de incidencia', '2019-05-24 14:06:43', '2019-05-24 14:06:43');
-INSERT INTO `bitacoras` VALUES (256, 'incidencia', 28, 750, 1735, 'Se ha creado una incidencia', '2019-05-24', '14:07:29', 1, 'Creacion de incidencia', '2019-05-24 14:07:29', '2019-05-24 14:07:29');
-INSERT INTO `bitacoras` VALUES (257, 'incidencia', 29, 750, 1741, 'Se ha creado una incidencia', '2019-05-24', '14:08:12', 1, 'Creacion de incidencia', '2019-05-24 14:08:12', '2019-05-24 14:08:12');
-INSERT INTO `bitacoras` VALUES (258, 'incidencia', 30, 750, 1745, 'Se ha creado una incidencia', '2019-05-24', '14:09:46', 1, 'Creacion de incidencia', '2019-05-24 14:09:46', '2019-05-24 14:09:46');
-INSERT INTO `bitacoras` VALUES (259, 'incidencia', 31, 750, 1650, 'Se ha creado una incidencia', '2019-05-24', '14:10:59', 1, 'Creacion de incidencia', '2019-05-24 14:10:59', '2019-05-24 14:10:59');
-INSERT INTO `bitacoras` VALUES (260, 'incidencia', 32, 750, 1654, 'Se ha creado una incidencia', '2019-05-24', '14:11:54', 1, 'Creacion de incidencia', '2019-05-24 14:11:54', '2019-05-24 14:11:54');
-INSERT INTO `bitacoras` VALUES (261, 'incidencia', 33, 750, 1337, 'Se ha creado una incidencia', '2019-05-24', '14:14:03', 1, 'Creacion de incidencia', '2019-05-24 14:14:03', '2019-05-24 14:14:03');
-INSERT INTO `bitacoras` VALUES (262, 'incidencia', 34, 750, 1908, 'Se ha creado una incidencia', '2019-05-24', '14:18:06', 1, 'Creacion de incidencia', '2019-05-24 14:18:06', '2019-05-24 14:18:06');
-INSERT INTO `bitacoras` VALUES (263, 'incidencia', 35, 750, 1451, 'Se ha creado una incidencia', '2019-05-24', '14:19:53', 1, 'Creacion de incidencia', '2019-05-24 14:19:53', '2019-05-24 14:19:53');
-INSERT INTO `bitacoras` VALUES (264, 'incidencia', 35, 750, 1451, '', '2019-05-24', '14:20:49', 1, 'autorizar', '2019-05-24 14:20:49', '2019-05-24 14:20:49');
-INSERT INTO `bitacoras` VALUES (265, 'incidencia', 34, 750, 1908, '', '2019-05-24', '14:20:52', 1, 'autorizar', '2019-05-24 14:20:52', '2019-05-24 14:20:52');
-INSERT INTO `bitacoras` VALUES (266, 'incidencia', 33, 750, 1337, '', '2019-05-24', '14:20:57', 1, 'autorizar', '2019-05-24 14:20:57', '2019-05-24 14:20:57');
-INSERT INTO `bitacoras` VALUES (267, 'incidencia', 32, 750, 1654, '', '2019-05-24', '14:21:00', 1, 'autorizar', '2019-05-24 14:21:00', '2019-05-24 14:21:00');
-INSERT INTO `bitacoras` VALUES (268, 'incidencia', 31, 750, 1650, '', '2019-05-24', '14:21:03', 1, 'autorizar', '2019-05-24 14:21:03', '2019-05-24 14:21:03');
-INSERT INTO `bitacoras` VALUES (269, 'incidencia', 30, 750, 1745, '', '2019-05-24', '14:21:06', 1, 'autorizar', '2019-05-24 14:21:06', '2019-05-24 14:21:06');
-INSERT INTO `bitacoras` VALUES (270, 'incidencia', 29, 750, 1741, '', '2019-05-24', '14:21:10', 1, 'autorizar', '2019-05-24 14:21:10', '2019-05-24 14:21:10');
-INSERT INTO `bitacoras` VALUES (271, 'incidencia', 28, 750, 1735, '', '2019-05-24', '14:21:17', 1, 'autorizar', '2019-05-24 14:21:17', '2019-05-24 14:21:17');
-INSERT INTO `bitacoras` VALUES (272, 'incidencia', 27, 750, 677, '', '2019-05-24', '14:21:21', 1, 'autorizar', '2019-05-24 14:21:21', '2019-05-24 14:21:21');
-INSERT INTO `bitacoras` VALUES (273, 'incidencia', 36, 750, 150, 'Se ha creado una incidencia', '2019-05-27', '10:51:47', 1, 'Creacion de incidencia', '2019-05-27 10:51:47', '2019-05-27 10:51:47');
-INSERT INTO `bitacoras` VALUES (274, 'incidencia', 37, 750, 1571, 'Se ha creado una incidencia', '2019-05-27', '10:53:08', 1, 'Creacion de incidencia', '2019-05-27 10:53:08', '2019-05-27 10:53:08');
-INSERT INTO `bitacoras` VALUES (275, 'incidencia', 38, 750, 2150, 'Se ha creado una incidencia', '2019-05-27', '10:53:40', 1, 'Creacion de incidencia', '2019-05-27 10:53:40', '2019-05-27 10:53:40');
-INSERT INTO `bitacoras` VALUES (276, 'incidencia', 38, 750, 2150, '', '2019-05-27', '11:59:30', 1, 'autorizar', '2019-05-27 11:59:30', '2019-05-27 11:59:30');
-INSERT INTO `bitacoras` VALUES (277, 'incidencia', 37, 750, 1571, '', '2019-05-27', '11:59:34', 1, 'autorizar', '2019-05-27 11:59:34', '2019-05-27 11:59:34');
-INSERT INTO `bitacoras` VALUES (278, 'incidencia', 36, 750, 150, '', '2019-05-27', '11:59:39', 1, 'autorizar', '2019-05-27 11:59:39', '2019-05-27 11:59:39');
-INSERT INTO `bitacoras` VALUES (279, 'incidencia', 32, 750, 1654, '', '2019-05-27', '13:50:31', 1, 'cancelar', '2019-05-27 13:50:32', '2019-05-27 13:50:32');
-INSERT INTO `bitacoras` VALUES (280, 'incidencia', 8, 750, 943, '', '2019-05-27', '13:50:44', 1, 'cancelar', '2019-05-27 13:50:44', '2019-05-27 13:50:44');
-INSERT INTO `bitacoras` VALUES (281, 'incidencia', 2, 750, 1418, '', '2019-05-27', '13:51:11', 1, 'cancelar', '2019-05-27 13:51:11', '2019-05-27 13:51:11');
-INSERT INTO `bitacoras` VALUES (282, 'incidencia', 31, 750, 1650, '', '2019-05-27', '13:59:49', 1, 'cancelar', '2019-05-27 13:59:49', '2019-05-27 13:59:49');
-INSERT INTO `bitacoras` VALUES (283, 'incidencia', 39, 536, 2083, 'Se ha creado una incidencia', '2019-05-28', '10:36:18', 1, 'Creacion de incidencia', '2019-05-28 10:36:18', '2019-05-28 10:36:18');
-INSERT INTO `bitacoras` VALUES (284, 'incidencia', 40, 750, 2150, 'Se ha creado una incidencia', '2019-05-29', '09:11:19', 1, 'Creacion de incidencia', '2019-05-29 09:11:19', '2019-05-29 09:11:19');
-INSERT INTO `bitacoras` VALUES (285, 'incidencia', 40, 750, 2150, '', '2019-05-29', '09:11:44', 1, 'autorizar', '2019-05-29 09:11:44', '2019-05-29 09:11:44');
-INSERT INTO `bitacoras` VALUES (286, 'incidencia', 41, 750, 2150, 'Se ha creado una incidencia', '2019-05-29', '09:51:19', 1, 'Creacion de incidencia', '2019-05-29 09:51:19', '2019-05-29 09:51:19');
-INSERT INTO `bitacoras` VALUES (287, 'incidencia', 42, 750, 1179, 'Se ha creado una incidencia', '2019-05-29', '10:52:15', 1, 'Creacion de incidencia', '2019-05-29 10:52:15', '2019-05-29 10:52:15');
-INSERT INTO `bitacoras` VALUES (288, 'incidencia', 43, 750, 2272, 'Se ha creado una incidencia', '2019-05-29', '10:55:26', 1, 'Creacion de incidencia', '2019-05-29 10:55:26', '2019-05-29 10:55:26');
-INSERT INTO `bitacoras` VALUES (289, 'incidencia', 44, 750, 1418, 'Se ha creado una incidencia', '2019-05-29', '11:38:30', 1, 'Creacion de incidencia', '2019-05-29 11:38:30', '2019-05-29 11:38:30');
-INSERT INTO `bitacoras` VALUES (290, 'incidencia', 44, 750, 1418, '', '2019-05-29', '11:38:43', 1, 'autorizar', '2019-05-29 11:38:43', '2019-05-29 11:38:43');
-INSERT INTO `bitacoras` VALUES (291, 'solicitud_alta', 23, 750, 0, 'Registro de solicitud', '2019-05-29', '18:36:51', 1, 'alta', '2019-05-29 18:36:51', '2019-05-29 18:36:51');
-INSERT INTO `bitacoras` VALUES (292, 'solicitud_alta', 23, 750, 0, 'Autorizar Solicitud', '2019-05-29', '18:37:09', 1, 'Autorizar solicitud', '2019-05-29 18:37:09', '2019-05-29 18:37:09');
-INSERT INTO `bitacoras` VALUES (293, 'solicitud_alta', 23, 750, 0, 'Agendar cita de firma', '2019-05-29', '18:38:05', 1, 'CITA FIRMA', '2019-05-29 18:38:05', '2019-05-29 18:38:05');
-INSERT INTO `bitacoras` VALUES (294, 'solicitud_alta', 23, 750, 0, 'Autorizar Solicitud', '2019-05-29', '18:39:00', 1, 'Autorizar computadora', '2019-05-29 18:39:00', '2019-05-29 18:39:00');
-INSERT INTO `bitacoras` VALUES (295, 'solicitud_alta', 23, 750, 0, 'Autorizar Solicitud', '2019-05-29', '18:39:23', 1, 'Autorizar celular', '2019-05-29 18:39:23', '2019-05-29 18:39:23');
-INSERT INTO `bitacoras` VALUES (296, 'solicitud_alta', 23, 750, 0, 'Autorizar Solicitud', '2019-05-29', '18:39:57', 1, 'Autorizar coche', '2019-05-29 18:39:57', '2019-05-29 18:39:57');
-INSERT INTO `bitacoras` VALUES (297, 'solicitud_alta', 23, 750, 0, 'Autorizar Solicitud', '2019-05-29', '18:40:14', 1, 'Autorizar herramientas', '2019-05-29 18:40:14', '2019-05-29 18:40:14');
-INSERT INTO `bitacoras` VALUES (298, 'solicitud_alta', 23, 750, 0, 'Autorizar Solicitud', '2019-05-29', '18:40:35', 1, 'Autorizar firmado', '2019-05-29 18:40:35', '2019-05-29 18:40:35');
-INSERT INTO `bitacoras` VALUES (299, 'solicitud_alta', 24, 750, 0, 'Registro de solicitud', '2019-05-29', '19:01:46', 1, 'alta', '2019-05-29 19:01:46', '2019-05-29 19:01:46');
-INSERT INTO `bitacoras` VALUES (300, 'solicitud_alta', 24, 750, 0, 'Autorizar Solicitud', '2019-05-29', '19:01:52', 1, 'Autorizar solicitud', '2019-05-29 19:01:52', '2019-05-29 19:01:52');
-INSERT INTO `bitacoras` VALUES (301, 'solicitud_alta', 24, 750, 0, 'Agendar cita de firma', '2019-05-29', '19:02:16', 1, 'CITA FIRMA', '2019-05-29 19:02:16', '2019-05-29 19:02:16');
-INSERT INTO `bitacoras` VALUES (302, 'solicitud_alta', 25, 750, 0, 'Registro de solicitud', '2019-05-30', '09:28:37', 1, 'alta', '2019-05-30 09:28:37', '2019-05-30 09:28:37');
-INSERT INTO `bitacoras` VALUES (303, 'solicitud_alta', 25, 750, 0, 'Autorizar Solicitud', '2019-05-30', '09:33:41', 1, 'Autorizar solicitud', '2019-05-30 09:33:41', '2019-05-30 09:33:41');
-INSERT INTO `bitacoras` VALUES (304, 'solicitud_alta', 25, 750, 0, 'Agendar cita de firma', '2019-05-30', '09:34:02', 1, 'CITA FIRMA', '2019-05-30 09:34:02', '2019-05-30 09:34:02');
-INSERT INTO `bitacoras` VALUES (305, 'solicitud_alta', 26, 750, 0, 'Registro de solicitud', '2019-05-30', '09:38:59', 1, 'alta', '2019-05-30 09:38:59', '2019-05-30 09:38:59');
-INSERT INTO `bitacoras` VALUES (306, 'solicitud_alta', 26, 750, 0, 'Autorizar Solicitud', '2019-05-30', '09:39:11', 1, 'Autorizar solicitud', '2019-05-30 09:39:11', '2019-05-30 09:39:11');
-INSERT INTO `bitacoras` VALUES (307, 'solicitud_alta', 26, 750, 0, 'Agendar cita de firma', '2019-05-30', '09:39:23', 1, 'CITA FIRMA', '2019-05-30 09:39:23', '2019-05-30 09:39:23');
-INSERT INTO `bitacoras` VALUES (308, 'solicitud_alta', 27, 750, 0, 'Registro de solicitud', '2019-05-30', '09:42:55', 1, 'alta', '2019-05-30 09:42:55', '2019-05-30 09:42:55');
-INSERT INTO `bitacoras` VALUES (309, 'solicitud_alta', 27, 750, 0, 'Autorizar Solicitud', '2019-05-30', '09:43:00', 1, 'Autorizar solicitud', '2019-05-30 09:43:00', '2019-05-30 09:43:00');
-INSERT INTO `bitacoras` VALUES (310, 'solicitud_alta', 27, 750, 0, 'Agendar cita de firma', '2019-05-30', '09:43:18', 1, 'CITA FIRMA', '2019-05-30 09:43:18', '2019-05-30 09:43:18');
-INSERT INTO `bitacoras` VALUES (311, 'solicitud_alta', 26, 750, 0, 'Autorizar Solicitud', '2019-05-30', '11:07:07', 1, 'Autorizar computadora', '2019-05-30 11:07:07', '2019-05-30 11:07:07');
-INSERT INTO `bitacoras` VALUES (312, 'solicitud_alta', 27, 750, 0, 'Autorizar Solicitud', '2019-05-30', '11:07:19', 1, 'Autorizar computadora', '2019-05-30 11:07:19', '2019-05-30 11:07:19');
-INSERT INTO `bitacoras` VALUES (313, 'solicitud_alta', 27, 750, 0, 'Autorizar Solicitud', '2019-05-30', '11:07:23', 1, 'Autorizar celular', '2019-05-30 11:07:23', '2019-05-30 11:07:23');
-INSERT INTO `bitacoras` VALUES (314, 'solicitud_alta', 25, 750, 0, 'Autorizar Solicitud', '2019-05-30', '11:07:33', 1, 'Autorizar computadora', '2019-05-30 11:07:33', '2019-05-30 11:07:33');
-INSERT INTO `bitacoras` VALUES (315, 'incidencia', 45, 750, 484, 'Se ha creado una incidencia', '2019-05-30', '11:42:34', 1, 'Creacion de incidencia', '2019-05-30 11:42:34', '2019-05-30 11:42:34');
-INSERT INTO `bitacoras` VALUES (316, 'solicitud_alta', 28, 750, 0, 'Registro de solicitud', '2019-05-30', '12:09:11', 1, 'alta', '2019-05-30 12:09:11', '2019-05-30 12:09:11');
-INSERT INTO `bitacoras` VALUES (317, 'solicitud_alta', 28, 750, 0, 'Autorizar Solicitud', '2019-05-30', '12:09:21', 1, 'Autorizar solicitud', '2019-05-30 12:09:21', '2019-05-30 12:09:21');
-INSERT INTO `bitacoras` VALUES (318, 'solicitud_alta', 28, 750, 0, 'Agendar cita de firma', '2019-05-30', '12:09:39', 1, 'CITA FIRMA', '2019-05-30 12:09:39', '2019-05-30 12:09:39');
-INSERT INTO `bitacoras` VALUES (319, 'solicitud_alta', 27, 750, 0, 'Autorizar Solicitud', '2019-05-30', '12:09:51', 1, 'Autorizar firmado', '2019-05-30 12:09:51', '2019-05-30 12:09:51');
-INSERT INTO `bitacoras` VALUES (320, 'solicitud_alta', 26, 750, 0, 'Autorizar Solicitud', '2019-05-30', '12:09:55', 1, 'Autorizar firmado', '2019-05-30 12:09:55', '2019-05-30 12:09:55');
-INSERT INTO `bitacoras` VALUES (321, 'solicitud_alta', 25, 750, 0, 'Autorizar Solicitud', '2019-05-30', '12:10:01', 1, 'Autorizar firmado', '2019-05-30 12:10:01', '2019-05-30 12:10:01');
-INSERT INTO `bitacoras` VALUES (322, 'incidencia', 46, 750, 2150, 'Se ha creado una incidencia', '2019-05-30', '14:19:20', 1, 'Creacion de incidencia', '2019-05-30 14:19:20', '2019-05-30 14:19:20');
-INSERT INTO `bitacoras` VALUES (323, 'incidencia', 48, 750, 2150, 'Se ha creado una incidencia', '2019-05-30', '14:22:10', 1, 'Creacion de incidencia', '2019-05-30 14:22:10', '2019-05-30 14:22:10');
-INSERT INTO `bitacoras` VALUES (324, 'incidencia', 49, 750, 1179, 'Se ha creado una incidencia', '2019-05-30', '14:22:49', 1, 'Creacion de incidencia', '2019-05-30 14:22:49', '2019-05-30 14:22:49');
-INSERT INTO `bitacoras` VALUES (325, 'incidencia', 50, 750, 1418, 'Se ha creado una incidencia', '2019-05-30', '14:25:32', 1, 'Creacion de incidencia', '2019-05-30 14:25:32', '2019-05-30 14:25:32');
-INSERT INTO `bitacoras` VALUES (326, 'incidencia', 51, 750, 116, 'Se ha creado una incidencia', '2019-05-30', '14:26:03', 1, 'Creacion de incidencia', '2019-05-30 14:26:03', '2019-05-30 14:26:03');
-INSERT INTO `bitacoras` VALUES (327, 'incidencia', 52, 750, 116, 'Se ha creado una incidencia', '2019-05-30', '14:26:56', 1, 'Creacion de incidencia', '2019-05-30 14:26:56', '2019-05-30 14:26:56');
-INSERT INTO `bitacoras` VALUES (328, 'incidencia', 53, 750, 272, 'Se ha creado una incidencia', '2019-05-30', '14:30:15', 1, 'Creacion de incidencia', '2019-05-30 14:30:15', '2019-05-30 14:30:15');
-INSERT INTO `bitacoras` VALUES (329, 'incidencia', 53, 750, 272, '', '2019-05-30', '18:35:09', 1, 'autorizar', '2019-05-30 18:35:09', '2019-05-30 18:35:09');
-INSERT INTO `bitacoras` VALUES (330, 'incidencia', 52, 750, 116, '', '2019-05-30', '18:35:13', 1, 'autorizar', '2019-05-30 18:35:13', '2019-05-30 18:35:13');
-INSERT INTO `bitacoras` VALUES (331, 'incidencia', 51, 750, 116, '', '2019-05-30', '18:35:16', 1, 'autorizar', '2019-05-30 18:35:16', '2019-05-30 18:35:16');
-INSERT INTO `bitacoras` VALUES (332, 'incidencia', 50, 750, 1418, '', '2019-05-30', '18:35:19', 1, 'autorizar', '2019-05-30 18:35:19', '2019-05-30 18:35:19');
-INSERT INTO `bitacoras` VALUES (333, 'incidencia', 54, 750, 2150, 'Se ha creado una incidencia', '2019-05-31', '09:21:34', 1, 'Creacion de incidencia', '2019-05-31 09:21:34', '2019-05-31 09:21:34');
-INSERT INTO `bitacoras` VALUES (334, 'incidencia', 55, 776, 2073, 'Se ha creado una incidencia', '2019-05-31', '10:01:48', 1, 'Creacion de incidencia', '2019-05-31 10:01:48', '2019-05-31 10:01:48');
-INSERT INTO `bitacoras` VALUES (335, 'incidencia', 56, 776, 1179, 'Se ha creado una incidencia', '2019-05-31', '10:10:47', 1, 'Creacion de incidencia', '2019-05-31 10:10:47', '2019-05-31 10:10:47');
-INSERT INTO `bitacoras` VALUES (336, 'incidencia', 56, 776, 1179, '', '2019-05-31', '10:22:43', 1, 'autorizar', '2019-05-31 10:22:43', '2019-05-31 10:22:43');
-INSERT INTO `bitacoras` VALUES (337, 'incidencia', 55, 776, 2073, '', '2019-05-31', '10:22:47', 1, 'autorizar', '2019-05-31 10:22:47', '2019-05-31 10:22:47');
-INSERT INTO `bitacoras` VALUES (338, 'incidencia', 57, 110, 1902, 'Se ha creado una incidencia', '2019-05-31', '11:07:11', 1, 'Creacion de incidencia', '2019-05-31 11:07:11', '2019-05-31 11:07:11');
-INSERT INTO `bitacoras` VALUES (339, 'incidencia', 57, 750, 1902, '', '2019-05-31', '13:36:59', 1, 'autorizar', '2019-05-31 13:36:59', '2019-05-31 13:36:59');
-INSERT INTO `bitacoras` VALUES (340, 'incidencia', 54, 750, 2150, '', '2019-05-31', '13:38:02', 1, 'cancelar', '2019-05-31 13:38:02', '2019-05-31 13:38:02');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for catalogo_codigos
@@ -5953,6 +5706,28 @@ INSERT INTO `catalogo_wbs` VALUES (2156, 'INE', 'RREC', 'NCNL', 'ADMO', '100', 1
 INSERT INTO `catalogo_wbs` VALUES (2159, 'NOK', 'AT&T', 'NCNL', 'ATRS', '100', 1);
 
 -- ----------------------------
+-- Table structure for directores_areas
+-- ----------------------------
+DROP TABLE IF EXISTS `directores_areas`;
+CREATE TABLE `directores_areas`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(10) UNSIGNED NOT NULL,
+  `cliente` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `servicio` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of directores_areas
+-- ----------------------------
+INSERT INTO `directores_areas` VALUES (1, 2, 'IND', 'DOIT', '2019-06-06 10:35:06', '2019-06-06 10:35:10');
+INSERT INTO `directores_areas` VALUES (2, 750, 'IND', 'DOIT', '2019-06-06 10:35:06', '2019-06-06 10:35:10');
+INSERT INTO `directores_areas` VALUES (3, 727, 'IND', 'COME', NULL, NULL);
+INSERT INTO `directores_areas` VALUES (4, 235, 'IND', 'DOIT', NULL, NULL);
+
+-- ----------------------------
 -- Table structure for empleados
 -- ----------------------------
 DROP TABLE IF EXISTS `empleados`;
@@ -6057,66 +5832,7 @@ CREATE TABLE `incidencias`  (
   INDEX `incidencias_id_rh_auth_foreign`(`id_rh_auth`) USING BTREE,
   INDEX `incidencias_id_direccion_auth_foreign`(`id_direccion_auth`) USING BTREE,
   INDEX `incidencias_id_capital_auth_foreign`(`id_capital_auth`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of incidencias
--- ----------------------------
-INSERT INTO `incidencias` VALUES (1, 115, 252, '2019-05-13', '2019-05-13', '2019-05-13', NULL, NULL, 'asdasd', 750, NULL, '2019-05-14', 750, '2019-05-14', 750, NULL, NULL, '2019-05-14', NULL, '2019-05-13 11:33:47', '2019-05-14 09:10:27', NULL, 'CANCELAR', 0, 'ADMIN', 'DESARROLLO', NULL, NULL, NULL);
-INSERT INTO `incidencias` VALUES (2, 1418, 206, '2019-05-13', NULL, NULL, NULL, 1000.000, 'asdasd', 2, 1, '2019-05-13', 2, '2019-05-27', 750, NULL, NULL, '2019-05-13', NULL, '2019-05-13 11:34:53', '2019-05-27 13:51:11', NULL, 'CANCELAR', 0, 'ADMIN', 'DESARROLLO', NULL, NULL, NULL);
-INSERT INTO `incidencias` VALUES (3, 2150, 206, '2019-05-13', NULL, NULL, NULL, 1000.000, 'asdasd', 2, NULL, '2019-05-14', 82, '2019-05-14', 82, NULL, NULL, NULL, NULL, '2019-05-13 13:20:59', '2019-05-14 12:00:04', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', NULL, 'incidencias/vobo_final_3/vobo_final_3.docx', NULL);
-INSERT INTO `incidencias` VALUES (5, 484, 207, '2019-05-13', NULL, NULL, NULL, 10000.000, 'asd', 750, 2, '2019-05-13', 750, '2019-05-13', 750, NULL, NULL, '2019-05-13', NULL, '2019-05-13 13:25:22', '2019-05-13 14:13:10', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_5/vobo_jefe_5.pdf', NULL, NULL);
-INSERT INTO `incidencias` VALUES (6, 2160, 252, '2019-05-13', '2019-05-13', '2019-05-13', NULL, NULL, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-13 16:52:32', '2019-05-31 12:27:11', NULL, 'CANCELAR', 0, 'ADMIN-CRON', 'DESARROLLO', 'incidencias/vobo_jefe_6/vobo_jefe_6.pdf', NULL, NULL);
-INSERT INTO `incidencias` VALUES (7, 1889, 266, '2019-05-13', '2019-05-13', '2019-05-13', NULL, NULL, 'asdasd', 2, NULL, '2019-05-14', 750, '2019-05-14', 750, NULL, NULL, '2019-05-14', NULL, '2019-05-13 17:12:16', '2019-05-14 11:53:10', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_7/vobo_jefe_7.pdf', NULL, NULL);
-INSERT INTO `incidencias` VALUES (8, 943, 206, '2019-05-14', NULL, NULL, NULL, 1000.000, 'asdasd', 750, 7, '2019-05-14', 750, '2019-05-14', 750, 750, '2019-05-27', '2019-05-14', NULL, '2019-05-14 10:24:49', '2019-05-27 13:50:44', NULL, 'CANCELAR', 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_8/vobo_jefe_8.pdf', NULL, 47689);
-INSERT INTO `incidencias` VALUES (9, 1179, 252, '2019-05-14', '2019-05-14', '2019-05-14', NULL, NULL, 'asdasd', 750, 7, '2019-05-14', 750, '2019-05-14', 750, NULL, NULL, '2019-05-14', NULL, '2019-05-14 16:01:51', '2019-05-22 12:51:14', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_9/vobo_jefe_9.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (10, 272, 252, '2019-05-16', '2019-05-16', '2019-05-16', NULL, NULL, 'asdasdasd', 750, 7, '2019-05-20', 750, '2019-05-20', 750, NULL, NULL, '2019-05-20', NULL, '2019-05-16 17:03:40', '2019-05-22 12:51:13', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_10/vobo_jefe_10.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (11, 1179, 206, '2019-05-16', NULL, NULL, NULL, 10000.000, 'sadasd', 750, 4, '2019-05-16', 750, '2019-05-16', 750, NULL, NULL, '2019-05-16', NULL, '2019-05-16 17:05:48', '2019-05-21 13:34:51', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_11/vobo_jefe_11.xlsx', 'incidencias/vobo_final_11/vobo_final_11.xlsx', NULL);
-INSERT INTO `incidencias` VALUES (12, 2150, 503, '2019-05-20', NULL, NULL, NULL, 10000.000, 'asdads', 750, NULL, '2019-05-20', 750, '2019-05-20', 750, NULL, NULL, '2019-05-20', NULL, '2019-05-20 17:00:56', '2019-05-20 17:08:52', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_12/vobo_jefe_12.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (13, 272, 503, '2019-05-20', NULL, NULL, NULL, 1000.000, 'asd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-20 17:04:04', '2019-05-31 12:31:01', NULL, 'CANCELAR', 0, 'ADMIN-CRON', 'DESARROLLO', 'incidencias/vobo_jefe_13/vobo_jefe_13.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (14, 272, 503, '2019-05-20', NULL, NULL, NULL, 1000.000, 'asdsad', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-20 18:44:02', '2019-05-20 18:44:02', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_14/vobo_jefe_14.xlsx', NULL, 45376);
-INSERT INTO `incidencias` VALUES (15, 1418, 208, '2019-05-21', NULL, NULL, NULL, 1000.000, 'se porta bien', 235, NULL, '2019-05-21', 750, '2019-05-21', 750, NULL, NULL, '2019-05-21', NULL, '2019-05-21 11:22:00', '2019-05-21 13:20:02', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_15/vobo_jefe_15.xlsx', 'incidencias/vobo_final_15/vobo_final_15.xlsx', 47672);
-INSERT INTO `incidencias` VALUES (16, 2150, 252, '2019-05-21', '2019-05-21', '2019-05-22', NULL, 933.000, 'asdsad', 750, NULL, '2019-05-21', 750, '2019-05-21', 750, NULL, NULL, '2019-05-21', NULL, '2019-05-21 12:35:38', '2019-05-21 13:20:01', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_16/vobo_jefe_16.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (17, 2275, 208, '2019-05-21', NULL, NULL, NULL, 2000.000, 'asdasd', 750, NULL, '2019-05-22', 750, '2019-05-22', 750, NULL, NULL, '2019-05-22', NULL, '2019-05-21 14:01:46', '2019-05-22 10:05:04', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_17/vobo_jefe_17.xlsx', 'incidencias/vobo_final_17/vobo_final_17.xlsx', 48551);
-INSERT INTO `incidencias` VALUES (18, 272, 208, '2019-05-21', NULL, NULL, NULL, 1.000, 'asdasdad', 706, 9, '2019-05-22', 750, '2019-05-22', 750, NULL, NULL, '2019-05-22', NULL, '2019-05-21 14:37:24', '2019-05-22 13:00:30', NULL, 'ENVIADO', 0, NULL, 'DIRECCION', 'incidencias/vobo_jefe_18/vobo_jefe_18.xlsx', 'incidencias/vobo_final_18/vobo_final_18.xlsx', 47672);
-INSERT INTO `incidencias` VALUES (19, 2150, 252, '2019-05-23', '2019-05-23', '2019-05-23', NULL, NULL, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-23 13:33:12', '2019-05-23 16:48:56', NULL, NULL, 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_19/vobo_jefe_19.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (20, 2283, 503, '2019-05-23', NULL, NULL, NULL, 1000.000, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-23 13:34:31', '2019-05-23 16:50:32', NULL, NULL, 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_20/vobo_jefe_20.xlsx', NULL, 48553);
-INSERT INTO `incidencias` VALUES (21, 2150, 208, '2019-05-23', NULL, NULL, NULL, 1000.000, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-23 13:37:20', '2019-05-23 16:57:10', NULL, NULL, 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_21/vobo_jefe_21.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (22, 2150, 252, '2019-05-24', '2019-05-24', '2019-05-24', NULL, NULL, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 09:19:42', '2019-05-24 09:19:42', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_22/vobo_jefe_22.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (23, 2150, 252, '2019-05-24', '2019-05-24', '2019-05-24', NULL, NULL, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 09:19:45', '2019-05-24 09:19:45', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_23/vobo_jefe_23.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (24, 2271, 208, '2019-05-24', NULL, NULL, NULL, 1000.000, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 09:22:52', '2019-05-24 09:22:52', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_24/vobo_jefe_24.xlsx', NULL, 48550);
-INSERT INTO `incidencias` VALUES (25, 2150, 208, '2019-05-24', NULL, NULL, NULL, 1000.000, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 09:24:52', '2019-05-24 09:24:52', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_25/vobo_jefe_25.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (26, 1690, 512, '2019-05-24', '2019-05-24', NULL, 1, NULL, 'asdasd', 750, NULL, NULL, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, '2019-05-24 10:59:13', '2019-05-24 11:03:42', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_26/vobo_jefe_26.xlsx', 'incidencias/vobo_final_26/vobo_final_26.xlsx', 47862);
-INSERT INTO `incidencias` VALUES (27, 677, 208, '2019-05-24', NULL, NULL, NULL, 1.000, 'asdasd', 750, 10, NULL, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:06:43', '2019-05-24 14:42:16', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_27/vobo_jefe_27.xlsx', 'incidencias/vobo_final_27/vobo_final_27.xlsx', 25812);
-INSERT INTO `incidencias` VALUES (28, 1735, 208, '2019-05-24', NULL, NULL, NULL, 1.000, 'asd', 750, 10, NULL, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:07:29', '2019-05-24 14:42:16', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_28/vobo_jefe_28.xlsx', 'incidencias/vobo_final_28/vobo_final_28.xlsx', 47784);
-INSERT INTO `incidencias` VALUES (29, 1741, 208, '2019-05-24', NULL, NULL, NULL, 1.000, 'asd', 750, 10, NULL, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:08:12', '2019-05-24 14:42:16', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_29/vobo_jefe_29.xlsx', 'incidencias/vobo_final_29/vobo_final_29.xlsx', 47786);
-INSERT INTO `incidencias` VALUES (30, 1745, 208, '2019-05-24', NULL, NULL, NULL, 1.000, 'asd', 750, 10, NULL, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:09:46', '2019-05-24 14:42:16', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_30/vobo_jefe_30.xlsx', 'incidencias/vobo_final_30/vobo_final_30.xlsx', 25824);
-INSERT INTO `incidencias` VALUES (31, 1650, 512, '2019-05-24', NULL, NULL, 1, NULL, 'asd', 750, 10, NULL, NULL, '2019-05-27', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:10:59', '2019-05-27 13:59:49', NULL, 'CANCELAR', 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_31/vobo_jefe_31.xlsx', 'incidencias/vobo_final_31/vobo_final_31.xlsx', 47857);
-INSERT INTO `incidencias` VALUES (32, 1654, 512, '2019-05-24', NULL, NULL, 1, NULL, 'asd', 750, 10, NULL, NULL, '2019-05-27', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:11:54', '2019-05-27 13:50:32', NULL, 'CANCELAR', 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_32/vobo_jefe_32.xlsx', 'incidencias/vobo_final_32/vobo_final_32.xlsx', 47858);
-INSERT INTO `incidencias` VALUES (33, 1337, 802, '2019-05-24', NULL, NULL, NULL, 2.000, 'asd', 750, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 14:14:03', '2019-05-29 12:14:50', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_33/vobo_jefe_33.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (34, 1908, 710, '2019-05-24', '2019-05-24', '2019-05-24', 1, NULL, 'asd', 750, 10, '2019-05-24', 750, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 14:18:06', '2019-05-24 14:42:14', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_34/vobo_jefe_34.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (35, 1451, 502, '2019-05-24', NULL, NULL, 1, NULL, 'asd', 750, NULL, NULL, NULL, '2019-05-24', 750, NULL, NULL, NULL, NULL, '2019-05-24 14:19:53', '2019-05-29 12:18:43', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_35/vobo_jefe_35.xlsx', 'incidencias/vobo_final_35/vobo_final_35.xlsx', 25824);
-INSERT INTO `incidencias` VALUES (36, 2150, 208, '2019-05-27', NULL, NULL, NULL, 100.500, 'asd', 750, 11, NULL, NULL, NULL, NULL, 750, '2019-05-27', NULL, NULL, '2019-05-27 10:51:46', '2019-05-27 13:10:03', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_36/vobo_jefe_36.xlsx', 'incidencias/vobo_final_36/vobo_final_36.xlsx', 47706);
-INSERT INTO `incidencias` VALUES (37, 1571, 512, '2019-05-27', NULL, NULL, 2, NULL, 'asd', 750, 11, NULL, NULL, NULL, NULL, 750, '2019-05-27', NULL, NULL, '2019-05-27 10:53:08', '2019-05-27 13:10:02', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_37/vobo_jefe_37.xlsx', 'incidencias/vobo_final_37/vobo_final_37.xlsx', 6299);
-INSERT INTO `incidencias` VALUES (38, 2150, 252, '2019-05-27', '2019-05-27', NULL, 2, NULL, 'asd', 750, 11, '2019-05-27', 750, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-27 10:53:40', '2019-05-27 13:10:02', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_38/vobo_jefe_38.msg', NULL, NULL);
-INSERT INTO `incidencias` VALUES (39, 2083, 208, '2019-05-28', NULL, NULL, NULL, 1.000, 'asd', 536, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-28 10:36:18', '2019-05-28 10:36:18', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_39/vobo_jefe_39.xlsx', NULL, 47679);
-INSERT INTO `incidencias` VALUES (40, 2150, 266, '2019-05-29', NULL, NULL, NULL, 1.000, 'asdasd', 750, 12, '2019-05-29', 750, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-29 09:11:18', '2019-05-29 09:12:21', NULL, 'ENVIADO', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_40/vobo_jefe_40.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (41, 2150, 208, '2019-05-29', NULL, NULL, NULL, 1.000, 'asddas', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-29 09:51:19', '2019-05-29 09:51:19', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_41/vobo_jefe_41.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (42, 1179, 208, '2019-05-29', NULL, NULL, NULL, 958.000, 'asd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-29 10:52:15', '2019-05-29 10:52:15', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_42/vobo_jefe_42.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (43, 2272, 208, '2019-05-29', NULL, NULL, NULL, 325.000, 'asd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-29 10:55:26', '2019-05-29 10:55:26', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_43/vobo_jefe_43.xlsx', NULL, 6299);
-INSERT INTO `incidencias` VALUES (44, 1418, 710, '2019-05-29', '2019-05-29', NULL, 1, NULL, 'asd', 750, NULL, '2019-05-29', 750, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-29 11:38:30', '2019-05-29 12:25:09', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_44/vobo_jefe_44.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (45, 484, 710, '2019-05-30', '2019-05-30', NULL, 2, NULL, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-30 11:42:34', '2019-05-30 11:42:34', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_45/vobo_jefe_45.xlsx', NULL, NULL);
-INSERT INTO `incidencias` VALUES (46, 2150, 208, '2019-05-30', NULL, NULL, NULL, 1.000, 'asdasd', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-30 14:19:20', '2019-05-30 14:19:20', NULL, NULL, 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_46/vobo_jefe_46.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (48, 2150, 710, '2019-05-30', '2019-05-30', NULL, 2, NULL, 'asdad', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-30 14:22:10', '2019-05-30 14:22:10', NULL, NULL, 0, NULL, 'DESARROLLO', NULL, NULL, NULL);
-INSERT INTO `incidencias` VALUES (49, 1179, 801, '2019-05-30', NULL, NULL, NULL, 50.000, 'asdad', 750, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-30 14:22:49', '2019-05-30 14:22:49', NULL, NULL, 0, NULL, 'DESARROLLO', NULL, NULL, NULL);
-INSERT INTO `incidencias` VALUES (50, 1418, 512, '2019-05-30', NULL, NULL, 1, NULL, 'asd', 750, NULL, NULL, NULL, '2019-05-30', 750, NULL, NULL, NULL, NULL, '2019-05-30 14:25:32', '2019-05-30 18:35:19', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', NULL, NULL, 47672);
-INSERT INTO `incidencias` VALUES (51, 116, 208, '2019-05-30', NULL, NULL, NULL, 1.000, 'asd', 750, NULL, NULL, NULL, NULL, NULL, 750, '2019-05-30', NULL, NULL, '2019-05-30 14:26:03', '2019-05-30 18:35:16', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', NULL, NULL, 47946);
-INSERT INTO `incidencias` VALUES (52, 116, 513, '2019-05-30', NULL, NULL, 1, NULL, 'asd', 750, NULL, NULL, NULL, NULL, NULL, 750, '2019-05-30', NULL, NULL, '2019-05-30 14:26:56', '2019-05-30 18:35:13', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', NULL, NULL, 47946);
-INSERT INTO `incidencias` VALUES (53, 272, 208, '2019-05-30', NULL, NULL, NULL, 1.000, 'asd', 750, NULL, NULL, NULL, '2019-05-30', 750, NULL, NULL, NULL, NULL, '2019-05-30 14:30:15', '2019-05-30 18:35:09', NULL, 'POR ENVIAR', 0, NULL, 'DESARROLLO', 'incidencias/vobo_jefe_53/vobo_jefe_53.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (54, 2150, 208, '2019-05-31', NULL, NULL, NULL, 58.000, 'asd', 750, NULL, NULL, NULL, '2019-05-31', 750, NULL, NULL, NULL, NULL, '2019-05-31 09:21:33', '2019-05-31 13:38:02', NULL, 'CANCELAR', 0, 'ADMIN', 'DESARROLLO', 'incidencias/vobo_jefe_54/vobo_jefe_54.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (55, 2073, 710, '2019-05-31', '2019-05-31', NULL, 2, NULL, 'asdasd', 776, NULL, '2019-05-31', 776, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-31 10:01:48', '2019-05-31 10:22:47', NULL, 'POR ENVIAR', 0, NULL, 'ESP', NULL, NULL, NULL);
-INSERT INTO `incidencias` VALUES (56, 1179, 208, '2019-05-31', NULL, NULL, NULL, 1000.000, 'asdsad', 776, NULL, NULL, NULL, '2019-05-31', 776, NULL, NULL, NULL, NULL, '2019-05-31 10:10:47', '2019-05-31 10:22:43', NULL, 'POR ENVIAR', 0, NULL, 'ESP', 'incidencias/vobo_jefe_56/vobo_jefe_56.xlsx', NULL, 47672);
-INSERT INTO `incidencias` VALUES (57, 1902, 208, '2019-05-31', NULL, NULL, NULL, 825.000, 'asdasd', 110, NULL, NULL, NULL, '2019-05-31', 750, NULL, NULL, NULL, NULL, '2019-05-31 11:07:11', '2019-05-31 13:36:59', NULL, 'POR ENVIAR', 0, NULL, 'COOR', 'incidencias/vobo_jefe_57/vobo_jefe_57.xlsx', NULL, 47882);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for incidencias_catalogo
@@ -6142,7 +5858,7 @@ INSERT INTO `incidencias_catalogo` VALUES (206, 'Bono Fijo Div', 'BONO FIJO', 'P
 INSERT INTO `incidencias_catalogo` VALUES (207, 'Compensación Esp Div', 'COMPENSACIÓN ESP', 'PERCEPCION', 'ASIMILADOS', 'MONTO', 'INACTIVO', NULL, NULL);
 INSERT INTO `incidencias_catalogo` VALUES (208, 'Compensación Div', 'BONO', 'PERCEPCION', 'ASIMILADOS', 'MONTO', 'ACTIVO', NULL, NULL);
 INSERT INTO `incidencias_catalogo` VALUES (252, 'Falta Div', 'FALTA', 'DEDUCCION', 'ASIMILADOS', 'LAPSO', 'INACTIVO', NULL, NULL);
-INSERT INTO `incidencias_catalogo` VALUES (266, 'Desc por Convenio Div', 'DESCUENTO POR CONVENIO', 'DEDUCCION', 'ASIMILADOS', 'MONTO', 'ACTIVO', NULL, NULL);
+INSERT INTO `incidencias_catalogo` VALUES (266, 'Desc por Convenio Div', 'DESCUENTO POR CONVENIO O ADEUDO', 'DEDUCCION', 'ASIMILADOS', 'MONTO', 'ACTIVO', NULL, NULL);
 INSERT INTO `incidencias_catalogo` VALUES (502, 'Vacaciones Disf', 'VACACIONES DISF', 'PERCEPCION', 'TRADICIONAL', 'DIAS', 'ACTIVO', NULL, NULL);
 INSERT INTO `incidencias_catalogo` VALUES (503, 'Bono', 'BONO TRADICIONAL', 'PERCEPCION', 'TRADICIONAL', 'MONTO', 'INACTIVO', NULL, NULL);
 INSERT INTO `incidencias_catalogo` VALUES (506, 'Compensación', 'BONO TRADICIONAL', 'PERCEPCION', 'TRADICIONAL', 'MONTO', 'INACTIVO', NULL, NULL);
@@ -6154,11 +5870,11 @@ INSERT INTO `incidencias_catalogo` VALUES (700, 'Inc. Enfermedad General', 'INC.
 INSERT INTO `incidencias_catalogo` VALUES (701, 'Inc. Maternidad', 'INC. MATERNIDAD', 'DEDUCCION', 'TRADICIONAL', 'OTRO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
 INSERT INTO `incidencias_catalogo` VALUES (702, 'Inc. por Accidente', 'INC. POR ACCIDENTE', 'DEDUCCION', 'TRADICIONAL', 'OTRO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
 INSERT INTO `incidencias_catalogo` VALUES (703, 'Inc. por Enlace', 'INC. POR ENLACE', 'DEDUCCION', 'TRADICIONAL', 'OTRO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
-INSERT INTO `incidencias_catalogo` VALUES (705, 'Permiso s/g Sueldo', 'PERMISO S/G SUELDO', 'DEDUCCION', 'TRADICIONAL', 'LAPSO', 'ACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
+INSERT INTO `incidencias_catalogo` VALUES (705, 'Permiso s/g Sueldo', 'PERMISO S/G SUELDO', 'DEDUCCION', 'TRADICIONAL', 'LAPSO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
 INSERT INTO `incidencias_catalogo` VALUES (708, 'Anticipo Nómina', 'ANTICIPO NÓMINA', 'DEDUCCION', 'TRADICIONAL', 'MONTO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
 INSERT INTO `incidencias_catalogo` VALUES (710, 'Faltas', 'FALTAS', 'DEDUCCION', 'TRADICIONAL', 'LAPSO', 'ACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
 INSERT INTO `incidencias_catalogo` VALUES (801, 'Desc por Convenio', 'DESCUENTO POR CONVENIO', 'DEDUCCION', 'TRADICIONAL', 'MONTO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
-INSERT INTO `incidencias_catalogo` VALUES (802, 'Desc Adeudo Compañía', 'DESC ADEUDO COMPAÑIA', 'DEDUCCION', 'TRADICIONAL', 'MONTO', 'ACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
+INSERT INTO `incidencias_catalogo` VALUES (802, 'Desc Adeudo Compañía', 'DESC ADEUDO COMPAÑIA', 'DEDUCCION', 'TRADICIONAL', 'MONTO', 'INACTIVO', '2019-04-04 14:28:41', '2019-04-04 14:28:41');
 
 -- ----------------------------
 -- Table structure for incidencias_lote
@@ -6175,23 +5891,7 @@ CREATE TABLE `incidencias_lote`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of incidencias_lote
--- ----------------------------
-INSERT INTO `incidencias_lote` VALUES (1, 'asd', 53, NULL, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-13 14:12:33', '2019-05-13 14:12:33');
-INSERT INTO `incidencias_lote` VALUES (2, 'asd', 54, NULL, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-13 14:13:09', '2019-05-13 14:13:09');
-INSERT INTO `incidencias_lote` VALUES (3, 'sad', 55, NULL, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-21 13:20:01', '2019-05-21 13:20:01');
-INSERT INTO `incidencias_lote` VALUES (4, 'asd', 56, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-21 13:34:51', '2019-05-21 13:34:51');
-INSERT INTO `incidencias_lote` VALUES (5, 'sad1', 57, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-22 09:59:25', '2019-05-22 09:59:25');
-INSERT INTO `incidencias_lote` VALUES (6, 'asd', 60, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-22 10:05:04', '2019-05-22 10:05:04');
-INSERT INTO `incidencias_lote` VALUES (7, 'Prueba daniel', 61, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-22 12:51:13', '2019-05-22 12:51:13');
-INSERT INTO `incidencias_lote` VALUES (8, 'Prueba 8', 62, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-22 12:57:13', '2019-05-22 12:57:13');
-INSERT INTO `incidencias_lote` VALUES (9, 'asd', 63, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-22 13:00:29', '2019-05-22 13:00:29');
-INSERT INTO `incidencias_lote` VALUES (10, 'asd', 67, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-24 14:42:12', '2019-05-24 14:42:12');
-INSERT INTO `incidencias_lote` VALUES (11, 'Prueba 27-05-2019 13:09', 69, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-27 13:10:02', '2019-05-27 13:10:02');
-INSERT INTO `incidencias_lote` VALUES (12, 'Prueba Desc Convenio', 72, 65, '1969-12-31 00:00:00', NULL, 'Enviado', '2019-05-29 09:12:21', '2019-05-29 09:12:21');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for incidencias_periodos
@@ -6206,14 +5906,26 @@ CREATE TABLE `incidencias_periodos`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of incidencias_periodos
 -- ----------------------------
 INSERT INTO `incidencias_periodos` VALUES (1, '2a Quincena mayo', '2019-05-16 00:00:00', '2019-05-29 23:59:00', '2019-05-30 23:59:00', NULL, NULL);
-INSERT INTO `incidencias_periodos` VALUES (2, '1a Quincena mayo', '2019-05-01 14:26:16', '2019-05-14 23:59:00', '2019-05-15 23:59:00', NULL, NULL);
-INSERT INTO `incidencias_periodos` VALUES (3, '1a Quincena Junio', '2019-05-30 00:00:00', '2019-06-03 23:59:00', '2019-06-04 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (2, '1a Quincena mayo', '2019-05-21 14:26:16', '2019-06-07 23:59:00', '2019-06-07 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (3, '1a Quincena Junio', '2019-06-08 00:00:00', '2019-06-21 23:59:00', '2019-06-30 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (4, '2a Quincena de Junio', '2019-06-22 00:00:00', '2019-07-01 23:59:00', '2019-07-05 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (5, '1a Quincena de Julio', '2019-06-06 00:00:00', '2019-07-17 23:59:00', '2019-07-23 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (6, '2a Quincena de Julio', '2019-07-24 00:00:00', '2019-08-04 23:59:00', '2019-08-07 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (7, '1a Quincena de Agosto', '2019-08-08 00:00:00', '2019-08-19 23:59:00', '2019-06-23 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (8, '2a Quincena de Agosto', '2019-08-24 00:00:00', '2019-09-02 23:59:00', '2019-09-06 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (9, '1a Quincena de Septiembre', '2019-09-07 00:00:00', '2019-09-16 23:59:00', '2019-09-20 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (10, '2a Quincena de Septiembre', '2019-09-21 00:00:00', '2019-10-02 23:59:00', '2019-10-07 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (11, '1a Quincena de Octubre', '2019-10-08 00:00:00', '2019-10-17 23:59:00', '2019-10-23 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (12, '2a Quincena de Octubre', '2019-10-24 00:00:00', '2019-11-03 23:59:00', '2019-11-07 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (13, '1a Quincena de Noviembre', '2019-11-08 00:00:00', '2019-11-18 23:59:00', '2019-11-22 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (14, '2a Quincena de Noviembre', '2019-11-23 00:00:00', '2019-12-02 23:59:00', '2019-12-06 23:59:00', NULL, NULL);
+INSERT INTO `incidencias_periodos` VALUES (15, '1a Quincena de Diciembre', '2019-12-07 00:00:00', '2019-12-16 23:59:00', '2019-12-20 23:59:00', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for jobs
@@ -6229,7 +5941,7 @@ CREATE TABLE `jobs`  (
   `created_at` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `jobs_queue_index`(`queue`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1039 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for migrations
@@ -6240,7 +5952,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -6265,6 +5977,8 @@ INSERT INTO `migrations` VALUES (17, '2018_05_29_150235_vista_incidencias_princi
 INSERT INTO `migrations` VALUES (19, '2018_06_13_233349_tabla_solicitudes', 3);
 INSERT INTO `migrations` VALUES (20, '2019_05_16_095653_create_jobs_table', 4);
 INSERT INTO `migrations` VALUES (21, '2019_05_27_122651_periodos_incidencias', 5);
+INSERT INTO `migrations` VALUES (23, '2019_06_06_095159_directores_areas', 6);
+INSERT INTO `migrations` VALUES (33, '2019_06_20_103228_ajustes_sueldos', 7);
 
 -- ----------------------------
 -- Table structure for notificaciones
@@ -6329,7 +6043,7 @@ CREATE TABLE `permisos`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `codigo`(`codigo`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permisos
@@ -6388,6 +6102,12 @@ INSERT INTO `permisos` VALUES (52, 'Autorizar/Cancelar Incidencia Dec', 'aut_can
 INSERT INTO `permisos` VALUES (53, 'Listar Incidencias Finalizadas', 'listado_finalizadas', 'Permiso para acceder al listado de incidencias finalizadas', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:50');
 INSERT INTO `permisos` VALUES (55, 'Editar Incidencias Envio', 'editar_inci_env', 'Permiso para editar incidencias antes de ser enviadas', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
 INSERT INTO `permisos` VALUES (56, 'Cambio de Proyecto', 'cambio_proyecto', 'Permiso para realizar el cambio de proyecto en los recursos', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
+INSERT INTO `permisos` VALUES (57, 'Listado de Ajustes de Sueldo', 'listado_ajuste_s', 'Permiso para acceder al listado de ajustes de sueldo', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
+INSERT INTO `permisos` VALUES (58, 'Editar Ajustes de Sueldo', 'editar_ajustes_s', 'Permiso para editar las solicitudes de ajuste de sueldo', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
+INSERT INTO `permisos` VALUES (59, 'Solicitar Ajustes de Sueldo', 'nuevo_ajuste_s', 'Permiso para crear solicitudes de ajuste de sueldo', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
+INSERT INTO `permisos` VALUES (60, 'Eliminar Ajustes de Sueldo', 'eliminar_ajuste_s', 'Permiso para eliminar solicitudes de ajuste de sueldo', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
+INSERT INTO `permisos` VALUES (61, 'Enviar Ajustes de Sueldo', 'enviar_ajuste_s', 'Permiso para enviar las solicitudes de ajuste de sueldo', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
+INSERT INTO `permisos` VALUES (62, 'Validar Ajustes de Sueldo', 'validar_ajuste_s', 'Permiso para validar las solicitudes de sueldo', '1', '2019-04-11 17:21:47', '2019-04-11 17:21:47');
 
 -- ----------------------------
 -- Table structure for proyectos_clientes
@@ -6783,7 +6503,7 @@ CREATE TABLE `solicitud_alta`  (
   `botas` int(11) NOT NULL DEFAULT 0,
   `talla_botas` decimal(10, 2) NULL DEFAULT NULL,
   `playera` int(11) NOT NULL DEFAULT 0,
-  `talla_playera` decimal(10, 2) NULL DEFAULT NULL,
+  `talla_playera` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `actividad` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `coordinador_id` int(11) NOT NULL,
   `pm` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -6812,42 +6532,11 @@ CREATE TABLE `solicitud_alta`  (
   `descargado` int(11) NULL DEFAULT 0,
   `area` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `id_empleado` int(10) UNSIGNED NULL DEFAULT NULL,
+  `usuario_rechazar` int(10) UNSIGNED NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of solicitud_alta
--- ----------------------------
-INSERT INTO `solicitud_alta` VALUES (1, 'IND', 'ADFI', 'RE09', 'CNTR', '100', 'INDEPLO', 'ADMINISTRACION', 'CONTRALORIA', 0, '2019-05-10', '2019-05-10', '37', '0', 0.00, 'ASIMILADO', 1, 1, '0', 1, '0', NULL, 1, '0', 1, '0', 1, '0', NULL, 27, '27', 1, 0.00, 1, 0.00, '', 78, 'asdsda', '1', 0.00, 0.00, 0.00, NULL, NULL, 'solicitudes/sol_1/vobo_sol_1.pdf', 'solicitudes/sol_1/cv_sol_1.pdf', 1000.00, 40000.00, NULL, 'INDEPLO', 'asdasd', 1, 'asdasd', NULL, '2019-05-10', '09:00:00', 'asd', 'PENDIENTE', 'asd@yopmail.com', 750, 0, 'ADMINISTRACION', NULL, '2019-05-10 11:03:19', '2019-05-10 11:36:05');
-INSERT INTO `solicitud_alta` VALUES (2, 'IND', 'DOIT', 'RE09', 'SIST', '100', 'PRUEBA', 'ARBOL', 'ARBOL', 0, '2019-05-13', '2019-05-13', '3', '0', 0.00, 'ASIMILADO', 1, 1, '0', 1, '0', NULL, 1, '0', 1, '0', 1, '0', NULL, 27, '27', 1, 0.00, 1, 0.00, 'asdasd', 104, 'asdasdasd', '15', 0.00, 0.00, 0.00, NULL, NULL, 'solicitudes/sol_2/vobo_sol_2.pdf', 'solicitudes/sol_2/cv_sol_2.pdf', 1000.00, 1000.00, NULL, 'INDEPLO', 'asd', 1, '', NULL, NULL, NULL, NULL, NULL, NULL, 750, 0, 'IT', NULL, '2019-05-13 09:07:21', '2019-05-13 09:07:22');
-INSERT INTO `solicitud_alta` VALUES (3, 'IND', 'ADFI', 'RE09', 'CNTR', '100', 'Prueba', 'coord', 'coord', 0, '2019-05-13', '2019-05-13', '10', '0', 0.00, 'ASIMILADO', 1, 1, '0', 1, '0', NULL, 0, '0', 1, '0', 1, '0', NULL, 27, '27', 1, 0.00, 1, 0.00, '', 214, 'asdasdasd', '9', 0.00, 0.00, 0.00, NULL, NULL, 'solicitudes/sol_3/vobo_sol_3.pdf', NULL, 1000.00, 500.00, NULL, '', 'asdasd', 1, 'asdasd', NULL, '2019-05-16', '09:00:00', 'asdasd', 'PENDIENTE', 'asd@yopmail.com', 5, 0, 'ADMINISTRACION', NULL, '2019-05-13 10:29:00', '2019-05-16 12:27:13');
-INSERT INTO `solicitud_alta` VALUES (4, 'NOK', 'SERV', 'RE09', 'NOCA', '100', 'JESUS ERICK', 'SALINAS', 'SERNA', 0, '2019-05-14', '2019-05-14', '40', '0', 0.00, 'ASIMILADO', 1, 1, 'FF-HER-SM-T-001', 1, 'FF-HER-SD-T-005', NULL, 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 0.00, 0, 0.00, '', 226, 'ASDASD', '1', 2596.00, 549.64, 0.00, 'solicitudes/sol_4/cotizacion_sol_4.xlsx', 'solicitudes/sol_4/caso_negocio_sol_4.pdf', NULL, 'solicitudes/sol_4/cv_sol_4.pdf', 1000.00, 1000.00, NULL, 'INDEPLO', 'sadsad', 3, 'asdasd', NULL, '2019-05-14', '09:00:00', 'asdads', 'EMPLEDO CREADO', 'sda@yopmail.com', 750, 0, 'COMERCIAL', 2261, '2019-05-14 13:37:05', '2019-05-14 13:41:10');
-INSERT INTO `solicitud_alta` VALUES (5, 'NOK', 'SERV', 'RE09', 'GEST', '103', 'ANDRES ENRIQUE', 'ENRIQUE', 'PRUEBA', 0, '2019-05-14', '2019-05-14', '15', '0', 0.00, 'TRADICIONAL', 1, 1, 'FF-HER-SD-T-004', 1, 'FF-HER-SD-T-005', NULL, 1, 'FF-PICK-UP-SM-001', 1, 'FF-HER-SD-T-009', 1, 'FF-HER-SD-T-010', NULL, 27, '27', 1, 0.00, 1, 0.00, '', 28, 'asdasd', '9', 30971.35, 8869.76, 0.00, 'solicitudes/sol_5/cotizacion_sol_5.pdf', 'solicitudes/sol_5/caso_negocio_sol_5.pdf', NULL, 'solicitudes/sol_5/cv_sol_5.pdf', 1000.00, 0.00, NULL, 'INDEPLO', 'SIERRA GUADALUPE', 3, 'asdasd', NULL, '2019-05-14', '09:00:00', 'dsfs', 'EMPLEDO CREADO', 'asdasd@yopmail.com', 750, 0, 'COMERCIAL', 1048, '2019-05-14 16:55:23', '2019-05-14 18:59:25');
-INSERT INTO `solicitud_alta` VALUES (6, 'NOK', 'POLZ', 'RE09', 'AMTO', '100', 'PRUEBA', 'PRUEBA', 'PRUEBA', 0, '2019-05-15', '2019-05-15', '21', '0', 79068.08, 'TRADICIONAL', 1, 1, '0', 1, '0', NULL, 1, '0', 1, '0', 1, '0', NULL, 71, '64', 1, 0.00, 1, 0.00, 'asasd', 196, 'asddas', '1', 79068.08, 17081.65, 0.00, 'solicitudes/sol_6/cotizacion_sol_6.xlsx', 'solicitudes/sol_6/caso_negocio_sol_6.msg', NULL, NULL, 10000.00, 0.00, NULL, 'INDEPLO', 'asd', 6, 'asdasd', NULL, '2019-05-15', '09:00:00', 'asdad', 'PENDIENTE', 'asd@yopmail.com', 750, 0, 'IT', NULL, '2019-05-15 09:56:50', '2019-05-15 10:16:02');
-INSERT INTO `solicitud_alta` VALUES (7, 'NOK', 'SERV', 'RE09', 'NOCT', '100', 'IND', 'IND', 'IND', 1253, '2019-05-15', '2019-05-15', '17', 'FF-NI-SD-T-001', 0.00, 'ASIMILADO', 2, 1, 'FF-HER-SD-T-004', 1, 'NFF-HER-SM-T-005', '', 1, 'FF-HER-SM-T-006', 1, 'FF-HER-SM-T2-009', 1, 'FF-HER-SD-T2-007', '', 27, '27', 1, 22.00, 1, 20.00, 'asasdasd', 226, 'asdasd', '1', 550.00, 564.82, 0.00, 'solicitudes/sol_7/cotizacion_sol_7.docx', 'solicitudes/sol_7/caso_negocio_sol_7.xlsx', NULL, NULL, 10000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 3, 'asdasd', NULL, '2019-05-16', '09:00:00', 'asds', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'DESARROLLO', 2271, '2019-05-15 14:01:21', '2019-05-16 18:24:05');
-INSERT INTO `solicitud_alta` VALUES (8, 'IND', 'ADFI', 'RE09', 'CNTR', '100', 'ANDRES ENRIQUE', 'ENRIQUE', 'PRUEBA', 0, '2019-05-16', '2019-05-16', '11', '0', 0.00, 'TRADICIONAL', 2, 1, '0', 1, '0', '', 1, '0', 1, '0', 1, '0', '', 27, '27', 1, 12.00, 1, 12.00, 'SIERRA GUADALUPE', 83, 'COACALCO', '1', 0.00, 0.00, 0.00, NULL, NULL, NULL, 'solicitudes/sol_8/cv_sol_8.xlsx', 10000.00, 0.00, NULL, 'INDEPLO', 'SIERRA GUADALUPE', 1, 'COACALCO', NULL, '2019-05-16', '09:00:00', 'asd', 'EMPLEDO CREADO', 'asd@yopmai.com', 750, 0, 'ADMINISTRACION', 2272, '2019-05-16 16:57:55', '2019-05-16 17:01:45');
-INSERT INTO `solicitud_alta` VALUES (9, 'BES', 'POLZ', 'RE09', 'TINS', '100', 'Pruebas', 'UNO', 'DOS', 0, '2019-05-20', '2019-05-20', '15', '0', 79068.08, 'ASIMILADO', 4, 1, '0', 1, '0', '', 0, '0', 0, '0', 1, '0', '', 27, '27', 0, 0.00, 0, 0.00, 'asdsasd', 189, '213123', '1', 79068.08, 3407.00, 0.00, 'solicitudes/sol_9/cotizacion_sol_9.xlsx', NULL, 'solicitudes/sol_9/vobo_sol_9.docx', 'solicitudes/sol_9/cv_sol_9.docx', 1000.00, 1000.00, NULL, '', 'asdsda', 6, 'asdsasd', NULL, '2019-05-20', '09:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'COMERCIAL', 2275, '2019-05-20 09:03:49', '2019-05-20 09:10:44');
-INSERT INTO `solicitud_alta` VALUES (10, 'CNK', 'TECH', 'RE09', 'GEST', '100', 'PRUEBA', 'CINKO', 'PRUEBA', 0, '2019-05-21', '2019-05-21', '21', '0', 0.00, 'ASIMILADO', 2, 0, '0', 1, '0', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 26.00, 0, 28.00, 'asdsd', 110, 'asdasd', '15', 0.00, 0.00, 0.00, NULL, NULL, NULL, 'solicitudes/sol_10/cv_sol_10.docx', 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 1, 'asdasd', NULL, '2019-05-21', '14:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 45, 0, 'CALIDAD', 2276, '2019-05-21 14:22:16', '2019-05-21 16:58:44');
-INSERT INTO `solicitud_alta` VALUES (11, 'CTO', 'IMPR', 'RE09', 'NOMI', '103', 'COSTO', 'IMPR', 'PRUEBA', 0, '2019-05-21', '2019-05-21', '18', '0', 0.00, 'ASIMILADO', 1, 0, '0', 0, '0', NULL, 0, '0', 0, '0', 0, '0', NULL, 27, '27', 1, 26.00, 1, 28.00, 'asdasdsd', 240, 'dasdsa', '15', 0.00, 0.00, 0.00, NULL, NULL, NULL, 'solicitudes/sol_11/cv_sol_11.xlsx', 1000.00, 1000.00, NULL, NULL, 'asdasd', 1, 'asdasdasd', NULL, '2019-05-21', '14:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 45, 0, 'SOPORTE', 2279, '2019-05-21 14:24:15', '2019-05-21 16:59:46');
-INSERT INTO `solicitud_alta` VALUES (12, 'HYB', 'SERV', 'RE09', 'INGP', '100', 'HUBARD', 'SERV', 'PRUEBA', 1255, '2019-05-21', '2019-05-21', '15', 'FF-NI-SD-T-004', 0.00, 'ASIMILADO', 1, 1, 'FF-HER-SM-T-001', 0, '0', NULL, 0, '0', 1, 'NFF-HER-SD-T-009', 0, '0', NULL, 55, '27', 0, 0.00, 0, 0.00, 'sdsdadsdasd', 123, 'asdasd', '4', 1625.00, 559.25, 0.00, 'solicitudes/sol_12/cotizacion_sol_12.docx', 'solicitudes/sol_12/caso_negocio_sol_12.xlsx', 'solicitudes/sol_12/vobo_sol_12.xlsx', 'solicitudes/sol_12/cv_sol_12.xlsx', 1000.00, 1000.00, NULL, NULL, 'dasds', 3, 'asdasdasd', NULL, '2019-05-21', '14:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 45, 0, 'CALIDAD', 2283, '2019-05-21 14:26:58', '2019-05-21 17:07:59');
-INSERT INTO `solicitud_alta` VALUES (13, 'IND', 'ADFI', 'RE09', 'RRHH', '100', 'INDEPLO', 'RH', 'PRUEBA', 0, '2019-05-22', '2019-05-21', '3', '0', 0.00, 'ASIMILADO', 2, 1, '0', 1, '0', 'asda', 0, '0', 0, '0', 0, '0', NULL, 69, '27', 0, 0.00, 0, 0.00, 'sadasd', 227, 'sad', '15', 0.00, 0.00, 0.00, NULL, NULL, NULL, 'solicitudes/sol_13/cv_sol_13.xlsx', 10000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 1, 'asdasd', NULL, '2019-05-21', '14:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 45, 0, 'ADMINISTRACION', 2281, '2019-05-21 14:29:58', '2019-05-21 17:06:48');
-INSERT INTO `solicitud_alta` VALUES (14, 'CNK', 'TECH', 'RE09', 'DIRE', '103', 'PRUEBA ', 'CINKO ', 'PRUEBA', 0, '2019-05-21', '2019-05-21', '9', '0', 0.00, 'ASIMILADO', 2, 0, '0', 0, '0', NULL, 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 12.00, 0, 12.00, 'asdasd', 177, 'adasd', '14', 0.00, 0.00, 0.00, NULL, NULL, NULL, 'solicitudes/sol_14/cv_sol_14.xlsx', 1000.00, 1000.00, NULL, 'INDEPLO', 'sadasd', 1, 'asdasd', NULL, '2019-05-22', '09:00:00', 'sadsad', 'PENDIENTE', 'asd@yopmail.com', 45, 0, 'COMPRAS', NULL, '2019-05-21 17:17:58', '2019-05-21 17:24:25');
-INSERT INTO `solicitud_alta` VALUES (15, 'HYB', 'SERV', 'RE09', 'GEST', '103', 'HUBARD  ', 'SERV', 'PRUEBA', 1256, '2019-05-21', '2019-05-21', '10', 'FF-NI-SD-T-015', 0.00, 'ASIMILADO', 2, 0, '0', 1, '', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 12.00, 0, 12.00, 'asdasd', 84, 'asdasd', '5', 1752.00, 86.60, 0.00, NULL, NULL, NULL, 'solicitudes/sol_15/cv_sol_15.xlsx', 1000.00, 1000.00, NULL, 'INDEPLO', 'asasdads', 3, 'asdasd', NULL, '2019-05-22', '09:00:00', 'sadsad', 'EMPLEDO CREADO', 'asd@yopmail.com', 45, 0, 'FINANZAS', 2284, '2019-05-21 17:19:43', '2019-05-21 18:45:26');
-INSERT INTO `solicitud_alta` VALUES (16, 'IND', 'ADFI', 'RE09', 'RRHH', '100', 'INDEPLO  ', 'RH', 'PRUEBA', 0, '2019-05-21', '2019-05-21', '14', '0', 0.00, 'ASIMILADO', 2, 1, '0', 1, '0', 'asdsasd', 0, '0', 0, '0', 0, '0', NULL, 58, '27', 0, 12.00, 0, 12.00, 'asdasd', 112, 'asdasd', '1', 0.00, 0.00, 0.00, NULL, NULL, NULL, 'solicitudes/sol_16/cv_sol_16.xlsx', 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 1, 'asdasd', NULL, '2019-05-22', '09:00:00', 'sadsad', 'PENDIENTE', 'asd@yopmail.com', 45, 0, 'R.R.H.H.', NULL, '2019-05-21 17:21:28', '2019-05-21 17:24:14');
-INSERT INTO `solicitud_alta` VALUES (17, 'CTO', 'IMPR', 'RE09', 'NOMI', '103', 'COSTO  ', 'IMPR', 'PRUEBA', 0, '2019-05-22', '2019-05-21', '11', '0', 0.00, 'ASIMILADO', 2, 0, '0', 0, '0', NULL, 0, '0', 0, '0', 0, '0', NULL, 27, '27', 1, 12.00, 1, 12.00, 'asddsaasd', 216, 'asdads', '1', 0.00, 0.00, 0.00, NULL, NULL, NULL, NULL, 1000.00, 1000.00, NULL, NULL, 'adasdasd', 1, 'asdasd', NULL, '2019-05-22', '09:00:00', 'sadsad', 'PENDIENTE', 'asd@yopmail.com', 45, 0, 'COMERCIAL', NULL, '2019-05-21 17:22:42', '2019-05-21 17:24:09');
-INSERT INTO `solicitud_alta` VALUES (18, 'ZOC', 'SERV', 'RE09', 'MTPL', '100', 'Prueba', 'ZOC', 'SERV', 1257, '2019-05-21', '2019-05-21', '11', 'FF-NI-SD-T-011', 0.00, 'ASIMILADO', 1, 0, '0', 1, 'FF-HER-SD-T-005', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 0.00, 0, 0.00, 'asdasd', 156, 'asdasd', '15', 1280.00, 104.44, 0.00, NULL, NULL, NULL, NULL, 1000.00, 1000.00, NULL, NULL, 'asdasd', 3, 'asdasd', NULL, '2019-05-21', '09:00:00', 'asd', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'DESARROLLO', 2284, '2019-05-21 17:27:39', '2019-05-21 17:29:43');
-INSERT INTO `solicitud_alta` VALUES (19, 'RAD', 'INST', 'RE05', 'DWDM', '100', 'RAD', 'INST', 'PRUEBA', 0, '2019-05-22', '2019-05-22', '18', '0', 0.00, 'ASIMILADO', 2, 1, '0', 1, '0', '', 1, '0', 1, '0', 1, '0', '', 27, '27', 1, 12.00, 1, 12.00, 'asdads', 280, 'COACALCO', '7', 0.00, 0.00, 0.00, NULL, NULL, 'solicitudes/sol_19/vobo_sol_19.xlsx', 'solicitudes/sol_19/cv_sol_19.xlsx', 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 1, 'COACALCO', NULL, '2019-05-22', '09:00:00', 'asd', 'PENDIENTE', 'asd@yopmail.com', 750, 0, 'DESARROLLO', NULL, '2019-05-22 09:13:52', '2019-05-22 09:20:09');
-INSERT INTO `solicitud_alta` VALUES (20, 'CTO', 'OPER', 'RE09', 'SOPA', '103', 'CTO', 'OPER', 'PRUEBA', 0, '2019-05-22', '2019-05-22', '35', '0', 0.00, 'ASIMILADO', 2, 1, '0', 1, '0', '', 1, '0', 1, '0', 1, '0', '', 27, '27', 1, 12.00, 1, 12.00, 'asdasd', 184, 'asd', '12', 0.00, 0.00, 0.00, NULL, NULL, 'solicitudes/sol_20/vobo_sol_20.xlsx', NULL, 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 1, 'asd', NULL, '2019-05-23', '09:00:00', 'asdasd', 'PENDIENTE', 'as@yopmail.com', 750, 0, 'COMPRAS', NULL, '2019-05-22 09:16:04', '2019-05-23 09:54:11');
-INSERT INTO `solicitud_alta` VALUES (21, 'IND', 'CALI', 'RE09', 'AUDI', '100', 'PRUEBA', 'PRUEBA', 'PRUEBA', 0, '2019-05-23', '2019-05-23', '21', '0', 0.00, 'ASIMILADO', 2, 1, '0', 1, '0', '', 1, '0', 1, '0', 1, '0', '', 27, '27', 1, 0.00, 1, 0.00, 'asdasd', 280, 'asdsad', '15', 0.00, 0.00, 0.00, NULL, NULL, NULL, NULL, 1000.00, 1000.00, NULL, 'INDEPLO', 'asda', 1, 'asdsad', NULL, NULL, NULL, NULL, NULL, NULL, 750, 0, 'CALIDAD', NULL, '2019-05-23 12:59:19', '2019-05-23 12:59:19');
-INSERT INTO `solicitud_alta` VALUES (22, 'NAE', 'RDCO', 'RE09', 'GEST', '103', 'PRUEBA', 'NAE', 'GEST', 0, '2019-05-24', '2019-05-24', '16', '0', 0.00, 'ASIMILADO', 2, 0, '0', 1, '0', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 0.00, 0, 0.00, 'asdasd', 293, 'asd', '5', 0.00, 0.00, 0.00, NULL, NULL, 'solicitudes/sol_22/vobo_sol_22.xlsx', 'solicitudes/sol_22/cv_sol_22.xlsx', 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 1, 'asdasd', NULL, NULL, NULL, NULL, NULL, NULL, 750, 0, 'COMERCIAL', NULL, '2019-05-24 09:51:40', '2019-05-24 09:51:40');
-INSERT INTO `solicitud_alta` VALUES (23, 'NOK', 'POLZ', 'RE09', 'TAC0', '100', 'NOK', 'POLZ', 'TAC0', 1258, '2019-05-29', '2019-05-29', '14', '0', 79068.08, 'ASIMILADO', 2, 1, '0', 1, '0', '', 1, '0', 1, '0', 1, '0', '', 27, '27', 1, 12.00, 1, 12.00, 'asdasd', 251, 'asdasd', '9', 79068.08, 3946.00, 0.00, 'solicitudes/sol_23/cotizacion_sol_23.xlsx', 'solicitudes/sol_23/caso_negocio_sol_23.xlsx', NULL, NULL, 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 6, 'aasdasdasd', NULL, '2019-05-29', '19:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'DESARROLLO', 2285, '2019-05-29 18:36:51', '2019-05-29 18:53:10');
-INSERT INTO `solicitud_alta` VALUES (24, 'NOK', 'TKBS', 'RE09', 'FIFO', '100', 'NOK', 'TKBS', 'FIFO', 1259, '2019-05-29', '2019-05-29', '9', '0', 200000.00, 'ASIMILADO', 1, 0, '0', 1, '0', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 0.00, 0, 0.00, 'asdasd', 203, 'asdasd', '15', 200000.00, 4537.00, 0.00, NULL, NULL, NULL, NULL, 2000.00, 1000.00, NULL, NULL, 'asdsda', 2, '', NULL, '2019-05-29', '20:00:00', 'asdasd', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'COMPRAS', 2286, '2019-05-29 19:01:46', '2019-05-29 19:03:21');
-INSERT INTO `solicitud_alta` VALUES (25, 'NOK', 'SERV', 'RE09', 'NOCA', '100', 'NOK', 'SERV', 'MARGEN', 1260, '2019-05-30', '2019-05-30', '12', 'FF-NI-SD-T-009', 0.00, 'ASIMILADO', 2, 0, '0', 1, 'FF-HER-SD-T-005', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 0.00, 0, 0.00, 'sadsad', 149, 'asdasd', '1', 1188.00, 104.44, 91.21, NULL, NULL, 'solicitudes/sol_25/vobo_sol_25.xlsx', 'solicitudes/sol_25/cv_sol_25.xlsx', 1000.00, 1000.00, NULL, NULL, 'asdads', 3, 'asdasd', NULL, '2019-05-30', '09:00:00', 'asd', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'COMPRAS', 2287, '2019-05-30 09:28:34', '2019-05-30 09:35:49');
-INSERT INTO `solicitud_alta` VALUES (26, 'NOK', 'POLZ', 'RE09', 'TAC2', '100', 'NOK', 'POLZ', 'TAC2', 1261, '2019-05-30', '2019-05-30', '13', '0', 79068.08, 'ASIMILADO', 2, 0, '0', 1, '0', '', 0, '0', 0, '0', 0, '0', NULL, 27, '27', 0, 0.00, 0, 0.00, 'asdasdasd', 138, 'asdasd', '1', 79068.08, 3048.00, 96.15, 'solicitudes/sol_26/cotizacion_sol_26.xlsx', 'solicitudes/sol_26/caso_negocio_sol_26.xlsx', 'solicitudes/sol_26/vobo_sol_26.xlsx', 'solicitudes/sol_26/cv_sol_26.xlsx', 1000.00, 1000.00, NULL, 'INDEPLO', 'asdasd', 6, 'asdasd', NULL, '2019-05-30', '09:00:00', 'asd', 'EMPLEDO CREADO', 'asd@yopmail.com', 750, 0, 'COMPRAS', 2288, '2019-05-30 09:38:59', '2019-05-30 09:40:15');
-INSERT INTO `solicitud_alta` VALUES (27, 'NOK', 'TKBS', 'RE09', 'FIFO', '100', 'NOK', 'TKBS', 'RE09', 1262, '2019-05-30', '2019-05-30', '10', '0', 60000.00, 'ASIMILADO', 2, 1, '0', 1, '0', '', 0, '0', 0, '0', 0, '0', NULL, 59, '27', 0, 0.00, 0, 0.00, 'asd', 203, 'asdddd', '9', 60000.00, 3367.00, 94.39, 'solicitudes/sol_27/cotizacion_sol_27.xlsx', 'solicitudes/sol_27/caso_negocio_sol_27.xlsx', NULL, 'solicitudes/sol_27/cv_sol_27.xlsx', 1000.00, 1000.00, NULL, NULL, '', 2, 'asasdsd', NULL, '2019-05-30', '09:00:00', 'asd', 'EMPLEDO CREADO', 'asd@ya.com', 750, 0, 'OPERACIONES', 2289, '2019-05-30 09:42:54', '2019-05-30 09:45:24');
-INSERT INTO `solicitud_alta` VALUES (28, 'NOK', 'SERV', 'RE09', 'GEST', '103', 'NOK', 'SERV', 'GEST', 1263, '2019-05-30', '2019-05-30', '3', 'FF-NI-SD-T-003', 0.00, 'ASIMILADO', 2, 0, '0', 0, '0', NULL, 0, '0', 0, '0', 0, '0', NULL, 27, '27', 1, 12.00, 1, 12.00, 'asd', 224, 'asd', '15', 745.00, 86.60, 88.38, NULL, NULL, NULL, 'solicitudes/sol_28/cv_sol_28.xlsx', 1000.00, 1000.00, NULL, NULL, 'asdasd', 3, 'asd', NULL, '2019-05-30', '09:00:00', 'asd', 'EMPLEDO CREADO', 'as@y.com', 750, 0, 'COMERCIAL', 2287, '2019-05-30 12:09:11', '2019-05-30 12:18:23');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for solicitud_alta_comentarios
@@ -6893,39 +6582,7 @@ CREATE TABLE `solicitudes_altas_auth`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of solicitudes_altas_auth
--- ----------------------------
-INSERT INTO `solicitudes_altas_auth` VALUES (1, 1, '2019-05-10 11:18:57', NULL, '2019-05-10 11:18:57', 750, NULL, NULL, NULL, NULL, 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'cita', NULL, '2019-05-10 11:03:19', '2019-05-10 11:36:05');
-INSERT INTO `solicitudes_altas_auth` VALUES (2, 2, '2019-05-22 13:42:15', NULL, '2019-05-22 13:42:15', 750, NULL, NULL, NULL, NULL, 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'cita', NULL, '2019-05-13 09:07:22', '2019-05-22 13:42:16');
-INSERT INTO `solicitudes_altas_auth` VALUES (3, 3, '2019-05-16 11:29:12', NULL, '2019-05-16 11:29:12', 750, '2019-05-16 12:27:13', 750, NULL, NULL, 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'ok', NULL, '2019-05-13 10:29:00', '2019-05-16 12:27:13');
-INSERT INTO `solicitudes_altas_auth` VALUES (4, 4, '2019-05-14 13:37:31', NULL, '2019-05-14 13:37:31', 750, '2019-05-14 13:37:52', 750, 'OK', 'OK', 'OK', 'X', 'OK', 'X', NULL, '', NULL, NULL, '', 'ok', NULL, '2019-05-14 13:37:05', '2019-05-14 13:41:10');
-INSERT INTO `solicitudes_altas_auth` VALUES (5, 5, '2019-05-14 16:55:56', NULL, '2019-05-14 16:55:56', 750, '2019-05-14 16:56:28', 750, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', NULL, '', NULL, '', '', 'ok', NULL, '2019-05-14 16:55:23', '2019-05-14 17:53:03');
-INSERT INTO `solicitudes_altas_auth` VALUES (6, 6, '2019-05-15 09:57:01', NULL, '2019-05-15 09:57:01', 750, '2019-05-15 10:16:02', 750, NULL, NULL, 'OK', 'OK', 'OK', 'OK', NULL, 'asdasd', '', '', 'correo@yopmail.com', 'cita', '', '2019-05-15 09:56:50', '2019-05-15 13:21:12');
-INSERT INTO `solicitudes_altas_auth` VALUES (7, 7, '2019-05-15 14:11:05', NULL, '2019-05-15 14:11:05', 750, '2019-05-16 16:26:35', 750, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', NULL, '', '', '', 'asd@yopmail.com', 'ok', '', '2019-05-15 14:01:21', '2019-05-16 16:51:53');
-INSERT INTO `solicitudes_altas_auth` VALUES (8, 8, '2019-05-16 16:58:27', NULL, '2019-05-16 16:58:27', 750, '2019-05-16 17:00:00', 750, 'OK', 'OK', 'OK', 'OK', 'OK', 'X', NULL, '', '', NULL, 'asd@yopmail.com', 'ok', '', '2019-05-16 16:57:56', '2019-05-16 17:01:45');
-INSERT INTO `solicitudes_altas_auth` VALUES (9, 9, '2019-05-20 09:04:28', NULL, '2019-05-20 09:04:28', 750, '2019-05-20 09:04:50', 750, 'OK', 'OK', 'OK', 'X', 'OK', 'X', NULL, 'asd', NULL, NULL, 'asd@yopmail.com', 'ok', 'asd', '2019-05-20 09:03:49', '2019-05-20 09:10:44');
-INSERT INTO `solicitudes_altas_auth` VALUES (10, 10, '2019-05-21 16:46:17', NULL, '2019-05-21 16:46:17', 82, '2019-05-21 16:47:38', 45, 'OK', 'OK', 'OK', 'X', 'X', 'X', NULL, '', NULL, NULL, 'hayala@yopmail.com', 'ok', NULL, '2019-05-21 14:22:16', '2019-05-21 16:58:44');
-INSERT INTO `solicitudes_altas_auth` VALUES (11, 11, '2019-05-21 16:46:07', NULL, '2019-05-21 16:46:07', 82, '2019-05-21 16:47:23', 45, 'OK', 'OK', 'X', 'X', 'X', 'OK', NULL, NULL, NULL, 'asd', NULL, 'ok', NULL, '2019-05-21 14:24:15', '2019-05-21 16:59:47');
-INSERT INTO `solicitudes_altas_auth` VALUES (12, 12, '2019-05-21 16:45:53', NULL, '2019-05-21 16:45:53', 82, '2019-05-21 16:47:06', 45, 'OK', 'OK', 'X', 'X', 'OK', 'X', NULL, NULL, NULL, NULL, NULL, 'ok', '', '2019-05-21 14:26:58', '2019-05-21 17:07:59');
-INSERT INTO `solicitudes_altas_auth` VALUES (13, 13, '2019-05-21 16:46:02', NULL, '2019-05-21 16:46:02', 82, '2019-05-21 16:46:56', 45, 'OK', 'OK', 'OK', 'X', 'OK', 'X', NULL, '', NULL, NULL, 'hayala@yopmail.com', 'ok', '', '2019-05-21 14:29:58', '2019-05-21 17:06:50');
-INSERT INTO `solicitudes_altas_auth` VALUES (14, 14, '2019-05-21 17:23:49', NULL, '2019-05-21 17:23:49', 750, '2019-05-21 17:24:25', 750, NULL, NULL, 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'ok', NULL, '2019-05-21 17:17:58', '2019-05-21 17:24:25');
-INSERT INTO `solicitudes_altas_auth` VALUES (15, 15, '2019-05-21 17:23:44', NULL, '2019-05-21 17:23:44', 750, '2019-05-21 17:24:20', 750, 'OK', 'OK', 'OK', 'X', 'X', 'X', NULL, 'asd', NULL, NULL, 'asda@yopmail.com', 'ok', NULL, '2019-05-21 17:19:43', '2019-05-21 18:45:26');
-INSERT INTO `solicitudes_altas_auth` VALUES (16, 16, '2019-05-21 17:23:39', NULL, '2019-05-21 17:23:39', 750, '2019-05-21 17:24:14', 750, NULL, NULL, 'OK', 'X', 'OK', 'X', NULL, 'asd', NULL, NULL, 'asda@yopmail.com', 'ok', '', '2019-05-21 17:21:28', '2019-05-22 08:56:06');
-INSERT INTO `solicitudes_altas_auth` VALUES (17, 17, '2019-05-21 17:23:33', NULL, '2019-05-21 17:23:33', 750, '2019-05-21 17:24:09', 750, NULL, NULL, 'X', 'X', 'X', 'OK', NULL, NULL, NULL, '', NULL, 'ok', NULL, '2019-05-21 17:22:42', '2019-05-22 08:56:02');
-INSERT INTO `solicitudes_altas_auth` VALUES (18, 18, '2019-05-21 17:27:50', NULL, '2019-05-21 17:27:50', 750, '2019-05-21 17:28:06', 750, 'OK', 'OK', 'OK', 'X', 'X', 'X', NULL, 'assdasd', NULL, NULL, 'asd@yopmail.com', 'ok', NULL, '2019-05-21 17:27:39', '2019-05-21 17:29:43');
-INSERT INTO `solicitudes_altas_auth` VALUES (19, 19, '2019-05-22 09:17:53', NULL, '2019-05-22 09:17:53', 750, '2019-05-22 09:20:09', 750, NULL, NULL, 'OK', 'OK', 'OK', 'OK', NULL, '', '', '', 'asd@yopmail.com', 'ok', '', '2019-05-22 09:13:53', '2019-05-22 18:23:48');
-INSERT INTO `solicitudes_altas_auth` VALUES (20, 20, '2019-05-22 09:17:47', NULL, '2019-05-22 09:17:47', 750, '2019-05-23 09:54:11', 750, 'OK', NULL, 'OK', 'X', 'X', 'X', NULL, '', '', '', 'asd@yopmail.com', 'ok', '', '2019-05-22 09:16:04', '2019-05-23 10:48:41');
-INSERT INTO `solicitudes_altas_auth` VALUES (21, 21, '2019-05-23 13:01:22', NULL, '2019-05-23 13:01:22', 750, NULL, NULL, NULL, NULL, 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'cita', NULL, '2019-05-23 12:59:20', '2019-05-23 13:01:22');
-INSERT INTO `solicitudes_altas_auth` VALUES (22, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-24 09:51:40', '2019-05-24 09:51:40');
-INSERT INTO `solicitudes_altas_auth` VALUES (23, 23, '2019-05-29 18:37:09', NULL, '2019-05-29 18:37:09', 750, '2019-05-29 18:38:05', 750, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', NULL, '', '', '', 'correo@yopmail.com', 'ok', '', '2019-05-29 18:36:51', '2019-05-29 18:53:11');
-INSERT INTO `solicitudes_altas_auth` VALUES (24, 24, '2019-05-29 19:01:52', NULL, '2019-05-29 19:01:52', 750, '2019-05-29 19:02:16', 750, NULL, 'OK', 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'ok', NULL, '2019-05-29 19:01:46', '2019-05-29 19:03:21');
-INSERT INTO `solicitudes_altas_auth` VALUES (25, 25, '2019-05-30 09:33:41', NULL, '2019-05-30 09:33:41', 750, '2019-05-30 09:34:02', 750, 'OK', 'OK', 'OK', 'X', 'X', 'X', NULL, '', NULL, NULL, 'asd@g.com', 'ok', NULL, '2019-05-30 09:28:36', '2019-05-30 12:10:01');
-INSERT INTO `solicitudes_altas_auth` VALUES (26, 26, '2019-05-30 09:39:11', NULL, '2019-05-30 09:39:11', 750, '2019-05-30 09:39:23', 750, 'OK', 'OK', 'OK', 'X', 'X', 'X', NULL, '', NULL, NULL, 'correo@yopmail.com', 'ok', NULL, '2019-05-30 09:38:59', '2019-05-30 12:09:55');
-INSERT INTO `solicitudes_altas_auth` VALUES (27, 27, '2019-05-30 09:43:00', NULL, '2019-05-30 09:43:00', 750, '2019-05-30 09:43:18', 750, 'OK', 'OK', 'OK', 'X', 'OK', 'X', NULL, '', NULL, NULL, 'ca@y.com', 'ok', '', '2019-05-30 09:42:55', '2019-05-30 12:09:51');
-INSERT INTO `solicitudes_altas_auth` VALUES (28, 28, '2019-05-30 12:09:21', NULL, '2019-05-30 12:09:21', 750, '2019-05-30 12:09:39', 750, NULL, 'OK', 'X', 'X', 'X', 'X', NULL, NULL, NULL, NULL, NULL, 'ok', NULL, '2019-05-30 12:09:11', '2019-05-30 12:18:23');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for solicitudes_baja_nomina
@@ -6955,36 +6612,23 @@ CREATE TABLE `solicitudes_baja_nomina`  (
   `vobo_jefe` varchar(405) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `solicitante` int(11) NULL DEFAULT NULL,
   `fecha_emision` timestamp(0) NULL DEFAULT NULL,
-  `obs_herramientas` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `obs_cita` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `obs_baja_def` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
+  `obs_compu` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `obs_cel` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `obs_auto` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `obs_alma` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `obs_cred` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `adeudo_compu` float(10, 2) NULL DEFAULT 0.00,
+  `adeudo_cel` float(10, 2) NULL DEFAULT 0.00,
+  `adeudo_auto` float(10, 2) NULL DEFAULT 0.00,
+  `adeudo_alma` float(10, 2) NULL DEFAULT 0.00,
+  `adeudo_cred` float(10, 2) NULL DEFAULT 0.00,
   INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of solicitudes_baja_nomina
--- ----------------------------
-INSERT INTO `solicitudes_baja_nomina` VALUES (1, 2261, '2019-05-13', NULL, '2019-05-13 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-14', NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'value', 'solicitudes_bajas/baja_1/baja_vobo_1.pdf', 518, '2019-05-13 18:47:27', NULL, '', '2019-05-13 18:47:27', '2019-05-14 13:26:37', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (2, 2266, '2019-05-14', NULL, '2019-05-14 09:00:00', NULL, NULL, 'true', 'true', NULL, 'true', NULL, NULL, NULL, NULL, NULL, 'sad', 'asdads', 'NO CUMPLE', 'value', 'solicitudes_bajas/baja_2/baja_vobo_2.docx', 750, '2019-05-14 17:04:13', NULL, NULL, '2019-05-14 17:04:13', '2019-05-14 17:04:49', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (3, 2261, '2019-05-14', NULL, '2019-05-14 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-15', NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'value', 'solicitudes_bajas/baja_3/baja_vobo_3.xlsx', 750, '2019-05-14 17:06:54', NULL, 'asdasd', '2019-05-14 17:06:54', '2019-05-14 17:19:20', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (4, 2269, '2019-05-15', NULL, '2019-05-15 09:00:00', 'true', 'true', 'true', 'true', 'true', NULL, NULL, '2019-05-15', NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'value', 'solicitudes_bajas/baja_4/baja_vobo_4.xlsx', 750, '2019-05-15 14:35:48', NULL, '', '2019-05-15 14:35:48', '2019-05-15 14:36:47', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (5, 2271, '2019-05-15', NULL, '2019-05-15 09:00:00', 'true', 'true', 'true', 'true', 'true', NULL, NULL, '2019-05-15', NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'value', 'solicitudes_bajas/baja_5/baja_vobo_5.xlsx', 750, '2019-05-15 14:38:16', NULL, 'asdasd', '2019-05-15 14:38:16', '2019-05-15 14:42:31', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (6, 2271, '2019-05-15', NULL, '2019-05-16 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-16', NULL, NULL, NULL, 'dasd', 'asd', 'NO ASISTE', 'value', 'solicitudes_bajas/baja_6/baja_vobo_6.xlsx', 750, '2019-05-15 16:38:21', NULL, '', '2019-05-15 16:38:21', '2019-05-16 16:47:23', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (7, 2276, '2019-05-21', NULL, '2019-05-21 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-21', NULL, NULL, NULL, 'ads', 'dasd', 'NO ASISTE', 'value', 'solicitudes_bajas/baja_7/baja_vobo_7.xlsx', 45, '2019-05-21 17:09:22', NULL, '', '2019-05-21 17:09:22', '2019-05-21 17:15:07', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (8, 2283, '2019-05-21', NULL, '2019-05-21 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-21', NULL, NULL, NULL, 'ads', 'dasd', 'NO ASISTE', 'value', 'solicitudes_bajas/baja_8/baja_vobo_8.xlsx', 45, '2019-05-21 17:09:37', NULL, '', '2019-05-21 17:09:37', '2019-05-21 17:15:02', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (9, 2281, '2019-05-21', NULL, '2019-05-21 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-21', NULL, NULL, NULL, 'ads', 'dasd', 'NO ASISTE', 'value', 'solicitudes_bajas/baja_9/baja_vobo_9.xlsx', 45, '2019-05-21 17:09:48', NULL, '', '2019-05-21 17:09:48', '2019-05-21 17:14:56', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (10, 2279, '2019-05-21', NULL, '2019-05-21 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-21', NULL, NULL, NULL, 'ads', 'dasd', 'NO ASISTE', 'value', 'solicitudes_bajas/baja_10/baja_vobo_10.xlsx', 45, '2019-05-21 17:10:00', NULL, '', '2019-05-21 17:10:00', '2019-05-21 17:14:50', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (11, 2275, '2019-05-22', NULL, '2019-05-22 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-22', NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'value', 'solicitudes_bajas/baja_11/baja_vobo_11.xlsx', 750, '2019-05-22 09:26:05', NULL, 'asd', '2019-05-22 09:26:06', '2019-05-22 09:45:56', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (12, 2283, '2019-05-29', NULL, '2019-05-29 09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sad', 'asd', 'NO CUMPLE', 'SI', 'solicitudes_bajas/baja_12/baja_vobo_12.xlsx', 750, '2019-05-29 17:25:15', NULL, NULL, '2019-05-29 17:25:15', '2019-05-29 18:08:33', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (13, 2274, '2019-05-29', NULL, '2019-05-29 09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asdas', 'asddas', 'NO CUMPLE', 'SI', 'solicitudes_bajas/baja_13/baja_vobo_13.xlsx', 750, '2019-05-29 18:10:36', NULL, NULL, '2019-05-29 18:10:36', '2019-05-29 18:14:18', '2019-05-29 18:14:18');
-INSERT INTO `solicitudes_baja_nomina` VALUES (14, 2274, '2019-05-29', NULL, '2019-05-29 09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ASAS', 'asdasd', 'NO CUMPLE', 'SI', 'solicitudes_bajas/baja_14/baja_vobo_14.xlsx', 750, '2019-05-29 18:23:54', NULL, NULL, '2019-05-29 18:23:54', '2019-05-29 18:24:35', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (15, 2273, '2019-05-29', NULL, '2019-05-29 09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'NO', 'solicitudes_bajas/baja_15/baja_vobo_15.xlsx', 750, '2019-05-29 18:30:17', NULL, NULL, '2019-05-29 18:30:17', '2019-05-29 18:30:38', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (16, 2150, '2019-05-29', NULL, '2019-05-29 09:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'SI', 'solicitudes_bajas/baja_16/baja_vobo_16.xlsx', 750, '2019-05-29 18:47:56', NULL, NULL, '2019-05-29 18:47:56', '2019-05-29 18:49:41', '2019-05-29 18:49:41');
-INSERT INTO `solicitudes_baja_nomina` VALUES (17, 2287, '2019-05-30', NULL, '2019-05-30 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-30', NULL, NULL, NULL, 'ninguna', 'ninguna', 'DURACION DEL PROYECTO', 'SI', 'solicitudes_bajas/baja_17/baja_vobo_17.xlsx', 750, '2019-05-30 10:15:37', NULL, '', '2019-05-30 10:15:38', '2019-05-30 11:05:23', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (18, 2288, '2019-05-30', NULL, '2019-05-30 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-30', NULL, NULL, NULL, 'asd', 'asd', 'NO CUMPLE', 'NO', 'solicitudes_bajas/baja_18/baja_vobo_18.xlsx', 750, '2019-05-30 10:17:23', NULL, '', '2019-05-30 10:17:23', '2019-05-30 11:05:17', NULL);
-INSERT INTO `solicitudes_baja_nomina` VALUES (19, 2289, '2019-05-30', NULL, '2019-05-30 09:00:00', 'true', 'true', 'true', 'true', 'true', 'true', NULL, '2019-05-30', NULL, NULL, NULL, 'asd', 'asd', 'NO ASISTE', 'NO', 'solicitudes_bajas/baja_19/baja_vobo_19.xlsx', 750, '2019-05-30 10:17:58', NULL, '', '2019-05-30 10:17:58', '2019-05-30 11:03:36', NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for users
@@ -7054,7 +6698,7 @@ CREATE TABLE `usuario_permisos`  (
   INDEX `usuarios`(`id_usuario`) USING BTREE,
   CONSTRAINT `permisos` FOREIGN KEY (`id_permiso`) REFERENCES `permisos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 651 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 953 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of usuario_permisos
@@ -7145,299 +6789,22 @@ INSERT INTO `usuario_permisos` VALUES (83, 40, 750, '', '2019-04-11 18:19:57', '
 INSERT INTO `usuario_permisos` VALUES (84, 41, 750, '', '2019-04-17 14:26:12', '2019-04-17 14:26:14');
 INSERT INTO `usuario_permisos` VALUES (85, 42, 750, '', '2019-04-23 12:01:34', '2019-04-23 12:01:36');
 INSERT INTO `usuario_permisos` VALUES (86, 43, 750, '', '2019-04-23 12:01:34', '2019-04-23 12:01:34');
-INSERT INTO `usuario_permisos` VALUES (239, 1, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (240, 2, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (241, 3, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (242, 4, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (243, 5, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (244, 6, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (245, 7, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (246, 8, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (247, 9, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (248, 10, 2, NULL, '2019-05-10 14:28:57', '2019-05-10 14:28:57');
-INSERT INTO `usuario_permisos` VALUES (249, 11, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (250, 12, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (251, 13, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (252, 14, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (253, 15, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (254, 16, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (255, 17, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (256, 18, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (257, 19, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (258, 20, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (259, 21, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (260, 22, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (261, 23, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (262, 24, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (263, 25, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (264, 26, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (265, 27, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (266, 28, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (267, 29, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (268, 30, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (269, 31, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (270, 32, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (271, 33, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (272, 34, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (273, 35, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (274, 36, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (275, 37, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (276, 38, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (277, 39, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (278, 40, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (279, 41, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (281, 43, 2, NULL, '2019-05-10 14:28:58', '2019-05-10 14:28:58');
-INSERT INTO `usuario_permisos` VALUES (282, 8, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (283, 9, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (284, 10, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (285, 11, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (286, 18, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (287, 19, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (288, 20, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (289, 26, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (290, 27, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (291, 28, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (292, 29, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (293, 30, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (294, 31, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (295, 32, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (296, 36, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (297, 37, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (298, 38, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (299, 41, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
-INSERT INTO `usuario_permisos` VALUES (300, 42, 19, NULL, '2019-05-13 09:42:03', '2019-05-13 09:42:03');
 INSERT INTO `usuario_permisos` VALUES (301, 44, 750, NULL, '2019-05-13 09:45:47', '2019-05-13 09:45:47');
-INSERT INTO `usuario_permisos` VALUES (302, 44, 19, NULL, '2019-05-13 09:47:31', '2019-05-13 09:47:31');
-INSERT INTO `usuario_permisos` VALUES (303, 8, 5, NULL, '2019-05-13 10:26:07', '2019-05-13 10:26:07');
-INSERT INTO `usuario_permisos` VALUES (304, 27, 5, NULL, '2019-05-13 10:26:07', '2019-05-13 10:26:07');
-INSERT INTO `usuario_permisos` VALUES (305, 30, 5, NULL, '2019-05-13 10:26:07', '2019-05-13 10:26:07');
-INSERT INTO `usuario_permisos` VALUES (306, 31, 5, NULL, '2019-05-13 10:26:07', '2019-05-13 10:26:07');
-INSERT INTO `usuario_permisos` VALUES (307, 9, 5, NULL, '2019-05-13 10:26:51', '2019-05-13 10:26:51');
-INSERT INTO `usuario_permisos` VALUES (308, 8, 232, NULL, '2019-05-13 10:29:27', '2019-05-13 10:29:27');
-INSERT INTO `usuario_permisos` VALUES (309, 27, 232, NULL, '2019-05-13 10:29:27', '2019-05-13 10:29:27');
-INSERT INTO `usuario_permisos` VALUES (310, 30, 232, NULL, '2019-05-13 10:29:27', '2019-05-13 10:29:27');
-INSERT INTO `usuario_permisos` VALUES (311, 31, 232, NULL, '2019-05-13 10:29:27', '2019-05-13 10:29:27');
-INSERT INTO `usuario_permisos` VALUES (313, 8, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (314, 9, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (315, 10, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (316, 16, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (317, 17, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (318, 18, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (319, 19, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (320, 20, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (321, 25, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (322, 26, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (323, 27, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (324, 28, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (325, 29, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (326, 30, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (327, 31, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (328, 32, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (329, 33, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (330, 34, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (331, 36, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (332, 37, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (333, 38, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (334, 39, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (335, 40, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (336, 41, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (337, 42, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (338, 43, 518, NULL, '2019-05-13 18:05:50', '2019-05-13 18:05:50');
-INSERT INTO `usuario_permisos` VALUES (339, 8, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (340, 9, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (341, 10, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (342, 11, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (343, 18, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (344, 19, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (345, 20, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (346, 26, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (347, 27, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (348, 28, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (349, 29, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (350, 30, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (351, 31, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (352, 32, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (353, 36, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (354, 37, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (355, 38, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (356, 41, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (357, 42, 82, NULL, '2019-05-14 09:27:44', '2019-05-14 09:27:44');
-INSERT INTO `usuario_permisos` VALUES (358, 34, 82, NULL, '2019-05-14 09:28:12', '2019-05-14 09:28:12');
-INSERT INTO `usuario_permisos` VALUES (360, 8, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (361, 9, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (362, 10, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (363, 11, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (364, 18, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (365, 19, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (366, 20, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (367, 26, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (368, 27, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (369, 28, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (370, 29, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (371, 30, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (372, 31, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (373, 32, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (374, 36, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (375, 37, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (376, 38, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (377, 41, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (378, 42, 117, NULL, '2019-05-14 16:40:56', '2019-05-14 16:40:56');
-INSERT INTO `usuario_permisos` VALUES (381, 8, 235, NULL, '2019-05-21 09:44:05', '2019-05-21 09:44:05');
-INSERT INTO `usuario_permisos` VALUES (382, 27, 235, NULL, '2019-05-21 09:44:05', '2019-05-21 09:44:05');
-INSERT INTO `usuario_permisos` VALUES (383, 30, 235, NULL, '2019-05-21 09:44:05', '2019-05-21 09:44:05');
-INSERT INTO `usuario_permisos` VALUES (384, 31, 235, NULL, '2019-05-21 09:44:05', '2019-05-21 09:44:05');
-INSERT INTO `usuario_permisos` VALUES (385, 45, 235, NULL, '2019-05-21 09:45:23', '2019-05-21 09:45:23');
-INSERT INTO `usuario_permisos` VALUES (412, 8, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (413, 9, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (414, 10, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (415, 16, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (416, 17, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (417, 18, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (418, 19, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (419, 20, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (420, 25, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (421, 26, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (422, 27, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (423, 28, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (424, 29, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (425, 30, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (426, 31, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (427, 32, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (429, 34, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (430, 36, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (431, 37, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (432, 38, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (435, 41, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (436, 42, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (437, 43, 45, NULL, '2019-05-21 11:24:57', '2019-05-21 11:24:57');
-INSERT INTO `usuario_permisos` VALUES (438, 45, 45, NULL, '2019-05-21 11:25:11', '2019-05-21 11:25:11');
-INSERT INTO `usuario_permisos` VALUES (439, 46, 45, NULL, '2019-05-21 11:25:11', '2019-05-21 11:25:11');
-INSERT INTO `usuario_permisos` VALUES (443, 8, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (444, 27, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (445, 30, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (446, 12, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (447, 21, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (448, 36, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (449, 37, 731, NULL, '2019-05-21 16:48:56', '2019-05-21 16:48:56');
-INSERT INTO `usuario_permisos` VALUES (450, 8, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (451, 27, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (452, 30, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (453, 13, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (454, 22, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (455, 36, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (456, 37, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (457, 28, 711, NULL, '2019-05-21 16:53:23', '2019-05-21 16:53:23');
-INSERT INTO `usuario_permisos` VALUES (458, 14, 711, NULL, '2019-05-21 16:54:26', '2019-05-21 16:54:26');
-INSERT INTO `usuario_permisos` VALUES (459, 8, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (460, 27, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (461, 30, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (462, 15, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (463, 24, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (464, 36, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (465, 37, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (466, 28, 744, NULL, '2019-05-21 16:55:44', '2019-05-21 16:55:44');
-INSERT INTO `usuario_permisos` VALUES (467, 28, 731, NULL, '2019-05-21 17:11:28', '2019-05-21 17:11:28');
-INSERT INTO `usuario_permisos` VALUES (468, 23, 711, NULL, '2019-05-21 17:12:54', '2019-05-21 17:12:54');
 INSERT INTO `usuario_permisos` VALUES (469, 47, 750, NULL, '2019-05-22 12:05:18', '2019-05-22 12:05:18');
 INSERT INTO `usuario_permisos` VALUES (470, 48, 750, NULL, '2019-05-23 10:31:59', '2019-05-23 10:31:59');
 INSERT INTO `usuario_permisos` VALUES (471, 52, 750, NULL, '2019-05-23 13:56:07', '2019-05-23 13:56:07');
 INSERT INTO `usuario_permisos` VALUES (472, 50, 750, NULL, '2019-05-23 13:56:54', '2019-05-23 13:56:54');
 INSERT INTO `usuario_permisos` VALUES (473, 51, 750, NULL, '2019-05-23 13:56:54', '2019-05-23 13:56:54');
-INSERT INTO `usuario_permisos` VALUES (474, 50, 82, NULL, '2019-05-23 17:02:25', '2019-05-23 17:02:25');
-INSERT INTO `usuario_permisos` VALUES (477, 51, 2, NULL, '2019-05-23 17:10:26', '2019-05-23 17:10:26');
-INSERT INTO `usuario_permisos` VALUES (478, 52, 45, NULL, '2019-05-23 17:12:20', '2019-05-23 17:12:20');
-INSERT INTO `usuario_permisos` VALUES (529, 8, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (530, 9, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (531, 10, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (532, 11, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (533, 18, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (534, 19, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (535, 20, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (536, 26, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (537, 27, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (538, 28, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (539, 29, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (540, 30, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (541, 31, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (542, 32, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (543, 36, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (544, 37, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (545, 38, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (546, 41, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (547, 42, 86, NULL, '2019-05-23 17:22:27', '2019-05-23 17:22:27');
-INSERT INTO `usuario_permisos` VALUES (548, 51, 86, NULL, '2019-05-23 17:23:19', '2019-05-23 17:23:19');
-INSERT INTO `usuario_permisos` VALUES (549, 44, 86, NULL, '2019-05-23 17:24:46', '2019-05-23 17:24:46');
 INSERT INTO `usuario_permisos` VALUES (550, 53, 750, NULL, '2019-05-27 13:27:18', '2019-05-27 13:27:18');
-INSERT INTO `usuario_permisos` VALUES (577, 8, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (578, 9, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (579, 10, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (580, 11, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (581, 18, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (582, 19, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (583, 20, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (584, 26, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (585, 27, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (586, 28, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (587, 29, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (588, 30, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (589, 31, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (590, 32, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (591, 36, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (592, 37, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (593, 38, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (594, 41, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (595, 42, 706, NULL, '2019-05-27 18:59:20', '2019-05-27 18:59:20');
-INSERT INTO `usuario_permisos` VALUES (596, 51, 706, NULL, '2019-05-27 18:59:30', '2019-05-27 18:59:30');
-INSERT INTO `usuario_permisos` VALUES (597, 44, 45, NULL, '2019-05-28 09:27:31', '2019-05-28 09:27:31');
-INSERT INTO `usuario_permisos` VALUES (598, 53, 82, NULL, '2019-05-28 09:51:19', '2019-05-28 09:51:19');
-INSERT INTO `usuario_permisos` VALUES (599, 53, 706, NULL, '2019-05-28 09:51:42', '2019-05-28 09:51:42');
-INSERT INTO `usuario_permisos` VALUES (600, 8, 536, NULL, '2019-05-28 10:33:00', '2019-05-28 10:33:00');
-INSERT INTO `usuario_permisos` VALUES (601, 27, 536, NULL, '2019-05-28 10:33:00', '2019-05-28 10:33:00');
-INSERT INTO `usuario_permisos` VALUES (602, 30, 536, NULL, '2019-05-28 10:33:00', '2019-05-28 10:33:00');
-INSERT INTO `usuario_permisos` VALUES (603, 31, 536, NULL, '2019-05-28 10:33:00', '2019-05-28 10:33:00');
-INSERT INTO `usuario_permisos` VALUES (604, 45, 536, NULL, '2019-05-28 10:33:51', '2019-05-28 10:33:51');
 INSERT INTO `usuario_permisos` VALUES (605, 45, 750, NULL, '2019-05-29 09:34:11', '2019-05-29 09:34:11');
 INSERT INTO `usuario_permisos` VALUES (606, 46, 750, NULL, '2019-05-29 09:41:15', '2019-05-29 09:41:15');
 INSERT INTO `usuario_permisos` VALUES (607, 55, 750, NULL, '2019-05-29 12:24:02', '2019-05-29 12:24:02');
-INSERT INTO `usuario_permisos` VALUES (610, 8, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (611, 9, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (612, 10, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (613, 17, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (614, 18, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (615, 19, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (616, 20, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (617, 26, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (618, 27, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (619, 28, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (620, 29, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (621, 30, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (622, 31, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (623, 32, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (625, 35, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (626, 37, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (627, 38, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (628, 39, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (630, 41, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (631, 44, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (632, 45, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (633, 46, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (634, 47, 776, NULL, '2019-05-31 09:56:39', '2019-05-31 09:56:39');
-INSERT INTO `usuario_permisos` VALUES (635, 53, 776, NULL, '2019-05-31 09:59:21', '2019-05-31 09:59:21');
-INSERT INTO `usuario_permisos` VALUES (636, 55, 776, NULL, '2019-05-31 09:59:21', '2019-05-31 09:59:21');
-INSERT INTO `usuario_permisos` VALUES (637, 50, 776, NULL, '2019-05-31 10:16:27', '2019-05-31 10:16:27');
-INSERT INTO `usuario_permisos` VALUES (638, 51, 776, NULL, '2019-05-31 10:16:27', '2019-05-31 10:16:27');
-INSERT INTO `usuario_permisos` VALUES (639, 52, 776, NULL, '2019-05-31 10:16:27', '2019-05-31 10:16:27');
-INSERT INTO `usuario_permisos` VALUES (640, 34, 776, NULL, '2019-05-31 10:22:36', '2019-05-31 10:22:36');
-INSERT INTO `usuario_permisos` VALUES (641, 33, 776, NULL, '2019-05-31 10:28:08', '2019-05-31 10:28:08');
-INSERT INTO `usuario_permisos` VALUES (642, 36, 776, NULL, '2019-05-31 10:28:08', '2019-05-31 10:28:08');
-INSERT INTO `usuario_permisos` VALUES (643, 40, 776, NULL, '2019-05-31 10:28:08', '2019-05-31 10:28:08');
-INSERT INTO `usuario_permisos` VALUES (644, 8, 110, NULL, '2019-05-31 10:55:57', '2019-05-31 10:55:57');
-INSERT INTO `usuario_permisos` VALUES (645, 27, 110, NULL, '2019-05-31 10:55:57', '2019-05-31 10:55:57');
-INSERT INTO `usuario_permisos` VALUES (646, 30, 110, NULL, '2019-05-31 10:55:57', '2019-05-31 10:55:57');
-INSERT INTO `usuario_permisos` VALUES (647, 31, 110, NULL, '2019-05-31 10:55:57', '2019-05-31 10:55:57');
-INSERT INTO `usuario_permisos` VALUES (648, 9, 110, NULL, '2019-05-31 10:57:20', '2019-05-31 10:57:20');
-INSERT INTO `usuario_permisos` VALUES (649, 28, 110, NULL, '2019-05-31 10:57:20', '2019-05-31 10:57:20');
-INSERT INTO `usuario_permisos` VALUES (650, 45, 110, NULL, '2019-05-31 11:06:37', '2019-05-31 11:06:37');
+INSERT INTO `usuario_permisos` VALUES (923, 57, 750, NULL, '2019-06-21 13:28:21', '2019-06-21 13:28:21');
+INSERT INTO `usuario_permisos` VALUES (924, 59, 750, NULL, '2019-06-21 13:33:52', '2019-06-21 13:33:52');
+INSERT INTO `usuario_permisos` VALUES (925, 61, 750, NULL, '2019-06-21 13:37:13', '2019-06-21 13:37:13');
+INSERT INTO `usuario_permisos` VALUES (927, 60, 750, NULL, '2019-06-21 13:40:45', '2019-06-21 13:40:45');
+INSERT INTO `usuario_permisos` VALUES (928, 58, 750, NULL, '2019-06-21 13:40:57', '2019-06-21 13:40:57');
+INSERT INTO `usuario_permisos` VALUES (929, 62, 750, NULL, '2019-06-24 18:56:40', '2019-06-24 18:56:40');
 
 -- ----------------------------
 -- Table structure for usuarios
@@ -7514,6 +6881,12 @@ INSERT INTO `usuarios_roles` VALUES (10, 'SALMA', 'Soporte Almacen', '2018-12-17
 INSERT INTO `usuarios_roles` VALUES (11, 'ESP', 'Especial', '2019-04-05 08:58:49', '2019-04-05 08:58:54');
 
 -- ----------------------------
+-- View structure for vista_ajuste_sueldos
+-- ----------------------------
+DROP VIEW IF EXISTS `vista_ajuste_sueldos`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_ajuste_sueldos` AS select `ajs`.`id` AS `id`,`ajs`.`id_empleado` AS `id_empleado`,`pi`.`id` AS `id_ro`,`pi`.`pedido` AS `pedido`,`pi`.`monto_venta` AS `monto`,`ajs`.`usuario_auth` AS `usuario_auth`,`ajs`.`usuario_cancel` AS `usuario_cancel`,`ajs`.`fecha_validacion` AS `fecha_validacion`,`ajs`.`num_empleado` AS `num_empleado`,concat(`emp`.`empleado_nombre`,' ',`emp`.`empleado_apaterno`,' ',`emp`.`empleado_amaterno`) AS `nombre`,`ajs`.`tradicional` AS `tradicional`,`ajs`.`asimilado` AS `asimilado`,ifnull(`ajs`.`estatus`,'NO') AS `estatus`,`ajs`.`observaciones` AS `observaciones`,`ajs`.`created_at` AS `fecha`,`ajs`.`url` AS `url` from ((`rh`.`ajustes_sueldos` `ajs` join `incore`.`empleados` `emp` on(`emp`.`empleado_id` = `ajs`.`id_empleado`)) left join `incore`.`proyectos_indeplo` `pi` on(`pi`.`id` = `ajs`.`ro`));
+
+-- ----------------------------
 -- View structure for vista_bitacora_general
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_bitacora_general`;
@@ -7529,7 +6902,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_citas` AS (select 
 -- View structure for vista_citas_firma
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_citas_firma`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_citas_firma` AS select `sa`.`id` AS `id`,concat_ws('-',`sa`.`cliente`,`sa`.`servicio`,`sa`.`region`,`sa`.`tecnologia`,`sa`.`grupo`) AS `WBS`,concat_ws(' ',`sa`.`nombre`,`sa`.`apaterno`,`sa`.`amaterno`) AS `Nombre`,concat_ws(' ',`co`.`nombre`,`co`.`apellido`) AS `coordinador`,concat_ws(' x ',`sla`.`auth_entregables`,`usentre`.`nombre`) AS `Auth_entregables`,concat_ws(' x ',`sla`.`auth_direccion`,`usdir`.`nombre`) AS `Auth_direccion`,concat_ws(' x ',`sla`.`auth_rh`,`usrh`.`nombre`) AS `Auth_RH`,`sa`.`fecha_cita` AS `fecha_cita`,`sa`.`hora_cita` AS `hora_cita`,`sa`.`detalles_cita` AS `detalles_cita`,`sa`.`status_cita` AS `status_cita`,`sa`.`correo_cita` AS `correo_cita`,`sa`.`cliente` AS `cliente` from (((((`rh`.`solicitud_alta` `sa` left join `rh`.`catalogo_coordinadores` `co` on(`co`.`id` = `sa`.`coordinador_id`)) left join `rh`.`solicitudes_altas_auth` `sla` on(`sla`.`id_solicitud` = `sa`.`id`)) left join `incore`.`usuarios` `usrh` on(`usrh`.`id_usuario` = `sla`.`id_user_rh`)) left join `incore`.`usuarios` `usdir` on(`usdir`.`id_usuario` = `sla`.`id_dir_user`)) left join `incore`.`usuarios` `usentre` on(`usentre`.`id_usuario` = `sla`.`entregables_user_id`)) where `sa`.`status_cita` is not null or `sa`.`status_cita` = '';
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_citas_firma` AS select `sa`.`id` AS `id`,concat_ws('-',`sa`.`cliente`,`sa`.`servicio`,`sa`.`region`,`sa`.`tecnologia`,`sa`.`grupo`) AS `WBS`,concat_ws(' ',`sa`.`nombre`,`sa`.`apaterno`,`sa`.`amaterno`) AS `Nombre`,concat_ws(' ',`co`.`nombre`,`co`.`apellido`) AS `coordinador`,`sa`.`coordinador_id` AS `coordinador_id`,concat_ws(' x ',`sla`.`auth_entregables`,`usentre`.`nombre`) AS `Auth_entregables`,concat_ws(' x ',`sla`.`auth_direccion`,`usdir`.`nombre`) AS `Auth_direccion`,concat_ws(' x ',`sla`.`auth_rh`,`usrh`.`nombre`) AS `Auth_RH`,`sa`.`fecha_cita` AS `fecha_cita`,`sa`.`hora_cita` AS `hora_cita`,`sa`.`detalles_cita` AS `detalles_cita`,`sa`.`status_cita` AS `status_cita`,`sa`.`correo_cita` AS `correo_cita`,`sa`.`cliente` AS `cliente` from (((((`rh`.`solicitud_alta` `sa` left join `rh`.`catalogo_coordinadores` `co` on(`co`.`id` = `sa`.`coordinador_id`)) left join `rh`.`solicitudes_altas_auth` `sla` on(`sla`.`id_solicitud` = `sa`.`id`)) left join `incore`.`usuarios` `usrh` on(`usrh`.`id_usuario` = `sla`.`id_user_rh`)) left join `incore`.`usuarios` `usdir` on(`usdir`.`id_usuario` = `sla`.`id_dir_user`)) left join `incore`.`usuarios` `usentre` on(`usentre`.`id_usuario` = `sla`.`entregables_user_id`)) where `sa`.`status_cita` is not null or `sa`.`status_cita` = '';
 
 -- ----------------------------
 -- View structure for vista_codigos
@@ -7571,13 +6944,13 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_empleados_excel` A
 -- View structure for vista_empleados_nomina
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_empleados_nomina`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_empleados_nomina` AS select `crc`.`id` AS `id`,`crc`.`descripcion` AS `descripcion`,`rn`.`num_empleado` AS `num_empleado`,`emp`.`empleado_id` AS `empleado_id`,`emp`.`empleado_num` AS `empleado_num`,`emp`.`empleado_alcatel_id` AS `empleado_alcatel_id`,`emp`.`empleado_nombre` AS `empleado_nombre`,`emp`.`empleado_apaterno` AS `empleado_apaterno`,`emp`.`empleado_amaterno` AS `empleado_amaterno`,`emp`.`calle` AS `calle`,`emp`.`num_exterior` AS `num_exterior`,`emp`.`num_interior` AS `num_interior`,`emp`.`colonia` AS `colonia`,`emp`.`municipio` AS `municipio`,`emp`.`cp` AS `cp`,`emp`.`estado` AS `estado`,`emp`.`nss` AS `nss`,`emp`.`curp` AS `curp`,`emp`.`rfc` AS `rfc`,`emp`.`mail` AS `mail`,`emp`.`telefono2` AS `telefono2`,`emp`.`telefono` AS `telefono`,`emp`.`mail_indeplo` AS `mail_indeplo`,`emp`.`empleado_domicilio` AS `empleado_domicilio`,`emp`.`empresa` AS `empresa`,`emp`.`empleado_grupo` AS `empleado_grupo`,`emp`.`segmento` AS `segmento`,`emp`.`empleado_po` AS `empleado_po`,`emp`.`diario_nomina` AS `diario_nomina`,`emp`.`empleado_estatus` AS `empleado_estatus`,`emp`.`empleado_fecha_alta` AS `empleado_fecha_alta`,`emp`.`empleado_fecha_baja` AS `empleado_fecha_baja`,`emp`.`empleado_observaciones` AS `empleado_observaciones`,`emp`.`viaticos_dia` AS `viaticos_dia`,`emp`.`baja_rh` AS `baja_rh`,`emp`.`empleado_update` AS `empleado_update`,`emp`.`viable` AS `viable`,`emp`.`motivo` AS `motivo`,`emp`.`bloqueo_viaticos` AS `bloqueo_viaticos`,`emp`.`motivo_bloqueo` AS `motivo_bloqueo`,`emp`.`contratista` AS `contratista`,`emp`.`tipo_contrato` AS `tipo_contrato`,`emp`.`created_at` AS `created_at`,`emp`.`updated_at` AS `updated_at`,`emp`.`area` AS `area`,`emp`.`id_solicitud` AS `id_solicitud`,`emp`.`actualizado` AS `actualizado` from ((((`incore`.`empleados` `emp` left join `incore`.`recursos_nomina` `rn` on(`emp`.`empleado_id` = `rn`.`empleado_id`)) join `incore`.`movimientos_recurso` `mr` on(`mr`.`empleado_id` = `emp`.`empleado_id`)) join `incore`.`catalogo_razonrh` `crh` on(`crh`.`razon_id` = `mr`.`razon_rh`)) join `rh`.`catalogo_razon_capital` `crc` on(`crh`.`id_razon_capital` = `crc`.`id`)) where `emp`.`empleado_fecha_baja` is null and `rn`.`num_empleado` <> 0 and `mr`.`fecha_baja` is null group by `emp`.`empleado_id` order by `emp`.`empleado_id`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_empleados_nomina` AS select `crc`.`id` AS `id`,`crc`.`descripcion` AS `descripcion`,`rn`.`num_empleado` AS `num_empleado`,`emp`.`empleado_id` AS `empleado_id`,`emp`.`empleado_num` AS `empleado_num`,`emp`.`empleado_alcatel_id` AS `empleado_alcatel_id`,`emp`.`empleado_nombre` AS `empleado_nombre`,`emp`.`empleado_apaterno` AS `empleado_apaterno`,`emp`.`empleado_amaterno` AS `empleado_amaterno`,`emp`.`calle` AS `calle`,`emp`.`num_exterior` AS `num_exterior`,`emp`.`num_interior` AS `num_interior`,`emp`.`colonia` AS `colonia`,`emp`.`municipio` AS `municipio`,`emp`.`cp` AS `cp`,`emp`.`estado` AS `estado`,`emp`.`nss` AS `nss`,`emp`.`curp` AS `curp`,`emp`.`rfc` AS `rfc`,`emp`.`mail` AS `mail`,`emp`.`telefono2` AS `telefono2`,`emp`.`telefono` AS `telefono`,`emp`.`mail_indeplo` AS `mail_indeplo`,`emp`.`empleado_domicilio` AS `empleado_domicilio`,`emp`.`empresa` AS `empresa`,`emp`.`empleado_grupo` AS `empleado_grupo`,`emp`.`segmento` AS `segmento`,`emp`.`empleado_po` AS `empleado_po`,`emp`.`diario_nomina` AS `diario_nomina`,`emp`.`empleado_estatus` AS `empleado_estatus`,`emp`.`empleado_fecha_alta` AS `empleado_fecha_alta`,`emp`.`empleado_fecha_baja` AS `empleado_fecha_baja`,`emp`.`empleado_observaciones` AS `empleado_observaciones`,`emp`.`viaticos_dia` AS `viaticos_dia`,`emp`.`baja_rh` AS `baja_rh`,`emp`.`empleado_update` AS `empleado_update`,`emp`.`viable` AS `viable`,`emp`.`motivo` AS `motivo`,`emp`.`bloqueo_viaticos` AS `bloqueo_viaticos`,`emp`.`motivo_bloqueo` AS `motivo_bloqueo`,`emp`.`contratista` AS `contratista`,`emp`.`tipo_contrato` AS `tipo_contrato`,`emp`.`created_at` AS `created_at`,`emp`.`updated_at` AS `updated_at`,`emp`.`area` AS `area`,`emp`.`id_solicitud` AS `id_solicitud`,`emp`.`actualizado` AS `actualizado` from ((((`incore`.`empleados` `emp` left join `incore`.`recursos_nomina` `rn` on(`emp`.`empleado_id` = `rn`.`empleado_id`)) join `incore`.`movimientos_recurso` `mr` on(`mr`.`empleado_id` = `emp`.`empleado_id`)) join `incore`.`catalogo_razonrh` `crh` on(`crh`.`razon_id` = `mr`.`razon_rh`)) join `incore`.`catalogo_razon_capital` `crc` on(`crh`.`id_razon_capital` = `crc`.`id`)) where `emp`.`empleado_fecha_baja` is null and `rn`.`num_empleado` <> 0 and `mr`.`fecha_baja` is null group by `emp`.`empleado_id` order by `emp`.`empleado_id`;
 
 -- ----------------------------
 -- View structure for vista_empleado_capital
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_empleado_capital`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_empleado_capital` AS select `crc`.`id` AS `id`,`crc`.`descripcion` AS `descripcion`,`emp`.`empleado_id` AS `empleado_id`,`emp`.`empleado_num` AS `empleado_num`,`emp`.`empleado_alcatel_id` AS `empleado_alcatel_id`,`emp`.`empleado_nombre` AS `empleado_nombre`,`emp`.`empleado_apaterno` AS `empleado_apaterno`,`emp`.`empleado_amaterno` AS `empleado_amaterno`,`emp`.`calle` AS `calle`,`emp`.`num_exterior` AS `num_exterior`,`emp`.`num_interior` AS `num_interior`,`emp`.`colonia` AS `colonia`,`emp`.`municipio` AS `municipio`,`emp`.`cp` AS `cp`,`emp`.`estado` AS `estado`,`emp`.`nss` AS `nss`,`emp`.`curp` AS `curp`,`emp`.`rfc` AS `rfc`,`emp`.`mail` AS `mail`,`emp`.`telefono2` AS `telefono2`,`emp`.`telefono` AS `telefono`,`emp`.`mail_indeplo` AS `mail_indeplo`,`emp`.`empleado_domicilio` AS `empleado_domicilio`,`emp`.`empresa` AS `empresa`,`emp`.`empleado_grupo` AS `empleado_grupo`,`emp`.`segmento` AS `segmento`,`emp`.`empleado_po` AS `empleado_po`,`emp`.`diario_nomina` AS `diario_nomina`,`emp`.`empleado_estatus` AS `empleado_estatus`,`emp`.`empleado_fecha_alta` AS `empleado_fecha_alta`,`emp`.`empleado_fecha_baja` AS `empleado_fecha_baja`,`emp`.`empleado_observaciones` AS `empleado_observaciones`,`emp`.`viaticos_dia` AS `viaticos_dia`,`emp`.`baja_rh` AS `baja_rh`,`emp`.`empleado_update` AS `empleado_update`,`emp`.`viable` AS `viable`,`emp`.`motivo` AS `motivo`,`emp`.`bloqueo_viaticos` AS `bloqueo_viaticos`,`emp`.`motivo_bloqueo` AS `motivo_bloqueo`,`emp`.`contratista` AS `contratista`,`emp`.`tipo_contrato` AS `tipo_contrato`,`emp`.`created_at` AS `created_at`,`emp`.`updated_at` AS `updated_at`,`emp`.`area` AS `area`,`emp`.`id_solicitud` AS `id_solicitud`,`emp`.`actualizado` AS `actualizado` from (((`incore`.`empleados` `emp` join `incore`.`movimientos_recurso` `mr` on(`mr`.`empleado_id` = `emp`.`empleado_id`)) join `incore`.`catalogo_razonrh` `crh` on(`mr`.`razon_rh` = `crh`.`razon_id`)) join `rh`.`catalogo_razon_capital` `crc` on(`crh`.`id_razon_capital` = `crc`.`id`)) where `emp`.`empleado_fecha_baja` is null and `emp`.`curp` is not null and `mr`.`fecha_baja` is null order by `emp`.`empleado_id`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_empleado_capital` AS select `crc`.`id` AS `id`,`crc`.`descripcion` AS `descripcion`,`emp`.`empleado_id` AS `empleado_id`,`emp`.`empleado_num` AS `empleado_num`,`emp`.`empleado_alcatel_id` AS `empleado_alcatel_id`,`emp`.`empleado_nombre` AS `empleado_nombre`,`emp`.`empleado_apaterno` AS `empleado_apaterno`,`emp`.`empleado_amaterno` AS `empleado_amaterno`,`emp`.`calle` AS `calle`,`emp`.`num_exterior` AS `num_exterior`,`emp`.`num_interior` AS `num_interior`,`emp`.`colonia` AS `colonia`,`emp`.`municipio` AS `municipio`,`emp`.`cp` AS `cp`,`emp`.`estado` AS `estado`,`emp`.`nss` AS `nss`,`emp`.`curp` AS `curp`,`emp`.`rfc` AS `rfc`,`emp`.`mail` AS `mail`,`emp`.`telefono2` AS `telefono2`,`emp`.`telefono` AS `telefono`,`emp`.`mail_indeplo` AS `mail_indeplo`,`emp`.`empleado_domicilio` AS `empleado_domicilio`,`emp`.`empresa` AS `empresa`,`emp`.`empleado_grupo` AS `empleado_grupo`,`emp`.`segmento` AS `segmento`,`emp`.`empleado_po` AS `empleado_po`,`emp`.`diario_nomina` AS `diario_nomina`,`emp`.`empleado_estatus` AS `empleado_estatus`,`emp`.`empleado_fecha_alta` AS `empleado_fecha_alta`,`emp`.`empleado_fecha_baja` AS `empleado_fecha_baja`,`emp`.`empleado_observaciones` AS `empleado_observaciones`,`emp`.`viaticos_dia` AS `viaticos_dia`,`emp`.`baja_rh` AS `baja_rh`,`emp`.`empleado_update` AS `empleado_update`,`emp`.`viable` AS `viable`,`emp`.`motivo` AS `motivo`,`emp`.`bloqueo_viaticos` AS `bloqueo_viaticos`,`emp`.`motivo_bloqueo` AS `motivo_bloqueo`,`emp`.`contratista` AS `contratista`,`emp`.`tipo_contrato` AS `tipo_contrato`,`emp`.`created_at` AS `created_at`,`emp`.`updated_at` AS `updated_at`,`emp`.`area` AS `area`,`emp`.`id_solicitud` AS `id_solicitud`,`emp`.`actualizado` AS `actualizado` from (((`incore`.`empleados` `emp` join `incore`.`movimientos_recurso` `mr` on(`mr`.`empleado_id` = `emp`.`empleado_id`)) join `incore`.`catalogo_razonrh` `crh` on(`mr`.`razon_rh` = `crh`.`razon_id`)) join `incore`.`catalogo_razon_capital` `crc` on(`crh`.`id_razon_capital` = `crc`.`id`)) where `emp`.`empleado_fecha_baja` is null and `emp`.`curp` is not null and `mr`.`fecha_baja` is null order by `emp`.`empleado_id`;
 
 -- ----------------------------
 -- View structure for vista_herramienta_empleado
@@ -7607,7 +6980,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_incidencias_period
 -- View structure for vista_incidencias_sin_lote
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_incidencias_sin_lote`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_incidencias_sin_lote` AS (select `i`.`id` AS `id`,`crc`.`capital_id` AS `capital_id`,concat_ws(' ',`e_asign`.`empleado_nombre`,`e_asign`.`empleado_apaterno`,`e_asign`.`empleado_amaterno`) AS `empleado`,`e_asign`.`empleado_num` AS `emp_id`,`pi`.`proyecto_nombre` AS `proyecto`,`pi`.`pedido` AS `pedido`,ifnull(`pi`.`monto_venta`,0) AS `venta`,`cat`.`nombre` AS `incidencia`,`cat`.`tipo` AS `tipo_incidencia`,`i`.`fecha_solicitud` AS `fecha_solicitud`,`i`.`fecha_inicio` AS `fecha_inicio`,`i`.`fecha_fin` AS `fecha_fin`,`i`.`dias` AS `duracion`,`i`.`monto` AS `monto`,`i`.`motivo` AS `motivo`,`u1`.`nombre` AS `solicitante`,`u1`.`id_usuario` AS `id_solicitante`,`i`.`auth_rh` AS `Autorizado_RH`,`i`.`auth_direccion` AS `Autorizado_DIR`,`i`.`auth_capital` AS `Autorizado_Capital`,`i`.`id_lote` AS `id_lote`,`i`.`download_info` AS `descargado`,`i`.`status_auth` AS `estatus`,`i`.`area_cancelar` AS `cancelado`,`i`.`id_incidencia_tipo` AS `id_tipo`,`i`.`area_solicitante` AS `area_solicitante`,`i`.`vobo` AS `vobo`,`i`.`vobo_final` AS `vobo_final`,`i`.`id_auth_venta` AS `id_auth_venta`,`i`.`auth_venta` AS `auth_venta`,`mc`.`coordinador_id` AS `coordinador_id` from ((((((`rh`.`incidencias` `i` join `rh`.`incidencias_catalogo` `cat` on(`cat`.`id` = `i`.`id_incidencia_tipo`)) left join `incore`.`empleados` `e_asign` on(`e_asign`.`empleado_id` = `i`.`id_empleado`)) left join `incore`.`usuarios` `u1` on(`u1`.`id_usuario` = `i`.`id_solicitante`)) left join (select `m_c`.`id` AS `id`,`m_c`.`coordinador_id` AS `coordinador_id`,`m_c`.`empleado_id` AS `empleado_id`,`m_c`.`fecha_inicio` AS `fecha_inicio`,`m_c`.`fecha_fin` AS `fecha_fin`,`m_c`.`user_log` AS `user_log`,`m_c`.`fecha_log` AS `fecha_log`,`m_c`.`caduca` AS `caduca`,`cc`.`nombre` AS `nombre` from (`incore`.`movimientos_coordinador` `m_c` join `incore`.`catalogo_coordinadores` `cc` on(`cc`.`id` = `m_c`.`coordinador_id`))) `mc` on(`mc`.`id` = (select `incore`.`movimientos_coordinador`.`id` from `incore`.`movimientos_coordinador` where `incore`.`movimientos_coordinador`.`empleado_id` = `e_asign`.`empleado_id` order by `incore`.`movimientos_coordinador`.`id` desc limit 0,1))) left join `incore`.`proyectos_indeplo` `pi` on(`pi`.`id` = `i`.`id_proyecto`)) left join (select `emp`.`empleado_id` AS `empleado_id`,`emp`.`empleado_nombre` AS `empleado_nombre`,`emp`.`empleado_apaterno` AS `empleado_apaterno`,`crp`.`id` AS `capital_id`,`crh`.`razon_nombre` AS `razon_nombre` from (((`incore`.`empleados` `emp` join `incore`.`movimientos_recurso` `mr` on(`emp`.`empleado_id` = `mr`.`empleado_id`)) join `incore`.`catalogo_razonrh` `crh` on(`crh`.`razon_id` = `mr`.`razon_rh`)) join `rh`.`catalogo_razon_capital` `crp` on(`crh`.`id_razon_capital` = `crp`.`id`)) where `emp`.`empleado_fecha_baja` is null and `mr`.`fecha_baja` is null order by `emp`.`empleado_id`) `crc` on(`crc`.`empleado_id` = `i`.`id_empleado`)) group by `i`.`id` order by `i`.`id`);
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_incidencias_sin_lote` AS (select `i`.`id` AS `id`,`crc`.`capital_id` AS `capital_id`,`e_asign`.`empleado_id` AS `id_empleado`,concat_ws(' ',`e_asign`.`empleado_nombre`,`e_asign`.`empleado_apaterno`,`e_asign`.`empleado_amaterno`) AS `empleado`,`e_asign`.`empleado_num` AS `emp_id`,`pi`.`proyecto_nombre` AS `proyecto`,`pi`.`pedido` AS `pedido`,ifnull(`pi`.`monto_venta`,0) AS `venta`,`cat`.`alias` AS `incidencia`,`cat`.`tipo` AS `tipo_incidencia`,`cat`.`tratamiento` AS `tratamiento`,`i`.`fecha_solicitud` AS `fecha_solicitud`,`i`.`fecha_inicio` AS `fecha_inicio`,`i`.`fecha_fin` AS `fecha_fin`,`i`.`dias` AS `duracion`,`i`.`monto` AS `monto`,`i`.`motivo` AS `motivo`,concat(`u1`.`nombre`,' ',`u1`.`apellido`) AS `solicitante`,`u1`.`id_usuario` AS `id_solicitante`,`i`.`auth_rh` AS `Autorizado_RH`,`i`.`auth_direccion` AS `Autorizado_DIR`,`i`.`auth_capital` AS `Autorizado_Capital`,`i`.`id_lote` AS `id_lote`,`i`.`download_info` AS `descargado`,`i`.`status_auth` AS `estatus`,`i`.`area_cancelar` AS `cancelado`,`i`.`id_incidencia_tipo` AS `id_tipo`,`i`.`area_solicitante` AS `area_solicitante`,`i`.`vobo` AS `vobo`,`i`.`vobo_final` AS `vobo_final`,`i`.`id_auth_venta` AS `id_auth_venta`,`i`.`auth_venta` AS `auth_venta`,`mc`.`coordinador_id` AS `coordinador_id` from ((((((`rh`.`incidencias` `i` join `rh`.`incidencias_catalogo` `cat` on(`cat`.`id` = `i`.`id_incidencia_tipo`)) left join `incore`.`empleados` `e_asign` on(`e_asign`.`empleado_id` = `i`.`id_empleado`)) left join `incore`.`usuarios` `u1` on(`u1`.`id_usuario` = `i`.`id_solicitante`)) left join (select `m_c`.`id` AS `id`,`m_c`.`coordinador_id` AS `coordinador_id`,`m_c`.`empleado_id` AS `empleado_id`,`m_c`.`fecha_inicio` AS `fecha_inicio`,`m_c`.`fecha_fin` AS `fecha_fin`,`m_c`.`user_log` AS `user_log`,`m_c`.`fecha_log` AS `fecha_log`,`m_c`.`caduca` AS `caduca`,`cc`.`nombre` AS `nombre` from (`incore`.`movimientos_coordinador` `m_c` join `incore`.`catalogo_coordinadores` `cc` on(`cc`.`id` = `m_c`.`coordinador_id`))) `mc` on(`mc`.`id` = (select `incore`.`movimientos_coordinador`.`id` from `incore`.`movimientos_coordinador` where `incore`.`movimientos_coordinador`.`empleado_id` = `e_asign`.`empleado_id` order by `incore`.`movimientos_coordinador`.`id` desc limit 0,1))) left join `incore`.`proyectos_indeplo` `pi` on(`pi`.`id` = `i`.`id_proyecto`)) left join (select `emp`.`empleado_id` AS `empleado_id`,`emp`.`empleado_nombre` AS `empleado_nombre`,`emp`.`empleado_apaterno` AS `empleado_apaterno`,`crp`.`id` AS `capital_id`,`crh`.`razon_nombre` AS `razon_nombre` from (((`incore`.`empleados` `emp` join `incore`.`movimientos_recurso` `mr` on(`emp`.`empleado_id` = `mr`.`empleado_id`)) join `incore`.`catalogo_razonrh` `crh` on(`crh`.`razon_id` = `mr`.`razon_rh`)) join `rh`.`catalogo_razon_capital` `crp` on(`crh`.`id_razon_capital` = `crp`.`id`)) where `emp`.`empleado_fecha_baja` is null and `mr`.`fecha_baja` is null order by `emp`.`empleado_id`) `crc` on(`crc`.`empleado_id` = `i`.`id_empleado`)) group by `i`.`id` order by `i`.`id`);
 
 -- ----------------------------
 -- View structure for vista_permisos_empleados
@@ -7625,13 +6998,13 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_solicitudes` AS (s
 -- View structure for vista_solicitudes_alta
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_solicitudes_alta`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_solicitudes_alta` AS select `sa`.`id` AS `id`,`sa`.`descargado` AS `descargado`,concat_ws('-',`sa`.`cliente`,`sa`.`servicio`,`sa`.`region`,`sa`.`tecnologia`,`sa`.`grupo`) AS `WBS`,concat_ws(' ',`sa`.`nombre`,`sa`.`apaterno`,`sa`.`amaterno`) AS `Nombre`,`sa`.`created_at` AS `fecha solicitud`,`sa`.`created_at` AS `fecha creacion de solicitud`,`co`.`id` AS `coordinador_id`,concat_ws(' ',`co`.`nombre`,`co`.`apellido`) AS `coordinador`,'coordinadornokia' AS `coordinadornokia`,`sa`.`pm` AS `pm`,'solicitante definir' AS `solicitante definir`,`sa`.`sueldo_imss` AS `imss`,`sa`.`sueldo_variable` AS `variable`,'asimilado' AS `asimilado`,`sa`.`costo` AS `costo`,`sa`.`status_cita` AS `status_cita`,`sa`.`venta` AS `venta`,`sa`.`margen` AS `margen`,if(concat_ws(' x ',`sla`.`auth_entregables`,`usentre`.`nombre`) <> '',concat_ws(' x ',`sla`.`auth_entregables`,`usentre`.`nombre`),'x') AS `Auth entregables`,if(concat_ws(' x ',`sla`.`auth_direccion`,`usdir`.`nombre`) <> '',concat_ws(' x ',`sla`.`auth_direccion`,`usdir`.`nombre`),'x') AS `Auth direccion`,if(concat_ws(' x ',`sla`.`auth_rh`,`usrh`.`nombre`) <> '',concat_ws(' x ',`sla`.`auth_rh`,`usrh`.`nombre`),'x') AS `Auth RH`,`sla`.`contrato_firmado` AS `Contrato firmado`,`sla`.`alta` AS `alta`,(select if(`sla`.`computadora` = 'OK','ASIGNADA',(select if(concat_ws('',(select if(`sa`.`computadora` <> 0,'SI','NO')),(select if(`sa`.`software` <> 0,'SI','NO'))) <> 'NONO','SOLICITADO','NO SOLICITADO')))) AS `Computadora`,(select if(`sla`.`coche` = 'OK','ASIGNADA',(select if((select if(`sa`.`auto` <> 0,'SI','NO') <> 'NO'),'SOLICITADO','NO SOLICITADO')))) AS `Coche`,(select if(`sla`.`celular` = 'OK','ASIGNADA',(select if(concat_ws('',(select if(`sa`.`celular` <> 0,'SI','NO')),(select if(`sa`.`plan_linea` <> 27,'SI','NO')),(select if(`sa`.`plan_linea_bam` <> 27,'SI','NO'))) <> 'NONONO','SOLICITADO','NO SOLICITADO')))) AS `Celular`,(select if(`sla`.`herramientas_almacen` = 'OK','ASIGNADA',(select if(concat_ws('',(select if(`sa`.`playera` <> 0,'SI','NO')),(select if(`sa`.`botas` <> 0,'SI','NO'))) <> 'NONO','SOLICITADO','NO SOLICITADO')))) AS `Herramientas`,`usr`.`id_usuario` AS `id_solicitante`,`usr`.`nombre` AS `Solicitante`,`sla`.`listo_cita` AS `cita`,`sla`.`computadora` AS `computadora_check`,`sla`.`celular` AS `celular_check`,`sla`.`coche` AS `coche_check`,`sla`.`herramientas_almacen` AS `herramientas_check`,`sa`.`cotizacion_url` AS `cotizacion_url`,`sa`.`caso_negocio_url` AS `caso_negocio_url`,`sa`.`vobo_url` AS `vobo_url`,`sa`.`curriculum_url` AS `curriculum_url`,`sa`.`cliente` AS `cliente`,`sa`.`servicio` AS `servicio`,`sa`.`region` AS `region`,`sa`.`tecnologia` AS `tecnologia`,`sa`.`grupo` AS `grupo` from ((((((`rh`.`solicitud_alta` `sa` left join `incore`.`catalogo_coordinadores` `co` on(`co`.`id` = `sa`.`coordinador_id`)) left join `rh`.`solicitudes_altas_auth` `sla` on(`sla`.`id_solicitud` = `sa`.`id`)) left join `incore`.`usuarios` `usrh` on(`usrh`.`id_usuario` = `sla`.`id_user_rh`)) left join `incore`.`usuarios` `usdir` on(`usdir`.`id_usuario` = `sla`.`id_dir_user`)) left join `incore`.`usuarios` `usentre` on(`usentre`.`id_usuario` = `sla`.`entregables_user_id`)) left join `incore`.`usuarios` `usr` on(`usr`.`id_usuario` = `sa`.`solicitante`));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_solicitudes_alta` AS select `sa`.`id` AS `id`,`sa`.`descargado` AS `descargado`,concat_ws('-',`sa`.`cliente`,`sa`.`servicio`,`sa`.`region`,`sa`.`tecnologia`,`sa`.`grupo`) AS `WBS`,concat_ws(' ',`sa`.`nombre`,`sa`.`apaterno`,`sa`.`amaterno`) AS `Nombre`,`sa`.`fecha_inicio` AS `fecha solicitud`,`sa`.`created_at` AS `fecha creacion de solicitud`,`co`.`id` AS `coordinador_id`,concat_ws(' ',`co`.`nombre`,`co`.`apellido`) AS `coordinador`,'coordinadornokia' AS `coordinadornokia`,`sa`.`pm` AS `pm`,`sa`.`sueldo_imss` AS `imss`,`sa`.`sueldo_variable` AS `variable`,`sa`.`costo` AS `costo`,`sa`.`status_cita` AS `status_cita`,`sa`.`venta` AS `venta`,`sa`.`margen` AS `margen`,if(concat_ws(' x ',`sla`.`auth_entregables`,`usentre`.`nombre`) <> '',concat_ws(' x ',`sla`.`auth_entregables`,`usentre`.`nombre`),'x') AS `Auth entregables`,if(concat_ws(' x ',`sla`.`auth_direccion`,`usdir`.`nombre`) <> '',concat_ws(' x ',`sla`.`auth_direccion`,`usdir`.`nombre`),'x') AS `Auth direccion`,if(concat_ws(' x ',`sla`.`auth_rh`,`usrh`.`nombre`) <> '',concat_ws(' x ',`sla`.`auth_rh`,`usrh`.`nombre`),'x') AS `Auth RH`,`sla`.`contrato_firmado` AS `Contrato firmado`,`sla`.`alta` AS `alta`,(select if(`sla`.`computadora` = 'OK','ASIGNADA',(select if(concat_ws('',(select if(`sa`.`computadora` <> 0,'SI','NO')),(select if(`sa`.`software` <> 0,'SI','NO'))) <> 'NONO','SOLICITADO','NO SOLICITADO')))) AS `Computadora`,(select if(`sla`.`coche` = 'OK','ASIGNADA',(select if((select if(`sa`.`auto` <> 0,'SI','NO') <> 'NO'),'SOLICITADO','NO SOLICITADO')))) AS `Coche`,(select if(`sla`.`celular` = 'OK','ASIGNADA',(select if(concat_ws('',(select if(`sa`.`celular` <> 0,'SI','NO')),(select if(`sa`.`plan_linea` <> 27,'SI','NO')),(select if(`sa`.`plan_linea_bam` <> 27,'SI','NO'))) <> 'NONONO','SOLICITADO','NO SOLICITADO')))) AS `Celular`,(select if(`sla`.`herramientas_almacen` = 'OK','ASIGNADA',(select if(concat_ws('',(select if(`sa`.`playera` <> 0,'SI','NO')),(select if(`sa`.`botas` <> 0,'SI','NO'))) <> 'NONO','SOLICITADO','NO SOLICITADO')))) AS `Herramientas`,`usr`.`id_usuario` AS `id_solicitante`,concat(`usr`.`nombre`,' ',`usr`.`apellido`) AS `Solicitante`,`sla`.`listo_cita` AS `cita`,`sla`.`computadora` AS `computadora_check`,`sla`.`celular` AS `celular_check`,`sla`.`coche` AS `coche_check`,`sla`.`herramientas_almacen` AS `herramientas_check`,`sa`.`cotizacion_url` AS `cotizacion_url`,`sa`.`caso_negocio_url` AS `caso_negocio_url`,`sa`.`vobo_url` AS `vobo_url`,`sa`.`curriculum_url` AS `curriculum_url`,`sa`.`cliente` AS `cliente`,`sa`.`servicio` AS `servicio`,`sa`.`region` AS `region`,`sa`.`tecnologia` AS `tecnologia`,`sa`.`grupo` AS `grupo`,`sa`.`motivo` AS `motivo`,`sa`.`puesto` AS `id_puesto`,`sa`.`lugar_trabajo` AS `lugar_trabajo`,`sa`.`usuario_rechazar` AS `id_rechazo` from ((((((`rh`.`solicitud_alta` `sa` left join `incore`.`catalogo_coordinadores` `co` on(`co`.`id` = `sa`.`coordinador_id`)) left join `rh`.`solicitudes_altas_auth` `sla` on(`sla`.`id_solicitud` = `sa`.`id`)) left join `incore`.`usuarios` `usrh` on(`usrh`.`id_usuario` = `sla`.`id_user_rh`)) left join `incore`.`usuarios` `usdir` on(`usdir`.`id_usuario` = `sla`.`id_dir_user`)) left join `incore`.`usuarios` `usentre` on(`usentre`.`id_usuario` = `sla`.`entregables_user_id`)) left join `incore`.`usuarios` `usr` on(`usr`.`id_usuario` = `sa`.`solicitante`));
 
 -- ----------------------------
 -- View structure for vista_solicitudes_baja_nom
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_solicitudes_baja_nom`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_solicitudes_baja_nom` AS select `sbn`.`id` AS `id`,`emp`.`empleado_id` AS `empleado_id`,concat(`emp`.`empleado_nombre`,' ',`emp`.`empleado_apaterno`,' ',`emp`.`empleado_amaterno`) AS `Recurso`,concat(`mpr`.`cliente`,' ',`mpr`.`servicio`,' ',`mpr`.`region`,' ',`mpr`.`tecnologia`,' ',`mpr`.`grupo`) AS `WBS`,`mc`.`nombre` AS `coordinador`,`mc`.`coordinador_id` AS `coordinador_id`,'coordinador nokia' AS `coordinador nokia`,`us`.`nombre` AS `solicitante`,`sbn`.`fecha_emision` AS `fecha_emision`,`sbn`.`fecha_baja_sol` AS `fecha_baja_sol`,`sbn`.`fecha_baja_nom` AS `fecha_baja_nom`,`sbn`.`fecha_cita` AS `fecha_cita`,if(`sbn`.`baja_computo` = 'true','OK','NO') AS `baja_computo`,if(`sbn`.`baja_auto` = 'true','OK','NO') AS `baja_auto`,if(`sbn`.`baja_celular` = 'true','OK','NO') AS `baja_celular`,if(`sbn`.`baja_almacen` = 'true','OK','NO') AS `baja_almacen`,if(`sbn`.`baja_credencial` = 'true','OK','NO') AS `baja_credencial`,if(`sbn`.`pago_finiquito` = 'true','OK','NO') AS `pago_finiquito`,if(`sbn`.`baja_definitiva` is null,'PENDIENTE','COMPLETADO') AS `baja_definitiva`,`sbn`.`adeudos` AS `adeudos`,`sbn`.`tiempo_herra` AS `tiempo_retraso_her`,`sbn`.`vobo_jefe` AS `vobo`,if(`as_comp`.`asign_id` is not null,'SI','NO') AS `adeudo_compu`,if(`as_acc`.`asign_id` is not null,'SI','NO') AS `adeudo_accesorios`,if(`as_cel`.`asign_id` is not null,'SI','NO') AS `adeudo_celular`,if(`as_lin`.`asign_id` is not null,'SI','NO') AS `adeudo_lin`,if(`as_auto`.`asign_id` is not null,'SI','NO') AS `adeudo_auto`,if(`vhe`.`articulo` is not null,'SI','NO') AS `adeudo_herra` from (((((((((((`rh`.`solicitudes_baja_nomina` `sbn` join `incore`.`empleados` `emp` on(`emp`.`empleado_id` = `sbn`.`id_empleado`)) left join `incore`.`movimientos_proyectos` `mpr` on(`mpr`.`id` = (select `incore`.`movimientos_proyectos`.`id` from `incore`.`movimientos_proyectos` where `incore`.`movimientos_proyectos`.`empleado_id` = `emp`.`empleado_id` order by `incore`.`movimientos_proyectos`.`id` desc limit 0,1))) left join (select `m_c`.`id` AS `id`,`m_c`.`coordinador_id` AS `coordinador_id`,`cc`.`nombre` AS `nombre` from (`incore`.`movimientos_coordinador` `m_c` join `incore`.`catalogo_coordinadores` `cc` on(`cc`.`id` = `m_c`.`coordinador_id`))) `mc` on(`mc`.`id` = (select `incore`.`movimientos_coordinador`.`id` from `incore`.`movimientos_coordinador` where `incore`.`movimientos_coordinador`.`empleado_id` = `emp`.`empleado_id` order by `incore`.`movimientos_coordinador`.`id` desc limit 0,1))) join `incore`.`usuarios` `us` on(`us`.`id_usuario` = `sbn`.`solicitante`)) left join `rh`.`solicitud_alta` `sa` on(`sa`.`id_empleado` = (select `rh`.`solicitud_alta`.`id_empleado` from `rh`.`solicitud_alta` where `rh`.`solicitud_alta`.`id_empleado` = `emp`.`empleado_id` order by `rh`.`solicitud_alta`.`id` desc limit 0,1))) left join `incore`.`asignaciones_computo` `as_comp` on(`as_comp`.`asign_empleado_id` = (select `incore`.`empleados`.`empleado_id` from (((`incore`.`asignaciones_computo` join `incore`.`computo` on(`incore`.`computo`.`equipo_id` = `incore`.`asignaciones_computo`.`asign_tool_id`)) join `incore`.`empleados` on(`incore`.`asignaciones_computo`.`asign_empleado_id` = `incore`.`empleados`.`empleado_id`)) left join `incore`.`baja_computo` on(`incore`.`baja_computo`.`baja_asign_id` = `incore`.`asignaciones_computo`.`asign_id`)) where `incore`.`asignaciones_computo`.`asign_empleado_id` = `emp`.`empleado_id` and `incore`.`baja_computo`.`baja_fecha` is null order by `incore`.`baja_computo`.`baja_asign_id` limit 0,1))) left join `incore`.`asignaciones_accesorios` `as_acc` on(`as_acc`.`asign_empleado_id` = (select `ac`.`asign_empleado_id` AS `empleado_id` from (`incore`.`asignaciones_accesorios` `ac` left join `incore`.`baja_accesorios` `bc` on(`bc`.`baja_asign_id` = `ac`.`asign_id`)) where `ac`.`asign_empleado_id` = `emp`.`empleado_id` and `bc`.`baja_id` is null limit 0,1))) left join `incore`.`asignaciones_celulares` `as_cel` on(`as_cel`.`asign_empleado_id` = (select `incore`.`asignaciones_celulares`.`asign_empleado_id` from (`incore`.`asignaciones_celulares` left join `incore`.`baja_celular` on(`incore`.`baja_celular`.`baja_asign_id` = `incore`.`asignaciones_celulares`.`asign_id`)) where `incore`.`baja_celular`.`baja_fecha` is null and `incore`.`asignaciones_celulares`.`asign_empleado_id` = `emp`.`empleado_id` limit 0,1))) left join `incore`.`asignaciones_lineas` `as_lin` on(`as_lin`.`asign_empleado_id` = (select `incore`.`asignaciones_lineas`.`asign_empleado_id` from (`incore`.`asignaciones_lineas` left join `incore`.`baja_linea` on(`incore`.`baja_linea`.`baja_asign_id` = `incore`.`asignaciones_lineas`.`asign_id`)) where `incore`.`baja_linea`.`baja_fecha` is null and `incore`.`asignaciones_lineas`.`asign_empleado_id` = `emp`.`empleado_id` limit 0,1))) left join `incore`.`asignaciones_autos` `as_auto` on(`as_auto`.`asign_empleado_id` = (select `incore`.`asignaciones_autos`.`asign_empleado_id` from (`incore`.`asignaciones_autos` left join `incore`.`baja_auto` on(`incore`.`baja_auto`.`baja_asign_id` = `incore`.`asignaciones_autos`.`asign_id`)) where `incore`.`asignaciones_autos`.`asign_empleado_id` = `emp`.`empleado_id` and `incore`.`baja_auto`.`baja_id` is null limit 0,1))) left join `rh`.`vista_herramienta_empleado` `vhe` on(`emp`.`empleado_id` = (select `vista_herramienta_empleado`.`empleado_id` from `rh`.`vista_herramienta_empleado` where `vista_herramienta_empleado`.`empleado_id` = `emp`.`empleado_id` group by `vista_herramienta_empleado`.`empleado_id`))) where `sbn`.`deleted_at` is null group by `sbn`.`id` order by `sbn`.`id`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_solicitudes_baja_nom` AS select `sbn`.`id` AS `id`,`emp`.`empleado_id` AS `empleado_id`,concat(`emp`.`empleado_nombre`,' ',`emp`.`empleado_apaterno`,' ',`emp`.`empleado_amaterno`) AS `Recurso`,concat(`mpr`.`cliente`,' ',`mpr`.`servicio`,' ',`mpr`.`region`,' ',`mpr`.`tecnologia`,' ',`mpr`.`grupo`) AS `WBS`,`mc`.`nombre` AS `coordinador`,`mc`.`coordinador_id` AS `coordinador_id`,'' AS `coordinador nokia`,concat(`us`.`nombre`,' ',`us`.`apellido`) AS `solicitante`,`sbn`.`fecha_emision` AS `fecha_emision`,`sbn`.`fecha_baja_sol` AS `fecha_baja_sol`,`emp`.`empleado_fecha_baja` AS `fecha_baja_nom`,`sbn`.`fecha_cita` AS `fecha_cita`,`sbn`.`adeudo_compu` AS `deuda_compu`,`sbn`.`adeudo_cel` AS `deuda_cel`,`sbn`.`adeudo_auto` AS `deuda_auto`,`sbn`.`adeudo_alma` AS `deuda_alma`,`sbn`.`adeudo_cred` AS `deuda_cred`,if(`sbn`.`baja_computo` = 'true' or `as_comp`.`asign_id` is null and `as_acc`.`asign_id` is null,'OK','NO') AS `baja_computo`,if(`sbn`.`baja_auto` = 'true' or `as_auto`.`asign_id` is null,'OK','NO') AS `baja_auto`,if(`sbn`.`baja_celular` = 'true' or `as_cel`.`asign_id` is null and `as_lin`.`asign_id` is null,'OK','NO') AS `baja_celular`,if(`sbn`.`baja_almacen` = 'true' or `vhe`.`articulo` is null,'OK','NO') AS `baja_almacen`,if(`sbn`.`baja_credencial` = 'true','OK','NO') AS `baja_credencial`,if(`sbn`.`pago_finiquito` = 'true','OK','NO') AS `pago_finiquito`,if(`sbn`.`baja_definitiva` is null,'PENDIENTE','COMPLETADO') AS `baja_definitiva`,`sbn`.`adeudos` AS `adeudos`,`sbn`.`tiempo_herra` AS `tiempo_retraso_her`,`sbn`.`vobo_jefe` AS `vobo`,if(`as_comp`.`asign_id` is not null,'SI','NO') AS `adeudo_compu`,if(`as_acc`.`asign_id` is not null,'SI','NO') AS `adeudo_accesorios`,if(`as_cel`.`asign_id` is not null,'SI','NO') AS `adeudo_celular`,if(`as_lin`.`asign_id` is not null,'SI','NO') AS `adeudo_lin`,if(`as_auto`.`asign_id` is not null,'SI','NO') AS `adeudo_auto`,if(`vhe`.`articulo` is not null,'SI','NO') AS `adeudo_herra` from (((((((((((`rh`.`solicitudes_baja_nomina` `sbn` join `incore`.`empleados` `emp` on(`emp`.`empleado_id` = `sbn`.`id_empleado`)) left join `incore`.`movimientos_proyectos` `mpr` on(`mpr`.`id` = (select `incore`.`movimientos_proyectos`.`id` from `incore`.`movimientos_proyectos` where `incore`.`movimientos_proyectos`.`empleado_id` = `emp`.`empleado_id` order by `incore`.`movimientos_proyectos`.`id` desc limit 0,1))) left join (select `m_c`.`id` AS `id`,`m_c`.`coordinador_id` AS `coordinador_id`,`cc`.`nombre` AS `nombre` from (`incore`.`movimientos_coordinador` `m_c` join `incore`.`catalogo_coordinadores` `cc` on(`cc`.`id` = `m_c`.`coordinador_id`))) `mc` on(`mc`.`id` = (select `incore`.`movimientos_coordinador`.`id` from `incore`.`movimientos_coordinador` where `incore`.`movimientos_coordinador`.`empleado_id` = `emp`.`empleado_id` order by `incore`.`movimientos_coordinador`.`id` desc limit 0,1))) join `incore`.`usuarios` `us` on(`us`.`id_usuario` = `sbn`.`solicitante`)) left join `rh`.`solicitud_alta` `sa` on(`sa`.`id_empleado` = (select `rh`.`solicitud_alta`.`id_empleado` from `rh`.`solicitud_alta` where `rh`.`solicitud_alta`.`id_empleado` = `emp`.`empleado_id` order by `rh`.`solicitud_alta`.`id` desc limit 0,1))) left join `incore`.`asignaciones_computo` `as_comp` on(`as_comp`.`asign_empleado_id` = (select `incore`.`empleados`.`empleado_id` from (((`incore`.`asignaciones_computo` join `incore`.`computo` on(`incore`.`computo`.`equipo_id` = `incore`.`asignaciones_computo`.`asign_tool_id`)) join `incore`.`empleados` on(`incore`.`asignaciones_computo`.`asign_empleado_id` = `incore`.`empleados`.`empleado_id`)) left join `incore`.`baja_computo` on(`incore`.`baja_computo`.`baja_asign_id` = `incore`.`asignaciones_computo`.`asign_id`)) where `incore`.`asignaciones_computo`.`asign_empleado_id` = `emp`.`empleado_id` and `incore`.`baja_computo`.`baja_fecha` is null order by `incore`.`baja_computo`.`baja_asign_id` limit 0,1))) left join `incore`.`asignaciones_accesorios` `as_acc` on(`as_acc`.`asign_empleado_id` = (select `ac`.`asign_empleado_id` AS `empleado_id` from (`incore`.`asignaciones_accesorios` `ac` left join `incore`.`baja_accesorios` `bc` on(`bc`.`baja_asign_id` = `ac`.`asign_id`)) where `ac`.`asign_empleado_id` = `emp`.`empleado_id` and `bc`.`baja_id` is null limit 0,1))) left join `incore`.`asignaciones_celulares` `as_cel` on(`as_cel`.`asign_empleado_id` = (select `incore`.`asignaciones_celulares`.`asign_empleado_id` from (`incore`.`asignaciones_celulares` left join `incore`.`baja_celular` on(`incore`.`baja_celular`.`baja_asign_id` = `incore`.`asignaciones_celulares`.`asign_id`)) where `incore`.`baja_celular`.`baja_fecha` is null and `incore`.`asignaciones_celulares`.`asign_empleado_id` = `emp`.`empleado_id` limit 0,1))) left join `incore`.`asignaciones_lineas` `as_lin` on(`as_lin`.`asign_empleado_id` = (select `incore`.`asignaciones_lineas`.`asign_empleado_id` from (`incore`.`asignaciones_lineas` left join `incore`.`baja_linea` on(`incore`.`baja_linea`.`baja_asign_id` = `incore`.`asignaciones_lineas`.`asign_id`)) where `incore`.`baja_linea`.`baja_fecha` is null and `incore`.`asignaciones_lineas`.`asign_empleado_id` = `emp`.`empleado_id` limit 0,1))) left join `incore`.`asignaciones_autos` `as_auto` on(`as_auto`.`asign_empleado_id` = (select `incore`.`asignaciones_autos`.`asign_empleado_id` from (`incore`.`asignaciones_autos` left join `incore`.`baja_auto` on(`incore`.`baja_auto`.`baja_asign_id` = `incore`.`asignaciones_autos`.`asign_id`)) where `incore`.`asignaciones_autos`.`asign_empleado_id` = `emp`.`empleado_id` and `incore`.`baja_auto`.`baja_id` is null limit 0,1))) left join `rh`.`vista_herramienta_empleado` `vhe` on(`emp`.`empleado_id` = (select `vista_herramienta_empleado`.`empleado_id` from `rh`.`vista_herramienta_empleado` where `vista_herramienta_empleado`.`empleado_id` = `emp`.`empleado_id` group by `vista_herramienta_empleado`.`empleado_id`))) where `sbn`.`deleted_at` is null group by `sbn`.`id` order by `sbn`.`id`;
 
 -- ----------------------------
 -- View structure for vista_usuarios
@@ -7644,1616 +7017,5 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_usuarios` AS (sele
 -- ----------------------------
 DROP VIEW IF EXISTS `vista_usuarios_notificaciones`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vista_usuarios_notificaciones` AS select `us`.`id_usuario` AS `id_usuario`,concat(`us`.`nombre`,' ',`us`.`apellido`) AS `usuario_nombre`,`us`.`usuario` AS `usuario`,`us`.`correo` AS `correo`,`noti`.`id` AS `id_noti`,`noti`.`codigo` AS `codigo`,`noti`.`nombre` AS `permiso_nombre`,`noti`.`tipo` AS `tipo_permiso`,`noti`.`estatus` AS `estatus` from ((`incore`.`usuarios` `us` join `rh`.`usuarios_notificaciones` `un` on(`un`.`id_usuario` = `us`.`id_usuario`)) join `rh`.`notificaciones` `noti` on(`noti`.`id` = `un`.`id_notificacion`)) where `us`.`estatus` = 'ACTIVO' and `us`.`correo` is not null;
-
--- ----------------------------
--- Procedure structure for log
--- ----------------------------
-DROP PROCEDURE IF EXISTS `log`;
-delimiter ;;
-CREATE PROCEDURE `log`()
-BEGIN
- DECLARE finished BOOL DEFAULT FALSE;
-   DECLARE VV_TmpEmail varchar(250) default '';
--- declare cursor for employee email
-DEClARE inc_cursor CURSOR FOR 
-select id from 
-incidencias
-where 
-auth_rh is not null and 
-auth_direccion is not null and 
-auth_capital is not null
-limit 10;
-
-DECLARE CONTINUE HANDLER 
-FOR NOT FOUND 
-SET finished = false;
-
- OPEN inc_cursor;
-   Recorre_Cursor: LOOP
-        FETCH inc_cursor INTO VV_TmpEmail;
- IF finished THEN
- select VV_TmpEmail;
-            LEAVE Recorre_Cursor;
-             
-        END IF;
-       
-
-    END LOOP;
-  CLOSE inc_cursor;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for Sp_Actualizar_Autorizaciones_incidencias
--- ----------------------------
-DROP PROCEDURE IF EXISTS `Sp_Actualizar_Autorizaciones_incidencias`;
-delimiter ;;
-CREATE PROCEDURE `Sp_Actualizar_Autorizaciones_incidencias`(`usuario` INT, `id_incidencia` INT, `opcion` NVARCHAR(10))
-BEGIN
- -- DECLARE IdUsuario int DEFAULT 'bob';
-DECLARE IdUsuario int;
-DECLARE RolUsuario varchar(10);
-DECLARE MENSAJE varchar(100);
-
-set idUsuario=((select u.id from 
-users u
-inner join usuarios_roles ur on ur.id=u.id_area
-where u.id =usuario) );
-
-set RolUsuario=((select ur.rol from 
-users u
-inner join usuarios_roles ur on ur.id=u.id_area
-where u.id =usuario) );
--- select idUsuario,idUsuario;
-
-
-CASE  opcion
-WHEN 'AUTORIZAR'
-THEN
-CASE RolUsuario
-
-      WHEN 'RH' THEN 
-				 UPDATE incidencias SET auth_rh=NOW(), id_rh_auth=idUsuario
-                
-                 where id=id_incidencia;
-                 SET MENSAJE='SE A AUTORIZADO CON RH';
-      WHEN 'COOR' THEN 
-				UPDATE incidencias SET auth_capital=NOW(), id_capital_auth=idUsuario
-               
-                 where id=id_incidencia;
-                 SET MENSAJE='SE A AUTORIZADO CON COORD';
-       WHEN 'DIR' THEN 
-				UPDATE incidencias SET auth_direccion=NOW(), id_direccion_auth=idUsuario
-               
-                 where id=id_incidencia;
-                 SET MENSAJE='SE A AUTORIZADO CON DIR';
-	    WHEN 'PRO' THEN
-					SET MENSAJE='NO HAY DATOS QUE  MOSTRAR';
-      ELSE
-        BEGIN
-        END;
-    END CASE;
-WHEN 'CANCELAR'
-THEN
-CASE RolUsuario
-
-      WHEN 'RH' THEN 
-				 UPDATE incidencias 
-                 SET auth_rh=NOW(),
-                 id_rh_auth=idUsuario,
-                 status_auth=opcion,
-								 area_cancelar = RolUsuario
-                 where id=id_incidencia;
-                 SET MENSAJE='SE A CANCELADO CON RH';
-      WHEN 'COOR' THEN 
-				UPDATE incidencias SET auth_capital=NOW(), id_capital_auth=idUsuario,
-                status_auth=opcion,
-								area_cancelar = RolUsuario
-                 where id=id_incidencia;
-                 SET MENSAJE='SE A CANCELADO CON COOR';
-       WHEN 'DIR' THEN 
-				UPDATE incidencias SET auth_direccion=NOW(), id_direccion_auth=idUsuario,
-                status_auth=opcion,
-								area_cancelar = RolUsuario
-                 where id=id_incidencia;
-                 SET MENSAJE='SE A CANCELADO CON DIR';
-	    WHEN 'PRO' THEN
-					SET MENSAJE='NO HAY DATOS QUE  MOSTRAR';
-      ELSE
-        BEGIN
-        END;
-    END CASE;
-ELSE
-        BEGIN
-        END;
-    END CASE;
-
-
-   SELECT MENSAJE;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for Sp_Auth_solicitudes
--- ----------------------------
-DROP PROCEDURE IF EXISTS `Sp_Auth_solicitudes`;
-delimiter ;;
-CREATE PROCEDURE `Sp_Auth_solicitudes`(`usuario` INT, `idRegistro` INT, `Opciones` VARCHAR(100), `VALOR` VARCHAR(100), `obs` NVARCHAR(250), `email` VARCHAR(45))
-BEGIN
-
- -- DECLARE IdUsuario int DEFAULT 'bob';
-DECLARE IdUsuario int;
-DECLARE RolUsuario varchar(10);
-DECLARE MENSAJE varchar(100);
-
-set idUsuario=((select u.id from 
-users u
-inner join usuarios_roles ur on ur.id=u.id_area
-where u.id =usuario) );
-
-set RolUsuario=((select ur.rol from 
-users u
-inner join usuarios_roles ur on ur.id=u.id_area
-where u.id =usuario) );
--- select idUsuario,idUsuario;
-CASE RolUsuario
-      WHEN 'ENTR' THEN 
-				 UPDATE solicitudes_altas_auth SET auth_entregables=NOW(),
-                 entregables_user_id=idUsuario
-                 where id_solicitud=idRegistro ;               
-                 SET MENSAJE='SE A AUTORIZADO CON ENTREGABLES';
-       WHEN 'DIR' THEN 
-				
-                UPDATE solicitudes_altas_auth 
-                     SET auth_direccion=NOW(),
-                 id_dir_user=idUsuario
-                 where id_solicitud=idRegistro;
-                SET MENSAJE='SE A AUTORIZADO CON DIR';
-		WHEN 'RH' THEN
-                    
-                     UPDATE solicitudes_altas_auth 
-                     SET auth_rh=NOW(),
-                 id_user_rh=idUsuario
-                 where id_solicitud=idRegistro ;
-                 SET MENSAJE='SE A AUTORIZADO CON RH';        
-      ELSE
-        BEGIN
-        END;
-    END CASE;
-    
-    
-    
-    
-case Opciones -- COMPUTADORA, AUTO , 
-when 'contrato'
-then
- UPDATE solicitudes_altas_auth 
-                SET contrato_firmado=VALOR
-                 where id_solicitud=idRegistro ;
-                 SET MENSAJE='SE ACTUALIZO CONTRATO: '; 
-
-when 'alta'
-then
-
-
-UPDATE solicitudes_altas_auth 
-                SET ALTA=VALOR
-                 where id_solicitud=idRegistro;
-                 SET MENSAJE='SE ACTUALIZO ALTA: '; 
-
-when 'computadora'
-then
-
-UPDATE solicitudes_altas_auth 
-                SET computadora=VALOR,
-                obs_compu=''+OBS+'',
-                email_nae=''+email+''
-                
-                 where 
-                 id_solicitud=idRegistro
-                 ;
-                 SET MENSAJE='SE ACTUALIZO COMPUTADORA'; 
-when 'coche'
-then
-UPDATE solicitudes_altas_auth 
-                SET coche=VALOR,
-                 obs_auto=obs
-                 where id_solicitud=idRegistro;
-                 SET MENSAJE='SE ACTUALIZO COCHE';
-when 'celular'
-then
-UPDATE solicitudes_altas_auth 
-                SET celular=VALOR,
-                 obs_celular=obs
-                 where id_solicitud=idRegistro;
-                 SET MENSAJE='SE ACTUALIZO CELULAR';    
-                 
-                 
-when 'herramientas'
-then
-UPDATE solicitudes_altas_auth 
-                SET herramientas_almacen=VALOR,
-                obs_herra=obs
-                 where id_solicitud=idRegistro;
-                 SET MENSAJE='SE ACTUALIZO HERRAMIENTAS ALMACEN'; 
-when 'solicitante'
-then
-
-UPDATE solicitudes_altas_auth 
-                SET solicitante=VALOR
-                 where id_solicitud=idRegistro;
-                 SET MENSAJE='SE ACTUALIZO SOLICITANTE'; 
-else 
-begin
-end;
-end case;
-   SELECT MENSAJE;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_bitacoras_sistema
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_bitacoras_sistema`;
-delimiter ;;
-CREATE PROCEDURE `sp_bitacoras_sistema`(`registro` INT, `tiporeg` VARCHAR(30))
-BEGIN
-select 
-bi.id 'CLAVE',
-bi.tipo 'TIPO',
-bi.id_tabla 'REGISTRO' ,
-us.name 'USUARIO',
-CONCAT_WS(' ',em.empleado_nombre,em.empleado_apaterno,em.empleado_amaterno) 'EMPLEADO',
-bi.mensaje 'DETALLES',
-bi.fecha 'FECHA',
-bi.hora 'HORA',
-bi.status_auth 'ESTADO' 
-from 
-rh.bitacoras bi
-left join users us on us.id=bi.id_usuario_login
-left join empleados em on em.id=bi.id_empleado
-where bi.id_tabla=registro and bi.tipo=tiporeg ;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_BuscarCodigos.
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_BuscarCodigos.`;
-delimiter ;;
-CREATE PROCEDURE `sp_BuscarCodigos.`(`codigo` VARCHAR(50), `tipo` VARCHAR(50))
-BEGIN
-SELECT id,codigo FROM rh.catalogo_codigos
-where codigo=codigo and 
-tipo=tipo and caduca is null
-limit 1;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_busca_empleado_criteria
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_busca_empleado_criteria`;
-delimiter ;;
-CREATE PROCEDURE `sp_busca_empleado_criteria`(`criteria` VARCHAR(50))
-BEGIN
-SELECT 
-id,
-empleado_nombre,
-empleado_apaterno,
-empleado_amaterno,
-calle,
-num_exterior,
-num_interior,
-colonia,
-municipio,
-cp,
-estado,
-nss,
-curp,
-rfc
-FROM rh.empleados
-where 
-nss  = criteria
-or curp = criteria
-or rfc = criteria
-and empleado_estatus = 'BAJA';
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_catalogos_crud
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_catalogos_crud`;
-delimiter ;;
-CREATE PROCEDURE `sp_catalogos_crud`(`_Catalogo` VARCHAR(30), `_Opcion` VARCHAR(30), `_idCoordinador` INT, `_Nombre` VARCHAR(50), `_Apellido` VARCHAR(50), `_Correo` VARCHAR(50), `_plan_id` INT, `_plan_codigo` VARCHAR(30), `_plan_nombre` VARCHAR(30), `_plan_tipo` VARCHAR(30), `_plan_descripcion` NVARCHAR(50), `_plan_costo` DOUBLE, `_plan_precio` DOUBLE, `_plan_empresa` VARCHAR(30), `_plan_proveedor` VARCHAR(30), `_idwbs` INT, `_cliente` VARCHAR(30), `_servicio` VARCHAR(30), `_region` VARCHAR(30), `_tecnologia` VARCHAR(30), `_grupo` INT)
-BEGIN
-
-case _Catalogo
- when  'coordinador'
- then
-        
-	if(_Opcion=0)
-        then 
-					select * from 
-					catalogo_coordinadores
-                    where id=_idCoordinador;
-        elseif(_Opcion=1)
-        then 
-					update 
-					catalogo_coordinadores
-					set 
-					nombre=_nombre,
-					apellido=_apellido,
-					correo=_correo
-					where id=_idCoordinador;
-Select 'ACTUALIZACION CORRECTA DEL COORDINADOR' as MENSAJE;
-        elseif(_Opcion=2)
-        then
-					delete from 
-					catalogo_coordinadores
-					where id=_idCoordinador;
-                      Select 'SE HA ELIMINADO CORRECTAMENTE EL COORDINADOR' as MENSAJE;
-                    
-		elseif(_Opcion=3)
-        then
-				insert into
-				catalogo_coordinadores
-                (nombre,
-                 apellido,
-                 correo)
-                values
-                 (_Nombre,
-                 _Apellido,
-                 _Correo);
-                  Select 'SE HA INSERTADO CORRECTAMENTE EL COORDINADOR' as MENSAJE;
-	end if;
-
-    
-	when  'plan'
-	then
-    
-    
-    if(_Opcion=0)
-        then 
-			select * from 
-			catalogo_planes_lineas
-			where plan_id=_plan_id;
-
-                    
-                    
-        elseif(_Opcion=1)
-        then 
-				update 
-				catalogo_planes_lineas
-				set 
-				plan_codigo=_plan_codigo,
-				plan_nombre=_plan_nombre,
-				plan_tipo=_plan_tipo,
-				plan_descripcion=_plan_descripcion,
-				plan_costo=_plan_costo,
-				plan_precio=_plan_precio,
-				plan_empresa=_plan_empresa,
-				plan_proveedor=_plan_proveedor
-				where plan_id=_plan_id;
-
-Select 'ACTUALIZACION CORRECTA DEL PLAN' as MENSAJE;
-
-        elseif(_Opcion=2)
-        then
-					delete from 
-					catalogo_planes_lineas
-					where plan_id=_plan_id;
-  Select 'SE HA ELIMINADO CORRECTAMENTE EL PLAN' as MENSAJE;
-
-           elseif(_Opcion=3)
-        then         
-                    
-       
-
-insert into
-catalogo_planes_lineas
-(
-plan_codigo,
-plan_nombre,
-plan_tipo,
-plan_descripcion,
-plan_costo,
-plan_precio,
-plan_empresa,
-plan_proveedor
-)
-values
-(
-_plan_codigo,
-_plan_nombre,
-_plan_tipo,
-_plan_descripcion,
-_plan_costo,
-_plan_precio,
-_plan_empresa,
-_plan_proveedor
-);
- Select 'SE HA INSERTADO CORRECTAMENTE EL PLAN' as MENSAJE;
-
-	end if;
-
-
-when  'wbs'
-	then
-    
-        if(_Opcion=0)
-        then 
-			select * from 
-			catalogo_wbs
-			where id=_idwbs;
-
-                    
-                    
-        elseif(_Opcion=1)
-        then 
-				update 
-				catalogo_wbs
-				set 
-					cliente=_cliente,
-					servicio=_servicio,
-					region=_region, 
-					tecnologia=_tecnologia, 
-					grupo=_grupo
-					where id=_idwbs;
-                    
-                    Select 'ACTUALIZACION CORRECTA EL WBS' as MENSAJE;
-
-
-        elseif(_Opcion=2)
-        then
-					delete from 
-					catalogo_wbs
-				where id=_idwbs;
-                
-                 Select 'SE HA ELIMINADO CORRECTAMENTE EL WBS' as MENSAJE;
-
-           elseif(_Opcion=3)
-        then         
-				insert into
-				catalogo_wbs
-				(
-				cliente,
-				servicio,
-				region, 
-				tecnologia, 
-				grupo
-				)
-				values
-				(
-				_cliente,
-				_servicio,
-				_region, 
-				_tecnologia, 
-				_grupo
-				);
-                 Select 'SE HA INSERTADO CORRECTAMENTE EL WBS' as MENSAJE;
-
-	end if;
-    
-    
-    
-    
-    
-end case;
- 
- 
-
-
-
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_Catalogos_Opciones
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_Catalogos_Opciones`;
-delimiter ;;
-CREATE PROCEDURE `sp_Catalogos_Opciones`(`opcion` INT, `_id` INT, `_codigo` VARCHAR(100), `_concepto` VARCHAR(100), `_precio` DOUBLE, `_costo` DOUBLE, `_incluye` VARCHAR(100), `_tipo` VARCHAR(100), `_diario` INT, `_pd` VARCHAR(50), `_diario_gasolina` DOUBLE, `_monto_viatico` DOUBLE, `_incluye_viaticos` INT, `_incluye_equipo` INT, `_descripcion` NVARCHAR(150), `_horas` VARCHAR(50), `_caduca` DATE)
-BEGIN
-
-
-if (opcion =0)  -- ACTUALIZAR CATALOGO
-then
-
-Update 
-rh.catalogo_codigos
-set  
-codigo=_codigo,
-concepto=_concepto, 
-precio=_precio,
-costo=_costo,
-incluye=_incluye,
-tipo=_tipo, 
-diario=_diario,
-pd=_pd,
-diario_gasolina=_diario_gasolina,
-monto_viatico=_monto_viatico,
-incluye_viaticos=_incluye_viaticos,
-incluye_equipo=_incluye_equipo,
-descripcion=_descripcion,
-horas=_horas,
-caduca=_caduca
-where id=_id;
-
-SELECT 'El codigo se a actualizado' AS MENSAJE;
-
-
-
-  elseif(opcion =1) -- ELIMINAR UN REGISTRO DE  LA TABLA DE BASE DE DATOS
-then
-
-DELETE from  rh.catalogo_codigos
-where id=_id;
-
-SELECT 'El codigo se a Eliminado' AS MENSAJE;
-
-elseif(opcion =2) -- Selecionar registro
-then
-SELECT id, codigo, concepto, precio,
- costo, incluye, tipo, diario, pd,
- diario_gasolina, monto_viatico, 
- incluye_viaticos, incluye_equipo, 
- descripcion, horas, caduca
- FROM rh.catalogo_codigos
- where id=_id
- order by id;
- 
- 
-  elseif(opcion =3) -- ELIMINAR UN REGISTRO DE  LA TABLA DE BASE DE DATOS
-then
-insert into rh.catalogo_codigos
-(
-codigo,
-concepto, 
-precio,
-costo,
-incluye,
-tipo, 
-diario,
-pd,
-diario_gasolina,
-monto_viatico,
-incluye_viaticos,
-incluye_equipo,
-descripcion,
-horas,
-caduca
-)
-values
-(
-_codigo,
-_concepto, 
-_precio,
-_costo,
-_incluye,
-_tipo, 
-_diario,
-_pd,
-_diario_gasolina,
-_monto_viatico,
-_incluye_viaticos,
-_incluye_equipo,
-_descripcion,
-_horas,
-_caduca);
-SELECT 'Codigo Insertado' AS MENSAJE;
- 
- 
-end if;
-end
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_empleado_herramientas
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_empleado_herramientas`;
-delimiter ;;
-CREATE PROCEDURE `sp_empleado_herramientas`(`Par_empleado` INT)
-BEGIN
-SELECT sl.celular celular,sl.plan_linea pan,
-sl.computadora, sl.desc_computadora,
-sl.software, sl.desc_software, sl.tipo_correo,
- sl.bam,sl.plan_linea_bam, sl.auto,
- sl.botas,
- sl.playera,
- sl.herramientas_detalles
- FROM  solicitud_alta sl 
-where  sl.id=Par_empleado;
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_GetUsers_Rol
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_GetUsers_Rol`;
-delimiter ;;
-CREATE PROCEDURE `sp_GetUsers_Rol`()
-BEGIN
-select  u.id,u.name,u.email,ur.descripcion,u.fecha_creacion from rh.users u
-inner join  usuarios_roles ur on ur.id=u.id_area
-order by u.name;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for SP_INCIDENCIAS_SLOTE
--- ----------------------------
-DROP PROCEDURE IF EXISTS `SP_INCIDENCIAS_SLOTE`;
-delimiter ;;
-CREATE PROCEDURE `SP_INCIDENCIAS_SLOTE`(IN `dato` INT(50))
-BEGIN
-select 
-i.id AS ID,
-CONCAT_WS(' ',em.empleado_nombre,em.empleado_apaterno,em.empleado_amaterno) AS EMPLEADO,
-em.id AS idEmpleado,
-upper(ic.nombre) 'TIPO',
-i.fecha_solicitud  'FECHA SOLICITUD',
-i.fecha_inicio  'FECHA INICIO',
-i.fecha_fin  'FECHA FIN',
-i.dias  'DURACION',
-i.monto 'MONTO',
-us.name 'SOLICITANTE'
-from 
-rh.incidencias i 
-LEFT join empleados em on em.empleado_id=i.id_empleado
-LEFT join incidencias_catalogo ic on ic.id=i.id_incidencia_tipo
-LEFT join users  us on us.id=i.id_solicitante
-WHERE I.ID_LOTE IS NULL;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_insert_Auth_solicitudes
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_insert_Auth_solicitudes`;
-delimiter ;;
-CREATE PROCEDURE `sp_insert_Auth_solicitudes`(`id` INT)
-BEGIN
-
-insert into
-solicitudes_altas_auth
-(
-id_solicitud
-)
-values
-(
-id
-);
-
-select 'SE INSERTO CORRECTAMENTE ' AS MENSAJE;
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_insert_bitacora
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_insert_bitacora`;
-delimiter ;;
-CREATE PROCEDURE `sp_insert_bitacora`(`tipo` VARCHAR(30), `id_reg` INT, `usuario` INT, `empl` INT, `mensaje` NVARCHAR(500), `opcion` NVARCHAR(50))
-BEGIN
-INSERT INTO `rh`.`bitacoras`
-(
-`tipo`,
-`id_tabla`,
-`id_usuario_login`,
-`id_empleado`,
-`mensaje`,
-`fecha`,
-`hora`,
-status_auth)
-VALUES
-(
-tipo,
-id_reg,
-usuario,
-empl,
-mensaje,
-CURDATE(),
-curTime(),
-opcion);
-SELECT 'SE HA INCERTADO CORRECTAMENTE' MENSAJE;
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_lista_codigos
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_lista_codigos`;
-delimiter ;;
-CREATE PROCEDURE `sp_lista_codigos`()
-BEGIN
-SELECT id, codigo, concepto, precio, costo, incluye, tipo, diario, pd, diario_gasolina, monto_viatico, incluye_viaticos, incluye_equipo, descripcion, horas, caduca
- FROM rh.catalogo_codigos;
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_Lista_Usuarios
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_Lista_Usuarios`;
-delimiter ;;
-CREATE PROCEDURE `sp_Lista_Usuarios`(`dato` NVARCHAR(50))
-BEGIN
-
--- CREATE TEMPORARY TABLE UsuariosTemp (Nombre varchar(50), id int);
---  Insert into UsuariosTemp
--- select concat_ws(empleado_nombre, empleado_apaterno, empleado_amaterno) AS nombre  ,id as id
--- from empleados ;
-  
--- Insert into UsuariosTemp  
--- select nombre, user_id as id 
--- from catalogo_coordinadores;
-
--- select * from  UsuariosTemp
- -- where Nombre like dato;
--- drop table UsuariosTemp;
-
-select concat_ws(' ',empleado_nombre, empleado_apaterno, empleado_amaterno) AS Nombre  ,id as id
-from empleados ;
-
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_notificaciones
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_notificaciones`;
-delimiter ;;
-CREATE PROCEDURE `sp_notificaciones`(`seccion` NVARCHAR(10))
-BEGIN
-
-
-
-CASE seccion
-      WHEN 'uscrear' THEN 
-				
-			select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where uscrear='true';
-
-             
-                
-                
-                
-       WHEN 'useliminar' THEN 
-					select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where useliminar='true';
-
-
-           
-		WHEN 'usedit' THEN
-        	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where usedit='true';
-
-             WHEN 'SolAlta' THEN 
-             	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where SolAlta='true';
-
-
-				
-           
-		WHEN 'SolCrear' THEN
-        	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where SolCrear='true';
-
-
-             WHEN 'SolBaja' THEN 
-             	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where SolBaja='true';
-
-				
-           
-		WHEN 'EmpleadoActualizar' THEN
-        	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where EmpleadoActualizar='true';
-
-            WHEN 'EmpleadoBaja' THEN 
-             	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where EmpleadoBaja='true';
-
-				
-           
-		WHEN 'InciCrear' THEN
-        	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where InciCrear='true';
-
-
-             WHEN 'inciAuth' THEN 
-             	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where inciAuth='true';
-
-
-				
-           
-		WHEN 'inciLote' THEN
-        	select us.name Nombre,us.email Correo,r.rol Rol,Descripcion,
-uscrear, useliminar, usedit, SolAlta, 
-SolCrear, SolBaja, EmpleadoActualizar,
- EmpleadoBaja, InciCrear, inciAuth, inciLote from 
-users us join
-usuarios_roles r on r.id=us.id_area
-join user_notificaciones  noti on noti.user_id=us.id
-where inciLote='true';
-
-
-
-                    
-                
-      ELSE
-        BEGIN
-        END;
-    END CASE;
-
-
-
-
-
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_optener_correos
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_optener_correos`;
-delimiter ;;
-CREATE PROCEDURE `sp_optener_correos`(`rol` VARCHAR(10))
-BEGIN
-select us.name Nombre,us.email Correo,r.rol Rol,Descripcion from 
-users us join
-usuarios_roles r on r.id=us.id_area
-where r.rol like Upper(rol)
-and r.rol<>'ADMIN';
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_proyectos_wbs
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_proyectos_wbs`;
-delimiter ;;
-CREATE PROCEDURE `sp_proyectos_wbs`(`wbs` VARCHAR(30), `opcion` INT, `_id` VARCHAR(10), `_nombre` NVARCHAR(50), `_activo` INT)
-BEGIN
-
-case wbs
-WHEN 'clientes'
-then
-				case opcion 
-						when 0
-						then
-								select id, nombre, activo from  
-								proyectos_clientes
-                                where  id=_id;
-                                
-						when 1
-						then 
-								update proyectos_clientes
-								set   nombre=_nombre, 
-									  activo=_activo
-								 where  id=_id;
-                                 
-                                 select 'Correcto!!' as MENSAJE;
-					when 2
-						then
-								delete from 
-								proyectos_clientes
-								 where  id=_id  COLLATE utf8_unicode_ci;
-                                 select 'Correcto!!' as MENSAJE;
-						when 3
-						then 
-								insert into proyectos_clientes
-								(id,nombre,activo) values (_id,_nombre,_activo);   
-                                select 'Correcto!!' as MENSAJE;
-				end case;
-when 'grupos'
-then
-				case opcion 
-						when 0
-						then
-								select id, nombre, activo from  
-								proyectos_grupos
-								 where  id=_id;
-						when 1
-						then 
-								update proyectos_grupos
-								set   nombre=_nombre, 
-									  activo=_activo
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 2
-						then
-								delete from 
-								proyectos_grupos
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 3
-						then 
-								insert into proyectos_grupos
-									(id,nombre,activo) values (_id,_nombre,_activo);   
-                                select 'Correcto!!' as MENSAJE;
-				end case;
-when 'regiones'
-then 
-
-                case opcion 
-						when 0
-						then
-								select id, nombre, activo from  
-								proyectos_regiones
-                                    where  id=_id;
-						when 1
-						then 
-								update proyectos_regiones
-								set   nombre=_nombre, 
-									  activo=_activo
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 2
-						then
-								delete from 
-								proyectos_regiones
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 3
-						then 
-								insert into proyectos_regiones
-								(id,nombre,activo) values (_id,_nombre,_activo);      
-                                select 'Correcto!!' as MENSAJE;
-				end case;
-    
-when 'servicios'
-then 
-
-
-			case opcion 
-						when 0
-						then
-								select id, nombre, activo from  
-								proyectos_servicios
-                                    where  id=_id;
-                                    
-						when 1
-						then 
-								update proyectos_servicios
-								set   nombre=_nombre, 
-									  activo=_activo
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 2
-						then
-								delete from 
-								proyectos_servicios
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 3
-						then 
-								insert into proyectos_servicios
-								(id,nombre,activo) values (_id,_nombre,_activo);    
-                                select 'Correcto!!' as MENSAJE;
-				end case;
-
-when 'tecnologias'
-then 
-				case opcion 
-						when 0
-						then
-								select id, nombre, activo from  
-								proyectos_tecnologias
-                                    where  id=_id;
-						when 1
-						then 
-								update proyectos_tecnologias
-								set   nombre=_nombre, 
-									  activo=_activo
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 2
-						then
-								delete from 
-								proyectos_tecnologias
-								 where  id=_id;
-                                 select 'Correcto!!' as MENSAJE;
-						when 3
-						then 
-								insert into proyectos_tecnologias
-								(id,nombre,activo) values (_id,_nombre,_activo);   
-                                select 'Correcto!!' as MENSAJE;
-				end case;
-
-end case;
-		
-
-
-
-
-
-
-
-
-
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_restaurar_auth
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_restaurar_auth`;
-delimiter ;;
-CREATE PROCEDURE `sp_restaurar_auth`(`_id` INT)
-BEGIN
-update 
-solicitudes_altas_auth
-set herramientas_almacen= null,
-celular=null,
-coche=null
-where id_solicitud=_id;
-
-select 'SE HAN RESTAURADO LOS DATOS' AS MENSAJE;
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_select_catalogos
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_select_catalogos`;
-delimiter ;;
-CREATE PROCEDURE `sp_select_catalogos`(`ops` INT)
-BEGIN
-if (ops=0)
-then
-
-SELECT id,nombre,apellido,correo FROM rh.catalogo_coordinadores;
-
-elseif(ops=1)
-then
-
-
-select 
-plan_id, plan_codigo, plan_nombre, plan_tipo, 
-            plan_descripcion, plan_costo, plan_precio, plan_empresa, plan_proveedor
-            from  rh.catalogo_planes_lineas;
-            
-elseif(ops=2)
-then
-
-
-select * from catalogo_wbs;
-
-end if;
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_select_citas
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_select_citas`;
-delimiter ;;
-CREATE PROCEDURE `sp_select_citas`()
-BEGIN
-SELECT 
-        `sa`.`id` AS `id`,
-        CONCAT_WS('-',
-                `sa`.`cliente`,
-                `sa`.`servicio`,
-                `sa`.`region`,
-                `sa`.`tecnologia`,
-                `sa`.`grupo`) AS `WBS`,
-        CONCAT_WS(' ',
-                `sa`.`nombre`,
-                `sa`.`apaterno`,
-                `sa`.`amaterno`) AS `Nombre`,
-        CONCAT_WS(' ', `co`.`nombre`, `co`.`apellido`) AS `coordinador`,
-        CONCAT_WS(' x ',
-                `sla`.`auth_entregables`,
-                `usentre`.`name`) AS `Auth_entregables`,
-        CONCAT_WS(' x ',
-                `sla`.`auth_direccion`,
-                `usdir`.`name`) AS `Auth_direccion`,
-        CONCAT_WS(' x ', `sla`.`auth_rh`, `usrh`.`name`) AS `Auth_RH`,
-        `sa`.`fecha_cita` AS `fecha_cita`,
-        `sa`.`hora_cita` AS `hora_cita`,
-        `sa`.`detalles_cita` AS `detalles_cita`,
-        `sa`.`status_cita` AS `status_cita`,
-        `sa`.`correo_cita` AS `correo_cita`
-    FROM
-        (((((`solicitud_alta` `sa`
-        LEFT JOIN `catalogo_coordinadores` `co` ON ((`co`.`id` = `sa`.`coordinador_id`)))
-        LEFT JOIN `solicitudes_altas_auth` `sla` ON ((`sla`.`id_solicitud` = `sa`.`id`)))
-        LEFT JOIN `users` `usrh` ON ((`usrh`.`id` = `sla`.`id_user_rh`)))
-        LEFT JOIN `users` `usdir` ON ((`usdir`.`id` = `sla`.`id_dir_user`)))
-        LEFT JOIN `users` `usentre` ON ((`usentre`.`id` = `sla`.`entregables_user_id`)))
-    WHERE
-        (`sa`.`status_cita` IS NOT NULL or `sa`.`status_cita`='' )
-    GROUP BY `sa`.`id`;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_solicitudes_alta
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_solicitudes_alta`;
-delimiter ;;
-CREATE PROCEDURE `sp_solicitudes_alta`()
-BEGIN
-
-
-
-SELECT 
-sa.id as id,
-sa.descargado as 'descargado',
-CONCAT_WS('-',sa.cliente,sa.servicio,sa.region,sa.tecnologia, sa.grupo) as WBS,
-CONCAT_WS(' ',sa.nombre,sa.apaterno,sa.amaterno) as  Nombre,
-sa.created_at 'fecha solicitud',
-sa.created_at 'fecha creacion de solicitud',
-CONCAT_WS(' ',co.nombre,co.apellido) as  'coordinador',
-'coordinadornokia',
-sa.pm,
-'solicitante definir',
-sa.sueldo_imss 'imss',
-sa.sueldo_variable 'variable' ,
-'asimilado',
-sa.costo,
-sa.status_cita,
-sa.venta,
-'0' margen, 
-IF(
-CONCAT_WS(' x ',sla.auth_entregables,usentre.name)<>'',
-CONCAT_WS(' x ',sla.auth_entregables,usentre.name),
-'x') 'Auth entregables',
-
-IF(
-CONCAT_WS(' x ',sla.auth_direccion,usdir.name)<>'',
-CONCAT_WS(' x ',sla.auth_direccion,usdir.name),
-'x') 'Auth direccion',
-
-
-IF(
-CONCAT_WS(' x ',sla.auth_rh,usrh.name)<>'',
-CONCAT_WS(' x ',sla.auth_rh,usrh.name),
-'x') 'Auth RH',
-
-sla.contrato_firmado 'Contrato firmado',
-sla.alta 'alta',
-sla.computadora 'computadora',
-
-  (SELECT 
-                IF((`sla`.`computadora` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((CONCAT_WS('',
-                                                (SELECT 
-                                                        IF((`sa`.`computadora` <> 0),
-                                                                'SI',
-                                                                'NO')
-                                                    ),
-                                                (SELECT IF((`sa`.`software` <> 0), 'SI', 'NO'))) <> 'NONO'),
-                                        'SOLICITADO',
-                                        'NO SOLICITADO')
-                            ))
-            ) AS `Computadora`,
-
-
-
-
-
-        (SELECT 
-                IF((`sla`.`coche` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((SELECT (IF((`sa`.`auto` <> 0), 'SI', 'NO') <> 'NO')),
-                                        'SOLICITADO',
-                                        'NO SOLICITADO')
-                            ))
-            ) AS `Coche`,
-            
-        (SELECT 
-                IF((`sla`.`celular` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((CONCAT_WS('',
-                                                (SELECT IF((`sa`.`celular` <> 0), 'SI', 'NO')),
-                                                (SELECT 
-                                                        IF((`sa`.`plan_linea` <> 27),
-                                                                'SI',
-                                                                'NO')
-                                                    ),
-                                                (SELECT 
-                                                        IF((`sa`.`plan_linea_bam` <> 27),
-                                                                'SI',
-                                                                'NO')
-                                                    )) <> 'NONONO'),
-                                        'SOLICITADO',
-                                        'NO SOLICITADO')
-                            ))
-            ) AS `Celular`,
-   (SELECT 
-                IF((`sla`.`herramientas_almacen` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((CONCAT_WS('',
-                                                (SELECT IF((`sa`.`playera` <> 0), 'SI', 'NO')),
-                                                (SELECT IF((`sa`.`botas` <> 0), 'SI', 'NO'))) <> 'NONO'),
-                                        'SOLICITADO',
-                                        'NO SOLICITADO')
-                            ))
-            ) AS `Herramientas`,
-            
-            
-            
-usr.name 'Solicitante',
-sla.listo_cita 'cita',
-sla.computadora 'computadora',
-sla.celular 'celular',
-sla.coche 'coche',
-sla.herramientas_almacen 'herramientas'
-FROM rh.solicitud_alta sa
-left join catalogo_coordinadores co on co.id=sa.coordinador_id
-left join solicitudes_altas_auth sla on sla.id_solicitud=sa.id
-left join users usrh on usrh.id=sla.id_user_rh
-left join users usdir on usdir.id=sla.id_dir_user
-left join users usentre on usentre.id=sla.entregables_user_id
-left join users usr on usr.id=sa.solicitante
- where 1
-group by sa.id ;
-
-
-                                             
-
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_solicitudes_baja_nom
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_solicitudes_baja_nom`;
-delimiter ;;
-CREATE PROCEDURE `sp_solicitudes_baja_nom`()
-BEGIN
-select 
-sbn.id 'id',
-concat_ws(' ',em.empleado_nombre,em.empleado_apaterno,em.empleado_amaterno) 'Recurso',
-CONCAT_WS('-',
-                `sa`.`cliente`,
-                `sa`.`servicio`,
-                `sa`.`region`,
-                `sa`.`tecnologia`,
-                `sa`.`grupo`) AS `WBS`, 
-cc.nombre as coordinador,
-'coordinador nokia',
-us.name 'solicitante',
-sbn.fecha_emision 'fecha_emision',
-sbn.fecha_baja_sol 'fecha_baja_sol',
-sbn.fecha_baja_nom 'fecha_baja_nom',
-sbn.fecha_cita 'fecha_cita',
-
-(if(sbn.baja_computo='true','YA SE DIO DE BAJA','NO SE HA DADO DE BAJA' )) 'baja_computo',
-
-(if(sbn.baja_auto='true','YA SE DIO DE BAJA','NO SE HA DADO DE BAJA' ))'baja_auto',
-
-(if(sbn.baja_celular='true','YA SE DIO DE BAJA','NO SE HA DADO DE BAJA' ))'baja_celular',
-
-(if(sbn.baja_almacen='true','YA SE DIO DE BAJA','NO SE HA DADO DE BAJA' )) 'baja_almacen',
-
-
-(if(sbn.baja_credencial='true','YA SE DIO DE BAJA','NO SE HA DADO DE BAJA' ))  'baja_credencial',
-
-(if(sbn.pago_finiquito='true','YA SE PAGO','NO SE HA PAGADO' )) 'pago_finiquito',
-
-
-(if(sbn.baja_definitiva is null ,'PENDIENTE','COMPLETADO' ))  'baja_definitiva',
-
-sbn.adeudos 'adeudos',
-sbn.tiempo_herra 'tiempo_retraso_her'
-from 
-empleados em
-inner join  solicitudes_baja_nomina sbn 
-on sbn.id_empleado= em.id
-inner join users us on us.id=sbn.solicitante
-inner join solicitud_alta sa on sa.id=em.id_solicitud
-inner join catalogo_coordinadores cc on cc.id=sa.coordinador_id;
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_solicitudes_excell
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_solicitudes_excell`;
-delimiter ;;
-CREATE PROCEDURE `sp_solicitudes_excell`()
-BEGIN
-SELECT sa.id as id,
-CONCAT_WS('-',sa.cliente,sa.servicio,sa.region,sa.tecnologia, sa.grupo) as WBS,
-CONCAT_WS(' ',sa.nombre,sa.apaterno,sa.amaterno) as  Nombre,
-sa.created_at 'fecha_solicitud',
-sa.created_at 'fecha_creacion_de_solicitud',
-CONCAT_WS(' ',co.nombre,co.apellido) as  'coordinador',
-'coordinadornokia',
-sa.pm,
-'solicitante_definir',
-sa.sueldo_imss 'imss',
-sa.sueldo_variable 'variable' ,
-'asimilado',
-sa.costo,
-sa.venta,
-'0' margen, 
-IF(
-CONCAT_WS(' x ',sla.auth_entregables,usentre.name)<>'',
-CONCAT_WS(' x ',sla.auth_entregables,usentre.name),
-'x') 'Auth_entregables',
-
-IF(
-CONCAT_WS(' x ',sla.auth_direccion,usdir.name)<>'',
-CONCAT_WS(' x ',sla.auth_direccion,usdir.name),
-'x') 'Auth_direccion',
-
-
-IF(
-CONCAT_WS(' x ',sla.auth_rh,usrh.name)<>'',
-CONCAT_WS(' x ',sla.auth_rh,usrh.name),
-'x') 'Auth_RH',
-
-sla.contrato_firmado 'Contrato_firmado',
-sla.alta 'alta',
-sla.computadora 'computadora',
-
-  (SELECT 
-                IF((`sla`.`computadora` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((CONCAT_WS('',
-                                                (SELECT 
-                                                        IF((`sa`.`computadora` <> 0),
-                                                                'SI',
-                                                                'NO')
-                                                    ),
-                                                (SELECT IF((`sa`.`software` <> 0), 'SI', 'NO'))) <> 'NONO'),
-                                        'SOLICITADO',
-                                        'NO_SOLICITADO')
-                            ))
-            ) AS `Computadora`,
-
-
-
-
-
-        (SELECT 
-                IF((`sla`.`coche` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((SELECT (IF((`sa`.`auto` <> 0), 'SI', 'NO') <> 'NO')),
-                                        'SOLICITADO',
-                                        'NO_SOLICITADO')
-                            ))
-            ) AS `Coche`,
-            
-        (SELECT 
-                IF((`sla`.`celular` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((CONCAT_WS('',
-                                                (SELECT IF((`sa`.`celular` <> 0), 'SI', 'NO')),
-                                                (SELECT 
-                                                        IF((`sa`.`plan_linea` <> 27),
-                                                                'SI',
-                                                                'NO')
-                                                    ),
-                                                (SELECT 
-                                                        IF((`sa`.`plan_linea_bam` <> 27),
-                                                                'SI',
-                                                                'NO')
-                                                    )) <> 'NONONO'),
-                                        'SOLICITADO',
-                                        'NO_SOLICITADO')
-                            ))
-            ) AS `Celular`,
-   (SELECT 
-                IF((`sla`.`herramientas_almacen` = 'OK'),
-                        'ASIGNADA',
-                        (SELECT 
-                                IF((CONCAT_WS('',
-                                                (SELECT IF((`sa`.`playera` <> 0), 'SI', 'NO')),
-                                                (SELECT IF((`sa`.`botas` <> 0), 'SI', 'NO'))) <> 'NONO'),
-                                        'SOLICITADO',
-                                        'NO_SOLICITADO')
-                            ))
-            ) AS `Herramientas`,
-usr.name 'Solicitante',
-sla.listo_cita 'cita'
-FROM rh.solicitud_alta sa
-left join catalogo_coordinadores co on co.id=sa.coordinador_id
-left join solicitudes_altas_auth sla on sla.id_solicitud=sa.id
-left join users usrh on usrh.id=sla.id_user_rh
-left join users usdir on usdir.id=sla.id_dir_user
-left join users usentre on usentre.id=sla.entregables_user_id
-
-left join users usr on usr.id=sa.solicitante
- where sa.status_cita is  null
-group by sa.id ;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_sol_baja_nomina
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_sol_baja_nomina`;
-delimiter ;;
-CREATE PROCEDURE `sp_sol_baja_nomina`(`idempleado` INT, `fecha_baja` DATETIME, `incidencia` NVARCHAR(500), `obs` NVARCHAR(500), `motivo` VARCHAR(30), `con_baja` VARCHAR(10), `vobo_jefe` VARCHAR(500))
-BEGIN
-
-
-INSERT INTO `rh`.`solicitudes_baja_nomina`
-(
-`id_empleado`,
-`fecha_baja_sol`,
-`incidencias`,
-`observaciones`,
-`motivo`,
-`conocimiento_baja`,
-vobo_jefe
-)
-VALUES
-(
-idempleado,
-fecha_baja,
-incidencia,
-obs,
-motivo,
-con_baja,
-vobo_jefe);
-
-SELECT 'INSERTADO CORRECTAMENTE'  AS MENSAJE;
-
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for sp_todos_proyectos
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_todos_proyectos`;
-delimiter ;;
-CREATE PROCEDURE `sp_todos_proyectos`()
-BEGIN
-(select 'clientes' as 'proyecto', id, nombre, activo from  
-proyectos_clientes)
-union
-(select 'grupos' as 'proyecto', id, nombre, activo  from 
-proyectos_grupos)
-union
-(select 'regiones' as 'proyecto', id, nombre, activo  from 
-proyectos_regiones)
-union
-(select 'servicios' as 'proyecto', id, nombre, activo  from 
-proyectos_servicios)
-union
-(select 'tecnologias' as 'proyecto', id, nombre, activo  from 
-proyectos_tecnologias);
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for Update_lotes_Incidencias
--- ----------------------------
-DROP PROCEDURE IF EXISTS `Update_lotes_Incidencias`;
-delimiter ;;
-CREATE PROCEDURE `Update_lotes_Incidencias`(`lote` INT, `id_incidencia` INT)
-BEGIN
-update 
-incidencias
-set id_lote=lote,
-status_auth='ENVIADO'
-where id=id_incidencia;
-select 'OK' MENSAJE;
-END
-;;
-delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;

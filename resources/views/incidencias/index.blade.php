@@ -18,6 +18,7 @@
                             </button>
                         @endcan
                     </div>
+                    <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">
                         <div class="form-group mb-1 col-sm-1">
                             <input id="search_id" name="search_id" class="form-control col-sm-12" value="{{$id == 0 ? null:$id}}" placeholder="ID" title="Buscar incidencia por ID" autocomplete="off">
@@ -42,19 +43,20 @@
                         <table class="table table-active text-center" id="incidencias-table" style="width: 100%">
                             <thead>
                             <tr>
-                                <th>{{__('Id')}}</th>
+                                <th data-priority="1">{{__('Id')}}</th>
                                 <th>{{__('Bitacora')}}</th>
                                 <th>{{__('Vobo Jefe')}}</th>
-                                <th>{{__('Empleado')}}</th>
-                                <th>{{__('Tipo de incidencia')}}</th>
-                                <th>{{__('Fecha de solicitud')}}</th>
-                                <th>{{__('Fecha inicio')}}</th>
-                                <th>{{__('Duracion (Días)')}}</th>
-                                <th>{{__('Monto')}}</th>
+                                <th data-priority="2">{{__('Empleado')}}</th>
+                                <th data-priority="3">{{__('Tipo de incidencia')}}</th>
+                                <th data-priority="8">{{__('Fecha de solicitud')}}</th>
+                                <th data-priority="4">{{__('Fecha inicio')}}</th>
+                                <th data-priority="5">{{__('Duracion (Días)')}}</th>
+                                <th data-priority="6">{{__('Monto')}}</th>
                                 <th>{{__('RO')}}</th>
                                 <th>{{__('Solicitante')}}</th>
                                 <th>{{__('Motivo')}}</th>
                                 <th>{{__('Lote')}}</th>
+                                <th data-priority="7">{{__('Acciones')}}</th>
                             </tr>
                             </thead>
                         </table>
@@ -64,10 +66,12 @@
             </div>
         </div>
     </div>
+    @include('incidencias.modals.editar')
     <script>
         var id_post     = '{{$id}}';
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {!! Html::script('js/MensajesJS.js') !!}
+    {!! Html::script('js/validador.js') !!}
     {!! Html::script('js/incidencias/index.js') !!}
 @endsection

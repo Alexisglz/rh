@@ -128,6 +128,8 @@ class EnvioIncidenciasController extends Controller
                     $incidencia->dias = $request->dias;
                     break;
             }
+            if (isset($request->motivo))
+                $incidencia->motivo = $request->motivo;
             $incidencia->save();
             DB::commit();
             return response()->json([

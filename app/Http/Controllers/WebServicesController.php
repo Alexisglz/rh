@@ -201,7 +201,7 @@ class WebServicesController extends Controller
                     'data' => []
                 ];
         }
-        else return "no existe";
+        else return $array;
     }
 
     public function firstUpdate(){

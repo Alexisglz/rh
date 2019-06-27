@@ -105,7 +105,11 @@ $("#incidencia").on('change',function(){
 				type: "warning"
 			});
 	    break;
-	}	
+	}
+	if($(this).val() == 666)
+		$('#dias').prop('max',2);
+	else
+		$('#dias').removeAttr('max');
    
 });
 

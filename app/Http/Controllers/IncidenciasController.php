@@ -136,9 +136,7 @@ class IncidenciasController extends Controller
             }
             $validator = Validator::make($request->all(), $reglas);
             if ($validator->fails()){
-                return back()->with([
-                    'errors' => $validator->messages()->all()
-                ]);
+                return back()->with('error', $validator->messages()->all());
             }
             $incidencia      = new Incidencias;
             $empleado        = Empleados::find($request->id_empleado);
@@ -161,7 +159,16 @@ class IncidenciasController extends Controller
                         $incidencia->monto        = $request->monto;
                     break;
                 case 'DIAS':
-                    $incidencia->dias         = $request->dias;
+                    if ($request->incidencia == 666){
+                        $sueldos           = $empleado->getMovimientoSueldo;
+                        $sueldo_total      = floatval($sueldos->sueldo_imss + $sueldos->sueldo_asimilado);
+                        $hora              = ($sueldo_total/30)/8;
+                        $hora_total        = round($hora, 4);
+                        $total             = 8 * $hora_total;
+                        $incidencia->monto = $total;
+                    }
+                    else
+                        $incidencia->dias         = $request->dias;
 
                     /*$f1 = new DateTime($request->fecha_i); // Calculo de monto en base a fechas
                     $f2 = new DateTime($request->fecha_f);
@@ -179,7 +186,7 @@ class IncidenciasController extends Controller
                     break;
             }
             $incidencia->id_empleado        = $request->id_empleado;
-            $incidencia->id_incidencia_tipo = $request->incidencia;
+            $incidencia->id_incidencia_tipo = $request->incidencia  == 666 ? 208:$request->incidencia;
             $incidencia->fecha_solicitud    = date('Y-m-d');
             $incidencia->id_solicitante     = auth()->user()->id_usuario;
             $incidencia->area_solicitante   = $user->getRol->Rol;

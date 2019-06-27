@@ -170,7 +170,7 @@ class WebServicesController extends Controller
         $client      = new \SoapClient($url);
         $user        = $this->user;
         $pass        = $this->password;
-        $numEmp      = $empleado->num_empleado;
+        $numEmp      = $empleado->empleado_num;
         $params = [
             "cia"         => $cia,
             "usuario"     => $user,

@@ -76,6 +76,12 @@ class LoginController extends Controller
 
         if (Auth::attempt(['usuario'=>$email, 'password' =>$password]))
         {
+            if (auth()->user()->pwdcgd == 0){
+                $user = auth()->user()->id_usuario;
+                $this->guard()->logout();
+                $request->session()->invalidate();
+                return redirect('pass?id='.$user);
+            }
             if (session('link') && session('link') != url()->current()){
                 return redirect(session('link'));
             }

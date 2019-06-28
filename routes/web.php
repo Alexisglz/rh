@@ -235,6 +235,11 @@ Route::group(["prefix" => "wbs", "middleware" => ["auth"]], function() {
     Route::post('/get_wbs', 'WbsController@getWbs')->name('wbs.get_wbs');
 });
 
+Route::group(["prefix" => "pass", "middleware" => []], function() {
+    Route::get('/', 'NewPasswordController@index')->name('pass.index');
+    Route::post('/update', 'NewPasswordController@update')->name('pass.update');
+});
+
 Route::get('/files/{path}/{folder}/{file}', 'FileController@export')->name('file.export');
 
 Route::get('/ExcelUsuarios', 'ExcelController@ExcelUsuarios');

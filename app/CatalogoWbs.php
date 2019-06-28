@@ -51,14 +51,8 @@ class CatalogoWbs extends Model
     public static function getSiguiente($a_buscar,$en_donde,$tabla,$cliente, $servicio, $region, $tecnologia, $grupo){
         $where   = array();
         $user    = auth()->user();
-        $pd      = [];
         if ( !empty($cliente) ) {
             $where[] = ['wbs.cliente','=',$cliente];
-            if ($user->listarTodo == null) {
-                foreach ($user->getCoordPD as $item){
-                    $pd[] = $item->servicio;
-                }
-            }
         }
         if ( !empty($servicio) ) {
             $where[] = ['wbs.servicio','=',$servicio];

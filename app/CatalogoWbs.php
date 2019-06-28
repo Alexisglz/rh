@@ -49,15 +49,22 @@ class CatalogoWbs extends Model
 
 
     public static function getSiguiente($a_buscar,$en_donde,$tabla,$cliente, $servicio, $region, $tecnologia, $grupo){
-        $where = array();
+        $where   = array();
+        $user    = auth()->user();
+        $pd      = [];
         if ( !empty($cliente) ) {
             $where[] = ['wbs.cliente','=',$cliente];
+            if ($user->listarTodo == null) {
+                foreach ($user->getCoordPD as $item){
+                    $pd[] = $item->servicio;
+                }
+            }
         }
         if ( !empty($servicio) ) {
             $where[] = ['wbs.servicio','=',$servicio];
         }
         if ( !empty($region) ) {
-            $where[] = ['wbs.region','=',$region]; 
+            $where[] = ['wbs.region','=',$region];
         }
         if ( !empty($tecnologia) ) { 
             $where[] = ['wbs.tecnologia','=',$tecnologia];
@@ -70,8 +77,15 @@ class CatalogoWbs extends Model
         $array = DB::table('incore.catalogo_wbs AS wbs')
                 ->select(DB::raw("DISTINCT(ps.id) AS id"), 'ps.nombre AS nombre')
                 ->join('incore.proyectos_'.$tabla.' AS ps','wbs.'.$en_donde,'=','ps.id')
-                ->where($where)
-                ->get();
-        return $array;
+                ->where($where);
+        if ($user->getCoordinador){
+            if($user->listarTodo == null){
+                $pd = DB::table('incore.coordinadores_project_definition')
+                    ->select(DB::raw("CONCAT(cliente,'-',servicio) AS pd"))
+                    ->where('usuario_id',$user->id_usuario)->pluck('pd');
+                $array->whereIn(DB::raw("CONCAT(wbs.cliente,'-',wbs.servicio)"),$pd->toArray());
+            }
+        }
+        return $array->get();
     }
 }

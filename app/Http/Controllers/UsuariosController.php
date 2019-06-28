@@ -143,6 +143,7 @@ class UsuariosController extends Controller
                 $cambiar             = true;
             }
             if ($request->password != "" ){
+                $user->password  = md5($request->password);
                 $user->password2 = bcrypt($request->password);
             }
             $user->save();

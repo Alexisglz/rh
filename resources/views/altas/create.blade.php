@@ -117,7 +117,7 @@
                                         ];
                                     @endphp
                                     <label for="esquemas"><abbr title="Este campo es obligatorio">*</abbr>Esquema:</label>
-                                    {!! Form::select('esquemas', $esquema_con, null,['class'=>'form-control req_nok','id'=>'esquemas','style'=>'width: 100%;']) !!}
+                                    {!! Form::select('esquemas', $esquema_con, null,['class'=>'form-control req_nok','id'=>'esquemas','style'=>'width: 100%;','hidden']) !!}
                                 </div>
                             <!--div id="temporalidad_contrato_div">
     							@php

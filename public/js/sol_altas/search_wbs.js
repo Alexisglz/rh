@@ -66,6 +66,7 @@ $(".select_wbs").on('change', function () {
                 });
                 $('#' + campo).empty();
                 $('#' + campo).append(add);
+                $("#"+campo+" option:first").prop('disabled', true);
                 $().loader("hide");
 
             })

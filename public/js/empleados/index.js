@@ -650,7 +650,9 @@ $('#Modal').on('show.bs.modal', function (event) {
             var ocultas = [
                 'descarga','empleado_update','bloqueo_viaticos','motivo_bloqueo','contratista',
                 'tipo_contrato','updated_at','created_at','id_solicitud','opc_computadora','opc_auto','opc_celular',
-                'opc_herramientas'
+                'opc_herramientas','diario_nomina','viable','razon','nomina','movimiento_proyecto_id','tipo_proyecto',
+                'tipo_contrato','movimiento_coordinador_id','coordinador_id','movimiento_sueldo_id','movimiento_recurso_id',
+                'movimiento_puesto_id','id_puesto'
             ];
             var sueldo = [
                 'sueldo_imss','sueldo_alternativo','sueldo_asimilado','sueldo_imss_bruto','sueldo_alternativo_bruto',

@@ -43,6 +43,7 @@ class AltasController extends Controller
 
     public function index(Request $request)
     {
+        //dd(auth()->user());
         $this->authorize('access',[User::class, 'listado_solicitudes']);
         $clientes       = CatalogoWbs::Clientes();
         $estados        = Estados::getEstados();

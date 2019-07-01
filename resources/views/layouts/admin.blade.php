@@ -115,9 +115,22 @@ to get the desired effect
                         {{ Auth::user()->getRol->Descripcion }} <span class="caret"></span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @if(!Auth::user()->isImpersonating())
+                            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#impersonate" onclick="event.preventDefault();">
+                                <i class="fa fa-eye text-primary"></i>
+                                {{ __('Ver como') }}
+                            </button>
+                        @endif
+                            @if(Auth::user()->isImpersonating())
+                                <a class="dropdown-item" href="{{route('imper.invalidate')}}">
+                                    <i class="fa fa-eye-slash text-danger"></i>
+                                    {{ __('Revertir') }}
+                                </a>
+                            @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                           document.getElementById('logout-form').submit();">
+                            <i class="fa fa-power-off text-danger"></i>
                             {{ __('Logout') }}
                         </a>
 
@@ -394,6 +407,7 @@ to get the desired effect
         </div>
     </div>
 </div>
+@include('common_modals.impersonate')
 {!! Html::script('plugins/ckeditor/ckeditor.js') !!}
 <!-- Bootstrap -->
 {!! Html::script('plugins/bootstrap/js/bootstrap.bundle.min.js') !!}

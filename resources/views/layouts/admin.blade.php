@@ -115,12 +115,14 @@ to get the desired effect
                         {{ Auth::user()->getRol->Descripcion }} <span class="caret"></span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @if(!Auth::user()->isImpersonating())
-                            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#impersonate" onclick="event.preventDefault();">
-                                <i class="fa fa-eye text-primary"></i>
-                                {{ __('Ver como') }}
-                            </button>
-                        @endif
+                        @can('access',[\App\User::class,'ver_como'])
+                            @if(!Auth::user()->isImpersonating())
+                                <button class="dropdown-item" href="#" data-toggle="modal" data-target="#impersonate" onclick="event.preventDefault();">
+                                    <i class="fa fa-eye text-primary"></i>
+                                    {{ __('Ver como') }}
+                                </button>
+                            @endif
+                        @endcan
                             @if(Auth::user()->isImpersonating())
                                 <a class="dropdown-item" href="{{route('imper.invalidate')}}">
                                     <i class="fa fa-eye-slash text-danger"></i>

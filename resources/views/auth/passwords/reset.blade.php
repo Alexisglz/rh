@@ -32,6 +32,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <small id="small">{{__('La contraseña debe tener 8 caracteres, una letra mayuscula, una minuscula, un numero y un caracter.')}}</small>
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback">
@@ -46,12 +47,13 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <small id="small-c" class="text-danger" style="display:none;">{{__('La contraseñas no coinciden')}}</small>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="sub" type="submit" class="btn btn-primary">
                                     {{ __('Reset Password') }}
                                 </button>
                             </div>
@@ -62,4 +64,10 @@
         </div>
     </div>
 </div>
+{!! Html::script('js/validador.js') !!}
+<script>
+    $(function () {
+        password('password','password-confirm','sub','small','small-c');
+    });
+</script>
 @endsection

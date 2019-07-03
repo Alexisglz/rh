@@ -67,6 +67,10 @@ class User extends Authenticatable
             ->with('getMovimientos');// Llamar a la funcion que obtinene los moviementos del coordinador del modelo CatalogoCoordinadores
     }
 
+    public function getEmpleado(){
+        return $this->hasOne(Empleados::class,'empleado_id','empleado_id')->with('getMovimientoProyecto');
+    }
+
     public function getDirectorNoti(){
         return $this->hasOne(DirectorArea::class,'id_usuario','id_usuario');
     }

@@ -77,6 +77,11 @@ class CatalogoWbs extends Model
                 $pd = DB::table('incore.coordinadores_project_definition')
                     ->select(DB::raw("CONCAT(cliente,'-',servicio) AS pd"))
                     ->where('usuario_id',$user->id_usuario)->pluck('pd');
+                if(empty($pd->toArray())){
+                    $proyecto = auth()->user()->getEmpleado->getMovimientoProyecto;
+                    if (!empty($proyecto))
+                        $pd[] = $proyecto->cliente.'-'.$proyecto->servicio;
+                }
                 $array->whereIn(DB::raw("CONCAT(wbs.cliente,'-',wbs.servicio)"),$pd->toArray());
             }
         }

@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('queue:work')
+        $schedule->command('queue:work --tries=3')
             ->cron('* * * * *')
             ->withoutOverlapping(); /*Desactivado por que el server de pruebas esta muy limitado */
         $schedule->command('service:numemp')->cron('00 06 * * *'); //Cron para actualizar los numeros de empleados

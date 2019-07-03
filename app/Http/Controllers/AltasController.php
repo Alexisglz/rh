@@ -85,6 +85,11 @@ class AltasController extends Controller
             foreach ($user->getCoordPD as $item){
                 $pd[] = $item->cliente;
             }
+            if (empty($pd)){
+                $proyecto = auth()->user()->getEmpleado->getMovimientoProyecto;
+                if (!empty($proyecto))
+                    $pd[] = $proyecto->cliente;
+            }
             $clientes->whereIn('wbs.cliente',$pd);
         }
         $clientes       = $clientes->pluck('nombre','id');

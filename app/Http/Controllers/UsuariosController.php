@@ -343,25 +343,25 @@ class UsuariosController extends Controller
                     break;
                 case 'STI':
                     $permisos = [
-                        'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_computadora',
-                        'baja_computo','exportar_solicitudes','exportar_empleados'
+                        'listado_solicitudes','listado_empleados','autorizar_computadora',
+                        'baja_computo','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;
                 case 'SAUTO':
                     $permisos = [
-                        'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_coche',
+                        'listado_solicitudes','listado_empleados','autorizar_coche',
                         'baja_coche','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;
                 case 'SCEL':
                     $permisos = [
-                        'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_celular',
+                        'listado_solicitudes','listado_empleados','autorizar_celular',
                         'baja_celular','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;
                 case 'SALMA':
                     $permisos = [
-                        'listado_solicitudes','listado_empleados','listado_incidencias','autorizar_herramientas',
+                        'listado_solicitudes','listado_empleados','autorizar_herramientas',
                         'baja_herramientas','exportar_solicitudes','exportar_empleados','listado_bajas'
                     ];
                     break;

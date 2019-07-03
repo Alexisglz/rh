@@ -327,12 +327,10 @@ class UsuariosController extends Controller
                     break;
                 case 'ENTR':
                     $permisos = [
-                        'listado_solicitudes','crear_solicitudes','editar_solicitudes','autorizar_solicitudes','agendar_cita',
-                        'autorizar_empleado','editar_empleado','baja_empleado','cancelar_bajas','baja_definitiva',
+                        'listado_solicitudes', 'autorizar_empleado','editar_empleado',
                         'listado_empleados','listado_bajas','listado_citas','listado_incidencias','crear_incidencias',
-                        'listado_autorizar','listado_lote','aut_cancel_incidencia','exportar_solicitudes',
-                        'exportar_empleados','exportar_incidencias','export_lote_incidencias','enviar_lote','cita_baja',
-                        'baja_credencial'
+                        'listado_lote','exportar_solicitudes', 'exportar_empleados','exportar_incidencias','export_lote_incidencias',
+                        'enviar_lote','baja_rh','listar_todos','ver_asimilados_inci','ver_tradicional_inci','listado_finalizadas'
                     ];
                     break;
                 case 'ADMIN':

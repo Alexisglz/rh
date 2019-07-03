@@ -479,7 +479,7 @@ class DatatablesController extends Controller
                 break;
         }
         if($periodo)
-            $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
+            $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_envio]);
         else
             $incidencias = [];
         return DataTables::of($incidencias)

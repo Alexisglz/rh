@@ -17,7 +17,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                                <small id="small">{{__('La contraseña debe tener 8 caracteres, una letra mayuscula, una minuscula, un numero y un caracter.')}}</small>
+                                <small id="small">{{__('La contraseña debe tener 8 caracteres, una letra mayuscula, una minuscula y un numero.')}}</small>
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback">

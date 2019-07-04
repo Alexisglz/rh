@@ -41,7 +41,7 @@ function password(id, confirm = null, button = null, small1 = null, small2 = nul
     var disabled2 = false;
     $('#'+id).on('keyup', function (e) {
         var input = $(this);
-        var lowerCaseLetters = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*\-_.])[a-zA-Z0-9#?!@$%^&*\-_.]{8,}/g;
+        var lowerCaseLetters = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/g;
         var small = small1 != null ? $('#'+small1):false;
         if(input.val().match(lowerCaseLetters)){
             small.removeClass('text-danger');

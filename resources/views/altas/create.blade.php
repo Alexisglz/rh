@@ -86,8 +86,8 @@
                                 <label for="apaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido paterno:</label>
                                 {!! Form::text('apaterno', null, ['class' => 'form-control req_common upper']) !!}
 
-                                <label for="amaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido materno</label>
-                                {!! Form::text('amaterno', null, ['class' => 'form-control req_common upper']) !!}
+                                <label for="amaterno">Apellido materno</label>
+                                {!! Form::text('amaterno', null, ['class' => 'form-control upper']) !!}
 
                                 {!! Form::label('cv', 'C.V. recurso: '); !!}
                                 <br>

@@ -62,7 +62,8 @@ $(".select_wbs").on('change', function () {
 
                 var add = "<option value=''>" + campo.toUpperCase() + "</option>";
                 $.each(data, function () {
-                    add += '<option value="' + this.id + '">' + this.nombre + '</option>';
+                    if(this.id != 'IMPR')
+                        add += '<option value="' + this.id + '">' + this.nombre + '</option>';
                 });
                 $('#' + campo).empty();
                 $('#' + campo).append(add);

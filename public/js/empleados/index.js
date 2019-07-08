@@ -753,3 +753,12 @@ $('#reset').on('click', function (e) {
     e.preventDefault();
     reset = 0;
 });
+
+$( function() {
+    $( "#empleado_fecha_baja" ).datepicker({
+        showOn: "both",
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        buttonText: "<i class='fa fa-calendar'></i>"
+    }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
+} );

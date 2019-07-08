@@ -10,8 +10,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form id="form_edit_empleado" method="post" action="">
-                                <label>Fecha de baja</label>
-                                <input type="date" name="id" id="empleado_fecha_baja" class="form-control">
+                                <div class="form-row">
+                                    <label>Fecha de baja</label>
+                                    <input type="date" name="empleado_fecha_baja" id="empleado_fecha_baja" class="form-control col-md-11">
+                                </div>
                                 <label for="incidencias1" class="col-form-label">Incidencias:</label>
                                 <input type="textarea" class="form-control" name="incidencias1" id="incidencias1"
                                        required>

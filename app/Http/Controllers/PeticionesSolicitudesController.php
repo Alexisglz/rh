@@ -196,6 +196,7 @@ class PeticionesSolicitudesController extends Controller
                 break;
             
             case 'ASIMILADO':
+            case 'MIXTO':
                 $costo = ($imss + $carga + $imss_isr + $imss_fee) + ($variable + $variable_isr + $variable_fee);
                 break;
 

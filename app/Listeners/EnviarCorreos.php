@@ -45,24 +45,35 @@ class EnviarCorreos implements ShouldQueue
             switch ($tipo){
                 case 'notificar_dir':
                     $message  = 'Se ha registrado una solicitud de alta con el id: '.$solicitud->id;
-                    if (config('app.env')=="local")
-                        Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
-                    if (config('app.env')=="production") {
-                        if ($solicitud->cliente == 'IND'){
-                            $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
+
+                    if ($solicitud->cliente == 'NOK' && $solicitud->servicio != 'INST'){
+                        $id = 750;
+                        $margen = $solicitud->margen;
+                        if ($margen >= 30){
+                            $id = 117;
+                        }
+                        elseif($margen>=25){
+                            $id = 86;
+                        }
+                        $correos = User::where('id_usuario', '=',$id)
+                            ->groupBy('id_usuario')
+                            ->get();
+                        if (config('app.env')=="local")
+                            Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $correos->toArray()));
+                        if (config('app.env')=="production") {
+                            foreach ($correos as $correo){
+                                Mail::to($correo->email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
+                            }
+                        }
+                    }
+                    else{
+                        $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
+                        if (config('app.env')=="local")
+                            Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $models->toArray()));
+                        if (config('app.env')=="production") {
                             foreach ($models  as $model){
                                 $usuario = User::find($model->id_usuario);
                                 Mail::to($usuario->correo)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
-                            }
-                        }
-                        else{
-                            $correos = DB::table('vista_permisos_empleados')
-                                ->where('codigo', '=','autorizar_solicitudes')
-                                ->orWhere('area', '=','Recursos Humanos')
-                                ->groupBy('id_usuario')
-                                ->get();
-                            foreach ($correos as $correo){
-                                Mail::to($correo->email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
                             }
                         }
                     }

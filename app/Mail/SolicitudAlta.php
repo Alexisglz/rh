@@ -13,6 +13,7 @@ class SolicitudAlta extends Mailable
     protected $msg;
     protected $emp;
     protected $id;
+    protected $users;
 
     /**
      * Create a new message instance.
@@ -20,12 +21,14 @@ class SolicitudAlta extends Mailable
      * @param $msg
      * @param $emp
      * @param $id
+     * @param array $users
      */
-    public function __construct($msg, $emp, $id)
+    public function __construct($msg, $emp, $id, $users = [])
     {
-        $this->msg = $msg;
-        $this->emp = $emp;
-        $this->id = $id;
+        $this->msg   = $msg;
+        $this->emp   = $emp;
+        $this->id    = $id;
+        $this->users = $users;
     }
 
     /**
@@ -40,6 +43,7 @@ class SolicitudAlta extends Mailable
             ->markdown('emails.solicitud_alta')
             ->with('id', $this->id)
             ->with('msg', $this->msg)
-            ->with('emp', $this->emp);
+            ->with('emp', $this->emp)
+            ->with('users', $this->users);
     }
 }

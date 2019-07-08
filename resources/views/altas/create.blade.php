@@ -257,7 +257,7 @@
                             </div>
                             <div class="clearfix"></div>
                             <div id="v_imss" class="hide col-md-6">
-                                {!! Form::label('sueldo_imss', 'Sueldo IMSS: ') !!}
+                                {!! Form::label('sueldo_imss', 'Sueldo Tradicional: ') !!}
                                 {!! Form::text('sueldo_imss', null, ['class' => 'form-control req_common']) !!}
                             </div>
 

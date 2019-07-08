@@ -32,10 +32,10 @@ $(document).ready(function () {
     $(".custom-combobox-toggle").append('<i class="fa fa-chevron-down "></i>');
     //Fecha inicio contratacion
     var today = new Date();
-    $('#fecha_inicio').datetimepicker({
+    /*$('#fecha_inicio').datetimepicker({
         format: 'YYYY-MM-DD',
         //minDate : today
-    });
+    });*/
 
     $("#auto, #celular, #computadora, #software, #correo, #bam").trigger('change');
 
@@ -880,6 +880,14 @@ function getCostoPlan(id, tipo) {
         })
 }
 
+$( function() {
+    $( "#fecha_inicio" ).datepicker({
+        showOn: "both",
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        buttonText: "<i class='fa fa-calendar'></i>"
+    }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
+} );
 /*
 jQuery.ui.autocomplete.prototype._resizeMenu = function () {
   var ul = this.menu.element;

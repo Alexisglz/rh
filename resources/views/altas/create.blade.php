@@ -101,8 +101,10 @@
                                 <label for="area"><abbr title="Este campo es obligatorio">*</abbr>Area</label>
                                 {!! Form::select('area',$areas,null,['class'=>'form-control req_nok','id'=>'area','style'=>'width: 100%;']) !!}
 
-                                <label for="fecha_inicio"><abbr title="Este campo es obligatorio">*</abbr>Fecha de inicio:</label>
-                                {!! Form::text('fecha_inicio', null, ['class' => 'form-control req_common','id'=>'fecha_inicio','autocomplete'=>'off']) !!}
+                                <div class="form-row">
+                                    <label for="fecha_inicio"><abbr title="Este campo es obligatorio">*</abbr>Fecha de inicio:</label>
+                                    {!! Form::text('fecha_inicio', null, ['class' => 'form-control req_common col-md-11','id'=>'fecha_inicio','autocomplete'=>'off']) !!}
+                                </div>
 
                                 <div id="esquema_div" class="hide">
                                     @php

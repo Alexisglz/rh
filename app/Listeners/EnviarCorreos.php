@@ -45,19 +45,36 @@ class EnviarCorreos implements ShouldQueue
             switch ($tipo){
                 case 'notificar_dir':
                     $message  = 'Se ha registrado una solicitud de alta con el id: '.$solicitud->id;
+                    $correos = [];
 
-                    if ($solicitud->cliente == 'NOK' && $solicitud->servicio != 'VARI'){
-                        $id = 750;
+                    $option = 'por_director';
+                    if ($solicitud->servicio == 'TKBS' || $solicitud->servicio == 'POLZ' || $solicitud->servicio == 'SERV'){
                         $margen = $solicitud->margen;
-                        if ($margen >= 30){
-                            $id = 117;
+                        if ($margen < 20){
+                            $option = 'menor_20';
                         }
-                        elseif($margen>=25){
-                            $id = 86;
+                        else
+                            $option = 'mayor_20';
+                    }
+
+                    if ($option == 'menor_20'){
+                        $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
+                    }
+                    if ($option == 'mayor_20'){
+                        $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
+                        if (count($models) == 0){
+                            $option = 'sin_director';
+                            $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
                         }
-                        $correos = User::where('id_usuario', '=',$id)
-                            ->groupBy('id_usuario')
-                            ->get();
+                    }
+                    if ($option == 'por_director'){
+                        $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
+                        if (count($models) == 0){
+                            $option = 'sin_director';
+                            $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
+                        }
+                    }
+                    if (count($correos) > 0){
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $correos->toArray()));
                         if (config('app.env')=="production") {
@@ -67,7 +84,6 @@ class EnviarCorreos implements ShouldQueue
                         }
                     }
                     else{
-                        $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $models->toArray()));
                         if (config('app.env')=="production") {

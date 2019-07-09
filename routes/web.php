@@ -276,6 +276,7 @@ Route::get('/task_based','WbsController@taskBased')->name('wbs.task_based');
 Route::get('/renta_etl','WbsController@rentaEtl')->name('wbs.renta_etl');
 Route::get('/poliza','WbsController@poliza')->name('wbs.poliza');
 Route::get('/venta_ro','WbsController@calcularVentaRo')->name('wbs.venta_ro');
+Route::get('/enviar_alta','WbsController@enviarAlta')->name('wbs.enviar_alta');
 
 Route::group(["prefix" => "imper"], function (){
     Route::get('/get_users', 'ImpersonateController@getUsers')->name('imper.get_users');

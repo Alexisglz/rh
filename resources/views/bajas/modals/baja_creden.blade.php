@@ -13,7 +13,7 @@
                                                           placeholder="Comentarios adicionales,lugar de cita,etc"
                                                           style="height: 150px"></textarea>
                                 <label for="message-text" class="col-form-label">{{__('Cantidad de Adeudo')}}:</label>
-                                <input type="number" class="form-control" name="cred_cant" id="cred_cant">
+                                <input type="number" value="0" min="0" class="form-control" name="cred_cant" id="cred_cant">
                             </form>
                         </div>
                     </div>

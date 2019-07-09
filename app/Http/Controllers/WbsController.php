@@ -7,6 +7,8 @@ use App\Classes\Poliza;
 use App\Classes\RentaFijaETL;
 use App\Classes\TaskBased;
 use App\Classes\VentaRO;
+use App\Events\AltaEvents;
+use App\Solicitudes;
 use Illuminate\Http\Request;
 
 class WbsController extends Controller
@@ -44,5 +46,11 @@ class WbsController extends Controller
     public function calcularVentaRo(){
         $venta = VentaRO::calcularVenta(48369);
         return $venta;
+    }
+
+    public function enviarAlta(){
+        $sol = Solicitudes::find(1);
+        event(new AltaEvents($sol, 'notificar_dir'));
+        dd($sol);
     }
 }

@@ -129,12 +129,23 @@ class DatatablesController extends Controller
             if ($directivo){ // Verificar que pueda autorizar las solicitudes por area
                 $solicitudes->where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$directivo->cliente.'-'.$directivo->servicio);
             }
-            elseif ($usuario->getCoordinador) { // verificar que sea coordinador
+            else{
+                $pd = DB::table('incore.coordinadores_project_definition')
+                    ->select(DB::raw("CONCAT(cliente,'-',servicio) AS pd"))
+                    ->where('usuario_id',$usuario->id_usuario)->pluck('pd');
+                if(empty($pd->toArray())){
+                    $proyecto = auth()->user()->getEmpleado->getMovimientoProyecto;
+                    if (!empty($proyecto))
+                        $pd[] = $proyecto->cliente.'-'.$proyecto->servicio;
+                }
+                $solicitudes->whereIn(DB::raw("CONCAT(cliente,'-',servicio)"),$pd->toArray());
+            }
+            /*elseif ($usuario->getCoordinador) { // verificar que sea coordinador
                 $this->recursivoCoordinadores($usuario->id_usuario); // Llamar la funcion recursiva para obtener el id de los coordinadores
                 $this->coords[] = $usuario->getCoordinador->id; // Agregar el id_coordinador del usuario autenticado
                 $coords         = array_values(array_unique($this->coords)); // Ordenar el arreglo de ids para que no se repitan y organizar los indices
                 $solicitudes->whereIn('coordinador_id', $coords); // Agregar a la consulta la busqueda de ids de coordinadores
-            }
+            }*/
         }
 
         // Aplicar Filtros a Datatables
@@ -206,11 +217,20 @@ class DatatablesController extends Controller
         $usuario     = auth()->user();
         $solicitudes = VistaSolBajas::query();
         if ($usuario->listarTodo == null){
-            if ($usuario->getCoordinador){
+            /*if ($usuario->getCoordinador){
                 $this->recursivoEmpleados($usuario->id_usuario);
                 $emps = array_values(array_unique($this->array));
                 $solicitudes->whereIn('empleado_id', $emps);
+            }*/
+            $pd = DB::table('incore.coordinadores_project_definition')
+                ->select(DB::raw("CONCAT(cliente,'-',servicio) AS pd"))
+                ->where('usuario_id',$usuario->id_usuario)->pluck('pd');
+            if(empty($pd->toArray())){
+                $proyecto = auth()->user()->getEmpleado->getMovimientoProyecto;
+                if (!empty($proyecto))
+                    $pd[] = $proyecto->cliente.'-'.$proyecto->servicio;
             }
+            $solicitudes->whereIn('pd',$pd->toArray());
         }
         if ($request->reset == 0){
             if($request->id != null)

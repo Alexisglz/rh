@@ -79,7 +79,7 @@ class EnviarCorreos implements ShouldQueue
                             Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $correos->toArray()));
                         if (config('app.env')=="production") {
                             foreach ($correos as $correo){
-                                Mail::to($correo->email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
+                                Mail::to($correo->correo)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
                             }
                         }
                     }

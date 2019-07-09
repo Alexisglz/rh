@@ -168,11 +168,20 @@ class DatatablesController extends Controller
         $usuario = auth()->user();
         $emp      = VistaEmpleadosActivos::query();
         if ($usuario->listarTodo == null){
-            if ($usuario->getCoordinador){
+            /*if ($usuario->getCoordinador){
                 $this->recursivoEmpleados($usuario->id_usuario);
                 $emps = array_values(array_unique($this->array));
                 $emp->whereIn('id', $emps);
+            }*/
+            $pd = DB::table('incore.coordinadores_project_definition')
+                ->select(DB::raw("CONCAT(cliente,'-',servicio) AS pd"))
+                ->where('usuario_id',$usuario->id_usuario)->pluck('pd');
+            if(empty($pd->toArray())){
+                $proyecto = auth()->user()->getEmpleado->getMovimientoProyecto;
+                if (!empty($proyecto))
+                    $pd[] = $proyecto->cliente.'-'.$proyecto->servicio;
             }
+            $emp->whereIn(DB::raw("CONCAT(cliente,'-',servicio)"),$pd->toArray());
         }
         //Filtros
         if($request->search_id != null)

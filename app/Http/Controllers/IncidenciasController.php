@@ -11,6 +11,7 @@ use App\Models\IncidenciaPeriodo;
 use App\Models\IncidenciasCatalogo;
 use App\Models\ProyectosIndeplo;
 use App\Models\ProyectosIndeploRecurso;
+use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaIncidenciasPeriodo;
 use App\User;
 use App\VistaIncidenciasSinLote;
@@ -229,16 +230,25 @@ class IncidenciasController extends Controller
     {
         try{
             $busqueda  = $request->term;
-            $empleados = Empleados::query();
+            $empleados = VistaEmpleadosActivos::query();
             $usuario   = auth()->user();
             if ($usuario->listarTodo == null){
-                if ($usuario->getCoordinador){
+                /*if ($usuario->getCoordinador){
                     $this->recursivoEmpleados($usuario->id_usuario);
                     $emps = array_values(array_unique($this->array));
-                    $empleados->whereIn('empleado_id', $emps);
+                    $empleados->whereIn('id', $emps);
+                }*/
+                $pd = DB::table('incore.coordinadores_project_definition')
+                    ->select(DB::raw("CONCAT(cliente,'-',servicio) AS pd"))
+                    ->where('usuario_id',$usuario->id_usuario)->pluck('pd');
+                if(empty($pd->toArray())){
+                    $proyecto = auth()->user()->getEmpleado->getMovimientoProyecto;
+                    if (!empty($proyecto))
+                        $pd[] = $proyecto->cliente.'-'.$proyecto->servicio;
                 }
+                $empleados->whereIn(DB::raw("CONCAT(cliente,'-',servicio)"),$pd->toArray());
             }
-            $empleados->select(DB::raw("concat_ws(' ',empleado_nombre, empleado_apaterno, empleado_amaterno) AS Nombre, empleado_id as id"));
+            $empleados->select(DB::raw("concat_ws(' ',empleado_nombre, empleado_apaterno, empleado_amaterno) AS Nombre, id as id"));
             $empleados->where(DB::raw("CONCAT(empleado_nombre,empleado_apaterno,empleado_amaterno)"), 'LIKE', '%'.$busqueda.'%');
             $empleados->whereNull('empleado_fecha_baja');
             $emps = $empleados->get();

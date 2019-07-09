@@ -46,7 +46,7 @@ class EnviarCorreos implements ShouldQueue
                 case 'notificar_dir':
                     $message  = 'Se ha registrado una solicitud de alta con el id: '.$solicitud->id;
 
-                    if ($solicitud->cliente == 'NOK' && $solicitud->servicio != 'INST'){
+                    if ($solicitud->cliente == 'NOK' && $solicitud->servicio != 'VARI'){
                         $id = 750;
                         $margen = $solicitud->margen;
                         if ($margen >= 30){

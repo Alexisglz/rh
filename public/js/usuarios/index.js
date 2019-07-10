@@ -103,6 +103,8 @@ var CSRF_TOKEN = $('#token').val();
 
 $('#editarUserModal').on('hidden.bs.modal', function() {
     $(':input', this).val('');
+    $('#reset_pass').prop('checked', false);
+    $('div.toggle').removeClass('btn-primary').addClass('btn-success off');
 });
 
 function abrirModalEditUsuario(id_user, name_user, id_area) {
@@ -196,7 +198,7 @@ function caracteresCorreoValido(email) {
 
 function validateFormEdit() {
     var email = $("#email_user").val();
-    var array = ['cerrar','password'];
+    var array = ['cerrar','password','reset_pass'];
     if (caracteresCorreoValido(email)) {
         if (existe('edit_usuario', array)){
         }
@@ -210,6 +212,7 @@ function validateFormEdit() {
         var rol         = $("#rol").val();
         var id_user     = $("#user_id").val();
         var password    = $("#password").val();
+        var reset_pass  = $('#reset_pass').prop('checked');
 
         var data = {
             _token: CSRF_TOKEN,
@@ -222,7 +225,8 @@ function validateFormEdit() {
             area: id_area,
             rol: rol,
             id_user: id_user,
-            password: password
+            password: password,
+            reset_pass: reset_pass
         };
 
         $.ajax({

@@ -64,6 +64,18 @@
                                     <label for="password">{{__('Contraseña')}}</label>
                                     <input type="password" name="password" id="password" class="form-control">
                                 @endif
+                                <div class="form-row mt-2">
+                                    <div class="col-md-12 ">
+                                        <label>
+                                            {{__('Solicitar Cambio de Contraseña')}}
+                                        </label>
+                                        <div class="checkbox">
+                                            <input id="reset_pass" type="checkbox" data-toggle="toggle" data-on="SI" data-off="NO" data-onstyle ="primary" data-offstyle="success">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="col-md-6">

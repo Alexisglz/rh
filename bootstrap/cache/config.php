@@ -287,6 +287,29 @@
           5 => 'NO_ENGINE_SUBSTITUTION',
         ),
       ),
+      'tickets' => 
+      array (
+        'driver' => 'mysql',
+        'host' => 'localhost',
+        'port' => '3306',
+        'database' => 'tickets',
+        'username' => 'root',
+        'password' => 'rodo2019',
+        'charset' => 'utf8',
+        'collation' => 'utf8_general_ci',
+        'prefix' => '',
+        'strict' => true,
+        'engine' => NULL,
+        'modes' => 
+        array (
+          0 => 'STRICT_TRANS_TABLES',
+          1 => 'NO_ZERO_IN_DATE',
+          2 => 'NO_ZERO_DATE',
+          3 => 'ERROR_FOR_DIVISION_BY_ZERO',
+          4 => 'NO_AUTO_CREATE_USER',
+          5 => 'NO_ENGINE_SUBSTITUTION',
+        ),
+      ),
       'pgsql' => 
       array (
         'driver' => 'pgsql',

@@ -11,6 +11,7 @@ use App\Area;
 use App\CatalogoRoles;
 use App\GlobalModel;
 use App\Models\UsuarioNotificacion;
+use App\Models\UsuariosTickets;
 use App\Notificacion;
 use App\Permiso;
 use App\User;
@@ -150,6 +151,11 @@ class UsuariosController extends Controller
             if ($cambiar == true){
                 UsuarioPermiso::where('id_usuario','=',$user->id_usuario)->delete();
                 $this::permisosDefault($user->id_usuario);
+            }
+            if ($request->password != "" ) {
+                $tickets = UsuariosTickets::where('usuario', '=', $user->usuario)->first();
+                $tickets->password = md5($request->password);
+                $tickets->save();
             }
             DB::commit();
             return response()->json([

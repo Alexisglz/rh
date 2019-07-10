@@ -9,6 +9,7 @@
 
                 <div class="card-body">
                     <form id="contra" method="POST" action="{{ route('pass.update') }}">
+                        <h5 class="text-success text-center"><strong>{{__('Al reestablecer la contraseña sera actualizada en los sistemas:')}}<br>{{__('Incore, RH y Tickets.')}}</strong></h5>
                         @csrf
 
                         <input id="id" name="id" hidden value="{{$id}}">

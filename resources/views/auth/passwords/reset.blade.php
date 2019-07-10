@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
+                    <h5 class="text-success text-center"><strong>{{__('Al reestablecer la contraseña sera actualizada en los sistemas:')}}<br>{{__('Incore, RH y Tickets.')}}</strong></h5>
                     <form method="POST" action="{{ route('password.request') }}">
                         @csrf
 

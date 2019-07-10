@@ -6,6 +6,7 @@ use App\Empleados;
 use App\Events\BajasEvents;
 use App\Mail\ConfirmarHerraBaja;
 use App\Mail\NuevaBaja;
+use App\Models\VistaSolBajas;
 use DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
@@ -50,7 +51,16 @@ class EnviarCorreosBajas implements ShouldQueue
                 }
                 break;
             case 'confirmar_herra':
-                $herra = ['baja_computo','baja_coche','baja_celular','baja_herramientas','baja_rh'];
+                $herra = ['baja_rh'];
+                $vista = VistaSolBajas::find($solicitud->id);
+                if ($vista->adeudo_compu == 'SI' || $vista->adeudo_accesorios == 'SI')
+                    $herra[] = 'baja_computo';
+                if ($vista->adeudo_celular == 'SI' || $vista->adeudo_lin == 'SI')
+                    $herra[] = 'baja_celular';
+                if ($vista->adeudo_auto == 'SI')
+                    $herra[] = 'baja_coche';
+                if ($vista->adeudo_herra == 'SI')
+                    $herra[] = 'baja_herramientas';
                 $correos = DB::table('vista_permisos_empleados')
                     ->whereIn('codigo', $herra)
                     ->groupBy('id_usuario','codigo')
@@ -58,7 +68,7 @@ class EnviarCorreosBajas implements ShouldQueue
                 foreach ($correos as $correo){
                     if (config('app.env')!="local")
                         $email = $correo->email;
-                    Mail::to($email)->send(new ConfirmarHerraBaja($solicitud, $nombre, $correo->nombre));
+                    Mail::to($email)->send(new ConfirmarHerraBaja($solicitud, $nombre, $correo->nombre,$correo));
                 }
                 break;
         }

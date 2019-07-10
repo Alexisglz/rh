@@ -1,6 +1,8 @@
 @component('mail::message')
 @if(config('app.env')=="local")
 # {{__('Este correo es una prueba por parte del area desarrollo y no tiene ningun efecto en el proceso real')}}
+<strong>{{__('Enviado a:')}}</strong><br>
+<li><strong>{{json_encode($user)}}</strong></li>
 @endif
 # {{ __("Se registro una solicitud de baja para el recurso:") }}
 <strong>{{$emp}}</strong>

@@ -17,6 +17,7 @@ class ConfirmarHerraBaja extends Mailable
     public $sol;
     public $emp;
     public $tipo;
+    public $user;
 
     /**
      * Create a new message instance.
@@ -24,12 +25,14 @@ class ConfirmarHerraBaja extends Mailable
      * @param SolBajaNomina $sol
      * @param $emp
      * @param $tipo
+     * @param null $user
      */
-    public function __construct(SolBajaNomina $sol, $emp, $tipo)
+    public function __construct(SolBajaNomina $sol, $emp, $tipo, $user = null)
     {
         $this->sol  = $sol;
         $this->emp  = $emp;
         $this->tipo = $tipo;
+        $this->user = $user;
     }
 
     /**
@@ -44,6 +47,7 @@ class ConfirmarHerraBaja extends Mailable
             ->markdown('emails.baja_herra')
             ->with('sol', $this->sol)
             ->with('tipo', $this->tipo)
-            ->with('emp', $this->emp);
+            ->with('emp', $this->emp)
+            ->with('user', $this->user);
     }
 }

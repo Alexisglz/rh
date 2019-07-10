@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UsuariosTickets;
 use App\User;
 use Auth;
 use DB;
@@ -29,6 +30,11 @@ class NewPasswordController extends Controller
             $user->password2 = bcrypt($request->password);
             $user->pwdcgd    = 1;
             $user->save();
+            $tickets           = UsuariosTickets::where('usuario', '=', $user->usuario)->first();
+            if($tickets){
+                $tickets->password = md5($request->password);
+                $tickets->save();
+            }
             $conn->commit();
             if (Auth::attempt(['usuario'=>$user->usuario, 'password' =>$request->password]) == true)
             {

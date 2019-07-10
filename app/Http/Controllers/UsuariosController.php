@@ -154,8 +154,10 @@ class UsuariosController extends Controller
             }
             if ($request->password != "" ) {
                 $tickets = UsuariosTickets::where('usuario', '=', $user->usuario)->first();
-                $tickets->password = md5($request->password);
-                $tickets->save();
+                if ($tickets){
+                    $tickets->password = md5($request->password);
+                    $tickets->save();
+                }
             }
             DB::commit();
             return response()->json([

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UsuariosTickets;
 use Hash;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -70,6 +71,12 @@ class ResetPasswordController extends Controller
     {
         $user->password2 = Hash::make($password);
         $user->password  = md5($password);
+
+        $tickets           = UsuariosTickets::where('usuario', '=', $user->usuario)->first();
+        if($tickets){
+            $tickets->password = md5($password);
+            $tickets->save();
+        }
 
         $user->setRememberToken(Str::random(60));
 

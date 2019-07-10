@@ -283,3 +283,5 @@ Route::group(["prefix" => "imper"], function (){
     Route::get('/impersonate', 'ImpersonateController@impersonate')->name('imper.create');
     Route::get('/stop', 'ImpersonateController@stopImpersonate')->name('imper.invalidate');
 });
+
+Route::get('/fresh','WbsController@fresh');

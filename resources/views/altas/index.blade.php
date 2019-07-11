@@ -164,17 +164,19 @@
         $auth_herramientas = auth()->user()->can('access',[\App\User::class,'autorizar_herramientas'])? 1:0;
         $ver_checks        = auth()->user()->can('access',[\App\User::class,'ver_autorizaciones'])? 1:0;
         $cont_firm         = auth()->user()->can('access',[\App\User::class,'contrato_firmado'])? 1:0;
+        $ver_sueldo        = auth()->user()->can('access',[\App\User::class,'ver_sueldo'])? 1:0;
     @endphp
     <script>
-        var edit              = '<?php echo $edit?>';
-        var auth_sol          = '<?php echo $auth_sol?>';
-        var cita              = '<?php echo $cita?>';
-        var auth_computadora  = '<?php echo $auth_computadora?>';
-        var auth_celular      = '<?php echo $auth_celular?>';
-        var auth_coche        = '<?php echo $auth_coche?>';
-        var auth_herramientas = '<?php echo $auth_herramientas?>';
-        var ver_checks        = '<?php echo $ver_checks?>';
-        var cont_firm         = '<?php echo $cont_firm?>';
+        var edit              = '{{$edit}}';
+        var auth_sol          = '{{$auth_sol}}';
+        var cita              = '{{$cita}}';
+        var auth_computadora  = '{{$auth_computadora}}';
+        var auth_celular      = '{{$auth_celular}}';
+        var auth_coche        = '{{$auth_coche}}';
+        var auth_herramientas = '{{$auth_herramientas}}';
+        var ver_checks        = '{{$ver_checks}}';
+        var cont_firm         = '{{$cont_firm}}';
+        var ver_sueldo        = '{{$ver_sueldo }}';
         var id_post           = '{{$id}}';
         $(function () {
             $("#computadora_check").bootstrapToggle({

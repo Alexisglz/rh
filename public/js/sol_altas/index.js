@@ -50,11 +50,11 @@ var table      = $('#altas-table').DataTable({
         {data: 'Herramientas',                  name: 'Herramientas', className:'herramientas_v auths text-center', orderable: false, searchable: false,},
         {data: 'Contrato firmado',              name: 'Contrato firmado', className:'cont_f_v auths text-center', orderable: false, searchable: false},
         {data: 'pm',                            name: 'pm', className:'width-auto'},
-        {data: 'imss',                          name: 'imss', className:'width-auto'},
-        {data: 'variable',                      name: 'variable', className:'width-auto'},
-        {data: 'costo',                         name: 'costo', className:'width-auto'},
-        {data: 'venta',                         name: 'venta', className:'width-auto'},
-        {data: 'margen',                        name: 'margen', className:'width-auto'},
+        {data: 'imss',                          name: 'imss', className:'width-auto', className:'sueldo_v'},
+        {data: 'variable',                      name: 'variable', className:'width-auto', className:'sueldo_v'},
+        {data: 'costo',                         name: 'costo', className:'width-auto',className:'sueldo_v'},
+        {data: 'venta',                         name: 'venta', className:'width-auto',className:'sueldo_v'},
+        {data: 'margen',                        name: 'margen', className:'width-auto',className:'sueldo_v'},
         {data: 'alta',                          name: 'alta'},
         {data: 'Solicitante',                   name: 'Solicitante'}
     ],
@@ -1662,6 +1662,8 @@ if (cont_firm != 1 && ver_checks == 1)
     table.columns( '.cont_f_v' ).visible( false );
 if (edit != 1)
     table.columns( '.editar_v' ).visible( false );
+if(ver_sueldo != 1)
+    table.columns( '.sueldo_v' ).visible( false );
 
 $( function() {
     $( "#fecha_cita" ).datepicker({

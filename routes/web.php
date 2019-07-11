@@ -269,6 +269,9 @@ Route::group(["prefix" => "capital", "middleware" => ["auth"]], function (){
     Route::get('/consultar_empleados','WebServicesController@getEmpleados')->name('capital.consultar');
     Route::get('/especifico','WebServicesController@getEspecifico')->name('capital.especifico');
     Route::get('/get_lote','WebServicesController@getLote')->name('capital.get_lote');
+    Route::get('/sueldo_especifico','WebServicesController@getSueldoEspecifico')->name('capital.sueldo_especifico');
+    Route::get('/calcular_sueldo','WebServicesController@calcularSueldo')->name('capital.calcular_sueldo');
+    Route::get('/actualizar_sueldos','WebServicesController@actualizarSueldos')->name('capital.actualizar_sueldos');
 });
 
 /* URL's de prueba para crear risk orders estan harcodeados los datos en el controlador */

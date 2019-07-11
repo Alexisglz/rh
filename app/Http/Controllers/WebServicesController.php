@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empleados;
 use App\Models\CatalogoRazonCapital;
 use App\Models\CatalogoRazonRH;
+use App\Models\VistaEmpleadosActivos;
 use DateTime;
 use DB;
 use Exception;
@@ -158,6 +159,13 @@ class WebServicesController extends Controller
         $empleado    = DB::table('vista_empleados_nomina')
             ->where('empleado_id', '=', $id)->first();//2148
 
+        if ($empleado == null){
+            return [
+                'ok'   => false,
+                'data' => []
+            ];
+        }
+
         $cia         = $empleado->id;
 
         $fechainicio  = (new DateTime($empleado->empleado_fecha_alta))->modify('first day of this month')
@@ -201,7 +209,10 @@ class WebServicesController extends Controller
                     'data' => []
                 ];
         }
-        else return $array;
+        else return [
+            'ok' => false,
+            'data' => $array
+        ];
     }
 
     public function firstUpdate(){
@@ -253,6 +264,93 @@ class WebServicesController extends Controller
             dd($info);
         }catch (\Exception $e){
             dd($e);
+        }
+    }
+
+    public function getSueldoEspecifico($id = 2150){
+        /* Buscar al empleado para obtener su fecha de ingreso y su esquema de cotratacion */
+        $empleado    = DB::table('vista_empleados_nomina')
+            ->where('empleado_id', '=', $id)->first();//2148
+
+        if ($empleado == null){
+            return [
+            'ok'   => false,
+                    'data' => []
+                ];
+        }
+        $cia         = $empleado->id;
+
+        $fechainicio  = (new DateTime($empleado->empleado_fecha_alta))->modify('first day of this month')
+            ->format('d/m/Y');
+        $fechafin     = (new DateTime(date('Y-m-d')))->modify('last day of this month')
+            ->format('d/m/Y');
+
+        /* Iniciar peticion al Web Service */
+        $url         = 'http://ws.humaneland.net/wsConsulta/Importes?wsdl';
+        $client      = new \SoapClient($url);
+        $user        = $this->user;
+        $pass        = $this->password;
+        $numEmp      = $empleado->empleado_num;
+        $params = [
+            "cia"         => $cia,
+            "usuario"     => $user,
+            "password"    => $pass,
+            "numEmp"      => $numEmp,
+            "fechainicio" => $fechainicio,
+            "fechafin"    => $fechafin,
+        ];
+        $response = $client->__soapCall("consultaImporte", array($params));
+        foreach ($response as $clave => $valor) {
+            $aux = [];
+            foreach ($valor as $instancia01 => $val) {
+                $aux[] = $val;
+            }
+            $array[] = $aux;
+        }
+        if (!empty($array[0][1])){
+            $item = $array[0][1];
+            if (isset($item->numEmp)){
+                return [
+                    'ok'   => true,
+                    'data' => $item
+                ];
+            }
+            else
+                return [
+                    'ok'   => false,
+                    'data' => []
+                ];
+        }
+        else return [
+            'ok' => false,
+            'data' => $array
+        ];
+    }
+
+    public function calcularSueldo($id = 2150){
+        $response = [];
+        $empleado = $this->getEspecifico($id);
+        $sueldo   = $this->getSueldoEspecifico($id);
+        if ($empleado['ok'] == true && $sueldo['ok']== true){
+            $emp = $empleado['data'];
+            $sue = $sueldo['data'];
+            $total = floatval($sue->importe);
+            $trad = round(($emp->sueldo * 30),0);
+            $asim = $total - $trad;
+            $response = [
+                'total' => $total,
+                'tradicional' => $trad,
+                'asimilado' => $asim
+            ];
+        }
+        return $response;
+    }
+
+    public function actualizarSueldos(){
+        $empleados = VistaEmpleadosActivos::all();
+        foreach ($empleados as $empleado){
+            //dd($empleado);
+            echo json_encode($this->calcularSueldo($empleado->id));
         }
     }
 }

@@ -108,6 +108,9 @@ $(".select_wbs").on('change', function () {
                 $('#esquemas option[value="3"]').prop('disabled', true);
                 $('#esquemas option[value="4"]').prop('disabled', true);
                 $('#esquemas option[value="7"]').prop('disabled', true);
+                $('#codigo_sueldo').removeClass('req_common');
+                $('#sueldo_venta_c').removeClass('req_common');
+                $('#codigo_poliza').addClass('req_common');
                 esquema.trigger('change');
                 break;
             case "TKBS":
@@ -116,6 +119,9 @@ $(".select_wbs").on('change', function () {
                 $('#esquemas option[value="4"]').prop('disabled', true);
                 $('#esquemas option[value="6"]').prop('disabled', true);
                 $('#esquemas option[value="7"]').prop('disabled', true);
+                $('#codigo_sueldo').removeClass('req_common');
+                $('#sueldo_venta_c').removeClass('req_common');
+                $('#codigo_poliza').removeClass('req_common');
                 esquema.val(2);
                 esquema.trigger('change');
                 break;
@@ -124,6 +130,9 @@ $(".select_wbs").on('change', function () {
                 $('#esquemas option[value="2"]').prop('disabled', true);
                 $('#esquemas option[value="6"]').prop('disabled', true);
                 $('#esquemas option[value="7"]').prop('disabled', true);
+                $('#codigo_sueldo').addClass('req_common');
+                $('#sueldo_venta_c').addClass('req_common');$(this).prop('data-id')
+                $('#codigo_poliza').removeClass('req_common');
                 esquema.val(3);
                 esquema.trigger('change');
                 break;
@@ -156,6 +165,9 @@ $(".select_wbs").on('change', function () {
         $("#sueldo_venta_c_div").addClass('hide');
         $("#codigo_sueldo").val('');
         $("#sueldo_venta_c").val('');
+        $('#codigo_sueldo').removeClass('req_common');
+        $('#sueldo_venta_c').removeClass('req_common');
+        $('#codigo_poliza').removeClass('req_common');
 
     }
 

@@ -252,6 +252,7 @@ $("#guarda_info").click(function () {
     var cliente  = $("#cliente").val();
     var servicio = $("#servicio").val();
     var esquemas = $("#esquemas").val();
+    var txt_cod  = '';
 
     var cuenta_errores = 0;
     var cadena         = "";
@@ -365,12 +366,28 @@ $("#guarda_info").click(function () {
         });
     }
 
+    if (servicio == 'SERV' || servicio == 'POLZ'){
+        var elements = ['codigo_sueldo'];
+        for(i in elements){
+            var element = $('#'+elements[i]);
+            if(element.hasClass('req_common')){
+                if(element.data('id') == undefined){
+                    cuenta_errores++;
+                    var titulo = (element.prev('label').text() != "") ? element.prev('label').text() : element.attr("name");
+                    txt_cod += 'Seleccionar una opcion en: '+titulo+'\n';
+                }
+                else
+                    element.css("border", "1px solid #eee");
+            }
+        }
+    }
+
     console.log(cuenta_errores);
 
     if (cuenta_errores == 0) {
         $("#formulario_solicitud").submit();
     } else {
-        swal("Error!", cadena, "error");
+        swal("Error!", cadena+'\n'+txt_cod, "error");
 
     }
 

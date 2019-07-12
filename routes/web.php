@@ -9,7 +9,7 @@ Route::get('/', 'AltasController@index')->name('index.index');
 Route::group(["prefix" => "auth", "middleware" => ["auth"]], function() {
     Route::get('/', 'AuthIncidenciaController@index')->name('auth.index');
     Route::get('/get_inci', 'AuthIncidenciaController@getIncidencias')->name('auth.get_inci');
-    Route::get('/validar_masivo', 'AuthIncidenciaController@validarMasivo')->name('auth.validar_masivo');
+    Route::post('/validar_masivo', 'AuthIncidenciaController@validarMasivo')->name('auth.validar_masivo');
 });
 // Agrupar rutas para las altas y verificar la autenticación
 Route::group(["prefix" => "altas", "middleware" => ["auth"]], function() {

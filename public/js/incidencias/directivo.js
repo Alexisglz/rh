@@ -1,5 +1,6 @@
-var models = {};
-var table = $('#table_dir').DataTable({
+var models     = {};
+var CSRF_TOKEN = $('#token').val();
+var table      = $('#table_dir').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
@@ -86,7 +87,37 @@ function save() {
         showCancelButton: true
     }).then((ok) => {
         if (ok.value == true) {
-            console.log('Si');
+            $.ajax({
+                url: '/auth/validar_masivo',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    _token: CSRF_TOKEN,
+                    incidencias: data
+                },
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success:function (data) {
+                    if (data.ok == true) {
+                        Swal.fire({
+                            title: "Incidencias Actualizadas Correctamente",
+                            text: "",
+                            type: "success"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Ocurrio un error",
+                            text: data.data,
+                            type: "error"
+                        });
+                    }
+                    table.ajax.reload();
+                }
+            });
         }
         else console.log('No');
     });

@@ -118,7 +118,7 @@ $("#auto, #celular, #computadora, #software, #correo, #bam").change(function () 
 });
 
 // AUTOCOMPLETES DE LOS CODIGOS
-$("#codigo_auto,#codigo_celular, #codigo_computadora, #codigo_software, #codigo_bam, #codigo_poliza, #codigo_sueldo").keyup(function () {
+$("#codigo_auto,#codigo_celular, #codigo_computadora, #codigo_software, #codigo_bam, #codigo_poliza, #codigo_sueldo").on('keyup focus',function () {
     var id = $(this).attr('id');
     var link = "";
     switch (id) {

@@ -160,6 +160,7 @@
                                             {!! Form::label('codigo_poliza', 'Codigo Póliza: ') !!}
                                         </div>
                                         <div class="col-md-6">
+                                            <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                             {!! Form::text('codigo_poliza', null, ['class' => 'form-control','id'=>'codigo_poliza']) !!}
                                         </div>
                                     </div>
@@ -247,11 +248,13 @@
                             </div>
                             <div class="clearfix"></div>
                             <div id="codigo_sueldo_div" class="hide col-md-6">
+                                <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                 {!! Form::label('codigo_sueldo', 'Código Facturación de Salario Venta: ') !!}
                                 {!! Form::text('codigo_sueldo', null, ['class' => 'form-control','id'=>'codigo_sueldo']) !!}
                             </div>
 
                             <div id="sueldo_venta_c_div" class="hide col-md-6">
+                                <p class="text-success">{{__('_')}}</p>
                                 {!! Form::label('sueldo_venta_c', 'Total Facturación de Salario Venta: ') !!}
                                 {!! Form::text('sueldo_venta_c', null, ['class' => 'form-control','id'=>'sueldo_venta_c']) !!}
                             </div>
@@ -316,12 +319,13 @@
                             <div class="col-md-9">
                                 <div class="row hide" id="celular_opciones">
                                     <div class="col-md-6">
-                                        {!! Form::label('plan_celular_select', 'Plan: ') !!}
+                                        {!! Form::label('plan_celular_select', 'Plan: ',['class' => 'mb-4 mt-3']) !!}
                                         <br>
                                         {!! Form::select('plan_celular_select',$planes,null,['class'=>'form-control','id'=>'plan_celular_select','style'=>'width: 100%;']) !!}
                                     </div>
                                     <div class="col-md-6 hide" id="celular_codigos">
                                         {!! Form::label('codigo_celular', 'Codigo de celular: ') !!}
+                                        <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                         {!! Form::text('codigo_celular', null, ['class' => 'form-control','id'=>'codigo_celular']) !!}
                                         <p>Venta:<span id="venta_celular_label"></span>, Costo:<span
                                                     id="costo_celular_label"></span></p>
@@ -343,6 +347,7 @@
                                     </div>
                                     <div class="col-md-6 hide" id="computadora_codigos">
                                         {!! Form::label('codigo_computadora', 'Codigo de computadora: ') !!}
+                                        <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                         {!! Form::text('codigo_computadora', null, ['class' => 'form-control','id'=>'codigo_computadora']) !!}
                                         <p>Venta:<span id="venta_computadora_label"></span>, Costo:<span
                                                     id="costo_computadora_label"></span></p>
@@ -364,6 +369,7 @@
                                     </div>
                                     <div class="col-md-6 hide" id="software_codigos">
                                         {!! Form::label('codigo_software', 'Codigo de software: ') !!}
+                                        <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                         {!! Form::text('codigo_software', null, ['class' => 'form-control','id'=>'codigo_software']) !!}
                                         <p>Venta:<span id="venta_software_label"></span>, Costo:<span
                                                     id="costo_software_label"></span></p>
@@ -401,12 +407,13 @@
                             <div class="col-md-9">
                                 <div class="row hide" id="bam_opciones">
                                     <div class="col-md-6">
-                                        {!! Form::label('plan_bam_select', 'Plan: ') !!}
+                                        {!! Form::label('plan_bam_select', 'Plan: ',['class' => 'mb-4 mt-3']) !!}
                                         <br>
                                         {!! Form::select('plan_bam_select',$planes,null,['class'=>'form-control','id'=>'plan_bam_select','style'=>'width: 100%;']) !!}
                                     </div>
                                     <div class="col-md-6 hide" id="bam_codigos">
                                         {!! Form::label('codigo_bam', 'Codigo de BAM: ') !!}
+                                        <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                         {!! Form::text('codigo_bam', null, ['class' => 'form-control','id'=>'codigo_bam']) !!}
                                         <p>Venta:<span id="venta_bam_label"></span>, Costo:<span
                                                     id="costo_bam_label"></span></p>
@@ -425,6 +432,7 @@
                                 <div class="row hide" id="auto_opciones">
                                     <div class="col-md-12 hide" id="auto_codigos">
                                         {!! Form::label('codigo_auto', 'Codigo de Auto: ') !!}
+                                        <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                         {!! Form::text('codigo_auto', null, ['class' => 'form-control','id'=>'codigo_auto']) !!}
                                         <p>Venta:<span id="venta_auto_label"></span>, Costo:<span
                                                     id="costo_auto_label"></span></p>

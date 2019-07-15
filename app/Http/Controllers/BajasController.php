@@ -337,9 +337,10 @@ class BajasController extends Controller
         $this->authorize('access',[User::class, 'cita_baja']);
         try{
             DB::beginTransaction();
-            $sol_baja             = SolBajaNomina::find($request->id);
-            $sol_baja->fecha_cita = $request->cita;
-            $sol_baja->obs_cita   = $request->obs;
+            $sol_baja                 = SolBajaNomina::find($request->id);
+            $sol_baja->fecha_cita     = $request->cita;
+            $sol_baja->fecha_baja_nom = $request->fecha_baja_nom;
+            $sol_baja->obs_cita       = $request->obs;
             $sol_baja->save();
             DB::commit();
             event(new BajasEvents($sol_baja, 'confirmar_herra'));

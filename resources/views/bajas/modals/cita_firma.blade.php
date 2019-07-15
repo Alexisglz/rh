@@ -14,7 +14,11 @@
                                               style="height: 150px"></textarea>
                                 </div>
                                 <div class="row">
-                                    <label for="fecha_cita" class="col-md-12">Fecha</label>
+                                    <label for="fecha_baja_nom" class="col-md-12">{{__('Fecha Baja Nomina')}}</label>
+                                    <input type="text" name="fecha_baja_nom" id="fecha_baja_nom" class="form-control col-md-11">
+                                </div>
+                                <div class="row">
+                                    <label for="fecha_cita" class="col-md-12">{{__('Fecha de la Cita')}}</label>
                                     <input type="text" name="fecha_cita" id="fecha_cita" class="form-control col-md-11">
                                 </div>
                                 <div class="row">

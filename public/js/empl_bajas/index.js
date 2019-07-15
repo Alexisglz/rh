@@ -296,6 +296,15 @@ var table      = $('#darbaja-table').DataTable({
             }
         },
         {
+            'targets': 20,
+            'data':null,
+            'render': function (data, type, row) {
+                var view = data == null ? '':data;
+                view += '<a class="btn btn-outline-primary text-primary btn-sm cambio_nom ml-2" title="Cambiar la fecha de baja nomina"><i class="fa fa-refresh"></i></a>';
+                return view;
+            }
+        },
+        {
             'targets': 22,
             'data':null,
             'render': function (data, type, row) {
@@ -954,6 +963,68 @@ function pagoFin() {
         }
     });
 }
+
+$('#darbaja-table tbody').on('click', '.cambio_nom', function () {
+    data = table.row($(this).parent()).data();
+    console.log(data);
+    Swal.fire({
+        title: 'Selecciona la nueva fecha',
+        html: '<div class="row"><label for="change_date" class="col-md-12">Fecha Baja Nómina</label>' +
+            '<input type="text" name="change_date" id="change_date" class="form-control col-md-11"></div>',
+        showCancelButton: true,
+        onOpen: function() {
+            $('#change_date').datepicker({
+                showOn: "both",
+                dateFormat: "yy-mm-dd",
+                minDate: 0,
+                buttonText: "<i class='fa fa-calendar'></i>"
+            }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
+        },
+    }).then(function(result) {
+        if (result.value == true){
+            var date = $('#change_date').val();
+            if (date == null || date == ''){
+                Swal.fire({
+                    title:"Fecha no valida",
+                    type: "error"
+                });
+                return false;
+            }
+            else {
+                $.ajax({
+                    url: '/bajas/cambio_nom',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data:{
+                        _token: CSRF_TOKEN,
+                        id: data.id,
+                        date: date
+                    },
+                    beforeSend: function () {
+                        $().loader("show");
+                    },
+                    complete: function () {
+                        $().loader("hide");
+                    },
+                    success: function (response) {
+                        if (response.ok == true){
+                            Swal.fire({
+                                title: "Cambio realizado Correctamente",
+                                type: "success"
+                            });
+                        }
+                        else
+                            Swal.fire({
+                                title: "Ocurrio un error",
+                                type: "error"
+                            });
+                        table.ajax.reload();
+                    }
+                });
+            }
+        }
+    });
+});
 
 if(cancel_baja != 1)
     table.columns( '.cancel_v' ).visible( false );

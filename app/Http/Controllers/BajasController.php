@@ -472,4 +472,25 @@ class BajasController extends Controller
         }
     }
 
+    public function cambioNom(Request $request){
+        try{
+            DB::beginTransaction();
+            $sol_baja                 = SolBajaNomina::find($request->id);
+            $sol_baja->fecha_baja_nom = $request->date;
+            $sol_baja->save();
+            DB::commit();
+            return response()->json([
+                "ok"    => true,
+                "data"  => $sol_baja
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                "ok"    => true,
+                "data"  => $e->getMessage()
+            ]);
+        }
+        dd($request);
+    }
+
 }

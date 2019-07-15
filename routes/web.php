@@ -80,6 +80,7 @@ Route::group(["prefix" => "bajas", "middleware" => ["auth"]], function() {
     Route::post('/baja_herra', 'BajasController@bajaHerra')->name('bajas.baja_herra');
     Route::post('/baja_cred', 'BajasController@bajaCred')->name('bajas.baja_cred');
     Route::post('/pago_fin', 'BajasController@pagoFin')->name('bajas.pago_fin');
+    Route::post('/cambio_nom', 'BajasController@cambioNom')->name('bajas.cambio_nom');
 });
 
 Route::group(["prefix" => "incidentes", "middleware" => ["auth"]], function() {

@@ -139,19 +139,19 @@ var table      = $('#altas-table').DataTable({
                     return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
-                    if (cita == 1) {
-                        switch (data) {
-                            case "cita":
+                    switch (data) {
+                        case "cita":
+                            if (cita == 1) {
                                 return "<button data-tipo='CitaFirma' class='cita info btn btn-xs btn-success iconCheckAuths' data-toggle='modal' data-target='#CitaFirma'><i class='fas fa-calendar nav-icon nav-icon nav-icon'></i></button>";
-                                break;
-                            case "ok":
-                                return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
-                                break;
-                            default :
+                            } else {
                                 return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
-                        }
-                    } else {
-                        return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                            }
+                            break;
+                        case "ok":
+                            return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                            break;
+                        default :
+                            return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
                     }
                 }
             }

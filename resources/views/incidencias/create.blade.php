@@ -18,11 +18,11 @@
                     </h3>
                 </div>
                 <div class="card-body form-group">
-                    <div class="form-row">
+                    <!--div class="form-row">
                         <h5 class="text-danger">{{__('El proceso para el periodo de incidencias del 06-06-2019 al 17-07-2019 se va a
                         realizar como hasta el momento se hace por cuestiones de coordinacion de informacion con el sistema de Capital.')}}</h5>
                         <br><h5 class="text-danger">{{__('*TODAS LAS INCIDENCIAS QUE SE SUBAN AL SISTEMA SERAN CONSIDERADAS COMO PRUEBA*')}}</h5>
-                    </div>
+                    </div-->
                     @if($periodo == null)
                         <div class="row text-center">
                             <h3 style="color: red;">{{__('El dia de hoy no se reciben incidencias')}}</h3>

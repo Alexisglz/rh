@@ -177,24 +177,25 @@ class AltasController extends Controller
         $this->authorize('access',[User::class, 'crear_solicitudes']);
         try{
             DB::beginTransaction();
-            $sol                = new Solicitudes;
+            $sol                        = new Solicitudes;
             //CAMPOS GENERALES
-            $sol->cliente       = $request->cliente;
-            $sol->servicio      = $request->servicio;
-            $sol->region        = $request->region;
-            $sol->tecnologia    = $request->tecnologia;
-            $sol->grupo         = $request->grupo;
-            $sol->nombre        = $request->nombre;
-            $sol->apaterno      = $request->apaterno;
-            $sol->amaterno      = $request->amaterno;
-            $sol->fecha_inicio  = $request->fecha_inicio;
-            $sol->fecha_alta    = $this->date;
-            $sol->puesto        = $request->puesto;
-            $sol->area          = $request->area;
-            $sol->esquema       = $request->esquema;
-            $sol->riesgo        = $request->riesgo;
-            $id_usuario         = auth()->user()->id_usuario;
-            $sol->solicitante   = $id_usuario;
+            $sol->cliente               = $request->cliente;
+            $sol->servicio              = $request->servicio;
+            $sol->region                = $request->region;
+            $sol->tecnologia            = $request->tecnologia;
+            $sol->grupo                 = $request->grupo;
+            $sol->nombre                = $request->nombre;
+            $sol->apaterno              = $request->apaterno;
+            $sol->amaterno              = $request->amaterno;
+            $sol->fecha_inicio          = $request->fecha_inicio;
+            $sol->fecha_alta            = $this->date;
+            $sol->puesto                = $request->puesto;
+            $sol->area                  = $request->area;
+            $sol->esquema               = $request->esquema;
+            $sol->riesgo                = $request->riesgo;
+            $sol->temporalidad_contrato = $request->temporalidad_contrato;
+            $id_usuario                 = auth()->user()->id_usuario;
+            $sol->solicitante           = $id_usuario;
             if (isset($request->botas)) {
                 $sol->botas = 1;
             } else {

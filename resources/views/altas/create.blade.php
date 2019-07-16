@@ -106,6 +106,19 @@
                                     {!! Form::text('fecha_inicio', null, ['class' => 'form-control req_common col-md-11','id'=>'fecha_inicio','autocomplete'=>'off']) !!}
                                 </div>
 
+                                @php
+                                    $temps_contrato = [
+                                        '0'=>'SELECCIONE',
+                                        '1'=>'1 MES',
+                                        '3'=>'3 MESES',
+                                        '12'=>'1 AÑO',
+                                        '36'=>'3 AÑOS'
+                                    ];
+                                @endphp
+                                {!! Form::label('temporalidad_contrato', 'Temporalidad de contrato: ') !!}
+                                <label for="temporalidad_contrato"><abbr title="Este campo es obligatorio">*</abbr></label>
+                                {!! Form::select('temporalidad_contrato',$temps_contrato,null,['class'=>'form-control req_common','id'=>'temporalidades_contrato','style'=>'width: 100%;']) !!}
+
                                 <div id="esquema_div" class="hide">
                                     @php
                                         $esquema_con = [
@@ -121,20 +134,6 @@
                                     <label for="esquemas"><abbr title="Este campo es obligatorio">*</abbr>Esquema:</label>
                                     {!! Form::select('esquemas', $esquema_con, null,['class'=>'form-control req_nok','id'=>'esquemas','style'=>'width: 100%;','hidden']) !!}
                                 </div>
-                            <!--div id="temporalidad_contrato_div">
-    							@php
-                                $temps_contrato = [
-                                    '0'=>'SELECCIONE',
-                                    '1'=>'1 MES',
-                                    '2'=>'3 MESES',
-                                    '3'=>'1 AÑO',
-                                    '4'=>'3 AÑOS'
-                                ];
-                            @endphp
-                            {!! Form::label('temporalidad_contrato', 'Temporalidad de contrato: ') !!}
-                                <label for="""><abbr title="Este campo es obligatorio">*</abbr>
-                            {!! Form::select('temporalidad_contrato',$temps_contrato,null,['class'=>'form-control req_nok','id'=>'temporalidades_contrato','style'=>'width: 100%;']) !!}
-                                    </div-->
                             </div>
                         </div>
                     </div>

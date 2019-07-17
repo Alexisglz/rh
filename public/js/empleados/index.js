@@ -111,16 +111,16 @@ var table = $('#empleados-table').DataTable({
                 var via = parseInt(row.viable);
                 switch (via) {
                     case 0:
-                        view = '<a class="viable btn btn-sm text-danger"><i class="fa fa-frown-o" aria-hidden="true"></i></a>';
+                        view = '<a class="viable btn btn-sm text-danger" title="No Viable"><i class="fa fa-frown-o" aria-hidden="true"></i></a>';
                         break;
                     case 1:
-                        view = '<a class="viable btn btn-sm text-success"><i class="fa fa-smile-o" aria-hidden="true"></i></a>';
+                        view = '<a class="viable btn btn-sm text-success" title="Viable"><i class="fa fa-smile-o" aria-hidden="true"></i></a>';
                         break;
                     case 2:
-                        view = '<a class="viable btn btn-sm text-warning"><i class="fa fa-meh-o" aria-hidden="true"></i></a>';
+                        view = '<a class="viable btn btn-sm text-warning" title="Viable con Reservas"><i class="fa fa-meh-o" aria-hidden="true"></i></a>';
                         break;
                     default:
-                        view = '<a class="viable btn btn-sm text-secondary"><i class="fa fa-question-circle" aria-hidden="true"></i></a>';
+                        view = '<a class="viable btn btn-sm text-secondary" title="No Aplica"><i class="fa fa-question-circle" aria-hidden="true"></i></a>';
                         break;
                 }
                 return view;

@@ -876,5 +876,41 @@ class EmpleadosController extends Controller
             ]);
         }
     }
+
+    public function viable(Request $request){
+        $conn = DB::connection('incore');
+        try{
+            $conn->beginTransaction();
+            $empleado = Empleados::find($request->id);
+            $viable = null;
+            switch ($request->viable){
+                case 'Si':
+                    $viable = 1;
+                    break;
+                case 'No':
+                    $viable = 0;
+                    break;
+                case 'Con reservas':
+                    $viable = 2;
+                    break;
+                case 'No aplica':
+                    break;
+            }
+            $empleado->viable = $viable;
+            $empleado->motivo = $request->obs;
+            $empleado->save();
+            $conn->commit();
+            return response()->json([
+                'ok' => true,
+                'data' => $empleado
+            ]);
+        }catch (\Exception $e){
+            $conn->rollBack();
+            return response()->json([
+                'ok' => false,
+                'data' => $e->getMessage()
+            ]);
+        }
+    }
 }
 

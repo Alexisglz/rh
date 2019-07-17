@@ -29,7 +29,7 @@ var table = $('#empleados-table').DataTable({
         {data: null, name: 'info', orderable: false, searchable: false},
         {data: 'empleado_estatus', name: 'empleado_estatus', orderable: false, searchable: false, className:'text-center editar_v'},
         {data: 'empleado_estatus', name: 'empleado_estatus', orderable: false, searchable: false, className:'text-center baja_v'},
-        {data: null, name: 'cambio_proyec', orderable: false, searchable: false, className:'text-center camb_p_v'},
+        {data: null, name: 'viable', orderable: false, searchable: false, className:'text-center viable_v'},
         {data: 'empleado_num', name: 'empleado_num'},
         {data: 'nombre_completo', name: 'nombre_completo'},
         {data: 'coordinador', name: 'coordinador'},
@@ -106,9 +106,23 @@ var table = $('#empleados-table').DataTable({
         {
             "targets": 4,
             "data": null,
-            "render": function (data, row, type) {
+            "render": function (data, type, row) {
                 var view = '';
-                view = '<a class="cambio_proyect btn btn-sm" style="color: grey"><i class="fa fa-cog"></i></a>';
+                var via = parseInt(row.viable);
+                switch (via) {
+                    case 0:
+                        view = '<a class="viable btn btn-sm text-danger"><i class="fa fa-frown-o" aria-hidden="true"></i></a>';
+                        break;
+                    case 1:
+                        view = '<a class="viable btn btn-sm text-success"><i class="fa fa-smile-o" aria-hidden="true"></i></a>';
+                        break;
+                    case 2:
+                        view = '<a class="viable btn btn-sm text-warning"><i class="fa fa-meh-o" aria-hidden="true"></i></a>';
+                        break;
+                    default:
+                        view = '<a class="viable btn btn-sm text-secondary"><i class="fa fa-question-circle" aria-hidden="true"></i></a>';
+                        break;
+                }
                 return view;
             }
         },
@@ -698,8 +712,6 @@ if(baja_emple != 1)
     table.columns( '.baja_v' ).visible( false );
 if(ver_sueldo != 1)
     table.columns( '.sueldo_v' ).visible( false );
-if(camb_pro != 1)
-    table.columns( '.camb_p_v' ).visible( false );
 
 var search_id     = $('#search_id');
 var num_emp       = $('#num_emp');
@@ -762,3 +774,78 @@ $( function() {
         buttonText: "<i class='fa fa-calendar'></i>"
     }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
 } );
+
+$('#empleados-table tbody').on('click', '.viable', function () {
+    data = table.row($(this).parent()).data();
+    var vi = parseInt(data.viable);
+    switch (vi) {
+        case 0:
+            $('#lbl_vi_no').addClass('active');
+            $('#lbl_vi_si').removeClass('active');
+            $('#lbl_vi_res').removeClass('active');
+            $('#lbl_vi_na').removeClass('active');
+            break;
+        case 1:
+            $('#lbl_vi_si').addClass('active');
+            $('#lbl_vi_no').removeClass('active');
+            $('#lbl_vi_res').removeClass('active');
+            $('#lbl_vi_na').removeClass('active');
+            break;
+        case 2:
+            $('#lbl_vi_res').addClass('active');
+            $('#lbl_vi_si').removeClass('active');
+            $('#lbl_vi_no').removeClass('active');
+            $('#lbl_vi_na').removeClass('active');
+            break;
+        default:
+            $('#lbl_vi_na').addClass('active');
+            $('#lbl_vi_si').removeClass('active');
+            $('#lbl_vi_no').removeClass('active');
+            $('#lbl_vi_res').removeClass('active');
+            break;
+    }
+    $('#id_empleado_via').val(data.id);
+    $('#obs_via').val(data.motivo);
+    $('#viable').modal('show');
+});
+
+function saveViable() {
+    var value = $('input[name=options]:checked').val();
+    var id    = $('#id_empleado_via').val();
+    var obs   = $('#obs_via').val();
+    $.ajax({
+        url:'/empleados/viable',
+        type: 'POST',
+        dataType: 'JSON',
+        data:{
+            _token: CSRF_TOKEN,
+            id:id,
+            viable: value,
+            obs: obs
+        },
+        beforeSend: function () {
+            $().loader("show");
+        },
+        complete: function () {
+            $().loader("hide");
+        },
+        success: function (data) {
+            if (data.ok == true){
+                Swal.fire({
+                    title: "Recurso Actualizado Correctamente",
+                    text: "",
+                    type: "success"
+                });
+            }
+            else {
+                Swal.fire({
+                    title: "Ocurrio un error",
+                    text: data.data,
+                    type: "error"
+                });
+            }
+            $('#viable').modal('toggle');
+            table.ajax.reload();
+        }
+    });
+}

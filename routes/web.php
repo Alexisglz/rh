@@ -146,6 +146,7 @@ Route::group(["prefix" => "empleados", "middleware" => ["auth"]], function() {
     Route::get('/search_empleado', 'EmpleadosController@searchEmpleado')->name('empleados.search_empleado');
     Route::post('/cambio_coord', 'EmpleadosController@cambioCoord')->name('empleados.cambio_coord');
     Route::post('/cambio_sueldo', 'EmpleadosController@cambioSueldo')->name('empleados.cambio_sueldo');
+    Route::post('/viable', 'EmpleadosController@viable')->name('empleados.viable');
 });
 
 Route::group(["prefix" => "envio_incidencias", "middleware" => ["auth"]], function() {

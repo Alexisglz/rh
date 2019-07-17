@@ -4,8 +4,10 @@ namespace App\Listeners;
 
 use App\Empleados;
 use App\Events\BajasEvents;
+use App\Mail\BajaGerencial;
 use App\Mail\ConfirmarHerraBaja;
 use App\Mail\NuevaBaja;
+use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaSolBajas;
 use DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,10 +36,20 @@ class EnviarCorreosBajas implements ShouldQueue
         $solicitud = $event->solicitud;
         $tipo      = $event->tipo;
         $empleado  = Empleados::find($solicitud->id_empleado);
+        $vista_em  = VistaEmpleadosActivos::find($solicitud->id_empleado);
         $nombre    = $empleado->empleado_nombre.' '.$empleado->empleado_apaterno.' '.$empleado->empleado_amaterno;
         $email     = config('app.mail_dev');
+        $puestos_gerentes    = ['33','36','228','229','230','231','232','233','234','235','236','237','238','239',
+                                '34','44','47','48','51','205','206','207','208','209','210','211','212','213','214','386','569'
+                                ];// ID catalogo puesto Gerentes
         switch ($tipo){
             case 'nueva_baja':
+                if (in_array($vista_em->id_puesto,$puestos_gerentes) == true){
+                    if (config('app.env')=="local")
+                        Mail::to($email)->send(new BajaGerencial($vista_em, $solicitud));
+                    if (config('app.env')=="production")
+                        Mail::to('javier.martinez1@indeplo.com')->send(new BajaGerencial($vista_em, $solicitud));
+                }
                 if (config('app.env')=="local")
                     Mail::to($email)->send(new NuevaBaja($solicitud, $nombre));
                 if (config('app.env')=="production") {
@@ -70,6 +82,9 @@ class EnviarCorreosBajas implements ShouldQueue
                         $email = $correo->email;
                     Mail::to($email)->send(new ConfirmarHerraBaja($solicitud, $nombre, $correo->nombre,$correo));
                 }
+                break;
+            case 'baja_gerencial':
+
                 break;
         }
     }

@@ -22,12 +22,16 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Autorizar</th>
-                                <th>Empleado</th>
                                 <th>Incidencia</th>
+                                <th>Empleado</th>
+                                <th>Proyecto</th>
                                 <th>Solicitante</th>
                                 <th>Vobo</th>
                                 <th>Venta</th>
                                 <th>RO</th>
+                                <th>Monto</th>
+                                <th>Fecha Inicio Falta</th>
+                                <th>Duración</th>
                                 <th>Fecha de solicitud</th>
                             </tr>
                             </thead>
@@ -37,6 +41,16 @@
             </div>
         </div>
     </div>
+    @php
+        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
+        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
+        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+    @endphp
+    <script>
+        var inc_c_v     = '<?php echo $inc_c_v ?>';
+        var inc_s_v     = '<?php echo $inc_s_v ?>';
+        var inc_ded     = '<?php echo $inc_ded ?>';
+    </script>
     {!! Html::script('js/incidencias/directivo.js') !!}
     <style>
         .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }

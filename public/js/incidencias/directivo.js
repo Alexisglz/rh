@@ -14,12 +14,16 @@ var table      = $('#table_dir').DataTable({
     columns: [
         {data: 'id', name: 'id'},
         {data:null, name:'info',orderable: false, searchable: false},
-        {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
+        {data: 'empleado', name: 'empleado'},
+        {data: 'proyecto', name: 'proyecto', className:'proyecto_p'},
         {data: 'solicitante', name: 'solicitante'},
-        {data: 'vobo', name: 'vobo'},
-        {data: 'venta', name: 'venta'},
-        {data: 'pedido', name: 'pedido'},
+        {data: 'vobo', name: 'vobo', className:'vobo_p'},
+        {data: 'venta', name: 'venta',className:'venta_p'},
+        {data: 'pedido', name: 'pedido', className:'pedido_p'},
+        {data: 'monto', name: 'monto'},
+        {data: 'fecha_inicio', name: 'fecha_inicio'},
+        {data: 'duracion', name: 'duracion'},
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
     ],
     language: {
@@ -50,7 +54,7 @@ var table      = $('#table_dir').DataTable({
             }
         },
         {
-            "targets": 5,
+            "targets": 6,
             "data": null,
             "className": "text-center",
             render: function (data,type,row) {
@@ -59,7 +63,24 @@ var table      = $('#table_dir').DataTable({
                     template += '<a class="btn" href="/files/'+data+'"><i class="fa fa-download"></i></a>';
                 return template;
             }
-        }
+        },
+        {
+            "targets": 7,
+            "data": null,
+            "className": "text-center",
+            render: function (data,type,row) {
+                var template = '';
+                if (row.tipo_incidencia == "DEDUCCION")
+                    template = '<span class="text-primary">No aplica</span>';
+                else {
+                    if (data <= 0)
+                        template = '<strong class="text-danger">'+data+'</strong>';
+                    else
+                        template = '<strong class="text-success">'+data+'</strong>';
+                }
+                return template;
+            }
+        },
     ],
 });
 
@@ -121,5 +142,11 @@ function save() {
         }
         else console.log('No');
     });
-    console.log(data);
+}
+
+if(inc_c_v != 1 && inc_s_v != 1){
+    table.columns( '.venta_p' ).visible( false );
+    table.columns( '.vobo_p' ).visible( false );
+    table.columns( '.pedido_p' ).visible( false );
+    table.columns( '.proyecto_p' ).visible( false );
 }

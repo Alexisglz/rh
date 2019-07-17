@@ -23,6 +23,19 @@ class AuthIncidenciaController extends Controller
         $this->date = date('Y-m-d H:i:s');
     }
 
+    /**
+     * @param $query
+     * @return string
+     */
+    function getRealQuery($query)
+    {
+        $params = array_map(function ($item) {
+            return "'{$item}'";
+        }, $query->getBindings());
+        $result = str_replace_array('?', $params, $query->toSql());
+        return $result;
+    }
+
     public function index(){
         return view('incidencias.validaciones.directivo');
     }
@@ -36,10 +49,7 @@ class AuthIncidenciaController extends Controller
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_fin','>=', $this->date)->first();
         $incidencias = VistaIncidenciasSinLote::query();
-        $incidencias->whereNull('estatus');
-        if($area == 'ADMIN' || $area == 'ESP'){
-        }
-        else{
+        if($area != 'ADMIN' && $area != 'ESP'){
             if ($inc_s_v == 1)
                 $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_c_v == 1)
@@ -47,11 +57,13 @@ class AuthIncidenciaController extends Controller
             if ($inc_ded == 1)
                 $incidencias->orWhere('tipo_incidencia','=','DEDUCCION');
         }
+        $incidencias->whereNull('estatus');
         if($periodo)
             $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])->get();
         else
             $incidencias = [];
-        return DataTables::of($incidencias)->make(true);
+        $sql = $this->getRealQuery($incidencias);
+        return DataTables::of($incidencias)->with(['sql' => $sql])->make(true);
     }
 
     public function validarMasivo(Request $request){

@@ -193,6 +193,7 @@ Route::group(["prefix" => "incidencias", "middleware" => ["auth"]], function() {
     Route::get('/aprobar', 'IncidenciasController@aprobar')->name('incidencias.aprobar');
     Route::post('/save_aprobar', 'IncidenciasController@saveAprobar')->name('incidencias.save_aprobar');
     Route::post('/delete', 'IncidenciasController@delete')->name('incidencias.delete');
+    Route::get('/noti_dir', 'IncidenciasController@notificarDir')->name('incidencias.noti_dir');
 });
 
 Route::group(["prefix" => "mail", "middleware" => ["auth"]], function() {

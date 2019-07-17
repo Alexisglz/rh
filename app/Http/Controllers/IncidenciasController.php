@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleados;
 use App\Events\IncidenciasEvents;
+use App\Events\IncidenciasNotificar;
 use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Incidencias;
@@ -496,5 +497,28 @@ class IncidenciasController extends Controller
                 'data' => $e->getMessage()
             ]);
         }
+    }
+
+    public function notificarDir(){
+        $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+            ->where('fecha_fin','>=', $this->date)->first();
+        $deduc = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
+            ->where('tipo_incidencia','DEDUCCION')->whereNull('estatus')->count();
+        $s_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
+            ->where('venta','<=',0)->where('tipo_incidencia', '!=','DEDUCCION')->whereNull('estatus')->count();
+        $c_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
+            ->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->whereNull('estatus')->count();
+        $fin_periodo = date('Y-m-d', strtotime($periodo->fecha_envio. ' - 1 days'));
+        $data = [];
+        if ($deduc > 0)
+            $data[] = 'aut_cancel_inci_dec';
+        if ($s_venta > 0)
+            $data[] = 'aut_cancel_inci_s_v';
+        if ($c_venta > 0)
+            $data[] = 'aut_cancel_inci_c_v';
+
+        event(new IncidenciasNotificar('auth',$data));
+
+        dd($periodo, $fin_periodo, $deduc,$s_venta,$c_venta, $data);
     }
 }

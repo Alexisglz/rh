@@ -28,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\SueldosEvents::class => [
             \App\Listeners\EnviarCorreosSueldos::class,
         ],
+        \App\Events\IncidenciasNotificar::class => [
+            \App\Listeners\EnviarCorreosDir::class,
+        ],
     ];
 
     /**

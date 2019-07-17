@@ -438,7 +438,7 @@ class DatatablesController extends Controller
         }
         else{
             if ($inc_s_v == 1)
-                $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
+                $incidencias->orWhere('venta','<=',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_c_v == 1)
                 $incidencias->orWhere('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION');
             if ($inc_ded == 1)

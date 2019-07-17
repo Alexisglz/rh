@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\IncidenciasCommand;
+use App\Console\Commands\IncidenciasNotificar;
 use App\Console\Commands\ServicesCommands;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         IncidenciasCommand::class,
-        ServicesCommands::class
+        ServicesCommands::class,
+        IncidenciasNotificar::class
     ];
 
     /**
@@ -30,8 +32,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('queue:work --tries=3')
             ->cron('* * * * *')
             ->withoutOverlapping(); /*Desactivado por que el server de pruebas esta muy limitado */
-        $schedule->command('service:numemp')->cron('00 06 * * *'); //Cron para actualizar los numeros de empleados
-        /*$schedule->command('incidencias:cancelar')->cron('00 03 * * *'); //Cron para cancelar incidencias vencidas */
+        //Cron para actualizar los numeros de empleados
+        $schedule->command('service:numemp')->cron('00 06 * * *');
+        /*//Cron para cancelar incidencias vencidas
+        $schedule->command('incidencias:cancelar')->cron('00 03 * * *');*/
+        // Cron para notificar la validacion de incidencias
+        /*$schedule->command('incidencias:notificar')->cron('10 00 * * *');*/
     }
 
     /**

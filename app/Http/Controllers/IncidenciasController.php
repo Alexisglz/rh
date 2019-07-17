@@ -207,7 +207,7 @@ class IncidenciasController extends Controller
             $opcional  = 'Creacion de incidencia';
             GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$opcional");
             DB::commit();
-            if ($tipo_incidencia->tipo == "DEDUCCION"){
+            /*if ($tipo_incidencia->tipo == "DEDUCCION"){
                 event(new IncidenciasEvents($incidencia,'noti_deduc'));
             }
             else{
@@ -218,7 +218,7 @@ class IncidenciasController extends Controller
                 if ($proyecto->monto_venta > 0){
                     event(new IncidenciasEvents($incidencia,'noti_cv'));
                 }
-            }
+            }*/
             return redirect('incidencias')->with('mensaje', 'Incidencia solicitada');
         }catch (\Exception $e){
             DB::rollBack();

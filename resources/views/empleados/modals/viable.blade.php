@@ -45,8 +45,16 @@
     </div>
 </div>
 <style>
-    .btn-success:not(:disabled):not(.disabled).active, .btn-danger:not(:disabled):not(.disabled).active,
-    .btn-warning:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled).active {
-        box-shadow: 0 0 1em #007bff !important;
+    .btn-success:not(:disabled):not(.disabled).active{
+        box-shadow: 0 0 1em #28a745 !important;
+    }
+    .btn-danger:not(:disabled):not(.disabled).active{
+        box-shadow: 0 0 1em #dc3545 !important;
+    }
+    .btn-warning:not(:disabled):not(.disabled).active{
+        box-shadow: 0 0 1em #d4a605 !important;
+    }
+    .btn-secondary:not(:disabled):not(.disabled).active {
+        box-shadow: 0 0 1em #6c757d !important;
     }
 </style>

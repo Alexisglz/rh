@@ -352,7 +352,6 @@
         $baja_rh     = auth()->user()->can('access',[\App\User::class,'baja_rh'])? 1:0;
         $baja_def    = auth()->user()->can('access',[\App\User::class,'baja_definitiva'])? 1:0;
         $ver_checks  = auth()->user()->can('access',[\App\User::class,'ver_autorizaciones'])? 1:0;
-        $editar_com  = auth()->user()->can('access',[\App\User::class,'editar_comentarios'])? 1:0;
     @endphp
     <script>
         var cancel_baja = '{{ $cancel_baja }}';
@@ -366,7 +365,6 @@
         var baja_def    = '{{ $baja_def }}';
         var area        = '{{ auth()->user()->getRol->Rol }}';
         var ver_checks  = '{{ $ver_checks }}';
-        var editar_com  = '{{ $editar_com}}';
         var id_post     = '{{ $id }}';
         $(function () {
             $("#computadora_check").bootstrapToggle({

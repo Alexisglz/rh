@@ -1041,32 +1041,39 @@ $('#darbaja-table tbody').on('click', '.comment_n', function () {
     var ade = '';
     var obs;
     var template = '<div class="row">';
+    var editar = false;
     switch (type) {
         case 'Cita':
             values    = '<span class="col-md-12 font-weight-bold">Fecha Baja Nomina: '+data.fecha_baja_nom+'</span>' +
                         '<br><span class="col-md-12 font-weight-bold">Fecha cita: '+data.fecha_cita+'</span>';
             obs       = data.observaciones_cita == null ? '':data.observaciones_cita;
             template += values;
+            editar    = cita_baja == 1 ? true:false;
             break;
         case 'Computo':
             ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_compu==0 ? 0:data.deuda_compu)+'</span>';
             obs = data.obs_compu == null ? '':data.obs_compu;
+            editar    = baja_compu == 1 ? true:false;
             break;
         case 'Celular':
             ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_cel==0 ? 0:data.deuda_cel)+'</span>';
             obs = data.obs_cel == null ? '':data.obs_cel;
+            editar    = baja_cel == 1 ? true:false;
             break;
         case 'Auto':
             ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_auto==0 ? 0:data.deuda_auto)+'</span>';
             obs = data.obs_auto == null ? '':data.obs_auto;
+            editar    = baja_coche == 1 ? true:false;
             break;
         case 'Almacen':
             ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_alma==0 ? 0:data.deuda_alma)+'</span>';
             obs = data.obs_alma == null ? '':data.obs_alma;
+            editar    = baja_herra == 1 ? true:false;
             break;
         case 'Credencial':
             ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_cred==0 ? 0:data.deuda_cred)+'</span>';
             obs = data.obs_cred == null ? '':data.obs_cred;
+            editar    = baja_crede == 1 ? true:false;
             break;
     }
     template += ade;
@@ -1076,7 +1083,7 @@ $('#darbaja-table tbody').on('click', '.comment_n', function () {
         title: 'Observaciones '+type,
         html: template,
         showCancelButton: true,
-        showConfirmButton: (editar_com == 1 ?true:false),
+        showConfirmButton: editar,
         confirmButtonText: 'Actualizar',
         cancelButtonText: 'Cancelar'
     }).then(function(result) {

@@ -493,4 +493,44 @@ class BajasController extends Controller
         dd($request);
     }
 
+    public function cambioComment(Request $request){
+        try{
+            DB::beginTransaction();
+            $type = $request->type;
+            $baja = SolBajaNomina::find($request->id);
+            switch ($type){
+                case 'Cita':
+                    $baja->obs_cita = $request->comment;
+                    break;
+                case 'Computo':
+                    $baja->obs_compu = $request->comment;
+                    break;
+                case 'Celular':
+                    $baja->obs_cel = $request->comment;
+                    break;
+                case 'Auto':
+                    $baja->obs_auto = $request->comment;
+                    break;
+                case 'Almacen':
+                    $baja->obs_alma = $request->comment;
+                    break;
+                case 'Credencial':
+                    $baja->obs_cred = $request->comment;
+                    break;
+            }
+            $baja->save();
+            DB::commit();
+            return response()->json([
+                "ok"    => true,
+                "data"  => $baja
+            ]);
+        }catch (\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                "ok"    => true,
+                "data"  => $e->getMessage()
+            ]);
+        }
+    }
+
 }

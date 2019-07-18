@@ -352,20 +352,22 @@
         $baja_rh     = auth()->user()->can('access',[\App\User::class,'baja_rh'])? 1:0;
         $baja_def    = auth()->user()->can('access',[\App\User::class,'baja_definitiva'])? 1:0;
         $ver_checks  = auth()->user()->can('access',[\App\User::class,'ver_autorizaciones'])? 1:0;
+        $editar_com  = auth()->user()->can('access',[\App\User::class,'editar_comentarios'])? 1:0;
     @endphp
     <script>
-        var cancel_baja = '<?php echo $cancel_baja ?>';
-        var cita_baja   = '<?php echo $cita_baja ?>';
-        var baja_compu  = '<?php echo $baja_compu ?>';
-        var baja_coche  = '<?php echo $baja_coche ?>';
-        var baja_cel    = '<?php echo $baja_cel   ?>';
-        var baja_herra  = '<?php echo $baja_herra ?>';
-        var baja_crede  = '<?php echo $baja_crede ?>';
-        var baja_rh     = '<?php echo $baja_rh ?>';
-        var baja_def    = '<?php echo $baja_def ?>';
-        var area        = '<?php echo auth()->user()->getRol->Rol ?>';
-        var ver_checks  = '<?php echo $ver_checks?>';
-        var id_post     = '{{$id}}';
+        var cancel_baja = '{{ $cancel_baja }}';
+        var cita_baja   = '{{ $cita_baja }}';
+        var baja_compu  = '{{ $baja_compu }}';
+        var baja_coche  = '{{ $baja_coche }}';
+        var baja_cel    = '{{ $baja_cel   }}';
+        var baja_herra  = '{{ $baja_herra }}';
+        var baja_crede  = '{{ $baja_crede }}';
+        var baja_rh     = '{{ $baja_rh }}';
+        var baja_def    = '{{ $baja_def }}';
+        var area        = '{{ auth()->user()->getRol->Rol }}';
+        var ver_checks  = '{{ $ver_checks }}';
+        var editar_com  = '{{ $editar_com}}';
+        var id_post     = '{{ $id }}';
         $(function () {
             $("#computadora_check").bootstrapToggle({
                 on: 'SI',

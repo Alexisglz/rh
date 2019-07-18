@@ -171,9 +171,10 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    if(row.adeudo_celular == 'SI' || row.adeudo_lin == 'SI')
+                    if(row.adeudo_celular == 'SI' || row.adeudo_lin == 'SI') {
                         view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
-                    else
+                        view += '<br><a class="btn btn-outline-primary text-primary btn-sm comment_n" data-comment="Celular"><i class="fa fa-comment"></i></a>';
+                    }                    else
                         view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
                 else {
@@ -198,8 +199,10 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    if(row.adeudo_auto == 'SI')
+                    if(row.adeudo_auto == 'SI') {
                         view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                        view += '<br><a class="btn btn-outline-primary text-primary btn-sm comment_n" data-comment="Auto"><i class="fa fa-comment"></i></a>';
+                    }
                     else
                         view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
@@ -225,8 +228,10 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    if(row.adeudo_herra == 'SI' )
+                    if(row.adeudo_herra == 'SI' ) {
                         view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                        view += '<br><a class="btn btn-outline-primary text-primary btn-sm comment_n" data-comment="Almacen"><i class="fa fa-comment"></i></a>';
+                    }
                     else
                         view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
@@ -253,6 +258,7 @@ var table      = $('#darbaja-table').DataTable({
                 var view = '';
                 if (data == 'OK'){
                     view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                    view += '<br><a class="btn btn-outline-primary text-primary btn-sm comment_n" data-comment="Credencial"><i class="fa fa-comment"></i></a>';
                 }
                 else {
                     if (baja_crede == 1 && (row.fecha_cita != null))
@@ -1031,64 +1037,81 @@ $('#darbaja-table tbody').on('click', '.cambio_nom', function () {
 $('#darbaja-table tbody').on('click', '.comment_n', function () {
     data = table.row($(this).parent()).data();
     var type = $(this).data().comment;
+    var values = '';
+    var ade = '';
+    var obs;
+    var template = '<div class="row">';
     switch (type) {
         case 'Cita':
+            values    = '<span class="col-md-12 font-weight-bold">Fecha Baja Nomina: '+data.fecha_baja_nom+'</span>' +
+                        '<br><span class="col-md-12 font-weight-bold">Fecha cita: '+data.fecha_cita+'</span>';
+            obs       = data.observaciones_cita == null ? '':data.observaciones_cita;
+            template += values;
+            break;
+        case 'Computo':
+            ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_compu==0 ? 0:data.deuda_compu)+'</span>';
+            obs = data.obs_compu == null ? '':data.obs_compu;
+            break;
+        case 'Celular':
+            ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_cel==0 ? 0:data.deuda_cel)+'</span>';
+            obs = data.obs_cel == null ? '':data.obs_cel;
+            break;
+        case 'Auto':
+            ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_auto==0 ? 0:data.deuda_auto)+'</span>';
+            obs = data.obs_auto == null ? '':data.obs_auto;
+            break;
+        case 'Almacen':
+            ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_alma==0 ? 0:data.deuda_alma)+'</span>';
+            obs = data.obs_alma == null ? '':data.obs_alma;
+            break;
+        case 'Credencial':
+            ade = '<span class="col-md-12 font-weight-bold">Adeudo: '+(data.deuda_cred==0 ? 0:data.deuda_cred)+'</span>';
+            obs = data.obs_cred == null ? '':data.obs_cred;
             break;
     }
-    var values = '';
-    var obs;
-    var template = '<div class="row"><span class="col-md-12 font-weight-bold">Fecha Baja Nomina: '+data.fecha_baja_nom+'</span>' +
-        '<br><span class="col-md-12 font-weight-bold">Fecha cita: '+data.fecha_cita+'</span>' +
-        '<textarea type="text" name="comment_n" id="comment_n" class="form-control ">'+data.observaciones_cita+'</textarea></div>';
-    console.log(type);
+    template += ade;
+    template += '<textarea type="text" name="comment_n" id="comment_n" class="form-control ">'+obs+'</textarea>';
+    template += '</div>';
     Swal.fire({
         title: 'Observaciones '+type,
         html: template,
         showCancelButton: true,
+        showConfirmButton: (editar_com == 1 ?true:false),
         confirmButtonText: 'Actualizar',
         cancelButtonText: 'Cancelar'
     }).then(function(result) {
         if (result.value == true){
-            var date = $('#change_date').val();
-            if (date == null || date == ''){
-                Swal.fire({
-                    title:"Fecha no valida",
-                    type: "error"
-                });
-                return false;
-            }
-            else {
-                $.ajax({
-                    url: '/bajas/cambio_nom',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data:{
-                        _token: CSRF_TOKEN,
-                        id: data.id,
-                        date: date
-                    },
-                    beforeSend: function () {
-                        $().loader("show");
-                    },
-                    complete: function () {
-                        $().loader("hide");
-                    },
-                    success: function (response) {
-                        if (response.ok == true){
-                            Swal.fire({
-                                title: "Cambio realizado Correctamente",
-                                type: "success"
-                            });
-                        }
-                        else
-                            Swal.fire({
-                                title: "Ocurrio un error",
-                                type: "error"
-                            });
-                        table.ajax.reload();
+            $.ajax({
+                url: '/bajas/cambio_comment',
+                type: 'POST',
+                dataType: 'JSON',
+                data:{
+                    _token: CSRF_TOKEN,
+                    id: data.id,
+                    comment: $('#comment_n').val(),
+                    type: type
+                },
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success: function (response) {
+                    if (response.ok == true){
+                        Swal.fire({
+                            title: "Comentario Actualizado Correctamente",
+                            type: "success"
+                        });
                     }
-                });
-            }
+                    else
+                        Swal.fire({
+                            title: "Ocurrio un error",
+                            type: "error"
+                        });
+                    table.ajax.reload();
+                }
+            });
         }
     });
 });

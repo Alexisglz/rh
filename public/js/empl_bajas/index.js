@@ -124,6 +124,7 @@ var table      = $('#darbaja-table').DataTable({
                 var view = '';
                 if (data != null){
                     view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i><br>'+data;
+                    view += '<br><a class="btn btn-outline-primary text-primary btn-sm comment_n" data-comment="Cita"><i class="fa fa-comment"></i></a>';
                 }
                 else {
                     if (cita_baja == 1){
@@ -141,8 +142,10 @@ var table      = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 var view = '';
                 if (data == 'OK'){
-                    if(row.adeudo_accesorios == 'SI' || row.adeudo_compu == 'SI')
+                    if(row.adeudo_accesorios == 'SI' || row.adeudo_compu == 'SI') {
                         view = '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
+                        view += '<br><a class="btn btn-outline-primary text-primary btn-sm comment_n" data-comment="Computo"><i class="fa fa-comment"></i></a>';
+                    }
                     else
                         view = '<i class="fa fa-check-circle" style="color:#007bff;font-size:20px"></i>';
                 }
@@ -966,7 +969,6 @@ function pagoFin() {
 
 $('#darbaja-table tbody').on('click', '.cambio_nom', function () {
     data = table.row($(this).parent()).data();
-    console.log(data);
     Swal.fire({
         title: 'Selecciona la nueva fecha',
         html: '<div class="row"><label for="change_date" class="col-md-12">Fecha Baja Nómina</label>' +
@@ -980,6 +982,71 @@ $('#darbaja-table tbody').on('click', '.cambio_nom', function () {
                 buttonText: "<i class='fa fa-calendar'></i>"
             }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
         },
+    }).then(function(result) {
+        if (result.value == true){
+            var date = $('#change_date').val();
+            if (date == null || date == ''){
+                Swal.fire({
+                    title:"Fecha no valida",
+                    type: "error"
+                });
+                return false;
+            }
+            else {
+                $.ajax({
+                    url: '/bajas/cambio_nom',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data:{
+                        _token: CSRF_TOKEN,
+                        id: data.id,
+                        date: date
+                    },
+                    beforeSend: function () {
+                        $().loader("show");
+                    },
+                    complete: function () {
+                        $().loader("hide");
+                    },
+                    success: function (response) {
+                        if (response.ok == true){
+                            Swal.fire({
+                                title: "Cambio realizado Correctamente",
+                                type: "success"
+                            });
+                        }
+                        else
+                            Swal.fire({
+                                title: "Ocurrio un error",
+                                type: "error"
+                            });
+                        table.ajax.reload();
+                    }
+                });
+            }
+        }
+    });
+});
+
+$('#darbaja-table tbody').on('click', '.comment_n', function () {
+    data = table.row($(this).parent()).data();
+    var type = $(this).data().comment;
+    switch (type) {
+        case 'Cita':
+            break;
+    }
+    var values = '';
+    var obs;
+    var template = '<div class="row"><span class="col-md-12 font-weight-bold">Fecha Baja Nomina: '+data.fecha_baja_nom+'</span>' +
+        '<br><span class="col-md-12 font-weight-bold">Fecha cita: '+data.fecha_cita+'</span>' +
+        '<textarea type="text" name="comment_n" id="comment_n" class="form-control ">'+data.observaciones_cita+'</textarea></div>';
+    console.log(type);
+    Swal.fire({
+        title: 'Observaciones '+type,
+        html: template,
+        showCancelButton: true,
+        confirmButtonText: 'Actualizar',
+        cancelButtonText: 'Cancelar'
     }).then(function(result) {
         if (result.value == true){
             var date = $('#change_date').val();

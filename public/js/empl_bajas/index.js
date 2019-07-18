@@ -721,7 +721,6 @@ $( function() {
     $( "#fecha_baja_nom" ).datepicker({
         showOn: "both",
         dateFormat: "yy-mm-dd",
-        minDate: 0,
         buttonText: "<i class='fa fa-calendar'></i>"
     }).next(".ui-datepicker-trigger").addClass("btn btn-sm btn-primary").prop('id','btn_cita');
 } );

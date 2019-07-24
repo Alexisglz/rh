@@ -22,9 +22,12 @@
                                        required>
                                 <label for="motivo">Motivo</label>
                                 <select id="motivo" name="motivo" class="form-control" required>
-                                    <option value="NO ASISTE">No asiste</option>
-                                    <option value="NO CUMPLE">No cumple</option>
-                                    <option value="DURACION DEL PROYECTO">Duracion de proyecto</option>
+                                    <option value="ABANDONO DE TRABAJO/AUSENTISMO">Abandono de Trabajo/Ausentismo</option>
+                                    <option value="TERMINO DE PROYECTO">Termino de Proyecto</option>
+                                    <option value="RENUNCIA VOLUNTARIA">Renuncia</option>
+                                    <option value="MEJOR OFERTA LABORAL">Mejor Oferta Laboral</option>
+                                    <option value="CAMBIO DE VENDOR">Cambio de Vendor</option>
+                                    <option value="DESEMPEÑO RESICION">Desempeño/Resición</option>
                                 </select>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <br>

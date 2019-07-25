@@ -291,6 +291,7 @@ class EmpleadosController extends Controller
             $emp_temp->municipio              = $request->emunicipio;
             $emp_temp->cp                     = $request->ecp;
             $emp_temp->estado                 = $request->eestado;
+            $emp_temp->empleado_fecha_alta    = $request->efecha_ingreso;
             if ($nss_exist == null)
                 $emp_temp->nss                    = $request->enss;
             if ($curp_exist == null)
@@ -913,4 +914,3 @@ class EmpleadosController extends Controller
         }
     }
 }
-

@@ -10,33 +10,33 @@
                     <div class="form-row">
                         <div id="e_id" class="form-group col-md-4">
                             <label for="eid">{{__('ID')}}</label>
-                            <input class="form-control" name="eid" type="text" id="eid" required=""
+                            <input class="form-control" name="eid" type="text" id="eid"
                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="enombre">{{__('Nombre(s):')}}</label>
-                            <input class="form-control" name="enombre" type="text" id="enombre" required=""
+                            <input class="form-control" name="enombre" type="text" id="enombre"
                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="eapaterno">{{__('A. Paterno:')}}</label>
-                            <input class="form-control" name="eapaterno" type="text" id="eapaterno" required=""
+                            <input class="form-control" name="eapaterno" type="text" id="eapaterno"
                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="eamaterno">{{__('A. Materno:')}}</label>
                             <input class="form-control" class="validar" name="eamaterno" type="text" id="eamaterno"
-                                   required="" maxlength="200" size="20" value="">
+                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="ecalle">{{__('Calle:')}}</label>
-                            <input class="form-control" name="ecalle" type="text" id="ecalle" required=""
+                            <input class="form-control" name="ecalle" type="text" id="ecalle"
                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="eno_exterior">{{__('# Ext:')}}</label>
                             <input class="form-control" name="eno_exterior" type="text" min="0" maxlength="20"
-                                   size="20" id="eno_exterior" required="" maxlength="200" size="6" value="">
+                                   size="20" id="eno_exterior"  maxlength="200" size="6" value="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="ecalle">{{__('# Int:')}}</label>
@@ -45,20 +45,20 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="ecolonia">{{__('Colonia:')}}</label>
-                            <input class="form-control" name="rcolonia" type="text" id="ecolonia" required=""
+                            <input class="form-control" name="rcolonia" type="text" id="ecolonia"
                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="emunicipio">{{__('Del./Municipio:')}}</label>
-                            <input class="form-control" name="emunicipio" type="text" id="emunicipio" required=""
+                            <input class="form-control" name="emunicipio" type="text" id="emunicipio"
                                    maxlength="200" size="20" value="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="ecp">{{__('CP:')}}</label>
-                            <input class="form-control" name="ecp" type="text" id="ecp" required="" maxlength="200"
+                            <input class="form-control" name="ecp" type="number" id="ecp"  maxlength="200"
                                    size="10" value="">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="eestado">{{__('Estado:')}}</label>
                             <select class="form-control" id="eestado" name="eestado">
                                 @foreach($estados as $estado)
@@ -97,17 +97,17 @@
                                 <div class="form-group col-md-4">
                                     <label for="enss">{{__('NSS:')}}</label>
                                     <input class="form-control" name="enss" type="text" id="enss"
-                                           class="validar nueva" required="" maxlength="200" size="20" value="">
+                                           class="validar nueva"  maxlength="200" size="20" value="">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="erfc">{{__('RFC:')}}</label>
                                     <input class="form-control" name="erfc" type="text" id="erfc"
-                                           class="nueva" required="" maxlength="200" size="20" value="">
+                                           class="nueva"  maxlength="200" size="20" value="">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="ecurp">{{__('CURP:')}}</label>
                                     <input class="form-control" name="ecurp" type="text" id="ecurp"
-                                           class="nueva" required="" maxlength="200" size="20" value=""></div>
+                                           class="nueva"  maxlength="200" size="20" value=""></div>
                             </div>
                         </div>
                     </div>
@@ -119,21 +119,21 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="etelefono">{{__('Tél. 1:')}}</label>
-                            <input type="tel" class="form-control" name="etelefono" id="etelefono" maxlength="200"
+                            <input type="number" class="form-control" name="etelefono" id="etelefono" maxlength="200"
                                    value="">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="etelefono2">{{__('Tél. 2:')}}</label>
-                            <input type="tel" class="form-control" name="etelefono2" id="etelefono2" maxlength="200"
+                            <input type="number" class="form-control" name="etelefono2" id="etelefono2" maxlength="200"
                                    value="">
                         </div>
                     </div>
-                    <table class="table table-responsive">
+                    <table class="table table-responsive" id="id_tabla">
                         <tbody>
                         <tr>
                             <td>{{__('Fecha ingreso:')}}</td>
                             <td>
-                                <input class="form-control" name="efecha_ingreso" required="" id="efecha_ingreso"
+                                <input class="form-control" name="efecha_ingreso"  id="efecha_ingreso"
                                        type="date" class="required hasDatepicker" maxlength="200" value="">
                             </td>
                             <td>{{__('# Empleado:')}}</td>
@@ -141,14 +141,14 @@
                                 <span id="num_emp_reac"></span>
                                 <input class="form-control" name="eempleado" id="eempleado" type="number" min="0"
                                        maxlength="20" size="20" class="validar unique_num" size="15" value=""
-                                       required="">
+                                      >
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="ocultar_tr">
                             <td>{{__('Empresa:')}}</td>
                             <td>
-                                <select class="form-control" name="eempresa" id="eempresa" class="required"
-                                        required="">
+                                <select class="form-control" name="eempresa" id="eempresa"
+                                        >
                                     <option value="">--SELECCIONE--</option>
                                     <option value="INDEPLO">INDEPLO</option>
                                     <option value="EXTERNO">EXTERNO</option>
@@ -163,9 +163,7 @@
                                     @endforeach
                                 </select>
                         </tr>
-                        <tr>
-                        </tr>
-                        <tr>
+                        <tr class="ocultar_tr">
                             <td>{{__('Segmento:')}}</td>
                             <td><select class="form-control" name="esegmento" id="esegmento">
                                     <option>{{__('ADMINISTRATIVO')}}</option>
@@ -208,7 +206,7 @@
                             <td>{{__('Proveedor:')}}</td>
                             <td>
                                 <select class="form-control" name="eproveedor" id="eproveedor" class="form-select"
-                                        required="">
+                                      >
                                     <option value="0">{{__('--SELECCIONE--')}}</option>
                                     @foreach($proveedores as $proveedor)
                                         <option value="{{$proveedor->id}}" @if($proveedor->id == 1) selected="selected" @endif>{{$proveedor->nombre}}</option>
@@ -220,7 +218,7 @@
                             <td>{{__('Razon Social:')}}</td>
                             <td colspan="3">
                                 <select class="form-control" name="erazon_rh" id="erazon_rh" class="form-select"
-                                        required="">
+                                      >
                                     <option value="">{{__('--SELECCIONE--')}}</option>
                                     @foreach($razones as $razon)
                                         <option value="{{$razon->razon_id}}">{{$razon->razon_nombre}}</option>
@@ -231,7 +229,7 @@
                         <tr>
                             <td>{{__('Puesto:')}}</td>
                             <td colspan="3">
-                                <select class="form-control" name="epuesto" id="epuesto">
+                                <select class="form-control" name="epuesto" id="epuesto" disabled>
                                     <option value="">{{__('--SELECCIONE--')}}</option>
                                     @foreach($puestos as $puesto)
                                         <option value="{{$puesto->id}}">{{$puesto->nombre_puesto}}</option>
@@ -246,13 +244,13 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-5">
                                             <strong>{{__('IMSS:')}}</strong>
-                                            <input disabled class="form-control" name="esueldo_imss" required=""
+                                            <input disabled class="form-control" name="esueldo_imss"
                                                    id="esueldo_imss" class="solo_numeros" type="number"
                                                    maxlength="200" value="0.00">
                                         </div>
                                         <div class="form-group col-md-5">
                                             <strong>{{__('Asimilado:')}}</strong>
-                                            <input disabled class="form-control" name="esueldo_asimilado" required=""
+                                            <input disabled class="form-control" name="esueldo_asimilado"
                                                    class="solo_numeros" id="esueldo_asimilado" type="number"
                                                    maxlength="200" value="0.00">
                                         </div>
@@ -298,7 +296,9 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+
+                        <tr  class="ocultar_tr">
+
                             <td colspan="4">
                                 {{__('Esquema:')}}
                                 <select class="form-control" name="eesquema" id="eesquema">
@@ -315,8 +315,11 @@
                                     <option value="VIATICOS">{{__('VIATICOS')}}</option>
                                 </select>
                             </td>
+
+
+
                         </tr>
-                        <tr>
+                        <tr class="ocultar_tr">
                             <td>{{__('# Monex:')}}</td>
                             <td><input class="form-control" id="emonex" name="emonex" class="solo_numeros"
                                        type="number" min="0" maxlength="20" size="20" value=""></td>
@@ -324,7 +327,7 @@
                             <td><input class="form-control" name="enum_cuenta" id="enum_cuenta" type="number"
                                        min="0" maxlength="20" size="20" value=""></td>
                         </tr>
-                        <tr>
+                        <tr class="ocultar_tr">
                             <td>
                                 {{__('BANCO:')}}
                             </td>
@@ -351,7 +354,7 @@
                                        maxlength="20" size="20" value="">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="ocultar_tr">
                             <td>{{__('Observaciones:')}}</td>
                             <td colspan="4">
                                     <textarea id="eobservaciones" class="form-control" name="eobservaciones" rows="1"

@@ -165,54 +165,137 @@ $('#empleados-table tbody').on('click', '.Editar', function () {
                 option.text = o.empleado_id[value];
                 option.value = value;
             }
-            $('#eid').val(o.id);
-            $('#e_id').hide();
-            $('#enombre').val(o.empleado_nombre);
-            $('#eapaterno').val(o.empleado_apaterno);
-            $('#eamaterno').val(o.empleado_amaterno);
-            $('#ecalle').val(o.calle);
-            $('#eno_exterior').val(o.num_exterior);
-            $('#eno_interior').val(o.num_interior);
-            $('#ecolonia').val(o.colonia);
-            $('#emunicipio').val(o.municipio);
-            $('#ecp').val(o.cp);
-            $('#eestado').val(o.estado);
-            $('#enss').val(o.nss);
-            $('#erfc').val(o.rfc);
-            $('#ecurp').val(o.curp);
-            $('#email').val(o.mail);
-            $('#etelefono').val(o.telefono);
-            $('#etelefono2').val(o.telefono2);
-            $('#efecha_ingreso').val(o.fecha_ingreso);
-            $('#eempleado').val(o.empleado_num);
-            $('#eempresa').val(o.empresa);
-            $('#elocalidad').val(o.localidad);
-            $('#esegmento').val(o.segmento);
-            $('#eind_val').val(o.empleado_alcatel_id);
-            //$('#eproveedor').val(o.proveedor);
-            $('#erazon_rh').val(o.razon);
-            $('#epuesto').val(o.id_puesto);
-            $('#esueldo_imss').val(o.sueldo_imss);
-            $('#esueldo_asimilado').val(o.sueldo_asimilado);
-            $('#eesquema').val(o.esquema);
-            $('#esquema_viaticos').val(o.esquema_viaticos);
-            $('#spn_coord').append(o.coordinador);
-            $('#ecoordinadores').val(o.coordinador_id);
-            $('#emonex').val(o.monex);
-            $('#enum_cuenta').val(o.num_cuenta);
-            $('#ebanco').val(o.banco);
-            $('#eclabe').val(o.clabe);
-            $('#eobservaciones').val(o.empleado_observaciones);
-            $("#lservicio").append(o.servicio);
-            $("#lcliente").append(o.cliente);
-            $("#lregion").append(o.region);
-            $("#ltecnologia").append(o.tecnologia);
-            $("#lgrupo").append(o.grupo);
-            $("#mov_coord_id").val(o.movimiento_coordinador_id);
-            $("#mov_proy_id").val(o.movimiento_proyecto_id);
-            $("#mov_pues_id").val(o.movimiento_puesto_id);
-            $("#mov_rec_id").val(o.movimiento_recurso_id);
-            $("#mov_suel_id").val(o.movimiento_sueldo_id);
+
+           if ((o.empresa)=="EXTERNO"){
+             $('#eid').val(o.id);
+             $('#e_id').hide();
+             $('#enombre').val(o.empleado_nombre);
+             $('#eapaterno').val(o.empleado_apaterno);
+             $('#eamaterno').val(o.empleado_amaterno);
+             $('#ecalle').val(o.calle);
+             $('#eno_exterior').val(o.num_exterior);
+             $('#eno_interior').val(o.num_interior);
+             $('#ecolonia').val(o.colonia);
+             $('#emunicipio').val(o.municipio);
+             $('#ecp').val(o.cp);
+             $('#eestado').val(o.estado);
+
+             $('#enss').val(o.nss);
+             $('#enss').attr("readonly","readonly");
+             $('#erfc').val(o.rfc);
+             $('#erfc').attr("readonly","readonly");
+             $('#ecurp').val(o.curp);
+             $('#ecurp').attr("readonly","readonly");
+
+             $('#email').val(o.mail);
+             $('#etelefono').val(o.telefono);
+             $('#etelefono2').val(o.telefono2);
+             $('#efecha_ingreso').val(o.fecha_ingreso);
+             $('#eempleado').val(o.empleado_num);
+             $('#eempresa').val(o.empresa);
+             $('#elocalidad').val(o.localidad);
+             $('#esegmento').val(o.segmento);
+             $('#esegmento').attr("readonly","readonly");
+             $('#eind_val').val(o.empleado_alcatel_id);
+             $('#erazon_rh').val(o.razon);
+             $('#epuesto').val(o.id_puesto);
+             $('#show_edit_sueldo').hide();
+             $('#show_edit_coord').hide();
+             $('#esueldo_imss').val(o.sueldo_imss);
+             $('#esueldo_asimilado').val(o.sueldo_asimilado);
+             $('#eesquema').val(o.esquema);
+             $('#eesquema').hide();
+             $('#eesquema_viaticos').val(o.esquema_viaticos);
+             $('#eesquema_viaticos').hide();
+             $('#spn_coord').append(o.coordinador);
+             $('#ecoordinadores').val(o.coordinador_id);
+
+             $('#emonex').val(o.monex);
+             $('#enum_cuenta').val(o.num_cuenta);
+             $('#ebanco').val(o.banco);
+             $('#eclabe').val(o.clabe);
+             $('#eobservaciones').val(o.empleado_observaciones);
+             $('#id_tabla').find('.ocultar_tr').hide();
+
+
+             $("#lservicio").append(o.servicio);
+             $("#lcliente").append(o.cliente);
+             $("#lregion").append(o.region);
+             $("#ltecnologia").append(o.tecnologia);
+             $("#lgrupo").append(o.grupo);
+             $("#mov_coord_id").val(o.movimiento_coordinador_id);
+             $("#mov_proy_id").val(o.movimiento_proyecto_id);
+             $("#mov_pues_id").val(o.movimiento_puesto_id);
+             $("#mov_rec_id").val(o.movimiento_recurso_id);
+             $("#mov_suel_id").val(o.movimiento_sueldo_id);
+
+           }
+           else {
+
+             $('#eid').val(o.id);
+             $('#e_id').hide();
+             $('#enombre').val(o.empleado_nombre);
+             $('#eapaterno').val(o.empleado_apaterno);
+             $('#eamaterno').val(o.empleado_amaterno);
+             $('#ecalle').val(o.calle);
+             $('#eno_exterior').val(o.num_exterior);
+             $('#eno_interior').val(o.num_interior);
+             $('#ecolonia').val(o.colonia);
+             $('#emunicipio').val(o.municipio);
+             $('#ecp').val(o.cp);
+             $('#eestado').val(o.estado);
+
+             $('#enss').val(o.nss);
+             $('#enss').removeAttr("readonly");
+             $('#erfc').val(o.rfc);
+             $('#erfc').removeAttr("readonly");
+             $('#ecurp').val(o.curp);
+             $('#ecurp').removeAttr("readonly");
+
+             $('#email').val(o.mail);
+             $('#etelefono').val(o.telefono);
+             $('#etelefono2').val(o.telefono2);
+             $('#efecha_ingreso').val(o.fecha_ingreso);
+             $('#eempleado').val(o.empleado_num);
+             $('#eempresa').val(o.empresa);
+             $('#elocalidad').val(o.localidad);
+             $('#esegmento').val(o.segmento);
+             $('#esegmento').removeAttr("readonly");
+             $('#eind_val').val(o.empleado_alcatel_id);
+             $('#erazon_rh').val(o.razon);
+             $('#epuesto').val(o.id_puesto);
+             $('#show_edit_sueldo').show();
+             $('#show_edit_coord').show();
+             $('#esueldo_imss').val(o.sueldo_imss);
+             $('#esueldo_asimilado').val(o.sueldo_asimilado);
+             $('#eesquema').val(o.esquema);
+             $('#eesquema').show();
+             $('#eesquema_viaticos').val(o.esquema_viaticos);
+             $('#eesquema_viaticos').show();
+             $('#spn_coord').append(o.coordinador);
+             $('#ecoordinadores').val(o.coordinador_id);
+
+             $('#emonex').val(o.monex);
+             $('#enum_cuenta').val(o.num_cuenta);
+             $('#ebanco').val(o.banco);
+             $('#eclabe').val(o.clabe);
+             $('#eobservaciones').val(o.empleado_observaciones);
+             $('#id_tabla').find('.ocultar_tr').show();
+
+
+             $("#lservicio").append(o.servicio);
+             $("#lcliente").append(o.cliente);
+             $("#lregion").append(o.region);
+             $("#ltecnologia").append(o.tecnologia);
+             $("#lgrupo").append(o.grupo);
+             $("#mov_coord_id").val(o.movimiento_coordinador_id);
+             $("#mov_proy_id").val(o.movimiento_proyecto_id);
+             $("#mov_pues_id").val(o.movimiento_puesto_id);
+             $("#mov_rec_id").val(o.movimiento_recurso_id);
+             $("#mov_suel_id").val(o.movimiento_sueldo_id);
+           }
+
+
         }
     )
 });
@@ -486,7 +569,7 @@ function validaFormEditar() {
     $inputs.each(function (index) {
         Datos[$(this).attr('id')] = $(this).val();
     });
-    var array = ['cerrar','eno_interior','etelefono2','cerrar','eobservaciones','emonex','fin_coord','ini_coord',
+    var array = ['enss','erfc','ecurp','mov_suel_id','elocalidad','eesquema_viaticos','eesquema','esueldo_imss','esueldo_asimilado','etelefono','email','cerrar','eno_interior','etelefono2','cerrar','eobservaciones','emonex','fin_coord','ini_coord',
                  'asimilado_bruto','imss_bruto','fin_sueldo','ini_sueldo'];
     var validador = existe('editar_emp', array);
     if (validador == false)
@@ -675,7 +758,7 @@ $('#Modal').on('show.bs.modal', function (event) {
             if (ver_sueldo == 0){
                 if (sueldo.indexOf(k) != -1)
                     continue;
-            } 
+            }
             if (ocultas.indexOf(k) != -1)
                 continue;
             var tr           = document.createElement("tr");

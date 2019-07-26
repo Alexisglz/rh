@@ -11,12 +11,22 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fa fa-plus"></i>
-                        {{__('Solicitar incidencia')}}
-                    </h3>
-                </div>
+              <div class="card-header">
+
+                <table class="table">
+                  <tr>
+                    <th>  <h3 class="card-title">
+                          <i class="fa fa-plus"></i>
+                          {{__('Solicitar incidencia')}}
+                      </h3></th>
+                    <th>                     <button type="button" class="btn btn-primary" id="abrir_cal" data-toggle="modal" data-target="#modal_calendario" name="abrir_cal">Ver calendario</button>
+</th>
+                  </tr>
+                </table>
+
+
+
+              </div>
                 <div class="card-body form-group">
                     <!--div class="form-row">
                         <h5 class="text-danger">{{__('El proceso para el periodo de incidencias del 06-06-2019 al 17-07-2019 se va a
@@ -99,7 +109,7 @@
             </div>
         </div>
     </div>
-
+    @include('incidencias.modals.calendario')
     {!! Html::script('js/validador.js?v='.time()) !!}
     {!! Html::script('js/incidencias/nueva.js') !!}
 

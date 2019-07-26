@@ -105,7 +105,7 @@ class IncidenciasController extends Controller
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
-                        'fecha_i'     => "required|after_or_equal:$fecha_min|before_or_equal:$fecha_max",
+                        //'fecha_i'     => "required|after_or_equal:$fecha_min|before_or_equal:$fecha_max",
                         'dias'        => 'required|integer|min:1'
                     ];
                     break;
@@ -138,7 +138,8 @@ class IncidenciasController extends Controller
             }
             $validator = Validator::make($request->all(), $reglas);
             if ($validator->fails()){
-                return back()->with('error', $validator->messages()->all());
+                $errors = $validator->messages()->all();
+                return back()->with('error', $errors);
             }
             $incidencia      = new Incidencias;
             $empleado        = Empleados::find($request->id_empleado);

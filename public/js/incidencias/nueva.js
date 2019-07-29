@@ -5,7 +5,7 @@
  var div_inc   = $('#div_incidencia');
  var risk 	   = $('#risk');
  var div_risk  = $('#div_risk');
- var div_monto = $('#div_monto');
+ //var div_monto = $('#div_monto');
 
 $('document').ready(function(){
 	monto.hide();
@@ -14,7 +14,7 @@ $('document').ready(function(){
 	horas.hide();
 	div_inc.hide();
 	div_risk.hide();
-	div_monto.hide();
+	//div_monto.hide();
 });
 
 $('#tipo').on('change', function () {
@@ -23,7 +23,7 @@ $('#tipo').on('change', function () {
 	$('#incidencia').empty();
 	$("#incidencia").val("");
 	$('#div_vobo').fadeOut();
-	$('#div_monto').fadeOut();
+	//$('#div_monto').fadeOut();
 	$("#esquema").val("");
 	$("#risk").val("");
 	$("#id_risk").val("");
@@ -77,7 +77,7 @@ $('#tipo').on('change', function () {
  });
 
 $("#incidencia").on('change',function(){
-	$('#div_monto').fadeOut();
+	//$('#div_monto').fadeOut();
 	var e = $("#incidencia");
 	var tratamiento = e.find(":selected").attr('tratamiento');
 	$(".tratement").val(tratamiento);
@@ -85,7 +85,7 @@ $("#incidencia").on('change',function(){
 	    case "MONTO":
 	        $('.lapso').fadeOut();
 			$('.dias').fadeOut();
-			$('#div_monto').fadeIn();
+			$('.monto').fadeIn();
 	    break; 
 	    case "LAPSO":
 	        $('.monto').fadeOut();

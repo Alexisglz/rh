@@ -93,6 +93,7 @@ class IncidenciasController extends Controller
     {
         $this->authorize('access',[User::class, 'crear_incidencias']);
         try{
+            //dd($request);
             DB::beginTransaction();
             $user    = User::find(auth()->user()->id_usuario);
             $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
@@ -114,12 +115,12 @@ class IncidenciasController extends Controller
                         'id_empleado' => 'required',
                         'tipo'        => 'required',
                         'motivo'      => 'required|max:255',
-                        'tipo_monto'  => 'required',
+                        //'tipo_monto'  => 'required',
                     ];
-                    if ($request->tipo_monto == "monto")
-                        $reglas['monto'] = 'required|numeric|min:1';
+                    $reglas['monto'] = 'required|numeric|min:1';
+                    /*if ($request->tipo_monto == "monto")
                     if ($request->tipo_monto == "horas")
-                        $reglas['horas'] = 'required|numeric|min:1';
+                        $reglas['horas'] = 'required|numeric|min:1';*/
                     break;
                 case 'DIAS':
                     $reglas = [
@@ -150,7 +151,7 @@ class IncidenciasController extends Controller
                     $incidencia->dias         = $request->dias;
                     break;
                 case 'MONTO':
-                    if ($request->tipo_monto == 'horas'){
+                    /*if ($request->tipo_monto == 'horas'){
                         $sueldos           = $empleado->getMovimientoSueldo;
                         $sueldo_total      = floatval($sueldos->sueldo_imss + $sueldos->sueldo_asimilado);
                         $hora              = ($sueldo_total/30)/8;
@@ -158,7 +159,7 @@ class IncidenciasController extends Controller
                         $total             = $request->horas * $hora_total;
                         $incidencia->monto = $total;
                     }
-                    else
+                    else*/
                         $incidencia->monto        = $request->monto;
                     break;
                 case 'DIAS':

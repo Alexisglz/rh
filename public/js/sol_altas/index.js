@@ -911,6 +911,10 @@ $('#Modal').on('show.bs.modal', function (event) {
 
     if (tipo == 'Informacion') {
         modal.find('.modal-title').text("Información");
+        var solicitud = '<div class="row"><div class="col-md-3">' +
+            '<span>Ver solicitud:</span>' +
+            '<a id="detalle_soli" href="/altas/aprobar?id='+data.id+'" class="btn btn-md btn-outline-primary text-primary"><i class="fa fa-eye"></i></a>' +
+            '</div><div class="col"></div></div>';
         var tabla = $('<table>').addClass('table table-bordered');
 
         for (var k in data) {
@@ -965,6 +969,8 @@ $('#Modal').on('show.bs.modal', function (event) {
             tr.append(dato);
             tabla.append(tr);
         }
+        if (auth_sol == 1)
+            cuerpo.append(solicitud);
         cuerpo.append(tabla);
     }
 });

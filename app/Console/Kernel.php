@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\IncidenciasCommand;
 use App\Console\Commands\IncidenciasNotificar;
 use App\Console\Commands\ServicesCommands;
+use App\Console\Commands\SueldosCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         IncidenciasCommand::class,
         ServicesCommands::class,
-        IncidenciasNotificar::class
+        IncidenciasNotificar::class,
+        SueldosCommand::class
     ];
 
     /**
@@ -38,6 +40,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('incidencias:cancelar')->cron('00 03 * * *');*/
         // Cron para notificar la validacion de incidencias
         /*$schedule->command('incidencias:notificar')->cron('10 00 * * *');*/
+        // Cron para actualizar los sueldos en base a la API
+        $schedule->command('sueldos:actualizar')->cron('30 01 * * *');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empleados;
 use App\Models\CatalogoRazonCapital;
 use App\Models\CatalogoRazonRH;
+use App\Models\MovimientosSueldo;
 use App\Models\VistaEmpleadosActivos;
 use DateTime;
 use DB;
@@ -347,10 +348,58 @@ class WebServicesController extends Controller
     }
 
     public function actualizarSueldos(){
-        $empleados = VistaEmpleadosActivos::all();
+        $empleados = VistaEmpleadosActivos::where('empleado_estatus','ACTIVO')->orderBy('id')->limit(10)->get();
+        //dd($empleados);
+        $array = [];
         foreach ($empleados as $empleado){
             //dd($empleado);
-            echo json_encode($this->calcularSueldo($empleado->id));
+            $sueldo = $this->calcularSueldo($empleado->id);
+            if (count($sueldo) > 0){
+                $sueldo_total_actual     = floatval($empleado->sueldo_imss) + floatval($empleado->sueldo_asimilado);
+                $sueldo_imss_actual      = floatval($empleado->sueldo_imss);
+                $sueldo_asimilado_actual = floatval($empleado->sueldo_asimilado);
+                $sueldo_total_api        = floatval($sueldo['total']);
+                $sueldo_imss_api         = floatval($sueldo['tradicional']);
+                $sueldo_asimilado_api    = floatval($sueldo['asimilado']);
+                if ($sueldo_total_actual != $sueldo_total_api){
+                    $conn = DB::connection('incore');
+                    try{
+                        $conn->beginTransaction();
+
+                        $mov_antiguo            = MovimientosSueldo::find($empleado->movimiento_sueldo_id);
+                        $mov_antiguo->fecha_fin = date('Y-m-d');
+                        $mov_antiguo->save();
+
+                        $mov_nuevo                   = new MovimientosSueldo();
+                        $mov_nuevo->empleado_id      = $empleado->id;
+                        $mov_nuevo->sueldo_mensual   = $sueldo_total_api;
+                        $mov_nuevo->sueldo_imss      = $sueldo_imss_api;
+                        $mov_nuevo->sueldo_asimilado = $sueldo_asimilado_api;
+                        $mov_nuevo->fecha_inicio     = date('Y-m-d');
+                        $mov_nuevo->user_log         = 'incore';
+                        $mov_nuevo->fecha_inicio     = date('Y-m-d H:i:s');
+                        $mov_nuevo->save();
+                        $conn->commit($array);
+                        $array[] = [
+                            'id'                      => $empleado->id,
+                            'nombre'                  => $empleado->nombre_completo,
+                            'sueldo_actual'           => $sueldo_total_actual,
+                            'sueldo_imss_actual'      => $sueldo_imss_actual,
+                            'sueldo_asimilado_actual' => $sueldo_asimilado_actual,
+                            'sueldo_total_api'        => $sueldo_total_api,
+                            'sueldo_imss_api'         => $sueldo_imss_api,
+                            'sueldo_asimilado_api'    => $sueldo_asimilado_api,
+                        ];
+                    }catch (\Exception $e){
+                        $conn->rollBack();
+                        dd($e);
+                    }
+                }
+            }
         }
+        echo json_encode([
+            'actualizados'=>count($array),
+            'datos'=>$array
+        ]);
     }
 }

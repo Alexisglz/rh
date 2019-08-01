@@ -547,6 +547,7 @@ class AltasController extends Controller
 
     public function update(Request $request)
     {
+        dd($request);
         $this->authorize('access',[User::class, 'editar_solicitudes']);
         try{
             DB::beginTransaction();
@@ -806,11 +807,10 @@ class AltasController extends Controller
         $coordinadores  = Coordinadores::getCoordinadores();
         $planes         = CatalogoPlanesLineas::getPlanes();
         $costos         = CostosIncore::getCostos();
-        $ipuestos       = DB::table('incore.catalogo_puesto')->select()->get();
+        $ipuestos       = Puesto::where('activo','!=', 0)->get();
         $puestos        = [];
         foreach ($ipuestos as $item) {
-            if ($item->activo != 0)
-                $puestos[$item->nombre_puesto] = $item->nombre_puesto;
+            $puestos[$item->id] = $item->nombre_puesto;
         }
 
         $iareas = DB::table('incore.catalogo_areas')

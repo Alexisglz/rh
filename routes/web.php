@@ -21,7 +21,7 @@ Route::group(["prefix" => "altas", "middleware" => ["auth"]], function() {
     Route::post('/autorizar_solicitud', 'AltasController@AutorizarSolicitud')->name('altas.autorizar_solicitud');
     Route::get('/get_bitacora_alta', 'AltasController@getBitacoraAlta')->name('altas.get_bitacora_alta');
     Route::get('/edit', 'AltasController@edit')->name('altas.edit');
-    Route::put('/update', 'AltasController@update')->name('altas.update');
+    Route::post('/update', 'AltasController@update')->name('altas.update');
     Route::get('/update_solicitud/{id}', 'AltasController@updateSolicitud')->name('altas.update_solicitud');
     Route::post('/agendar_cita_firma', 'AltasController@AgendarCitaFirma')->name('altas.agendar_cita_firma');
     Route::get('/get_coordinadores', 'AltasController@getCoordinadores')->name('altas.get_coordinadores');

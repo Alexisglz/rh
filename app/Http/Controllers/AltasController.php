@@ -35,6 +35,10 @@ class AltasController extends Controller
     protected $rules = [
         'grupo' => ['required']
     ];
+    /**
+     * @var false|string
+     */
+    private $date;
 
     public function __construct()
     {
@@ -190,7 +194,6 @@ class AltasController extends Controller
             $sol->fecha_inicio          = $request->fecha_inicio;
             $sol->fecha_alta            = $this->date;
             $sol->puesto                = $request->puesto;
-            $sol->area                  = $request->area;
             $sol->esquema               = $request->esquema;
             $sol->riesgo                = $request->riesgo;
             $sol->temporalidad_contrato = $request->temporalidad_contrato;
@@ -200,6 +203,11 @@ class AltasController extends Controller
                 $sol->botas = 1;
             } else {
                 $sol->botas = 0;
+            }
+            if (isset($request->correo)) {
+                $sol->correo = 1;
+            } else {
+                $sol->correo = 0;
             }
             $sol->talla_botas = 0;
             if (isset($request->playera)) {
@@ -232,14 +240,18 @@ class AltasController extends Controller
             }
             $sol->motivo    = $request->motivo;
             $sol->direccion = $request->direccion;
-
+            $sol->herramientas_detalles = $request->herramientas_almacen;
 
             if ($request->servicio == "RREC" ||  $request->servicio == "POLZ" ||  $request->servicio == "TKBS" ||  $request->servicio == "SERV") {
                 $ind                = $this->getIndIncore() > $this->getIndRH() ? $this->getIndIncore():$this->getIndRH();
                 $sol->tipo_proyecto = $request->esquemas; //Esquema: normal, task, etc...
                 $sol->ind           = $ind;
-                $sol->codigo_sueldo = $request->codigo_sueldo != ""? $request->codigo_sueldo:0;
-                $sol->sueldo_venta  = $request->sueldo_venta;
+                if ($sol->servicio == "SERV")
+                    $sol->codigo_sueldo = $request->codigo_sueldo != ""? $request->codigo_sueldo:null;
+                else
+                    $sol->codigo_sueldo = null;
+                $sol->sueldo_venta   = $sol->servicio == "TKBS" ? $request->sueldo_venta:0;
+                $sol->codigo_poliza  = $sol->servicio == "POLZ" ? $request->codigo_poliza:null;
                 switch ($request->esquemas) {
                     case '2':
                     case '6':
@@ -536,249 +548,259 @@ class AltasController extends Controller
     public function update(Request $request)
     {
         $this->authorize('access',[User::class, 'editar_solicitudes']);
-        $solicitud  = new Solicitudes;
-        $sol        = $solicitud::find($request->id_solicitud);
-        //CAMPOS GENERALES
-        $sol->nombre        = $request->nombre;
-        $sol->apaterno      = $request->apaterno;
-        $sol->amaterno      = $request->amaterno;
-        $sol->fecha_inicio  = $request->fecha_inicio;
-        $sol->puesto        = $request->puesto;
-        $sol->area          = $request->area;
-        $sol->esquema       = $request->esquema;
-        $sol->riesgo        = $request->riesgo;
-        $id_solicitante     = $request->id_user;
+        try{
+            DB::beginTransaction();
+            $sol                = Solicitudes::find($request->id);
+            //CAMPOS GENERALES
+            $sol->nombre                = $request->nombre;
+            $sol->apaterno              = $request->apaterno;
+            $sol->amaterno              = $request->amaterno;
+            $sol->fecha_inicio          = $request->fecha_inicio;
+            $sol->fecha_alta            = $this->date;
+            $sol->puesto                = $request->puesto;
+            $sol->esquema               = $request->esquema;
+            $sol->riesgo                = $request->riesgo;
+            $sol->temporalidad_contrato = $request->temporalidad_contrato;
+            $id_usuario                 = auth()->user()->id_usuario;
+            $sol->solicitante           = $id_usuario;
 
-        if (isset($request->botas)) {
-            $sol->botas = 1;
-        } else {
-            $sol->botas = 0;
-        }
-        $sol->talla_botas = 0;
-        if (isset($request->playera)) {
-            $sol->playera = 1;
-        } else {
-            $sol->playera = 0;
-        }
-        $sol->talla_playera    = 0;
-        $sol->actividad        = $request->actividad;
-        $sol->coordinador_id   = $request->coordinador_id;
-        $sol->pm               = $request->pm;
-        $sol->lugar_trabajo    = $request->lugar_trabajo;
-        $sol->cotizacion_url   = null;
-        $sol->caso_negocio_url = null;
-        $sol->vobo_url         = null;
-        $sol->curriculum_url   = null;
-        if (isset($request->correo)) {
-            $sol->tipo_correo = $request->tipo_correo;
-        } else {
-            $sol->tipo_correo = null;
-        }
-        if ($request->sueldo_imss == "") {
-            $sol->sueldo_imss = 0;
-        } else {
-            $sol->sueldo_imss = $request->sueldo_imss;
-        }
-        if ($request->sueldo_variable == "") {
-            $sol->sueldo_variable = 0;
-        } else {
-            $sol->sueldo_variable = $request->sueldo_variable;
-        }
-        $sol->motivo        = $request->motivo;
-        $sol->direccion     = $request->direccion;
-        $sol->tipo_proyecto = $request->esquemas; //Esquema: normal, task, etc...
-        $sol->sueldo_venta  = $request->sueldo_venta;
-
-        if ($request->cliente == "NOK" && $request->servicio == "RREC") {
-
-            $sol->tipo_proyecto = $request->esquemas; //Esquema: normal, task, etc...
-            $sol->ind           = 0;
-            $sol->codigo_sueldo = 0;
-
-            switch ($request->esquemas) {
-                case '2':
-                case '6':
-
-                    if (isset($request->celular)) {
-                        $sol->celular        = 1;
-                        $sol->codigo_celular = 0;
-                    } else {
-                        $sol->celular        = 0;
-                        $sol->codigo_celular = 0;
-                    }
-                    if (isset($request->computadora)) {
-                        $sol->computadora        = 1;
-                        $sol->codigo_computadora = 0;
-                        $sol->desc_computadora   = $request->desc_computadora;
-                    } else {
-                        $sol->computadora        = 0;
-                        $sol->codigo_computadora = 0;
-                    }
-                    if (isset($request->auto)) {
-                        $sol->auto        = 1;
-                        $sol->codigo_auto = 0;
-                    } else {
-                        $sol->auto        = 0;
-                        $sol->codigo_auto = 0;
-                    }
-                    if (isset($request->bam)) {
-                        $sol->bam        = 1;
-                        $sol->codigo_bam = 0;
-                    } else {
-                        $sol->bam        = 0;
-                        $sol->codigo_bam = 0;
-                    }
-                    if (isset($request->software)) {
-                        $sol->software        = 1;
-                        $sol->codigo_software = 0;
-                        $sol->desc_software   = $request->desc_software;
-                    } else {
-                        $sol->software        = 0;
-                        $sol->codigo_software = 0;
-                    }
-                    $sol->plan_linea     = $request->plan_celular_select;
-                    $sol->plan_linea_bam = $request->plan_bam_select;
-
-                    break;
-                case '3':
-                case '4':
-                case '7':
-
-                    if (isset($request->celular)) {
-                        $sol->celular        = 1;
-                        $sol->codigo_celular = $request->codigo_celular;
-                    } else {
-                        $sol->celular        = 0;
-                        $sol->codigo_celular = 0;
-                    }
-                    if (isset($request->computadora)) {
-                        $sol->computadora        = 1;
-                        $sol->codigo_computadora = $request->codigo_computadora;
-                        $sol->desc_computadora   = $request->desc_computadora;
-                    } else {
-                        $sol->computadora        = 0;
-                        $sol->codigo_computadora = 0;
-                    }
-                    if (isset($request->auto)) {
-                        $sol->auto        = 1;
-                        $sol->codigo_auto = $request->codigo_auto;
-                    } else {
-                        $sol->auto        = 0;
-                        $sol->codigo_auto = 0;
-                    }
-                    if (isset($request->bam)) {
-                        $sol->bam        = 1;
-                        $sol->codigo_bam = $request->codigo_bam;
-                    } else {
-                        $sol->bam        = 0;
-                        $sol->codigo_bam = 0;
-                    }
-                    if (isset($request->software)) {
-                        $sol->software        = 1;
-                        $sol->codigo_software = $request->codigo_software;
-                        $sol->desc_software   = $request->desc_software;
-                    } else {
-                        $sol->software        = 0;
-                        $sol->codigo_software = 0;
-                    }
-                    $sol->plan_linea     = $request->plan_celular_select;
-                    $sol->plan_linea_bam = $request->plan_bam_select;
-
-                    break;
-            }
-            $sol->venta = $request->venta_calculada;
-            $sol->costo = $request->costo_estimado;
-        }
-        else {
-            $sol->ind           = 0;
-            $sol->codigo_sueldo = 0;
-            $sol->sueldo_venta  = 0;
-
-            if (isset($request->celular)) {
-                $sol->celular        = 1;
-                $sol->codigo_celular = 0;
+            if (isset($request->botas)) {
+                $sol->botas = 1;
             } else {
-                $sol->celular        = 0;
-                $sol->codigo_celular = 0;
+                $sol->botas = 0;
             }
-            if (isset($request->computadora)) {
-                $sol->computadora        = 1;
-                $sol->codigo_computadora = 0;
-                $sol->desc_computadora   = $request->desc_computadora;
+            if (isset($request->playera)) {
+                $sol->playera = 1;
             } else {
-                $sol->computadora        = 0;
-                $sol->codigo_computadora = 0;
+                $sol->playera = 0;
             }
-            if (isset($request->auto)) {
-                $sol->auto        = 1;
-                $sol->codigo_auto = 0;
+            if (isset($request->correo)) {
+                $sol->tipo_correo = $request->tipo_correo;
+                $sol->correo      = 1;
             } else {
-                $sol->auto        = 0;
-                $sol->codigo_auto = 0;
+                $sol->tipo_correo = null;
+                $sol->correo = 0;
             }
-            if (isset($request->bam)) {
-                $sol->bam        = 1;
-                $sol->codigo_bam = 0;
+            if ($request->sueldo_imss == "") {
+                $sol->sueldo_imss = 0;
             } else {
-                $sol->bam        = 0;
-                $sol->codigo_bam = 0;
+                $sol->sueldo_imss = $request->sueldo_imss;
             }
-            if (isset($request->software)) {
-                $sol->software        = 1;
-                $sol->codigo_software = 0;
-                $sol->desc_software   = $request->desc_software;
+            if ($request->sueldo_variable == "") {
+                $sol->sueldo_variable = 0;
             } else {
-                $sol->software        = 0;
-                $sol->codigo_software = 0;
+                $sol->sueldo_variable = $request->sueldo_variable;
             }
-            $sol->plan_linea     = $request->plan_celular_select;
-            $sol->plan_linea_bam = $request->plan_bam_select;
-            $sol->venta          = 0;
-            $sol->costo          = 0;
-            $sol->tipo_proyecto  = 1; //Esquema: normal, task, etc...
-        }
+            $sol->talla_playera    = 0;
+            $sol->actividad        = $request->actividad;
+            $sol->coordinador_id   = $request->coordinador_id;
+            $sol->lugar_trabajo    = $request->lugar_trabajo;
+            $sol->cotizacion_url   = null;
+            $sol->caso_negocio_url = null;
+            $sol->vobo_url         = null;
+            $sol->curriculum_url   = null;
+            $sol->motivo           = $request->motivo;
+            $sol->direccion        = $request->direccion;
+            $sol->herramientas_detalles = $request->herramientas_almacen;
 
-        $sol->save();
-        $lastid   = $sol->id;
-        $sol_file = $sol::find($lastid);
-        $carpeta  = "sol_" . $lastid;
-        if ($request->file('vobo') != null || $request->file('cv') != null) {
-            Storage::makeDirectory('solicitudes/' . $carpeta, 0775, true);
-        }
-        if ($request->servicio == "RREC") {
-            if ($request->file('caso_negocio') != null) {
-                $ext = $request->file('caso_negocio')->getClientOriginalExtension();
-                $sol_file->caso_negocio_url = $request->file('caso_negocio')->storeas('solicitudes/' . $carpeta, "caso_negocio_" . $carpeta . "." . $ext);
+            if ($sol->servicio == "RREC" ||  $sol->servicio == "POLZ" ||  $sol->servicio == "TKBS" ||  $sol->servicio == "SERV") {
+                $sol->tipo_proyecto = $request->esquemas; //Esquema: normal, task, etc...
+                if ($sol->servicio == "SERV")
+                    $sol->codigo_sueldo = $request->codigo_sueldo != ""? $request->codigo_sueldo:null;
+                else
+                    $sol->codigo_sueldo = null;
+                $sol->sueldo_venta   = $sol->servicio == "TKBS" ? $request->sueldo_venta:0;
+                $sol->codigo_poliza  = $sol->servicio == "POLZ" ? $request->codigo_poliza:null;
+                switch ($request->esquemas) {
+                    case '2':
+                    case '6':
+
+                        if (isset($request->celular)) {
+                            $sol->celular        = 1;
+                            $sol->codigo_celular = 0;
+                        } else {
+                            $sol->celular        = 0;
+                            $sol->codigo_celular = 0;
+                        }
+                        if (isset($request->computadora)) {
+                            $sol->computadora        = 1;
+                            $sol->codigo_computadora = 0;
+                            $sol->desc_computadora   = $request->desc_computadora;
+                        } else {
+                            $sol->computadora        = 0;
+                            $sol->codigo_computadora = 0;
+                        }
+                        if (isset($request->auto)) {
+                            $sol->auto        = 1;
+                            $sol->codigo_auto = 0;
+                        } else {
+                            $sol->auto        = 0;
+                            $sol->codigo_auto = 0;
+                        }
+                        if (isset($request->bam)) {
+                            $sol->bam        = 1;
+                            $sol->codigo_bam = 0;
+                        } else {
+                            $sol->bam        = 0;
+                            $sol->codigo_bam = 0;
+                        }
+                        if (isset($request->software)) {
+                            $sol->software        = 1;
+                            $sol->codigo_software = 0;
+                            $sol->desc_software   = $request->desc_software;
+                        } else {
+                            $sol->software        = 0;
+                            $sol->codigo_software = 0;
+                        }
+                        $sol->plan_linea     = $request->plan_celular_select;
+                        $sol->plan_linea_bam = $request->plan_bam_select;
+                        break;
+                    case '3':
+                    case '4':
+                    case '7':
+
+                        if (isset($request->celular)) {
+                            $sol->celular        = 1;
+                            $sol->codigo_celular = $request->codigo_celular;
+                        } else {
+                            $sol->celular        = 0;
+                            $sol->codigo_celular = 0;
+                        }
+                        if (isset($request->computadora)) {
+                            $sol->computadora        = 1;
+                            $sol->codigo_computadora = $request->codigo_computadora;
+                            $sol->desc_computadora   = $request->desc_computadora;
+                        } else {
+                            $sol->computadora        = 0;
+                            $sol->codigo_computadora = 0;
+                        }
+                        if (isset($request->auto)) {
+                            $sol->auto        = 1;
+                            $sol->codigo_auto = $request->codigo_auto;
+                        } else {
+                            $sol->auto        = 0;
+                            $sol->codigo_auto = 0;
+                        }
+                        if (isset($request->bam)) {
+                            $sol->bam        = 1;
+                            $sol->codigo_bam = $request->codigo_bam;
+                        } else {
+                            $sol->bam        = 0;
+                            $sol->codigo_bam = 0;
+                        }
+                        if (isset($request->software)) {
+                            $sol->software        = 1;
+                            $sol->codigo_software = $request->codigo_software;
+                            $sol->desc_software   = $request->desc_software;
+                        } else {
+                            $sol->software        = 0;
+                            $sol->codigo_software = 0;
+                        }
+                        $sol->plan_linea     = $request->plan_celular_select;
+                        $sol->plan_linea_bam = $request->plan_bam_select;
+
+                        break;
+                }
+                $sol->venta  = $request->venta_calculada;
+                $sol->costo  = $request->costo_estimado;
+                $sol->margen = $request->margen;
+
+
+            } else {
+                $sol->ind           = 0;
+                $sol->codigo_sueldo = 0;
+                $sol->sueldo_venta  = 0;
+
+                if (isset($request->celular)) {
+                    $sol->celular        = 1;
+                    $sol->codigo_celular = 0;
+                } else {
+                    $sol->celular        = 0;
+                    $sol->codigo_celular = 0;
+                }
+                if (isset($request->computadora)) {
+                    $sol->computadora        = 1;
+                    $sol->codigo_computadora = 0;
+                    $sol->desc_computadora   = $request->desc_computadora;
+                } else {
+                    $sol->computadora        = 0;
+                    $sol->codigo_computadora = 0;
+                }
+                if (isset($request->auto)) {
+                    $sol->auto        = 1;
+                    $sol->codigo_auto = 0;
+                } else {
+                    $sol->auto        = 0;
+                    $sol->codigo_auto = 0;
+                }
+                if (isset($request->bam)) {
+                    $sol->bam        = 1;
+                    $sol->codigo_bam = 0;
+                } else {
+                    $sol->bam        = 0;
+                    $sol->codigo_bam = 0;
+                }
+                if (isset($request->software)) {
+                    $sol->software        = 1;
+                    $sol->codigo_software = 0;
+                    $sol->desc_software   = $request->desc_software;
+                } else {
+                    $sol->software        = 0;
+                    $sol->codigo_software = 0;
+                }
+                $sol->plan_linea     = $request->plan_celular_select;
+                $sol->plan_linea_bam = $request->plan_bam_select;
+
+                $sol->venta         = 0;
+                $sol->costo         = 0;
+                $sol->tipo_proyecto = 1; //Esquema: normal, task, etc...
             }
-            if ($request->file('cotizacion') != null) {
-                $ext = $request->file('cotizacion')->getClientOriginalExtension();
-                $sol_file->cotizacion_url = $request->file('cotizacion')->storeas('solicitudes/' . $carpeta, "cotizacion_" . $carpeta . "." . $ext);
+
+            $sol->save();
+            $lastid   = $sol->id;
+            $sol_file = $sol::find($lastid);
+            $carpeta  = "sol_" . $lastid;
+            if ($request->file('vobo') != null || $request->file('cv') != null) {
+                Storage::makeDirectory('public/solicitudes/' . $carpeta, 0775, true);
             }
-        }
-        if ($request->file('vobo') != null) {
-            $ext = $request->file('vobo')->getClientOriginalExtension();
-            $sol_file->vobo_url = $request->file('vobo')->storeas('solicitudes/' . $carpeta, "vobo_" . $carpeta . "." . $ext);
-        }
-        if ($request->file('cv') != null) {
-            $ext = $request->file('cv')->getClientOriginalExtension();
-            $sol_file->curriculum_url = $request->file('cv')->storeas('solicitudes/' . $carpeta, "cv_" . $carpeta . "." . $ext);
-        }
-        $sol_file->save();
+            if ($request->servicio == "RREC" ||  $request->servicio == "POLZ" ||  $request->servicio == "TKBS" ||  $request->servicio == "SERV") {
+                if ($request->file('caso_negocio') != null) {
+                    $nombre = "caso_negocio_" . $carpeta;
+                    $sol_file->caso_negocio_url = Upload::uploadFile('solicitudes/'.$carpeta,'caso_negocio', $sol_file, $nombre);
+                }
+                if ($request->file('cotizacion') != null) {
+                    $nombre = "cotizacion_" . $carpeta;
+                    $sol_file->cotizacion_url = Upload::uploadFile('solicitudes/'.$carpeta,'cotizacion', $sol_file, $nombre);
+                }
+            }
+            if ($request->file('vobo') != null) {
+                $nombre = "vobo_" . $carpeta;
+                $sol_file->vobo_url = Upload::uploadFile('solicitudes/'.$carpeta,'vobo', $sol_file, $nombre);
+            }
+            if ($request->file('cv') != null) {
+                $nombre = "cv_" . $carpeta;
+                $sol_file->curriculum_url = Upload::uploadFile('solicitudes/'.$carpeta,'cv',$sol_file, $nombre);
+            }
+            $sol_file->save();
 
-        $mensaje   = 'Editar Solicitud';
-        $Tipo_bita = 'solicitud_alta';
-        $opcional  = 'EDITAR';
+            $mensaje   = 'Editar Solicitud';
+            $Tipo_bita = 'solicitud_alta';
+            $opcional  = 'EDITAR';
 
-        GlobalModel::SetBitacoras("$Tipo_bita", $sol->id, auth()->user()->id_usuario, 0, "$mensaje", "$opcional");
-        return Redirect::to('altas');
-
+            GlobalModel::SetBitacoras("$Tipo_bita", $sol->id, auth()->user()->id_usuario, 0, "$mensaje", "$opcional");
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollBack();
+            dd($e);
+        }
+        return redirect()->route('altas.index');
     }
 
     public function updateSolicitud(Request $request)
     {
         $this->authorize('access',[User::class, 'editar_solicitudes']);
-        $solicitud      = new Solicitudes;
-        $solicitud_temp = $solicitud::find($request->id);
+        $solicitud      = Solicitudes::find($request->id);
+        $vista          = VistaSolAltas::find($request->id);
         $clientes       = CatalogoWbs::Clientes();
         $estados        = Estados::getEstados();
         $coordinadores  = Coordinadores::getCoordinadores();
@@ -800,18 +822,7 @@ class AltasController extends Controller
                 $areas[$item->area] = $item->area;
         }
 
-
-        $esquemas = [
-            '0' => 'SELECCIONE',
-            '1' => 'NORMAL',
-            '2' => 'TASK BASED',
-            '3' => 'RENTA FIJA',
-            '4' => 'ETL',
-            '6' => 'PILIZA',
-            '7' => 'RENTA FIJA'
-        ];
-
-        return view('altas.update', [
+        return view('altas.create', [
             'clientes'       => $clientes,
             'estados'        => $estados,
             'coordinadores'  => $coordinadores,
@@ -819,7 +830,8 @@ class AltasController extends Controller
             'costos'         => $costos,
             'puestos'        => $puestos,
             'areas'          => $areas,
-            'solicitud_temp' => $solicitud_temp
+            'solicitud'      => $solicitud,
+            'vista'          => $vista
         ]);
 
     }

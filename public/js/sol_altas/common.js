@@ -151,11 +151,11 @@ $("#codigo_auto,#codigo_celular, #codigo_computadora, #codigo_software, #codigo_
 $("#esquemas").change(function () {
     var valor = $(this).val();
     // LIMPIEZA DE ELEMENTOS
-    $("#sueldo_venta").val('0.00');
-    $("#codigo_poliza").val("");
-    $("#sueldo_venta_div").empty();
-    $("#costo_pol").empty();
-    $("#cantidad_pol_inc").empty();
+    //$("#sueldo_venta").val('0.00');
+    //$("#codigo_poliza").val("");
+    //$("#sueldo_venta_div").empty();
+    //$("#costo_pol").empty();
+    //$("#cantidad_pol_inc").empty();
 
     if (valor == 2) {
         $("#venta_esperada_div").removeClass('hide');

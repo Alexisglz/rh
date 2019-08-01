@@ -2,8 +2,7 @@
 
 @section('contenido')
 
-
-    {!! Form::open(['id'=>'formulario_solicitud','route'=>'altas.store','method'=>'POST','files'=>true,'enctype'=>"multipart/form-data"]) !!}
+    <form id="formulario_solicitud" action="{{isset($solicitud->id) ? route('altas.update',['id'=>$solicitud->id]):route('altas.store')}}" method="POST" enctype="multipart/form-data">
 
     @foreach( $costos AS $costo )
         @php
@@ -81,13 +80,13 @@
                         <div class="row valid-feedback d-block">
                             <div class="col-md-6">
                                 <label for="nombre"><abbr title="Este campo es obligatorio">*</abbr>Nombre:</label>
-                                {!! Form::text('nombre', null, ['class' => 'form-control req_common upper']) !!}
+                                {!! Form::text('nombre', $value = isset($solicitud->nombre) ? $solicitud->nombre:null, ['class' => 'form-control req_common upper']) !!}
 
                                 <label for="apaterno"><abbr title="Este campo es obligatorio">*</abbr>Apellido paterno:</label>
-                                {!! Form::text('apaterno', null, ['class' => 'form-control req_common upper']) !!}
+                                {!! Form::text('apaterno', $value = isset($solicitud->apaterno) ? $solicitud->apaterno:null, ['class' => 'form-control req_common upper']) !!}
 
                                 <label for="amaterno">Apellido materno</label>
-                                {!! Form::text('amaterno', null, ['class' => 'form-control upper']) !!}
+                                {!! Form::text('amaterno', $value = isset($solicitud->amaterno) ? $solicitud->amaterno:null, ['class' => 'form-control upper']) !!}
 
                                 {!! Form::label('cv', 'C.V. recurso: '); !!}
                                 <br>
@@ -96,14 +95,11 @@
                             <div class="col-md-6">
 
                                 <label for="puesto"><abbr title="Este campo es obligatorio">*</abbr>Puesto:</label>
-                                {!! Form::select('puesto',$puestos,null,['class'=>'form-control req_nok','id'=>'puesto','style'=>'width: 100%;']) !!}
-
-                                <label for="area"><abbr title="Este campo es obligatorio">*</abbr>Area</label>
-                                {!! Form::select('area',$areas,null,['class'=>'form-control req_nok','id'=>'area','style'=>'width: 100%;']) !!}
+                                {!! Form::select('puesto',$puestos,$value = isset($solicitud->puesto) ? $solicitud->puesto:null,['class'=>'form-control req_nok','id'=>'puesto','style'=>'width: 100%;']) !!}
 
                                 <div class="form-row">
                                     <label for="fecha_inicio"><abbr title="Este campo es obligatorio">*</abbr>Fecha de inicio:</label>
-                                    {!! Form::text('fecha_inicio', null, ['class' => 'form-control req_common col-md-11','id'=>'fecha_inicio','autocomplete'=>'off']) !!}
+                                    {!! Form::text('fecha_inicio', $value = isset($solicitud->fecha_inicio) ? $solicitud->fecha_inicio:null, ['class' => 'form-control req_common col-md-11','id'=>'fecha_inicio','autocomplete'=>'off']) !!}
                                 </div>
 
                                 @php
@@ -117,7 +113,7 @@
                                 @endphp
                                 {!! Form::label('temporalidad_contrato', 'Temporalidad de contrato: ') !!}
                                 <label for="temporalidad_contrato"><abbr title="Este campo es obligatorio">*</abbr></label>
-                                {!! Form::select('temporalidad_contrato',$temps_contrato,null,['class'=>'form-control req_common','id'=>'temporalidades_contrato','style'=>'width: 100%;']) !!}
+                                {!! Form::select('temporalidad_contrato',$temps_contrato,$value = isset($solicitud->temporalidad_contrato) ? $solicitud->temporalidad_contrato:null,['class'=>'form-control req_common','id'=>'temporalidades_contrato','style'=>'width: 100%;']) !!}
 
                                 <div id="esquema_div" class="hide">
                                     @php
@@ -131,8 +127,8 @@
                                             '7'=>'RENTA FIJA',
                                         ];
                                     @endphp
-                                    <label for="esquemas"><abbr title="Este campo es obligatorio">*</abbr>Esquema:</label>
-                                    {!! Form::select('esquemas', $esquema_con, null,['class'=>'form-control req_nok','id'=>'esquemas','style'=>'width: 100%;','hidden']) !!}
+                                    <!--label for="esquemas"><abbr title="Este campo es obligatorio">*</abbr>Esquema:</label-->
+                                    {!! Form::select('esquemas', $esquema_con, $value = isset($solicitud->tipo_proyecto) ? $solicitud->tipo_proyecto:null,['class'=>'form-control req_nok','id'=>'esquemas','style'=>'width: 100%;','hidden']) !!}
                                 </div>
                             </div>
                         </div>
@@ -151,7 +147,7 @@
                             <div class="col-md-12">
                                 <div id="esq_task" class="hide">
                                     {!! Form::label('sueldo_venta', 'Monto de venta: ') !!}
-                                    {!! Form::text('sueldo_venta', null, ['class' => 'form-control req_nok']) !!}
+                                    {!! Form::number('sueldo_venta', null, ['class' => 'form-control req_nok']) !!}
                                 </div>
                                 <div id="esq_poliza" class="hide">
                                     <div class="row">
@@ -160,7 +156,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
-                                            {!! Form::text('codigo_poliza', null, ['class' => 'form-control','id'=>'codigo_poliza']) !!}
+                                            {!! Form::text('codigo_poliza', $value = isset($solicitud->id) ? 'NFF-SOP-TAC-SM-001':null, ['class' => 'form-control','id'=>'codigo_poliza']) !!}
                                         </div>
                                     </div>
                                     <br>
@@ -228,7 +224,7 @@
                                     ];
                                 @endphp
                                 {!! Form::label('esquema', 'Esquema de contratación: ') !!}
-                                {!! Form::select('esquema', $esquema_sueldos,null,['class'=>'form-control select_esquema req_common','id'=>'esquema','placeholder'=>'SELECCIONE','style'=>'width: 100%;']) !!}
+                                {!! Form::select('esquema', $esquema_sueldos,$value = isset($solicitud->esquema) ? $solicitud->esquema:null,['class'=>'form-control select_esquema req_common','id'=>'esquema','placeholder'=>'SELECCIONE','style'=>'width: 100%;']) !!}
 
                             </div>
 
@@ -242,14 +238,14 @@
                                     ];
                                 @endphp
                                 {!! Form::label('riesgo', 'Trabajo de riesgo: ') !!}
-                                {!! Form::select('riesgo',$trabajo_riesgo, null,['class'=>'form-control req_common','id'=>'riesgo','placeholder'=>'SELECCIONE','style'=>'width: 100%;']) !!}
+                                {!! Form::select('riesgo',$trabajo_riesgo, $value = isset($solicitud->riesgo) ? $solicitud->riesgo:null,['class'=>'form-control req_common','id'=>'riesgo','placeholder'=>'SELECCIONE','style'=>'width: 100%;']) !!}
 
                             </div>
                             <div class="clearfix"></div>
                             <div id="codigo_sueldo_div" class="hide col-md-6">
                                 <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
                                 {!! Form::label('codigo_sueldo', 'Código Facturación de Salario Venta: ') !!}
-                                {!! Form::text('codigo_sueldo', null, ['class' => 'form-control','id'=>'codigo_sueldo']) !!}
+                                {!! Form::text('codigo_sueldo', $value = isset($solicitud->codigo_sueldo) ? $solicitud->codigo_sueldo:null, ['class' => 'form-control','id'=>'codigo_sueldo']) !!}
                             </div>
 
                             <div id="sueldo_venta_c_div" class="hide col-md-6">
@@ -260,12 +256,12 @@
                             <div class="clearfix"></div>
                             <div id="v_imss" class="hide col-md-6">
                                 {!! Form::label('sueldo_imss', 'Sueldo Tradicional: ') !!}
-                                {!! Form::text('sueldo_imss', null, ['class' => 'form-control req_common']) !!}
+                                {!! Form::number('sueldo_imss', $value = isset($solicitud->sueldo_imss) ? $solicitud->sueldo_imss:null, ['class' => 'form-control req_common']) !!}
                             </div>
 
                             <div id="v_variable" class="hide col-md-6">
                                 {!! Form::label('sueldo_variable', 'Sueldo Variable: ') !!}
-                                {!! Form::text('sueldo_variable', null, ['class' => 'form-control']) !!}
+                                {!! Form::number('sueldo_variable', $value = isset($solicitud->sueldo_variable) ? $solicitud->sueldo_variable:null, ['class' => 'form-control']) !!}
                             </div>
                             <br>
                             <div class="clearfix"></div>
@@ -290,7 +286,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="motivo"><abbr title="Este campo es obligatorio">*</abbr>Motivo:</label>
-                                {!! Form::textarea('motivo', null, ['class' => 'form-control upper','maxlength'=>'250','rows'=>'4','style'=>'overflow: hidden; resize: none;']) !!}
+                                {!! Form::textarea('motivo', $value = isset($solicitud->motivo) ? $solicitud->motivo:null, ['class' => 'form-control upper','maxlength'=>'250','rows'=>'4','style'=>'overflow: hidden; resize: none;']) !!}
 
                                 {!! Form::label('vobo', 'Vo.Bo. Cliente: '); !!}
                                 <br>
@@ -320,12 +316,12 @@
                                     <div class="col-md-6">
                                         {!! Form::label('plan_celular_select', 'Plan: ',['class' => 'mb-4 mt-3']) !!}
                                         <br>
-                                        {!! Form::select('plan_celular_select',$planes,null,['class'=>'form-control','id'=>'plan_celular_select','style'=>'width: 100%;']) !!}
+                                        {!! Form::select('plan_celular_select',$planes,$value = isset($solicitud->plan_linea) ? $solicitud->plan_linea:null,['class'=>'form-control','id'=>'plan_celular_select','style'=>'width: 100%;']) !!}
                                     </div>
                                     <div class="col-md-6 hide" id="celular_codigos">
                                         {!! Form::label('codigo_celular', 'Codigo de celular: ') !!}
                                         <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
-                                        {!! Form::text('codigo_celular', null, ['class' => 'form-control','id'=>'codigo_celular']) !!}
+                                        {!! Form::text('codigo_celular', $value = isset($solicitud->codigo_celular) ? $solicitud->codigo_celular:null, ['class' => 'form-control','id'=>'codigo_celular']) !!}
                                         <p>Venta:<span id="venta_celular_label"></span>, Costo:<span
                                                     id="costo_celular_label"></span></p>
                                     </div>
@@ -342,12 +338,12 @@
                                 <div class="row hide" id="computadora_opciones">
                                     <div class="col-md-6">
                                         {!! Form::label('desc_computadora', 'Descripcion de la computadora (OPCIONAL): ') !!}
-                                        {!! Form::textarea('desc_computadora', null, ['class' => 'form-control','rows'=>'3','style'=>'overflow: hidden; resize: none;']) !!}
+                                        {!! Form::textarea('desc_computadora', $value = isset($solicitud->desc_computadora) ? $solicitud->desc_computadora:null, ['class' => 'form-control','rows'=>'3','style'=>'overflow: hidden; resize: none;']) !!}
                                     </div>
                                     <div class="col-md-6 hide" id="computadora_codigos">
                                         {!! Form::label('codigo_computadora', 'Codigo de computadora: ') !!}
                                         <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
-                                        {!! Form::text('codigo_computadora', null, ['class' => 'form-control','id'=>'codigo_computadora']) !!}
+                                        {!! Form::text('codigo_computadora', $value = isset($solicitud->codigo_computadora) ? $solicitud->codigo_computadora:null, ['class' => 'form-control','id'=>'codigo_computadora']) !!}
                                         <p>Venta:<span id="venta_computadora_label"></span>, Costo:<span
                                                     id="costo_computadora_label"></span></p>
                                     </div>
@@ -364,12 +360,12 @@
                                 <div class="row hide" id="software_opciones">
                                     <div class="col-md-6">
                                         {!! Form::label('desc_software', 'Descripcion del software (OPCIONAL): ') !!}
-                                        {!! Form::textarea('desc_software', null, ['class' => 'form-control','rows'=>'3','style'=>'overflow: hidden; resize: none;']) !!}
+                                        {!! Form::textarea('desc_software', $value = isset($solicitud->desc_software) ? $solicitud->desc_software:null, ['class' => 'form-control','rows'=>'3','style'=>'overflow: hidden; resize: none;']) !!}
                                     </div>
                                     <div class="col-md-6 hide" id="software_codigos">
                                         {!! Form::label('codigo_software', 'Codigo de software: ') !!}
                                         <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
-                                        {!! Form::text('codigo_software', null, ['class' => 'form-control','id'=>'codigo_software']) !!}
+                                        {!! Form::text('codigo_software', $value = isset($solicitud->codigo_software) ? $solicitud->codigo_software:null, ['class' => 'form-control','id'=>'codigo_software']) !!}
                                         <p>Venta:<span id="venta_software_label"></span>, Costo:<span
                                                     id="costo_software_label"></span></p>
                                     </div>
@@ -392,7 +388,7 @@
                                             ];
                                         @endphp
                                         {!! Form::label('tipo_correo', 'Tipo de correo: ') !!}
-                                        {!! Form::select('tipo_correo',$correo_array,null,['class'=>'form-control','id'=>'riesgo','placeholder'=>'SELECCIONE','style'=>'width: 100%;']) !!}
+                                        {!! Form::select('tipo_correo',$correo_array,$value = isset($solicitud->tipo_correo) ? $solicitud->tipo_correo:null,['class'=>'form-control','id'=>'tipo_correo','placeholder'=>'SELECCIONE','style'=>'width: 100%;']) !!}
                                     </div>
                                 </div>
                             </div>
@@ -408,12 +404,12 @@
                                     <div class="col-md-6">
                                         {!! Form::label('plan_bam_select', 'Plan: ',['class' => 'mb-4 mt-3']) !!}
                                         <br>
-                                        {!! Form::select('plan_bam_select',$planes,null,['class'=>'form-control','id'=>'plan_bam_select','style'=>'width: 100%;']) !!}
+                                        {!! Form::select('plan_bam_select',$planes,$value = isset($solicitud->plan_linea_bam) ? $solicitud->plan_linea_bam:null,['class'=>'form-control','id'=>'plan_bam_select','style'=>'width: 100%;']) !!}
                                     </div>
                                     <div class="col-md-6 hide" id="bam_codigos">
                                         {!! Form::label('codigo_bam', 'Codigo de BAM: ') !!}
                                         <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
-                                        {!! Form::text('codigo_bam', null, ['class' => 'form-control','id'=>'codigo_bam']) !!}
+                                        {!! Form::text('codigo_bam', $value = isset($solicitud->codigo_bam) ? $solicitud->codigo_bam:null, ['class' => 'form-control','id'=>'codigo_bam']) !!}
                                         <p>Venta:<span id="venta_bam_label"></span>, Costo:<span
                                                     id="costo_bam_label"></span></p>
                                     </div>
@@ -432,7 +428,7 @@
                                     <div class="col-md-12 hide" id="auto_codigos">
                                         {!! Form::label('codigo_auto', 'Codigo de Auto: ') !!}
                                         <p class="text-success font-weight-bold">{{__('Debes seleccionar alguna de las opciones de la lista.')}}</p>
-                                        {!! Form::text('codigo_auto', null, ['class' => 'form-control','id'=>'codigo_auto']) !!}
+                                        {!! Form::text('codigo_auto', $value = isset($solicitud->codigo_auto) ? $solicitud->codigo_auto:null, ['class' => 'form-control','id'=>'codigo_auto']) !!}
                                         <p>Venta:<span id="venta_auto_label"></span>, Costo:<span
                                                     id="costo_auto_label"></span></p>
                                     </div>
@@ -460,7 +456,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
-                                {!! Form::textarea('herramientas_almacen', null, ['class' => 'form-control upper','maxlength'=>'250','rows'=>'5','style'=>'overflow: hidden; resize: none;','placeholder'=>'Detalle de las herramientas de almacen necesitadas']) !!}
+                                {!! Form::textarea('herramientas_almacen', $value = isset($solicitud->herramientas_detalles) ? $solicitud->herramientas_detalles:null, ['class' => 'form-control upper','maxlength'=>'250','rows'=>'5','style'=>'overflow: hidden; resize: none;','placeholder'=>'Detalle de las herramientas de almacen necesitadas']) !!}
                             </div>
                         </div>
                     </div>
@@ -477,14 +473,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {!! Form::label('actividad', 'Actividades: ') !!}
-                                {!! Form::textarea('actividad', null, ['class' => 'form-control req_common upper','maxlength'=>'250','rows'=>'2','style'=>'overflow: hidden; resize: none;']) !!}
+                                {!! Form::textarea('actividad', $value = isset($solicitud->actividad) ? $solicitud->actividad:null, ['class' => 'form-control req_common upper','maxlength'=>'250','rows'=>'2','style'=>'overflow: hidden; resize: none;']) !!}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 {!! Form::label('coordinador_id', 'Coordinador: ') !!}
                                 <div class="ui-widget">
-                                    {!! Form::select('coordinador_id',$coordinadores,null,['class'=>'form-control req_common','id'=>'coordinador_id','style'=>'width: 100%;']) !!}
+                                    {!! Form::select('coordinador_id',$coordinadores,$value = isset($solicitud->coordinador_id) ? $solicitud->coordinador_id:null,['class'=>'form-control req_common','id'=>'coordinador_id','style'=>'width: 100%;']) !!}
                                 </div>
                             </div>
                             <div class="col-md-6 hide" id="coord_nuevo_div">
@@ -493,7 +489,7 @@
                             </div>
                             <div class="col-md-6">
                                 {!! Form::label('lugar_trabajo', 'Lugar de trabajo: ') !!}
-                                {!! Form::select('lugar_trabajo',$estados,null,['class'=>'form-control req_common','id'=>'lugar_trabajo','style'=>'width: 100%;']) !!}
+                                {!! Form::select('lugar_trabajo',$estados,$value = isset($solicitud->lugar_trabajo) ? $solicitud->lugar_trabajo:null,['class'=>'form-control req_common','id'=>'lugar_trabajo','style'=>'width: 100%;']) !!}
                             </div>
                         </div>
 
@@ -515,7 +511,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 {!! Form::label('direccion', 'Direccion: ') !!}
-                                {!! Form::textarea('direccion', null, ['class' => 'form-control req_common upper','maxlength'=>'150','rows'=>'2','style'=>'overflow: hidden; resize: none;','id'=>'direccion']) !!}
+                                {!! Form::textarea('direccion', $value = isset($solicitud->direccion) ? $solicitud->direccion:null, ['class' => 'form-control req_common upper','maxlength'=>'150','rows'=>'2','style'=>'overflow: hidden; resize: none;','id'=>'direccion']) !!}
                             </div>
                         </div>
                     </div>
@@ -569,7 +565,14 @@
         <!-- /.row -->
     </div><!-- /.container-fluid -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {!! Form::close() !!}
+    </form>
     {!! Html::script('js/sol_altas/search_wbs.js?v='.time()) !!}
     {!! Html::script('js/sol_altas/common.js?v='.time()) !!}
+    @if(isset($solicitud->id))
+        <script>
+            var sol   = '@json($solicitud)';
+            var vista = '@json($vista)';
+        </script>
+        {!! Html::script('js/sol_altas/editar.js?v='.time()) !!}
+    @endif
 @endsection

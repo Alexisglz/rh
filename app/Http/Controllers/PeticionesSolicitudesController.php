@@ -19,135 +19,240 @@ class PeticionesSolicitudesController extends Controller
 
     public function getCodigosCelular(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosCelular($term);
+        $edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosCelular($term, $edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] =[
-                'id'       => $value->id,
-                'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-                'concepto' => $value->concepto,
-                'precio'   => $value->precio,
-                'diario'   => $value->diario,
+    	if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
+        }
+    	else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
     	return response()->json($result);
     }
 
     public function getCodigosCelularDato(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosCelularDato($term);
+    	$edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosCelularDato($term,$edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] =[
-                'id'       => $value->id,
-                'value'    => $value->codigo,
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
+        }
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
     	return response()->json($result);
     }
 
     public function getCodigosComputadora(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosComputadora($term);
+    	$edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosComputadora($term,$edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] =[
-                'id'       => $value->id,
-                'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-                'concepto' => $value->concepto,
-                'precio'   => $value->precio,
-                'diario'   => $value->diario,
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
+        }
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
     	return response()->json($result);
     }
 
     public function getCodigosSoftware(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosSoftware($term);
+    	$edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosSoftware($term,$edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] =[
-                'id'       => $value->id,
-                'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-                'concepto' => $value->concepto,
-                'precio'   => $value->precio,
-                'diario'   => $value->diario,
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
+        }
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
     	return response()->json($result);
     }
 
     public function getCodigosBam(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosBam($term);
+    	$edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosBam($term,$edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] = [
-                'id'       => $value->id,
-                'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-                'concepto' => $value->concepto,
-                'precio'   => $value->precio,
-                'diario'   => $value->diario,
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
         }
-
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
+        }
     	return response()->json($result);
     }
 
     public function getCodigosAuto(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosAuto($term);
+    	$edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosAuto($term,$edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] = [
-                'id'       => $value->id,
-                'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-                'concepto' => $value->concepto,
-                'precio'   => $value->precio,
-                'diario'   => $value->diario,
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
+        }
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
     	return response()->json($result);
     }
 
     public function getCodigosPoliza(Request $request){
     	$term   = $request->term;
-    	$array  = CatalogoCodigos::getCodigosPoliza($term);
+    	$edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+    	$array  = CatalogoCodigos::getCodigosPoliza($term,$edit);
     	$result = array();
-        foreach ($array as $key => $value){
-			$result[] = [
-				'id'       => $value->id,
-				'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-				'concepto' => $value->concepto,
-				'precio'   => $value->precio,
-				'incluye'  => $value->incluye,
-                'diario'   => $value->diario,
-			];
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
+            ];
+        }
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
     	return response()->json($result);
     }
 
     public function getCodigosSueldo(Request $request){
         $term   = $request->term;
-        $array  = CatalogoCodigos::getCodigosSueldo($term);
+        $edit   = (isset($request->edit) && $request->edit == 1) ? true:false;
+        $array  = CatalogoCodigos::getCodigosSueldo($term,$edit);
         $result = array();
-        foreach ($array as $key => $value){
-            $result[] = [
-                'id'       => $value->id,
-                'value'    => $value->codigo,
-                'label'    => $value->codigo.' - '.$value->concepto,
-                'concepto' => $value->concepto,
-                'precio'   => $value->precio,
-                'incluye'  => $value->incluye,
-                'diario'   => $value->diario,
+        if ($edit == true){
+            $result =[
+                'id'       => $array->id,
+                'value'    => $array->codigo,
+                'label'    => $array->codigo.' - '.$array->concepto,
+                'concepto' => $array->concepto,
+                'precio'   => $array->precio,
+                'diario'   => $array->diario,
             ];
+        }
+        else{
+            foreach ($array as $key => $value){
+                $result[] =[
+                    'id'       => $value->id,
+                    'value'    => $value->codigo,
+                    'label'    => $value->codigo.' - '.$value->concepto,
+                    'concepto' => $value->concepto,
+                    'precio'   => $value->precio,
+                    'diario'   => $value->diario,
+                ];
+            }
         }
         return response()->json($result);
     }

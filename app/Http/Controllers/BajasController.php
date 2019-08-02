@@ -504,18 +504,23 @@ class BajasController extends Controller
                     break;
                 case 'Computo':
                     $baja->obs_compu = $request->comment;
+                    $baja->adeudo_compu = $request->deuda;
                     break;
                 case 'Celular':
                     $baja->obs_cel = $request->comment;
+                    $baja->adeudo_cel = $request->deuda;
                     break;
                 case 'Auto':
                     $baja->obs_auto = $request->comment;
+                    $baja->adeudo_auto = $request->deuda;
                     break;
                 case 'Almacen':
                     $baja->obs_alma = $request->comment;
+                    $baja->adeudo_alma = $request->deuda;
                     break;
                 case 'Credencial':
                     $baja->obs_cred = $request->comment;
+                    $baja->adeudo_cred = $request->deuda;
                     break;
             }
             $baja->save();

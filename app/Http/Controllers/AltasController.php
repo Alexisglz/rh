@@ -547,7 +547,6 @@ class AltasController extends Controller
 
     public function update(Request $request)
     {
-        dd($request);
         $this->authorize('access',[User::class, 'editar_solicitudes']);
         try{
             DB::beginTransaction();

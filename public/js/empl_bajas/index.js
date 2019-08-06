@@ -1108,7 +1108,7 @@ $('#darbaja-table tbody').on('click', '.comment_n', function () {
             break;
     }
     template += ade;
-    template += '<textarea type="text" name="comment_n" id="comment_n" class="form-control text-center">' + obs + '</textarea>';
+    template += '<label for="comment_n" class="col-md-12">Comentarios:</label><textarea type="text" name="comment_n" id="comment_n" class="form-control text-center">' + obs + '</textarea>';
     template += '</div>';
     Swal.fire({
         title: 'Observaciones ' + type,

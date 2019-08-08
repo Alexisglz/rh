@@ -82,6 +82,8 @@ Route::group(["prefix" => "bajas", "middleware" => ["auth"]], function() {
     Route::post('/pago_fin', 'BajasController@pagoFin')->name('bajas.pago_fin');
     Route::post('/cambio_nom', 'BajasController@cambioNom')->name('bajas.cambio_nom');
     Route::post('/cambio_comment', 'BajasController@cambioComment')->name('bajas.cambio_comment');
+    Route::post('/ver_bitacora', 'BajasController@verBitacora')->name('bajas.ver_bitacora');
+    Route::post('/add_bitacora', 'BajasController@addBitacora')->name('bajas.add_bitacora');
 });
 
 Route::group(["prefix" => "incidentes", "middleware" => ["auth"]], function() {
@@ -148,6 +150,16 @@ Route::group(["prefix" => "empleados", "middleware" => ["auth"]], function() {
     Route::post('/cambio_coord', 'EmpleadosController@cambioCoord')->name('empleados.cambio_coord');
     Route::post('/cambio_sueldo', 'EmpleadosController@cambioSueldo')->name('empleados.cambio_sueldo');
     Route::post('/viable', 'EmpleadosController@viable')->name('empleados.viable');
+
+
+
+    Route::post('/ver_servicios', 'EmpleadosController@combos')->name('empleados.add_e');
+    Route::post('/ver_region', 'EmpleadosController@combos2')->name('empleados.add_e');
+    Route::post('/ver_tecnologia', 'EmpleadosController@combos3')->name('empleados.add_e');
+    Route::post('/ver_grupo', 'EmpleadosController@combos4')->name('empleados.add_e');
+    Route::post('/add_empleado_e', 'EmpleadosController@guardarEmpleadoExterno')->name('empleados.add_e');
+
+
 });
 
 Route::group(["prefix" => "envio_incidencias", "middleware" => ["auth"]], function() {

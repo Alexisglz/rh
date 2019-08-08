@@ -11,7 +11,7 @@ use App\Models\MovimientoRecurso;
 use App\Models\MovimientosCoordinador;
 use App\Models\MovimientosProyecto;
 use App\Models\MovimientosPuesto;
-use App\Models\MovimientosSueldo;
+use App\Models\SolicitudesBitacoraBajas;
 use App\SolBajaNomina;
 use App\solicitudbaja;
 use App\User;
@@ -359,10 +359,19 @@ class BajasController extends Controller
         try{
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
+            $bit                    = new SolicitudesBitacoraBajas();
+
             $sol_baja->baja_computo = "true";
             $sol_baja->obs_compu    = $request->obs;
             $sol_baja->adeudo_compu = $request->cantidad;
+
+            $bit->solicitud_id=$request->id;
+            $bit->comentario=$request->obs;
+            $bit->log=date('Y-m-d G:i:s');
+
             $sol_baja->save();
+            $bit->save();
+
             DB::commit();
             return response()->json([
                 "ok"    => true,
@@ -379,10 +388,18 @@ class BajasController extends Controller
         try{
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
+            $bit                    = new SolicitudesBitacoraBajas();
+
             $sol_baja->baja_celular = "true";
             $sol_baja->obs_cel      = $request->obs;
             $sol_baja->adeudo_cel   = $request->cantidad;
+
+            $bit->solicitud_id=$request->id;
+            $bit->comentario=$request->obs;
+            $bit->log=date('Y-m-d G:i:s');
+
             $sol_baja->save();
+            $bit->save();
             DB::commit();
             return response()->json([
                 "ok"    => true,
@@ -399,10 +416,18 @@ class BajasController extends Controller
         try{
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
+            $bit                    = new SolicitudesBitacoraBajas();
+
             $sol_baja->baja_auto    = "true";
             $sol_baja->obs_auto     = $request->obs;
             $sol_baja->adeudo_auto  = $request->cantidad;
+
+            $bit->solicitud_id=$request->id;
+            $bit->comentario=$request->obs;
+            $bit->log=date('Y-m-d G:i:s');
+
             $sol_baja->save();
+            $bit->save();
             DB::commit();
             return response()->json([
                 "ok"    => true,
@@ -419,10 +444,18 @@ class BajasController extends Controller
         try{
             DB::beginTransaction();
             $sol_baja               = solicitudbaja::find($request->id);
+            $bit                    = new SolicitudesBitacoraBajas();
+
             $sol_baja->baja_almacen = "true";
             $sol_baja->obs_alma     = $request->obs;
             $sol_baja->adeudo_alma  = $request->cantidad;
+
+            $bit->solicitud_id=$request->id;
+            $bit->comentario=$request->obs;
+            $bit->log=date('Y-m-d G:i:s');
+
             $sol_baja->save();
+            $bit->save();
             DB::commit();
             return response()->json([
                 "ok"    => true,
@@ -439,10 +472,19 @@ class BajasController extends Controller
         try{
             DB::beginTransaction();
             $sol_baja                  = solicitudbaja::find($request->id);
+            $bit                    = new SolicitudesBitacoraBajas();
+
             $sol_baja->baja_credencial = "true";
             $sol_baja->obs_cred        = $request->obs;
             $sol_baja->adeudo_cred     = $request->cantidad;
+
+            $bit->solicitud_id=$request->id;
+            $bit->comentario=$request->obs;
+            $bit->log=date('Y-m-d G:i:s');
+
+
             $sol_baja->save();
+            $bit->save();
             DB::commit();
             return response()->json([
                 "ok"    => true,
@@ -492,38 +534,109 @@ class BajasController extends Controller
         }
         dd($request);
     }
+    public function verBitacora(Request $request)
+    {
+
+    $bit=SolicitudesBitacoraBajas::where('solicitud_id',$request->solicitud_id)->get();
+
+    $count = strlen($bit);
+
+
+    if($count>2){
+
+return response()->json(['bit'=>$bit]);
+    }
+    else{
+      return response()->json(['bit'=>$request->solicitud_id]);
+    }
+
+
+    }
+    public function addBitacora(Request $request)
+    {
+      DB::connection();
+      try {
+        DB::beginTransaction();
+        $bit = new SolicitudesBitacoraBajas();
+        $bit->solicitud_id=$request->solicitud_id;
+        $bit->comentario=$request->entrada_bitacora;
+        $bit->user_log='Incore';
+        $bit->log=date('Y-m-d G:i:s');
+        $bit->save();
+        DB::commit();
+        $bit_complete=SolicitudesBitacoraBajas::where('solicitud_id',$bit->solicitud_id)->get();
+        return response()->json(['ok'=>1,'bit'=>$bit,'bit_complete'=>$bit_complete]);
+
+
+      } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['ok'=>0,'data'=>$e->getMessage()]);
+
+      }
+
+    }
+
 
     public function cambioComment(Request $request){
         try{
             DB::beginTransaction();
             $type = $request->type;
+
             $baja = SolBajaNomina::find($request->id);
+            $bit = new SolicitudesBitacoraBajas();
+
+
             switch ($type){
                 case 'Cita':
                     $baja->obs_cita = $request->comment;
+
+                    $bit->solicitud_id=$request->id;
+                    $bit->comentario=$request->comment;
+                    $bit->log=date('Y-m-d G:i:s');
                     break;
                 case 'Computo':
                     $baja->obs_compu = $request->comment;
                     $baja->adeudo_compu = $request->deuda;
+
+                    $bit->solicitud_id=$request->id;
+                    $bit->comentario=$request->comment;
+                    $bit->log=date('Y-m-d G:i:s');
                     break;
                 case 'Celular':
                     $baja->obs_cel = $request->comment;
                     $baja->adeudo_cel = $request->deuda;
+
+                    $bit->solicitud_id=$request->id;
+                    $bit->comentario=$request->comment;
+                    $bit->log=date('Y-m-d G:i:s');
                     break;
                 case 'Auto':
                     $baja->obs_auto = $request->comment;
                     $baja->adeudo_auto = $request->deuda;
+
+                    $bit->solicitud_id=$request->id;
+                    $bit->comentario=$request->comment;
+                    $bit->log=date('Y-m-d G:i:s');
                     break;
                 case 'Almacen':
                     $baja->obs_alma = $request->comment;
                     $baja->adeudo_alma = $request->deuda;
+
+                    $bit->solicitud_id=$request->id;
+                    $bit->comentario=$request->comment;
+                    $bit->log=date('Y-m-d G:i:s');
                     break;
                 case 'Credencial':
                     $baja->obs_cred = $request->comment;
                     $baja->adeudo_cred = $request->deuda;
+
+                    $bit->solicitud_id=$request->id;
+                    $bit->comentario=$request->comment;
+                    $bit->log=date('Y-m-d G:i:s');
                     break;
             }
             $baja->save();
+            $bit->save();
             DB::commit();
             return response()->json([
                 "ok"    => true,

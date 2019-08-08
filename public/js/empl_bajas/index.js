@@ -32,6 +32,8 @@ var table = $('#darbaja-table').DataTable({
             searchable: false,
             className: "baja_v text-center"
         },
+        {data: null, name: 'bitacora', orderable: false, searchable: false, className: ""},
+
         {data: 'Recurso', name: 'Recurso', className: 'text-center common'},
         {data: 'WBS', name: 'WBS', className: 'text-center common'},
         {
@@ -166,7 +168,17 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 6,
+            "targets": 4,
+            "data": null,
+            "render": function (data, type, row) {
+
+
+                            return "<button type='button' class='btn btn-primary bit_ind'  title='VER BITACORA'><i class='fas fa-book-reader'></i></button>";
+
+            }
+        },
+        {
+            "targets": 7,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -183,7 +195,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 7,
+            "targets": 8,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -209,7 +221,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 8,
+            "targets": 9,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -235,7 +247,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 9,
+            "targets": 10,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -261,7 +273,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 10,
+            "targets": 11,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -287,7 +299,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 11,
+            "targets": 12,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -304,7 +316,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            "targets": 12,
+            "targets": 13,
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -320,7 +332,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            'targets': 13,
+            'targets': 14,
             'data': null,
             'render': function (data, type, row) {
                 var view = '';
@@ -338,7 +350,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            'targets': 20,
+            'targets': 21,
             'data': null,
             'render': function (data, type, row) {
                 var view = data == null ? '' : data;
@@ -347,7 +359,7 @@ var table = $('#darbaja-table').DataTable({
             }
         },
         {
-            'targets': 22,
+            'targets': 23,
             'data': null,
             'render': function (data, type, row) {
                 var view = '';
@@ -363,6 +375,15 @@ var table = $('#darbaja-table').DataTable({
 new $.fn.dataTable.FixedHeader(table);
 
 tabla = table;
+
+$('#darbaja-table tbody').on('click', '.bit_ind', function () {
+    data = table.row($(this).parent()).data();
+
+    $('#ModalBitacora').modal('toggle');
+
+LLenarTabla(data.id);
+});
+
 
 $('#darbaja-table tbody').on('click', '.cancel', function () {
     data = table.row($(this).parent()).data();
@@ -527,6 +548,89 @@ function EliminarSolicitud(id) {
         }
     });
 }
+function LLenarTabla(id) {
+  dataRes      = {
+      _token:             CSRF_TOKEN,
+      solicitud_id: id}
+
+  $.ajax({
+      url: '/bajas/ver_bitacora',
+      type: 'POST',
+      dataType: 'JSON',
+      data: dataRes,
+      success:function (response) {
+        var th;
+        if(Array.isArray(response.bit)){
+          var solicitud_id = (response.bit[0].solicitud_id);
+          var input="<input id='solicitud_id' type='hidden' value='"+solicitud_id+"'>";
+          for(var i in response.bit)
+         {
+             th += "<tr><td  class='text-center'>"+response.bit[i].log+"</td><td class='text-center'>"+response.bit[i].user_log+"</td><td class='text-center'>"+response.bit[i].comentario+"</td></tr>";
+
+         }
+
+
+        }
+        else{
+          th ="<tr><td colspan='3' class='text-center'>NADA QUE MOSTRAR</td></tr>";
+          var input="<input id='solicitud_id' type='hidden' value='"+response.bit+"'>";
+        }
+
+        document.getElementById('tabla_bitacora').innerHTML="<table class='table table-bordered'><thead class='thead-dark'><tr>"+
+            "<th class='text-center'>Hora</th>"+
+            "<th class='text-center'>Realizó</th>"+
+            "<th class='text-center'>Comentario</th>"+
+            "</tr></thead>"+th+"</table>"+input;
+
+
+      }
+  });
+}
+
+
+
+
+function EnviarEntrada(){
+
+  var entrada_bitacora = document.getElementById('entrada_bitacora').value;
+  var solicitud_id = document.getElementById('solicitud_id').value;
+  dataRes      = {
+      _token:             CSRF_TOKEN,
+      entrada_bitacora: entrada_bitacora,
+      solicitud_id: solicitud_id
+    }
+
+  $.ajax({
+      url: '/bajas/add_bitacora',
+      type: 'POST',
+      dataType: 'JSON',
+      data: dataRes,
+      success:function (response) {
+        if (response.ok == 1){
+          var th;
+
+          for(var i in response.bit_complete)
+         {
+             th += "<tr><input id='solicitud_id' type='hidden' value='"+response.bit_complete[i].solicitud_id+"'><td  class='text-center'>"+response.bit_complete[i].log+"</td><td class='text-center'>"+response.bit_complete[i].user_log+"</td><td class='text-center'>"+response.bit_complete[i].comentario+"</td></tr>";
+
+         }
+
+         document.getElementById('tabla_bitacora').innerHTML="<table class='table table-bordered'><thead class='thead-dark'><tr>"+
+             "<th class='text-center'>Hora</th>"+
+             "<th class='text-center'>Realizó</th>"+
+             "<th class='text-center'>Comentario</th>"+
+             "</tr></thead>"+th+"</table>";
+
+             document.getElementById('entrada_bitacora').value="";
+
+
+        }
+
+      }
+  });
+}
+
+
 
 function MostrarInfo(data) {
     var tabla = $('<table>').addClass('table table-bordered');

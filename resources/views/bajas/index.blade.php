@@ -46,6 +46,7 @@
                         <th>{{__('CANCELAR')}}</th>
                         <th>{{__('INFO')}}</th>
                         <th>{{__('BAJA DEFINITIVA')}}</th>
+                        <th>{{__('BITACORA')}}</th>
                         <th>{{__('RECURSO')}}</th>
                         <th>{{__('WBS')}}</th>
                         <th>{{__('FECHA CITA')}}</th>
@@ -327,6 +328,7 @@
             @include('bajas.modals.baja_creden')
             @include('bajas.modals.pago_fin')
             @include('bajas.modals.info_check')
+            @include('bajas.modals.bitacora')
         </div>
     </div>
     <style type="text/css">

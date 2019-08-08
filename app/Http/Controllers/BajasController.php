@@ -60,15 +60,14 @@ class BajasController extends Controller
             $empleado_fecha_baja          = $request->input('fecha_baja_definitiva');
             $obs_baja_def                 = $request->input('observaciones');
 
-            $ObjSolBajaNom                = new SolBajaNomina;
-            $DataBajaNom                  = $ObjSolBajaNom::find($id);
-            $DataBajaNom->baja_definitiva = $empleado_fecha_baja;
-            $DataBajaNom->obs_baja_def    = $obs_baja_def;
-            $DataBajaNom->save();
+            $baja                  = SolBajaNomina::find($id);
+            $baja->baja_definitiva = $empleado_fecha_baja;
+            $baja->obs_baja_def    = $obs_baja_def;
+            $baja->save();
 
-            $empleado                      = Empleados::find($DataBajaNom->id_empleado);
-            $empleado->empleado_fecha_baja = $empleado_fecha_baja;
-            $empleado->baja_rh             = $empleado_fecha_baja;
+            $empleado                      = Empleados::find($baja->id_empleado);
+            $empleado->empleado_fecha_baja = $baja->fecha_baja_nom;
+            $empleado->baja_rh             = $baja->fecha_cita;
             $empleado->empleado_estatus    = 'INACTIVO';
             $empleado->save();
 
@@ -76,8 +75,8 @@ class BajasController extends Controller
             if (count($mov_recurso) > 0){
                 foreach ($mov_recurso as $item){
                     if ($item->fecha_baja == null || $item->fecha_baja_rh == null){
-                        $item->fecha_baja    = date('Y-m-d H:i:s');
-                        $item->fecha_baja_rh = date('Y-m-d H:i:s');
+                        $item->fecha_baja    = $baja->fecha_baja_nom;
+                        $item->fecha_baja_rh = $baja->fecha_cita;
                         $item->save();
                     }
                 }
@@ -86,7 +85,7 @@ class BajasController extends Controller
             if (count($mov_proyect) > 0){
                 foreach ($mov_proyect as $item){
                     if ($item->fecha_fin == null ){
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
@@ -95,7 +94,7 @@ class BajasController extends Controller
             if (count($mov_coordin) > 0){
                 foreach ($mov_coordin as $item){
                     if ($item->fecha_fin == null ){
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
@@ -104,7 +103,7 @@ class BajasController extends Controller
             if (count($mov_sueldo) > 0){
                 foreach ($mov_sueldo  as $item){
                     if ($item->fecha_fin == null ){
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
@@ -113,7 +112,7 @@ class BajasController extends Controller
             if (count($mov_puesto) > 0){
                 foreach ($mov_puesto  as $item){
                     if ($item->fecha_fin == null ){
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
@@ -122,7 +121,7 @@ class BajasController extends Controller
             if (count($mov_cod_mov) > 0){
                 foreach ($mov_cod_mov as $item){
                     if ($item->fecha_fin == null ){
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
@@ -132,7 +131,7 @@ class BajasController extends Controller
             if (count($codigos) > 0){
                 foreach ($codigos as $item){
                     if ($item->fecha_fin == null ){
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }

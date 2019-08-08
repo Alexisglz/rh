@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\BajaAutomatica;
 use App\Console\Commands\IncidenciasCommand;
 use App\Console\Commands\IncidenciasNotificar;
 use App\Console\Commands\ServicesCommands;
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
         IncidenciasCommand::class,
         ServicesCommands::class,
         IncidenciasNotificar::class,
-        SueldosCommand::class
+        SueldosCommand::class,
+        BajaAutomatica::class
     ];
 
     /**
@@ -42,6 +44,7 @@ class Kernel extends ConsoleKernel
         /*$schedule->command('incidencias:notificar')->cron('10 00 * * *');*/
         // Cron para actualizar los sueldos en base a la API
         $schedule->command('sueldos:actualizar')->cron('30 01 * * *');
+        $schedule->command('bajas:automatica')->cron('30 23 * * *');
     }
 
     /**

@@ -243,6 +243,20 @@ class RentaFijaETL
                         'pic.cantidad' => DB::raw('DATEDIFF(pi.fecha_fin,pi.fecha_requerida)+1')
                     ]);
             }
+            $posteriores = DB::table('incore.proyectos_indeplo AS pi')
+                ->select(DB::raw('pi.id'))
+                ->join(DB::raw('incore.proyectos_indeplo_recursos AS pir'), DB::raw('pir.proyecto_id'), '=', DB::raw('pi.id'))
+                ->where(DB::raw('pi.fecha_requerida'),'>', $date)
+                ->where(DB::raw('pi.servicio'),'=', 'SERV')
+                ->where(DB::raw('pir.empleado_id'),'=', $empleado_id)
+                ->get();
+            if ($posteriores){
+                foreach ($posteriores as $posterior){
+                    ProyectosIndeploRecurso::where('proyecto_id','=',$posterior->id)->delete();
+                    ProyectosIndeploCodigos::where('proyecto_id','=',$posterior->id)->delete();
+                    ProyectosIndeplo::where('id','=',$posterior->id)->delete();
+                }
+            }
 
             /* Si se crean RO's posteriores aqui debe de ir el codigo para eliminarlas */
             $conn->commit();

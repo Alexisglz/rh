@@ -289,6 +289,10 @@ Route::get('/renta_etl','WbsController@rentaEtl')->name('wbs.renta_etl');
 Route::get('/poliza','WbsController@poliza')->name('wbs.poliza');
 Route::get('/venta_ro','WbsController@calcularVentaRo')->name('wbs.venta_ro');
 Route::get('/enviar_alta','WbsController@enviarAlta')->name('wbs.enviar_alta');
+Route::get('/cerrar_serv','WbsController@cerrarServ')->name('wbs.cerrar_serv');
+Route::get('/cerrar_polz','WbsController@cerrarPolz')->name('wbs.cerrar_serv');
+Route::get('/cerrar_tkbs','WbsController@cerrarTkbs')->name('wbs.cerrar_tkbs');
+Route::get('/bajas_pen','Dev\CronController@bajaAutomatica')->name('wbs.bajas_pen');
 
 Route::group(["prefix" => "imper"], function (){
     Route::get('/get_users', 'ImpersonateController@getUsers')->name('imper.get_users');

@@ -12,6 +12,7 @@ use Exception;
 
 class RentaFijaETL
 {
+
     public static function create($empleado_id, $fecha = ''){
         /*$ro = RentaFijaETL::buscarRO($empleado_id);
         if($ro){
@@ -196,6 +197,65 @@ class RentaFijaETL
             return $models;
         }catch (Exception $e){
             return $e;
+        }
+    }
+
+    public static function close($empleado_id){
+        $conn = DB::connection('incore');
+        try{
+            $conn->beginTransaction();
+            $date = date('Y-m-d');
+            $model = DB::table('incore.proyectos_indeplo AS pi')
+                ->select(DB::raw('pi.id'))
+                ->join(DB::raw('incore.proyectos_indeplo_recursos AS pir'),DB::raw('pir.proyecto_id'),'=',DB::raw('pi.id '))
+                ->where('pir.empleado_id', '=', $empleado_id)
+                ->whereNull('pi.fecha_termino')
+                ->where(DB::raw('MONTH ( pi.fecha_requerida )'), '=', DB::raw(' MONTH ( now( ) )'))
+                ->where('pi.servicio','=','SERV')
+                ->first();
+            if (!$model){
+                return [
+                    'ok' => true,
+                ];
+            }
+            $ro = $model->id;
+            $p_update = DB::table('incore.proyectos_indeplo AS pi')
+                ->join(DB::raw('incore.proyectos_indeplo_recursos AS pir'), DB::raw('pir.proyecto_id'),'=',DB::raw('pi.id '))
+                ->where(DB::raw('MONTH(pi.fecha_requerida)'), '=', DB::raw('month(now())'))
+                ->where(DB::raw('pir.empleado_id'),'=',$empleado_id)
+                ->whereNull(DB::raw('pi.fecha_termino'))
+                ->update([
+                    'pi.fecha_fin' => $date,
+                    'pi.fecha_termino' => $date,
+                    'estatus' => 6
+                ]);
+
+            $cods = DB::table('incore.proyectos_indeplo AS pi')
+                ->select(DB::raw('pi.id'))
+                ->join(DB::raw('incore.proyectos_indeplo_codigos AS pic'),DB::raw('pic.proyecto_id'),'=',DB::raw('pi.id '))
+                ->where('pi.id','=',$ro)
+                ->get();
+            if($cods){
+                $cods_upd = DB::table('incore.proyectos_indeplo AS pi')
+                    ->join(DB::raw('incore.proyectos_indeplo_codigos AS pic'), DB::raw('pic.proyecto_id'),'=',DB::raw('pi.id '))
+                    ->where(DB::raw('pi.id'),'=',$ro)
+                    ->update([
+                        'pic.cantidad' => DB::raw('DATEDIFF(pi.fecha_fin,pi.fecha_requerida)+1')
+                    ]);
+            }
+
+            /* Si se crean RO's posteriores aqui debe de ir el codigo para eliminarlas */
+            $conn->commit();
+            return [
+                'ok' => true,
+                'data' => $model
+            ];
+        }catch (\Exception $e){
+            $conn->rollBack();
+            return [
+                'ok' => false,
+                'data' => $e->getMessage()
+            ];
         }
     }
 }

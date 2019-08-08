@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\BajaComentarios;
+use App\Classes\Poliza;
+use App\Classes\RentaFijaETL;
+use App\Classes\TaskBased;
 use App\Empleados;
 use App\Events\BajasEvents;
 use App\GlobalModel;
@@ -87,6 +90,17 @@ class BajasController extends Controller
                     if ($item->fecha_fin == null ){
                         $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
+                        switch ($item->servicio){
+                            case 'TKBS':
+                                TaskBased::close($empleado->empleado_id);
+                                break;
+                            case 'SERV':
+                                RentaFijaETL::close($empleado->empleado_id);
+                                break;
+                            case 'POLZ':
+                                Poliza::close($empleado->empleado_id);
+                                break;
+                        }
                     }
                 }
             }

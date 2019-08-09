@@ -143,4 +143,35 @@ class Poliza
             return $e;
         }
     }
+
+    public static function close($empleado_id){
+        $conn = DB::connection('incore');
+        try{
+            $conn->beginTransaction();
+            $date = date('Y-m-d');
+            $models = DB::table('incore.proyectos_indeplo AS pi')
+                ->select(DB::raw('pi.id'))
+                ->join(DB::raw('incore.proyectos_indeplo_recursos AS pir'),DB::raw('pir.proyecto_id'), '=', DB::raw('pi.id'))
+                ->where(DB::raw('pir.empleado_id'), '=', $empleado_id)
+                ->where(DB::raw('pi.fecha_requerida') ,'>', $date)
+                ->get();
+            if ($models){
+                foreach ($models AS $model){
+                    $ro = ProyectosIndeplo::find($model->id);
+                    $ro->delete();
+                }
+            }
+            $conn->commit();
+            return [
+                'ok' => true,
+                'data' => $models
+            ];
+        }catch (\Exception $e){
+            $conn->rollBack();
+            return [
+                'ok' => false,
+                'data' => $e->getMessage()
+            ];
+        }
+    }
 }

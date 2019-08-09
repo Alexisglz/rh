@@ -131,4 +131,19 @@ class WbsController extends Controller
         curl_close($ch);
         return $array;
     }
+
+    public function cerrarServ(){
+        $serv = RentaFijaETL::close(2074);
+        return $serv;
+    }
+
+    public function cerrarPolz(){
+        $serv = Poliza::close(1105);
+        return $serv;
+    }
+
+    public function cerrarTkbs(){
+        $serv = TaskBased::close(34);
+        return $serv;
+    }
 }

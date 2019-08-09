@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\BajaComentarios;
+use App\Classes\Poliza;
+use App\Classes\RentaFijaETL;
+use App\Classes\TaskBased;
 use App\Empleados;
 use App\Events\BajasEvents;
 use App\GlobalModel;
@@ -60,79 +63,89 @@ class BajasController extends Controller
             $empleado_fecha_baja = $request->input('fecha_baja_definitiva');
             $obs_baja_def = $request->input('observaciones');
 
-            $ObjSolBajaNom = new SolBajaNomina;
-            $DataBajaNom = $ObjSolBajaNom::find($id);
-            $DataBajaNom->baja_definitiva = $empleado_fecha_baja;
-            $DataBajaNom->obs_baja_def = $obs_baja_def;
-            $DataBajaNom->save();
+            $baja                  = SolBajaNomina::find($id);
+            $baja->baja_definitiva = $empleado_fecha_baja;
+            $baja->obs_baja_def    = $obs_baja_def;
+            $baja->save();
 
-            $empleado = Empleados::find($DataBajaNom->id_empleado);
-            $empleado->empleado_fecha_baja = $empleado_fecha_baja;
-            $empleado->baja_rh = $empleado_fecha_baja;
-            $empleado->empleado_estatus = 'INACTIVO';
+            $empleado                      = Empleados::find($baja->id_empleado);
+            $empleado->empleado_fecha_baja = $baja->fecha_baja_nom;
+            $empleado->baja_rh             = $baja->fecha_cita;
+            $empleado->empleado_estatus    = 'INACTIVO';
             $empleado->save();
 
             $mov_recurso = MovimientoRecurso::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_recurso) > 0) {
-                foreach ($mov_recurso as $item) {
-                    if ($item->fecha_baja == null || $item->fecha_baja_rh == null) {
-                        $item->fecha_baja = date('Y-m-d H:i:s');
-                        $item->fecha_baja_rh = date('Y-m-d H:i:s');
+            if (count($mov_recurso) > 0){
+                foreach ($mov_recurso as $item){
+                    if ($item->fecha_baja == null || $item->fecha_baja_rh == null){
+                        $item->fecha_baja    = $baja->fecha_baja_nom;
+                        $item->fecha_baja_rh = $baja->fecha_cita;
                         $item->save();
                     }
                 }
             }
             $mov_proyect = MovimientosProyecto::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_proyect) > 0) {
-                foreach ($mov_proyect as $item) {
-                    if ($item->fecha_fin == null) {
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+            if (count($mov_proyect) > 0){
+                foreach ($mov_proyect as $item){
+                    if ($item->fecha_fin == null ){
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
+                        switch ($item->servicio){
+                            case 'TKBS':
+                                TaskBased::close($empleado->empleado_id);
+                                break;
+                            case 'SERV':
+                                RentaFijaETL::close($empleado->empleado_id);
+                                break;
+                            case 'POLZ':
+                                Poliza::close($empleado->empleado_id);
+                                break;
+                        }
                     }
                 }
             }
             $mov_coordin = MovimientosCoordinador::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_coordin) > 0) {
-                foreach ($mov_coordin as $item) {
-                    if ($item->fecha_fin == null) {
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+            if (count($mov_coordin) > 0){
+                foreach ($mov_coordin as $item){
+                    if ($item->fecha_fin == null ){
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
             }
-            $mov_sueldo = MovimientosSueldo::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_sueldo) > 0) {
-                foreach ($mov_sueldo as $item) {
-                    if ($item->fecha_fin == null) {
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+            $mov_sueldo  = MovimientosSueldo::where('empleado_id', $empleado->empleado_id)->get();
+            if (count($mov_sueldo) > 0){
+                foreach ($mov_sueldo  as $item){
+                    if ($item->fecha_fin == null ){
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
             }
-            $mov_puesto = MovimientosPuesto::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_puesto) > 0) {
-                foreach ($mov_puesto as $item) {
-                    if ($item->fecha_fin == null) {
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+            $mov_puesto  = MovimientosPuesto::where('empleado_id', $empleado->empleado_id)->get();
+            if (count($mov_puesto) > 0){
+                foreach ($mov_puesto  as $item){
+                    if ($item->fecha_fin == null ){
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
             }
             $mov_cod_mov = EmpleadoCodigoMovimiento::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_cod_mov) > 0) {
-                foreach ($mov_cod_mov as $item) {
-                    if ($item->fecha_fin == null) {
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+            if (count($mov_cod_mov) > 0){
+                foreach ($mov_cod_mov as $item){
+                    if ($item->fecha_fin == null ){
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
             }
 
             $codigos = EmpleadoCodigoMovimiento::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($codigos) > 0) {
-                foreach ($codigos as $item) {
-                    if ($item->fecha_fin == null) {
-                        $item->fecha_fin = date('Y-m-d H:i:s');
+            if (count($codigos) > 0){
+                foreach ($codigos as $item){
+                    if ($item->fecha_fin == null ){
+                        $item->fecha_fin = $baja->fecha_baja_nom;
                         $item->save();
                     }
                 }
@@ -345,6 +358,9 @@ class BajasController extends Controller
             $sol_baja->fecha_baja_nom = $request->fecha_baja_nom;
             $sol_baja->obs_cita = $request->obs;
             $sol_baja->save();
+            $empleado          = Empleados::find($sol_baja->id_empleado);
+            $empleado->baja_rh = $sol_baja->fecha_cita;
+            $empleado->save();
             DB::commit();
             event(new BajasEvents($sol_baja, 'confirmar_herra'));
             return response()->json([
@@ -371,7 +387,8 @@ class BajasController extends Controller
 
             $bit->solicitud_id = $request->id;
             $bit->comentario = $request->obs;
-            $bit->log = date('Y-m-d G:i:s');
+            $bit->log       = date('Y-m-d H:i:s');
+            $bit->user_log  = auth()->user()->id_usuario;
 
             $sol_baja->save();
             $bit->save();
@@ -401,7 +418,8 @@ class BajasController extends Controller
 
             $bit->solicitud_id = $request->id;
             $bit->comentario = $request->obs;
-            $bit->log = date('Y-m-d G:i:s');
+            $bit->log = date('Y-m-d H:i:s');
+            $bit->user_log  = auth()->user()->id_usuario;
 
             $sol_baja->save();
             $bit->save();
@@ -430,7 +448,8 @@ class BajasController extends Controller
 
             $bit->solicitud_id = $request->id;
             $bit->comentario = $request->obs;
-            $bit->log = date('Y-m-d G:i:s');
+            $bit->log = date('Y-m-d H:i:s');
+            $bit->user_log  = auth()->user()->id_usuario;
 
             $sol_baja->save();
             $bit->save();
@@ -459,7 +478,8 @@ class BajasController extends Controller
 
             $bit->solicitud_id = $request->id;
             $bit->comentario = $request->obs;
-            $bit->log = date('Y-m-d G:i:s');
+            $bit->log = date('Y-m-d H:i:s');
+            $bit->user_log  = auth()->user()->id_usuario;
 
             $sol_baja->save();
             $bit->save();
@@ -488,7 +508,8 @@ class BajasController extends Controller
 
             $bit->solicitud_id = $request->id;
             $bit->comentario = $request->obs;
-            $bit->log = date('Y-m-d G:i:s');
+            $bit->log = date('Y-m-d H:i:s');
+            $bit->user_log  = auth()->user()->id_usuario;
 
 
             $sol_baja->save();

@@ -280,4 +280,33 @@ class TaskBased
             return $e;
         }
     }
+
+    public static function close($empleado_id){
+        $conn = DB::connection('incore');
+        try{
+            $conn->beginTransaction();
+            $date = date('Y-m-d');
+            $model = DB::table('incore.proyectos_indeplo AS pi')
+                ->join(DB::raw('incore.proyectos_indeplo_recursos AS pir'), DB::raw('pir.proyecto_id'), '=', DB::raw('pi.id'))
+                ->where(DB::raw('pir.empleado_id'), '=', $empleado_id)
+                ->where(DB::raw('MONTH(pi.fecha_requerida)'), '=', DB::raw('MONTH(now())'))
+                ->where(DB::raw('YEAR(pi.fecha_requerida)'), '=', DB::raw('YEAR(now())'))
+                ->update([
+                    'pi.fecha_fin'     => $date,
+                    'pi.fecha_termino' => $date,
+                    'estatus'          => 6,
+                ])
+            ;
+            return [
+                'ok' => true,
+                'data' => $model
+            ];
+        }catch (\Exception $e){
+            $conn->rollBack();
+            return [
+                'ok' => false,
+                'data' => $e->getMessage()
+            ];
+        }
+    }
 }

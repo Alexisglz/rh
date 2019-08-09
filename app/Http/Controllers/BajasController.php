@@ -30,9 +30,9 @@ class BajasController extends Controller
 
     public function index(Request $request)
     {
-        $id = isset($request->id) ? $request->id:0;
-        $this->authorize('access',[User::class, 'listado_bajas']);
-        return view('bajas.index',[
+        $id = isset($request->id) ? $request->id : 0;
+        $this->authorize('access', [User::class, 'listado_bajas']);
+        return view('bajas.index', [
             'id' => $id
         ]);
     }
@@ -41,7 +41,7 @@ class BajasController extends Controller
     {
         $bajas = new SolBajaNomina;;
         $bajas_temp = $bajas::find($id);
-        $comentarios = BajaComentarios::where('id_baja','=',$bajas_temp->id)->delete();
+        $comentarios = BajaComentarios::where('id_baja', '=', $bajas_temp->id)->delete();
         $bajas_temp->delete();
         $data = array(
             'success' => 'success'
@@ -55,73 +55,73 @@ class BajasController extends Controller
     {
         $conn = DB::connection('incore');
         $conn->beginTransaction();
-        try{
-            $id                           = $request->input('id');
-            $empleado_fecha_baja          = $request->input('fecha_baja_definitiva');
-            $obs_baja_def                 = $request->input('observaciones');
+        try {
+            $id = $request->input('id');
+            $empleado_fecha_baja = $request->input('fecha_baja_definitiva');
+            $obs_baja_def = $request->input('observaciones');
 
-            $ObjSolBajaNom                = new SolBajaNomina;
-            $DataBajaNom                  = $ObjSolBajaNom::find($id);
+            $ObjSolBajaNom = new SolBajaNomina;
+            $DataBajaNom = $ObjSolBajaNom::find($id);
             $DataBajaNom->baja_definitiva = $empleado_fecha_baja;
-            $DataBajaNom->obs_baja_def    = $obs_baja_def;
+            $DataBajaNom->obs_baja_def = $obs_baja_def;
             $DataBajaNom->save();
 
-            $empleado                      = Empleados::find($DataBajaNom->id_empleado);
+            $empleado = Empleados::find($DataBajaNom->id_empleado);
             $empleado->empleado_fecha_baja = $empleado_fecha_baja;
-            $empleado->baja_rh             = $empleado_fecha_baja;
-            $empleado->empleado_estatus    = 'INACTIVO';
+            $empleado->baja_rh = $empleado_fecha_baja;
+            $empleado->empleado_estatus = 'INACTIVO';
             $empleado->save();
 
             $mov_recurso = MovimientoRecurso::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_recurso) > 0){
-                foreach ($mov_recurso as $item){
-                    if ($item->fecha_baja == null || $item->fecha_baja_rh == null){
-                        $item->fecha_baja    = date('Y-m-d H:i:s');
+            if (count($mov_recurso) > 0) {
+                foreach ($mov_recurso as $item) {
+                    if ($item->fecha_baja == null || $item->fecha_baja_rh == null) {
+                        $item->fecha_baja = date('Y-m-d H:i:s');
                         $item->fecha_baja_rh = date('Y-m-d H:i:s');
                         $item->save();
                     }
                 }
             }
             $mov_proyect = MovimientosProyecto::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_proyect) > 0){
-                foreach ($mov_proyect as $item){
-                    if ($item->fecha_fin == null ){
+            if (count($mov_proyect) > 0) {
+                foreach ($mov_proyect as $item) {
+                    if ($item->fecha_fin == null) {
                         $item->fecha_fin = date('Y-m-d H:i:s');
                         $item->save();
                     }
                 }
             }
             $mov_coordin = MovimientosCoordinador::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_coordin) > 0){
-                foreach ($mov_coordin as $item){
-                    if ($item->fecha_fin == null ){
+            if (count($mov_coordin) > 0) {
+                foreach ($mov_coordin as $item) {
+                    if ($item->fecha_fin == null) {
                         $item->fecha_fin = date('Y-m-d H:i:s');
                         $item->save();
                     }
                 }
             }
-            $mov_sueldo  = MovimientosSueldo::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_sueldo) > 0){
-                foreach ($mov_sueldo  as $item){
-                    if ($item->fecha_fin == null ){
+            $mov_sueldo = MovimientosSueldo::where('empleado_id', $empleado->empleado_id)->get();
+            if (count($mov_sueldo) > 0) {
+                foreach ($mov_sueldo as $item) {
+                    if ($item->fecha_fin == null) {
                         $item->fecha_fin = date('Y-m-d H:i:s');
                         $item->save();
                     }
                 }
             }
-            $mov_puesto  = MovimientosPuesto::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_puesto) > 0){
-                foreach ($mov_puesto  as $item){
-                    if ($item->fecha_fin == null ){
+            $mov_puesto = MovimientosPuesto::where('empleado_id', $empleado->empleado_id)->get();
+            if (count($mov_puesto) > 0) {
+                foreach ($mov_puesto as $item) {
+                    if ($item->fecha_fin == null) {
                         $item->fecha_fin = date('Y-m-d H:i:s');
                         $item->save();
                     }
                 }
             }
             $mov_cod_mov = EmpleadoCodigoMovimiento::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($mov_cod_mov) > 0){
-                foreach ($mov_cod_mov as $item){
-                    if ($item->fecha_fin == null ){
+            if (count($mov_cod_mov) > 0) {
+                foreach ($mov_cod_mov as $item) {
+                    if ($item->fecha_fin == null) {
                         $item->fecha_fin = date('Y-m-d H:i:s');
                         $item->save();
                     }
@@ -129,9 +129,9 @@ class BajasController extends Controller
             }
 
             $codigos = EmpleadoCodigoMovimiento::where('empleado_id', $empleado->empleado_id)->get();
-            if (count($codigos) > 0){
-                foreach ($codigos as $item){
-                    if ($item->fecha_fin == null ){
+            if (count($codigos) > 0) {
+                foreach ($codigos as $item) {
+                    if ($item->fecha_fin == null) {
                         $item->fecha_fin = date('Y-m-d H:i:s');
                         $item->save();
                     }
@@ -140,9 +140,9 @@ class BajasController extends Controller
             $conn->commit();
             return response()->json([
                 'ok' => true,
-                'data'=>'Datos guardados'
+                'data' => 'Datos guardados'
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $conn->rollBack();
             return [
                 'ok' => false,
@@ -197,52 +197,52 @@ class BajasController extends Controller
 
     public function solicitudBaja(Request $request)
     {
-        try{
+        try {
             DB::beginTransaction();
             //$sol                    = new solicitudbaja;
-            $sol                    = solicitudbaja::find($request->id_empleado);
-            $area                   = auth()->user()->getRol->Descripcion;
-            switch ($area){
+            $sol = solicitudbaja::find($request->id_empleado);
+            $area = auth()->user()->getRol->Descripcion;
+            switch ($area) {
                 case 'Recursos Humanos':
-                    $sol->fecha_emision     = $request->fecha_emision == "" ? null:$request->fecha_emision;
-                    $sol->fecha_baja_sol    = $request->fecha_baja_sol == "" ? null:$request->fecha_baja_sol;
-                    $sol->fecha_baja_nom    = $request->fecha_baja_nom == "" ? null:$request->fecha_baja_nom;
-                    $sol->fecha_cita        = $request->fecha_cita == "" ? null:$request->fecha_cita;
-                    $sol->baja_credencial   = $request->credencial;
-                    $sol->pago_finiquito    = $request->pago_finiquito;
-                    $sol->adeudos           = $request->adeudos;
-                    $sol->tiempo_herra      = $request->retraso;
-                    $sol->obs_herramientas  = $request->obs_herramientas;
+                    $sol->fecha_emision = $request->fecha_emision == "" ? null : $request->fecha_emision;
+                    $sol->fecha_baja_sol = $request->fecha_baja_sol == "" ? null : $request->fecha_baja_sol;
+                    $sol->fecha_baja_nom = $request->fecha_baja_nom == "" ? null : $request->fecha_baja_nom;
+                    $sol->fecha_cita = $request->fecha_cita == "" ? null : $request->fecha_cita;
+                    $sol->baja_credencial = $request->credencial;
+                    $sol->pago_finiquito = $request->pago_finiquito;
+                    $sol->adeudos = $request->adeudos;
+                    $sol->tiempo_herra = $request->retraso;
+                    $sol->obs_herramientas = $request->obs_herramientas;
                     break;
                 case 'Proveedor':
-                    $sol->pago_finiquito  = $request->pago_finiquito;
+                    $sol->pago_finiquito = $request->pago_finiquito;
                     break;
                 case 'Soporte IT':
-                    $sol->baja_computo    = $request->computadora;
+                    $sol->baja_computo = $request->computadora;
                     break;
                 case 'Soporte Celular':
-                    $sol->baja_celular     = $request->celular;
+                    $sol->baja_celular = $request->celular;
                     break;
                 case 'Soporte Auto':
-                    $sol->baja_auto       = $request->auto;
+                    $sol->baja_auto = $request->auto;
                     break;
                 case 'Soporte Almacen':
-                    $sol->baja_almacen    = $request->almacen;
+                    $sol->baja_almacen = $request->almacen;
                     break;
             }
             // $sol->id_empleado= $id_empleado;
             $sol->save();
-            if ($request->adeudos != "" || $request->retraso != "" || $request->obs_herramientas){
-                if ($area != 'Recursos Humanos'){
+            if ($request->adeudos != "" || $request->retraso != "" || $request->obs_herramientas) {
+                if ($area != 'Recursos Humanos') {
                     if (intval($request->id_comment) != 0)
-                        $comentario                 = BajaComentarios::find($request->id_comment);
+                        $comentario = BajaComentarios::find($request->id_comment);
                     else
-                        $comentario                 = new BajaComentarios();
-                    $comentario->id_baja        = $sol->id;
-                    $comentario->area           = $area;
-                    $comentario->adeudo         = $request->adeudos;
-                    $comentario->retraso        = $request->retraso;
-                    $comentario->observaciones  = $request->obs_herramientas;
+                        $comentario = new BajaComentarios();
+                    $comentario->id_baja = $sol->id;
+                    $comentario->area = $area;
+                    $comentario->adeudo = $request->adeudos;
+                    $comentario->retraso = $request->retraso;
+                    $comentario->observaciones = $request->obs_herramientas;
                     $comentario->save();
                 }
             }
@@ -250,7 +250,7 @@ class BajasController extends Controller
             //exit;
             DB::commit();
             return ["ok" => true];
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
@@ -282,303 +282,307 @@ class BajasController extends Controller
         return json_encode($data, JSON_FORCE_OBJECT);
     }
 
-    public function getEstatusBaja(Request $request){
-        try{
+    public function getEstatusBaja(Request $request)
+    {
+        try {
             //$bajas = SolBajaNomina::where('id_empleado','=',$request->id)->whereNull('baja_definitiva')->first();
             $bajas = DB::table('solicitudes_baja_nomina')
-                ->where('id_empleado','=',$request->id)
+                ->where('id_empleado', '=', $request->id)
                 ->whereNull('deleted_at')
                 ->whereNull('baja_definitiva')->get();
             return response()->json([
                 'ok' => true,
                 'data' => $bajas
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return $e;
         }
     }
 
-    public function getBaja(Request $request){
+    public function getBaja(Request $request)
+    {
         $baja = solicitudbaja::find($request->id);
-        $comments = BajaComentarios::where('id_baja',$baja->id)->where('area',auth()->user()->getRol->Descripcion)->first();
+        $comments = BajaComentarios::where('id_baja', $baja->id)->where('area', auth()->user()->getRol->Descripcion)->first();
         $data = array(
-            'id'                => $baja->id,
-            'id_empleado'       => $baja->id_empleado,
-            'fecha_baja_sol'    => $baja->fecha_baja_sol,
-            'fecha_baja_nom'    => $baja->fecha_baja_nom,
-            'fecha_cita'        => $baja->fecha_cita,
-            'baja_computo'      => $baja->baja_computo,
-            'baja_auto'         => $baja->baja_auto,
-            'baja_almacen'      => $baja->baja_almacen,
-            'baja_credencial'   => $baja->baja_credencial,
-            'baja_celular'      => $baja->baja_celular,
-            'pago_finiquito'    => $baja->pago_finiquito,
-            'fecha_pago_fin'    => $baja->fecha_pago_fin,
-            'baja_definitiva'   => $baja->baja_definitiva,
-            'adeudos'           => $baja->adeudos,
-            'tiempo_herra'      => $baja->tiempo_herra,
-            'status'            => $baja->status,
-            'incidencias'       => $baja->incidencias,
-            'observaciones'     => $baja->observaciones,
-            'motivo'            => $baja->motivo,
+            'id' => $baja->id,
+            'id_empleado' => $baja->id_empleado,
+            'fecha_baja_sol' => $baja->fecha_baja_sol,
+            'fecha_baja_nom' => $baja->fecha_baja_nom,
+            'fecha_cita' => $baja->fecha_cita,
+            'baja_computo' => $baja->baja_computo,
+            'baja_auto' => $baja->baja_auto,
+            'baja_almacen' => $baja->baja_almacen,
+            'baja_credencial' => $baja->baja_credencial,
+            'baja_celular' => $baja->baja_celular,
+            'pago_finiquito' => $baja->pago_finiquito,
+            'fecha_pago_fin' => $baja->fecha_pago_fin,
+            'baja_definitiva' => $baja->baja_definitiva,
+            'adeudos' => $baja->adeudos,
+            'tiempo_herra' => $baja->tiempo_herra,
+            'status' => $baja->status,
+            'incidencias' => $baja->incidencias,
+            'observaciones' => $baja->observaciones,
+            'motivo' => $baja->motivo,
             'conocimiento_baja' => $baja->conocimiento_baja,
-            'vobo_jefe'         => $baja->vobo_jefe,
-            'solicitante'       => $baja->solicitante,
-            'fecha_emision'     => $baja->fecha_emision,
-            'obs_baja_def'      => $baja->obs_baja_def,
-            'obs_herramientas'  => $baja->obs_herramientas,
-            'comments'          => $comments!=null ? $comments:0,
-            'area'              => auth()->user()->getRol->Descripcion,
+            'vobo_jefe' => $baja->vobo_jefe,
+            'solicitante' => $baja->solicitante,
+            'fecha_emision' => $baja->fecha_emision,
+            'obs_baja_def' => $baja->obs_baja_def,
+            'obs_herramientas' => $baja->obs_herramientas,
+            'comments' => $comments != null ? $comments : 0,
+            'area' => auth()->user()->getRol->Descripcion,
         );
         return response()->json($data);
     }
 
-    public function saveFechaCita(Request $request){
-        $this->authorize('access',[User::class, 'cita_baja']);
-        try{
+    public function saveFechaCita(Request $request)
+    {
+        $this->authorize('access', [User::class, 'cita_baja']);
+        try {
             DB::beginTransaction();
-            $sol_baja                 = SolBajaNomina::find($request->id);
-            $sol_baja->fecha_cita     = $request->cita;
+            $sol_baja = SolBajaNomina::find($request->id);
+            $sol_baja->fecha_cita = $request->cita;
             $sol_baja->fecha_baja_nom = $request->fecha_baja_nom;
-            $sol_baja->obs_cita       = $request->obs;
+            $sol_baja->obs_cita = $request->obs;
             $sol_baja->save();
             DB::commit();
             event(new BajasEvents($sol_baja, 'confirmar_herra'));
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
+                "ok" => true,
+                "data" => $sol_baja->id
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function bajaComputo(Request $request){
-        $this->authorize('access',[User::class, 'baja_computo']);
-        try{
+    public function bajaComputo(Request $request)
+    {
+        $this->authorize('access', [User::class, 'baja_computo']);
+        try {
             DB::beginTransaction();
-            $sol_baja               = solicitudbaja::find($request->id);
-            $bit                    = new SolicitudesBitacoraBajas();
+            $sol_baja = solicitudbaja::find($request->id);
+            $bit = new SolicitudesBitacoraBajas();
 
             $sol_baja->baja_computo = "true";
-            $sol_baja->obs_compu    = $request->obs;
+            $sol_baja->obs_compu = $request->obs;
             $sol_baja->adeudo_compu = $request->cantidad;
 
-            $bit->solicitud_id=$request->id;
-            $bit->comentario=$request->obs;
-            $bit->log=date('Y-m-d G:i:s');
+            $bit->solicitud_id = $request->id;
+            $bit->comentario = $request->obs;
+            $bit->log = date('Y-m-d G:i:s');
 
             $sol_baja->save();
             $bit->save();
 
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
+                "ok" => true,
+                "data" => $sol_baja->id
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function bajaCel(Request $request){
-        $this->authorize('access',[User::class, 'baja_celular']);
-        try{
+    public function bajaCel(Request $request)
+    {
+        $this->authorize('access', [User::class, 'baja_celular']);
+        try {
             DB::beginTransaction();
-            $sol_baja               = solicitudbaja::find($request->id);
-            $bit                    = new SolicitudesBitacoraBajas();
+            $sol_baja = solicitudbaja::find($request->id);
+            $bit = new SolicitudesBitacoraBajas();
 
             $sol_baja->baja_celular = "true";
-            $sol_baja->obs_cel      = $request->obs;
-            $sol_baja->adeudo_cel   = $request->cantidad;
+            $sol_baja->obs_cel = $request->obs;
+            $sol_baja->adeudo_cel = $request->cantidad;
 
-            $bit->solicitud_id=$request->id;
-            $bit->comentario=$request->obs;
-            $bit->log=date('Y-m-d G:i:s');
-
-            $sol_baja->save();
-            $bit->save();
-            DB::commit();
-            return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
-            ]);
-        }catch (\Exception $e){
-            DB::rollBack();
-            return $e;
-        }
-    }
-
-    public function bajaAuto(Request $request){
-        $this->authorize('access',[User::class, 'baja_coche']);
-        try{
-            DB::beginTransaction();
-            $sol_baja               = solicitudbaja::find($request->id);
-            $bit                    = new SolicitudesBitacoraBajas();
-
-            $sol_baja->baja_auto    = "true";
-            $sol_baja->obs_auto     = $request->obs;
-            $sol_baja->adeudo_auto  = $request->cantidad;
-
-            $bit->solicitud_id=$request->id;
-            $bit->comentario=$request->obs;
-            $bit->log=date('Y-m-d G:i:s');
+            $bit->solicitud_id = $request->id;
+            $bit->comentario = $request->obs;
+            $bit->log = date('Y-m-d G:i:s');
 
             $sol_baja->save();
             $bit->save();
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
+                "ok" => true,
+                "data" => $sol_baja->id
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function bajaHerra(Request $request){
-        $this->authorize('access',[User::class, 'baja_herramientas']);
-        try{
+    public function bajaAuto(Request $request)
+    {
+        $this->authorize('access', [User::class, 'baja_coche']);
+        try {
             DB::beginTransaction();
-            $sol_baja               = solicitudbaja::find($request->id);
-            $bit                    = new SolicitudesBitacoraBajas();
+            $sol_baja = solicitudbaja::find($request->id);
+            $bit = new SolicitudesBitacoraBajas();
+
+            $sol_baja->baja_auto = "true";
+            $sol_baja->obs_auto = $request->obs;
+            $sol_baja->adeudo_auto = $request->cantidad;
+
+            $bit->solicitud_id = $request->id;
+            $bit->comentario = $request->obs;
+            $bit->log = date('Y-m-d G:i:s');
+
+            $sol_baja->save();
+            $bit->save();
+            DB::commit();
+            return response()->json([
+                "ok" => true,
+                "data" => $sol_baja->id
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e;
+        }
+    }
+
+    public function bajaHerra(Request $request)
+    {
+        $this->authorize('access', [User::class, 'baja_herramientas']);
+        try {
+            DB::beginTransaction();
+            $sol_baja = solicitudbaja::find($request->id);
+            $bit = new SolicitudesBitacoraBajas();
 
             $sol_baja->baja_almacen = "true";
-            $sol_baja->obs_alma     = $request->obs;
-            $sol_baja->adeudo_alma  = $request->cantidad;
+            $sol_baja->obs_alma = $request->obs;
+            $sol_baja->adeudo_alma = $request->cantidad;
 
-            $bit->solicitud_id=$request->id;
-            $bit->comentario=$request->obs;
-            $bit->log=date('Y-m-d G:i:s');
+            $bit->solicitud_id = $request->id;
+            $bit->comentario = $request->obs;
+            $bit->log = date('Y-m-d G:i:s');
 
             $sol_baja->save();
             $bit->save();
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
+                "ok" => true,
+                "data" => $sol_baja->id
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function bajaCred(Request $request){
-        $this->authorize('access',[User::class, 'baja_credencial']);
-        try{
+    public function bajaCred(Request $request)
+    {
+        $this->authorize('access', [User::class, 'baja_credencial']);
+        try {
             DB::beginTransaction();
-            $sol_baja                  = solicitudbaja::find($request->id);
-            $bit                    = new SolicitudesBitacoraBajas();
+            $sol_baja = solicitudbaja::find($request->id);
+            $bit = new SolicitudesBitacoraBajas();
 
             $sol_baja->baja_credencial = "true";
-            $sol_baja->obs_cred        = $request->obs;
-            $sol_baja->adeudo_cred     = $request->cantidad;
+            $sol_baja->obs_cred = $request->obs;
+            $sol_baja->adeudo_cred = $request->cantidad;
 
-            $bit->solicitud_id=$request->id;
-            $bit->comentario=$request->obs;
-            $bit->log=date('Y-m-d G:i:s');
+            $bit->solicitud_id = $request->id;
+            $bit->comentario = $request->obs;
+            $bit->log = date('Y-m-d G:i:s');
 
 
             $sol_baja->save();
             $bit->save();
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
+                "ok" => true,
+                "data" => $sol_baja->id
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function pagoFin(Request $request){
-        $this->authorize('access',[User::class, 'baja_rh']);
-        try{
+    public function pagoFin(Request $request)
+    {
+        $this->authorize('access', [User::class, 'baja_rh']);
+        try {
             DB::beginTransaction();
-            $sol_baja                  = solicitudbaja::find($request->id);
-            $sol_baja->pago_finiquito  = "true";
+            $sol_baja = solicitudbaja::find($request->id);
+            $sol_baja->pago_finiquito = "true";
             $sol_baja->save();
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja->id
+                "ok" => true,
+                "data" => $sol_baja->id
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
     }
 
-    public function cambioNom(Request $request){
-        try{
+    public function cambioNom(Request $request)
+    {
+        try {
             DB::beginTransaction();
-            $sol_baja                 = SolBajaNomina::find($request->id);
+            $sol_baja = SolBajaNomina::find($request->id);
             $sol_baja->fecha_baja_nom = $request->date;
             $sol_baja->save();
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $sol_baja
+                "ok" => true,
+                "data" => $sol_baja
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                "ok"    => true,
-                "data"  => $e->getMessage()
+                "ok" => true,
+                "data" => $e->getMessage()
             ]);
         }
         dd($request);
     }
+
     public function verBitacora(Request $request)
     {
-
-    $bit=SolicitudesBitacoraBajas::where('solicitud_id',$request->solicitud_id)->get();
-
-    $count = strlen($bit);
-
-
-    if($count>2){
-
-return response()->json(['bit'=>$bit]);
-    }
-    else{
-      return response()->json(['bit'=>$request->solicitud_id]);
-    }
-
+        $bit = SolicitudesBitacoraBajas::where('solicitud_id', $request->solicitud_id)->get();
+        $count = strlen($bit);
+        if ($count > 2) {
+            return response()->json(['bit' => $bit]);
+        } else {
+            return response()->json(['bit' => $request->solicitud_id]);
+        }
 
     }
+
     public function addBitacora(Request $request)
     {
-      DB::connection();
-      try {
-        DB::beginTransaction();
-        $bit = new SolicitudesBitacoraBajas();
-        $bit->solicitud_id=$request->solicitud_id;
-        $bit->comentario=$request->entrada_bitacora;
-        $bit->user_log='Incore';
-        $bit->log=date('Y-m-d G:i:s');
-        $bit->save();
-        DB::commit();
-        $bit_complete=SolicitudesBitacoraBajas::where('solicitud_id',$bit->solicitud_id)->get();
-        return response()->json(['ok'=>1,'bit'=>$bit,'bit_complete'=>$bit_complete]);
+        DB::connection();
+        try {
+            DB::beginTransaction();
+            $bit               = new SolicitudesBitacoraBajas();
+            $bit->solicitud_id = $request->solicitud_id;
+            $bit->comentario   = $request->entrada_bitacora;
+            $bit->user_log     = auth()->user()->id_usuario;
+            $bit->log          = date('Y-m-d H:i:s');
+            $bit->save();
+            DB::commit();
+            $bit_complete = SolicitudesBitacoraBajas::where('solicitud_id', $bit->solicitud_id)->get();
+            return response()->json(['ok' => 1, 'bit' => $bit, 'bit_complete' => $bit_complete]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['ok' => 0, 'data' => $e->getMessage()]);
 
-
-      } catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json(['ok'=>0,'data'=>$e->getMessage()]);
-
-      }
+        }
 
     }
 
 
-    public function cambioComment(Request $request){
-        try{
+    public function cambioComment(Request $request)
+    {
+        try {
             DB::beginTransaction();
             $type = $request->type;
 
@@ -586,67 +590,67 @@ return response()->json(['bit'=>$bit]);
             $bit = new SolicitudesBitacoraBajas();
 
 
-            switch ($type){
+            switch ($type) {
                 case 'Cita':
                     $baja->obs_cita = $request->comment;
 
-                    $bit->solicitud_id=$request->id;
-                    $bit->comentario=$request->comment;
-                    $bit->log=date('Y-m-d G:i:s');
+                    $bit->solicitud_id = $request->id;
+                    $bit->comentario = $request->comment;
+                    $bit->log = date('Y-m-d G:i:s');
                     break;
                 case 'Computo':
                     $baja->obs_compu = $request->comment;
                     $baja->adeudo_compu = $request->deuda;
 
-                    $bit->solicitud_id=$request->id;
-                    $bit->comentario=$request->comment;
-                    $bit->log=date('Y-m-d G:i:s');
+                    $bit->solicitud_id = $request->id;
+                    $bit->comentario = $request->comment;
+                    $bit->log = date('Y-m-d G:i:s');
                     break;
                 case 'Celular':
                     $baja->obs_cel = $request->comment;
                     $baja->adeudo_cel = $request->deuda;
 
-                    $bit->solicitud_id=$request->id;
-                    $bit->comentario=$request->comment;
-                    $bit->log=date('Y-m-d G:i:s');
+                    $bit->solicitud_id = $request->id;
+                    $bit->comentario = $request->comment;
+                    $bit->log = date('Y-m-d G:i:s');
                     break;
                 case 'Auto':
                     $baja->obs_auto = $request->comment;
                     $baja->adeudo_auto = $request->deuda;
 
-                    $bit->solicitud_id=$request->id;
-                    $bit->comentario=$request->comment;
-                    $bit->log=date('Y-m-d G:i:s');
+                    $bit->solicitud_id = $request->id;
+                    $bit->comentario = $request->comment;
+                    $bit->log = date('Y-m-d G:i:s');
                     break;
                 case 'Almacen':
                     $baja->obs_alma = $request->comment;
                     $baja->adeudo_alma = $request->deuda;
 
-                    $bit->solicitud_id=$request->id;
-                    $bit->comentario=$request->comment;
-                    $bit->log=date('Y-m-d G:i:s');
+                    $bit->solicitud_id = $request->id;
+                    $bit->comentario = $request->comment;
+                    $bit->log = date('Y-m-d G:i:s');
                     break;
                 case 'Credencial':
                     $baja->obs_cred = $request->comment;
                     $baja->adeudo_cred = $request->deuda;
 
-                    $bit->solicitud_id=$request->id;
-                    $bit->comentario=$request->comment;
-                    $bit->log=date('Y-m-d G:i:s');
+                    $bit->solicitud_id = $request->id;
+                    $bit->comentario = $request->comment;
+                    $bit->log = date('Y-m-d G:i:s');
                     break;
             }
             $baja->save();
             $bit->save();
             DB::commit();
             return response()->json([
-                "ok"    => true,
-                "data"  => $baja
+                "ok" => true,
+                "data" => $baja
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                "ok"    => true,
-                "data"  => $e->getMessage()
+                "ok" => true,
+                "data" => $e->getMessage()
             ]);
         }
     }

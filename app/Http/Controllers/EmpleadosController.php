@@ -282,8 +282,8 @@ class EmpleadosController extends Controller
             $emp_temp->empleado_num           = $request->eempleado;
             $emp_temp->empleado_alcatel_id    = $request->eind_val == "" ? 0:$request->eind_val;
             $emp_temp->empleado_nombre        = $request->enombre;
-            $emp_temp->empleado_apaterno      = $request->eamaterno;
-            $emp_temp->empleado_amaterno      = $request->eapaterno;
+            $emp_temp->empleado_apaterno      = $request->eapaterno;
+            $emp_temp->empleado_amaterno      = $request->eamaterno;
             $emp_temp->calle                  = $request->ecalle;
             $emp_temp->num_exterior           = $request->eno_exterior;
             $emp_temp->num_interior           = $request->eno_interior;

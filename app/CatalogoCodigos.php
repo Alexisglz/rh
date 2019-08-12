@@ -114,7 +114,7 @@ class CatalogoCodigos extends Model
     public static function getCodigosSueldo($term, $edit = false){
         $array = DB::table('incore.catalogo_nokia_codigos')
                 ->select('*')
-                ->where('tipo','like','%sueldo%')
+                ->whereIN('tipo',['sueldo','cotización'])
                 ->where('codigo','like','%'.$term.'%')
                 ->whereNull('caduca');
         if ($edit == true)

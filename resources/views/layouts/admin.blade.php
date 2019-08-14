@@ -23,7 +23,7 @@
 <!-- DateTimePicker -->
     {!! Html::style('plugins/datetimepicker/datetimepicker.min.css') !!}
 <!-- Bootstrap Toggle -->
-    {!! Html::style('plugins/bootstrap-toggle/css/bootstrap-toggle.min.css') !!}
+    <link rel="stylesheet" href="{{asset('/plugins/bootstrap-toggle/css/bootstrap-toggle.min.css')}}">
 <!-- jQuery -->
     {!! Html::script('plugins/jquery/jquery.min.js') !!}
 <!-- jQuery UI -->

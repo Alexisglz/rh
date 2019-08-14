@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('contenido')
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">

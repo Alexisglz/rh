@@ -342,7 +342,7 @@ class IncidenciasController extends Controller
             }
             if ($empleado->getWBS != null){ //Buscar la RO de administrativos con el wbs al que se le solicita la incidencia
                 $proy_rec = ProyectosIndeplo::where('proyecto_nombre','LIKE', '%'.$empleado->getWBS->wbs.'%')
-                    ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '=', date('m'))
+                    ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '>=', date('m'))
                     ->get();
                 if (count($proy_rec) > 0){
                     foreach ($proy_rec as $pros){

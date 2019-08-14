@@ -361,6 +361,11 @@ class BajasController extends Controller
             $empleado          = Empleados::find($sol_baja->id_empleado);
             $empleado->baja_rh = $sol_baja->fecha_cita;
             $empleado->save();
+            $mov_rec = MovimientoRecurso::where('empleado_id', $empleado->empleado_id)->whereNull('fecha_baja_rh')->first();
+            if ($mov_rec){
+                $mov_rec->fecha_baja_rh = $sol_baja->fecha_cita;
+                $mov_rec->save();
+            }
             DB::commit();
             event(new BajasEvents($sol_baja, 'confirmar_herra'));
             return response()->json([

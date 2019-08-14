@@ -118,8 +118,11 @@ var table = $('#darbaja-table').DataTable({
             "render": function (data, type, row) {
                 if (cancel_baja == 1) {
                     switch (data) {
-                        case "PENDIENTE"  :
-                            return "<button data-tipo='cancel' class='cancel btn btn-xs btn-success iconInfo'><i class='fas fa-ban'></i></button>";
+                        case "PENDIENTE":
+                            if (row.fecha_cita != null && row.fecha_cita != "")
+                                return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';
+                            else
+                                return "<button data-tipo='cancel' class='cancel btn btn-xs btn-success iconInfo'><i class='fas fa-ban'></i></button>";
                             break;
                         default :
                             return '<i class="fa fa-ban" style="color:orange;font-size:20px"></i>';

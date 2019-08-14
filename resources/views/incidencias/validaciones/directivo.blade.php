@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('contenido')
-    {!! Html::style('plugins/bootstrap-toggle/css/bootstrap-toggle.min.css') !!}
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <div class="container-fluid">
         <div class="row">

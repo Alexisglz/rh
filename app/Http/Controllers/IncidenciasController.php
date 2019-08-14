@@ -323,28 +323,22 @@ class IncidenciasController extends Controller
            if ($rec_proyectos) {//Buscar si el usuario esta relacionado a una RO
                foreach ($rec_proyectos as $rec_proyecto){
                    $proyecto_ind = ProyectosIndeplo::where('id', '=', $rec_proyecto->proyecto_id)
-                       ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '=', date('m'))->first();
+                       ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '>=', date('m'))->first();
                    if ($proyecto_ind) { //validar que la RO sea valida
                        $servicio = $proyecto_ind->servicio;
-                       $tipo_proyecto = $proyecto_ind->tipo_proyecto;
-                       //if ($tipo_proyecto == 2 || $tipo_proyecto == 3 || $tipo_proyecto == 4 || $tipo_proyecto == 6){
                        if ($servicio == "RREC" || $servicio == "POLZ" || $servicio == "TKBS" || $servicio == "SERV") { // En caso de estos servicios se regresa la RO a la que pertenecen
-                           foreach ($proyecto_ind as $pros){
-                               $text = $pros->pedido.' '.$pros->proyecto_nombre.' '.$pros->sitio;
-                               $data[] = ['value' => $text, 'id' => $pros->id, 'monto_venta' => $pros->monto_venta];
-                           }
                            $text = $proyecto_ind->pedido . ' ' . $proyecto_ind->proyecto_nombre . ' ' . $proyecto_ind->sitio;
                            $data[] = ['value' => $text, 'id' => $proyecto_ind->id, 'monto_venta' => $proyecto_ind->monto_venta];
                            //return response()->json($data);
                        } elseif ($proyecto_ind->cliente == "NAE" && $proyecto_ind->tecnologia == "GEST") {// En caso de los NAE se regresa la RO a la que pertenecen
                            $text = $proyecto_ind->pedido . ' ' . $proyecto_ind->proyecto_nombre . ' ' . $proyecto_ind->sitio;
                            $data[] = ['value' => $text, 'id' => $proyecto_ind->id,'monto_venta' => $proyecto_ind->monto_venta];
+                           //return response()->json($data);
                        }
-                       //}
                    }
                }
                if (!empty($data))
-                return response()->json($data);
+                   return response()->json($data);
             }
             if ($empleado->getWBS != null){ //Buscar la RO de administrativos con el wbs al que se le solicita la incidencia
                 $proy_rec = ProyectosIndeplo::where('proyecto_nombre','LIKE', '%'.$empleado->getWBS->wbs.'%')

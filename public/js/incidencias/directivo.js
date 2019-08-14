@@ -48,7 +48,7 @@ var table      = $('#table_dir').DataTable({
             "className": "text-center",
             render: function (data, type, row) {
                 var template = '';
-                template = '<input id="'+row.id+'" type="checkbox" data-toggle="toggle" data-on="<i class=\'fa fa-check\'></i>" ' +
+                template = '<input id="'+row.id+'" type="checkbox" class="toggle_1" data-toggle="toggle" data-on="<i class=\'fa fa-check\'></i>" ' +
                     'data-off="<i class=\'fa fa-close\'></i>" data-onstyle ="success" data-offstyle="danger" data-size="small" checked="checked">';
                 return template;
             }
@@ -82,6 +82,11 @@ var table      = $('#table_dir').DataTable({
             }
         },
     ],
+    drawCallback: function(settings) {
+        $(function() {
+            $('.toggle_1').bootstrapToggle();
+        })
+    }
 });
 
 function save() {

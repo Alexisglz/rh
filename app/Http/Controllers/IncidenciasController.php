@@ -326,7 +326,7 @@ class IncidenciasController extends Controller
                 if ($proyecto_ind) { //validar que la RO sea valida
                     $servicio = $proyecto_ind->servicio;
                     $tipo_proyecto = $proyecto_ind->tipo_proyecto;
-                    if ($tipo_proyecto == 2 || $tipo_proyecto == 3 || $tipo_proyecto == 4 || $tipo_proyecto == 6){
+                    //if ($tipo_proyecto == 2 || $tipo_proyecto == 3 || $tipo_proyecto == 4 || $tipo_proyecto == 6){
                         if ($servicio == "RREC" || $servicio == "POLZ" || $servicio == "TKBS" || $servicio == "SERV") { // En caso de estos servicios se regresa la RO a la que pertenecen
                             $text = $proyecto_ind->pedido . ' ' . $proyecto_ind->proyecto_nombre . ' ' . $proyecto_ind->sitio;
                             $data[] = ['value' => $text, 'id' => $proyecto_ind->id, 'monto_venta' => $proyecto_ind->monto_venta];
@@ -336,7 +336,7 @@ class IncidenciasController extends Controller
                             $data[] = ['value' => $text, 'id' => $proyecto_ind->id,'monto_venta' => $proyecto_ind->monto_venta];
                             return response()->json($data);
                         }
-                    }
+                    //}
                 }
             }
             if ($empleado->getWBS != null){ //Buscar la RO de administrativos con el wbs al que se le solicita la incidencia

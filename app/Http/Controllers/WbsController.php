@@ -36,7 +36,7 @@ class WbsController extends Controller
     }
 
     public function rentaEtl(){
-        $codigos = RentaFijaETL::create(2287);
+        $codigos = RentaFijaETL::create(2288);
         return $codigos;
     }
 

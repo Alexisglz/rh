@@ -91,7 +91,7 @@ to get the desired effect
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('altas.index') }}" class="nav-link">{{__('Inicio')}}</a>
+                <a href="{{ route('home') }}" class="nav-link">{{__('Inicio')}}</a>
             </li>
         </ul>
 

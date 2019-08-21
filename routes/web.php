@@ -210,9 +210,6 @@ Route::group(["prefix" => "incidencias", "middleware" => ["auth"]], function() {
 });
 
 Route::group(["prefix" => "mail", "middleware" => ["auth"]], function() {
-    Route::get('/store', 'MailController@store')->name('mail.store');
-    Route::get('/cita_firma', 'MailController@citaFirma')->name('mail.cita_firma');
-    Route::get('/cita_firma', 'MailController@citaFirma')->name('mail.cita_firma');
 });
 
 Route::group(["prefix" => "nuevas", "middleware" => ["auth"]], function() {

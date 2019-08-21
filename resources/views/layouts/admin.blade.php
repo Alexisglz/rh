@@ -146,7 +146,7 @@ to get the desired effect
     </nav>
     <aside class="main-sidebar sidebar-dark-primary">
         <div class="sidebar">
-            <a href="{{ route('altas.index') }}" class="brand-link">
+            <a href="{{ route('home') }}" class="brand-link">
                 <img src="{{ asset('img/logo_indeplo_alt.png') }}" alt="Logo Indeplo" class="brand-image">
                 <br>
             </a>

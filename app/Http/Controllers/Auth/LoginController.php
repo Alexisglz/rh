@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/altas';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -86,7 +86,7 @@ class LoginController extends Controller
                 return redirect(session('link'));
             }
             else
-                return redirect()->route('altas.index');
+                return redirect()->route('home');
         }
         else
         {

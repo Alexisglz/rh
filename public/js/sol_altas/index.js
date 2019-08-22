@@ -105,7 +105,7 @@ var table      = $('#altas-table').DataTable({
             "render": function (data, type, row) {
                 if (cancel_sol == 1) {
                     var view = '<button class="btn btn-outline-danger eliminar_sol"><i class="fa fa-ban"></i></button>';
-                    if (row.status_cita == "EMPLEADO CREADO" || data['Auth direccion'] != 'x') {
+                    if (row.status_cita == "EMPLEADO CREADO" || data['id_rechazo'] != null) {
                         return '';
                     } else
                         return view;

@@ -23,9 +23,7 @@ class MailController extends Controller
             $dest_copia_oculta = $request->dest_copia_oculta;
             $url_adjunto       = $request->url_adjunto;
             //dd($dest);
-            foreach ($dest as $item){
-                Mail::to($item)->cc($dest_copia)->bcc($dest_copia_oculta)->send(new IncoreMail($body,$subject));
-            }
+            Mail::to($dest)->cc($dest_copia)->bcc($dest_copia_oculta)->send(new IncoreMail($body,$subject));
             return response()->json(true);
         }catch (\Exception $e){
             return response()->json(false);

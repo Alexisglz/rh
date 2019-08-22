@@ -319,7 +319,7 @@ class UsuariosController extends Controller
                         'listado_empleados','listado_bajas','listado_citas','listado_incidencias','crear_incidencias',
                         'listado_autorizar','aut_cancel_incidencia','exportar_solicitudes','exportar_empleados',
                         'exportar_incidencias','ver_sueldo','cita_baja','baja_credencial','listar_todos','ver_asimilados_inci',
-                        'ver_tradicional_inci','cambio_viable'
+                        'ver_tradicional_inci','cambio_viable','cancel_sol_alta'
                     ];
                     break;
                 case 'DIR':

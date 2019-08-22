@@ -79,6 +79,7 @@
                     <th>{{__('ID')}}</th>
                     <th>{{__('INFO')}}</th>
                     <th>{{__('EDITAR')}}</th>
+                    <th>{{__('CANCELAR')}}</th>
                     <th>{{__('BITACORA')}}</th>
                     <th>{{__('WBS')}}</th>
                     <th>{{__('RECURSO')}}</th>
@@ -165,6 +166,7 @@
         $ver_checks        = auth()->user()->can('access',[\App\User::class,'ver_autorizaciones'])? 1:0;
         $cont_firm         = auth()->user()->can('access',[\App\User::class,'contrato_firmado'])? 1:0;
         $ver_sueldo        = auth()->user()->can('access',[\App\User::class,'ver_sueldo'])? 1:0;
+        $cancel_sol        = auth()->user()->can('access',[\App\User::class,'cancel_sol_alta'])? 1:0;
     @endphp
     <script>
         var edit              = '{{$edit}}';
@@ -177,6 +179,7 @@
         var ver_checks        = '{{$ver_checks}}';
         var cont_firm         = '{{$cont_firm}}';
         var ver_sueldo        = '{{$ver_sueldo }}';
+        var cancel_sol        = '{{$cancel_sol }}';
         var id_post           = '{{$id}}';
         $(function () {
             $("#computadora_check").bootstrapToggle({
@@ -206,7 +209,7 @@
         })
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {!! Html::script('js/sol_altas/index.js') !!}
+    {!! Html::script('js/sol_altas/index.js?v='.time()) !!}
     {!! Html::script('js/validador.js') !!}
 
     {!! Form::close() !!}

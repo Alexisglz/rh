@@ -946,11 +946,20 @@ class AltasController extends Controller
             GlobalModel::SetBitacoras("$Tipo_bita", $sol->id, auth()->user()->id_usuario, 0, "$mensaje", "$opcional");
             $auth->save();
             DB::commit();
-            event(new AltaEvents($sol, 'notificar_auth_rh'));
+            //event(new AltaEvents($sol, 'notificar_auth_rh'));
+            if(isset($request->peticion))
+                return response()->json([
+                    'ok' => true,
+                    'data' => $sol
+                ]);
             return redirect()->route('altas.index')->with('success','Solicitud Actualizada correctamente');
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
+            if(isset($request->peticion))
+                return response()->json([
+                    'ok' => true,
+                    'data' => $e->getMessage()
+                ]);
             return back()->with('Error', 'Ocurrio un error');
         }
     }

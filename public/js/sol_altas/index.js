@@ -36,7 +36,8 @@ var table      = $('#altas-table').DataTable({
         {data: 'id', name: 'id',className:'id text-center'},
         {name: 'i', orderable: false, searchable: false},
         {name: 'e', orderable: false, searchable: false, className:'editar_v text-center'},
-        {name: 'b', orderable: false, searchable: false},
+        {name: 'b', orderable: false, searchable: false,className:'cancelar_v text-center'},
+        {name: null, orderable: false, searchable: false},
         {data: 'WBS',                           name: 'WBS', className:'width-auto'},
         {data: 'Nombre',                        name: 'Nombre', className:'width-auto'},
         {data: 'fecha solicitud',               name: 'fecha solicitud', className:'width-auto'},
@@ -101,10 +102,25 @@ var table      = $('#altas-table').DataTable({
             "targets": 3, // your case first column
             "data": null,
             "className": "text-center",
+            "render": function (data, type, row) {
+                if (cancel_sol == 1) {
+                    var view = '<button class="btn btn-outline-danger eliminar_sol"><i class="fa fa-ban"></i></button>';
+                    if (row.status_cita == "EMPLEADO CREADO" || data['Auth direccion'] != 'x') {
+                        return '';
+                    } else
+                        return view;
+                }
+                return '';
+            }
+        },
+        {
+            "targets": 4, // your case first column
+            "data": null,
+            "className": "text-center",
             "defaultContent": "<button data-tipo='Bitacora' class='bitacora btn btn-xs btn-danger iconBitacora'><i class=' fa fa-book nav-icon nav-icon'></i></button>",
         },
         {
-            "targets": 9, // your case first column
+            "targets": 10, // your case first column
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
@@ -128,7 +144,7 @@ var table      = $('#altas-table').DataTable({
             }
         },
         {
-            "targets": 10, // your case first column
+            "targets": 11, // your case first column
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
@@ -157,7 +173,7 @@ var table      = $('#altas-table').DataTable({
             }
         },
         {
-            "targets": 11,
+            "targets": 12,
             "data": null,
             "className": "text-center",
             "render" : function (data, type, row) {
@@ -180,7 +196,7 @@ var table      = $('#altas-table').DataTable({
             }
         },
         {
-            "targets": 12,
+            "targets": 13,
             "data": null,
             "className": "text-center",
             "render" : function (data, type, row) {
@@ -203,7 +219,7 @@ var table      = $('#altas-table').DataTable({
             }
         },
         {
-            "targets": 13,
+            "targets": 14,
             "data": null,
             "className": "text-center",
             "render" : function (data, type, row) {
@@ -226,7 +242,7 @@ var table      = $('#altas-table').DataTable({
             }
         },
         {
-            "targets": 14,
+            "targets": 15,
             "data": null,
             "className": "text-center",
             "render" : function (data, type, row) {
@@ -249,7 +265,7 @@ var table      = $('#altas-table').DataTable({
             }
         },
         {
-            "targets": 15,
+            "targets": 16,
             "data": null,
             "className": "text-center",
             "render" : function (data, type, row) {
@@ -310,6 +326,51 @@ $('#altas-table tbody').on('click', '.cita', function () {
     $('#fecha_cita').val(data['fecha solicitud']);
     data_table = data;
     iduatCoche = data['id'];
+});
+
+$('#altas-table tbody').on('click', '.eliminar_sol', function () {
+    data       = table.row($(this).parent()).data();
+    var id = data.id;
+    Swal.fire({
+        title: 'Cancelar Solicitud',
+        text: '¿Confirmar la cancelación de la solicitud?',
+        showCancelButton: true,
+        type: 'error'
+    }).then((ok) => {
+        if(ok.value == true){
+            $.ajax({
+                url: '/altas/aprobar_dir',
+                type: 'POST',
+                dataType: 'JSON',
+                data:{
+                    _token: CSRF_TOKEN,
+                    id: id,
+                    tipo: 'rechazar',
+                    peticion: 'ajax'
+                },
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success: function (response) {
+                    if(response.ok == true){
+                        Swal.fire({
+                            title: 'Solicitud Cancelada Correctamente',
+                            type: 'success'
+                        });
+                    }
+                    else
+                        Swal.fire({
+                            title: 'Ocurrio un error al cancelar la solicitud',
+                            type: 'error'
+                        });
+                    table.ajax.reload();
+                }
+            });
+        }
+    });
 });
 
 var celular_check     = false;
@@ -1670,6 +1731,8 @@ if (edit != 1)
     table.columns( '.editar_v' ).visible( false );
 if(ver_sueldo != 1)
     table.columns( '.sueldo_v' ).visible( false );
+if(cancel_sol != 1)
+    table.columns( '.cancelar_v' ).visible( false );
 
 $( function() {
     $( "#fecha_cita" ).datepicker({

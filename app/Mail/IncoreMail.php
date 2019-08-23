@@ -11,17 +11,20 @@ class IncoreMail extends Mailable
 {
     use Queueable, SerializesModels;
     private $body,$subject_incore;
+    private $file;
 
     /**
      * Create a new message instance.
      *
      * @param $body
-     * @param $subject
+     * @param $subject_incore
+     * @param $file
      */
-    public function __construct($body, $subject_incore)
+    public function __construct($body, $subject_incore, $file = null)
     {
         $this->body            = $body;
-        $this->subject_incore = $subject_incore;
+        $this->subject_incore  = $subject_incore;
+        $this->file            = $file;
     }
 
     /**
@@ -33,6 +36,7 @@ class IncoreMail extends Mailable
     {
         return $this
             ->subject(__($this->subject_incore))
+            //->attach($this->file)
             ->html($this->body);
             //->from('Viaticos')
             //->markdown('emails.email_incore')

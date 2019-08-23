@@ -20,7 +20,7 @@ class IncoreMail extends Mailable
      * @param $subject_incore
      * @param $file
      */
-    public function __construct($body, $subject_incore, $file = null)
+    public function __construct($body, $subject_incore, $file = [])
     {
         $this->body            = $body;
         $this->subject_incore  = $subject_incore;
@@ -34,12 +34,15 @@ class IncoreMail extends Mailable
      */
     public function build()
     {
-        return $this
+        $files = $this->file;
+        $email = $this
             ->subject(__($this->subject_incore))
-            //->attach($this->file)
             ->html($this->body);
-            //->from('Viaticos')
-            //->markdown('emails.email_incore')
-            //->with('body', $this->body);
+        if (!empty($files)){
+            foreach ($files as $item){
+                $email->attach($item);
+            }
+        }
+        return $email;
     }
 }

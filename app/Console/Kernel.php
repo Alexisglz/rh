@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ActualizarRazon;
 use App\Console\Commands\BajaAutomatica;
 use App\Console\Commands\IncidenciasCommand;
 use App\Console\Commands\IncidenciasNotificar;
@@ -22,7 +23,8 @@ class Kernel extends ConsoleKernel
         ServicesCommands::class,
         IncidenciasNotificar::class,
         SueldosCommand::class,
-        BajaAutomatica::class
+        BajaAutomatica::class,
+        ActualizarRazon::class
     ];
 
     /**
@@ -38,6 +40,8 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping(); /*Desactivado por que el server de pruebas esta muy limitado */
         //Cron para actualizar los numeros de empleados
         $schedule->command('service:numemp')->cron('00 06 * * *');
+        //Cron para actualizar las razones sociales de los empleados
+        $schedule->command('service:razon')->cron('00 04 * * *');
         /*//Cron para cancelar incidencias vencidas
         $schedule->command('incidencias:cancelar')->cron('00 03 * * *');*/
         // Cron para notificar la validacion de incidencias

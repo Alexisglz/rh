@@ -7,6 +7,7 @@
 @endforeach
 @endif
 # {{ __("Validar Nuevas Incidencias") }}
+# {{ $periodo }}
 
 <p>Se han registrado nuevas incidencias que necesitan ser validadas favor de ingresar al sistema antes de: </p><strong>{{$date}}</strong>
 

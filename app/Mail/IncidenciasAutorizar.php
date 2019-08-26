@@ -22,6 +22,10 @@ class IncidenciasAutorizar extends Mailable
      * @var null
      */
     private $users;
+    /**
+     * @var null
+     */
+    private $periodo;
 
     /**
      * Create a new message instance.
@@ -29,12 +33,14 @@ class IncidenciasAutorizar extends Mailable
      * @param string|null $url
      * @param string|null $date
      * @param null $users
+     * @param null $periodo
      */
-    public function __construct(string $url = null, string $date = null, $users = null)
+    public function __construct(string $url = null, string $date = null, $users = null, $periodo = null)
     {
         $this->url = $url;
         $this->date = $date;
         $this->users = $users;
+        $this->periodo = $periodo;
     }
 
     /**
@@ -49,6 +55,7 @@ class IncidenciasAutorizar extends Mailable
             ->markdown('emails.auth_inc')
             ->with('url', $this->url)
             ->with('date', $this->date)
+            ->with('periodo', $this->periodo)
             ->with('users', $this->users);
     }
 }

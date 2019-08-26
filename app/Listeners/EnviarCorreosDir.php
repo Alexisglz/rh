@@ -63,7 +63,7 @@ class EnviarCorreosDir implements ShouldQueue
                     break;
             }
         }catch (\Exception $e){
-            echo $e;
+            echo $e->getMessage();
         }
     }
 }

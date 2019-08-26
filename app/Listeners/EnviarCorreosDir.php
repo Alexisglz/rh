@@ -51,6 +51,7 @@ class EnviarCorreosDir
                         ->whereIn('codigo', $perms)
                         ->groupBy('id_usuario')
                         ->get();
+                    echo json_encode($correos);
                     if (config('app.env')=="local")
                         Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
                     if (config('app.env')=="production") {

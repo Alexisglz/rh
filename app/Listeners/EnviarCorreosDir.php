@@ -55,8 +55,7 @@ class EnviarCorreosDir
                         Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
                     if (config('app.env')=="production") {
                         foreach ($correos  as $correo){
-                            if (isset($correo->correo))
-                                Mail::to($correo->correo)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
+                            Mail::to($correo->correo)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
                         }
                     }
                     break;

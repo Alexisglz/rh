@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
-class EnviarCorreosDir
+class EnviarCorreosDir implements ShouldQueue
 {
     /**
      * @var false|string
@@ -51,12 +51,11 @@ class EnviarCorreosDir
                         ->whereIn('codigo', $perms)
                         ->groupBy('id_usuario')
                         ->get();
-                    echo json_encode($correos);
                     if (config('app.env')=="local")
                         Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
                     if (config('app.env')=="production") {
                         foreach ($correos  as $correo){
-                            Mail::to($correo->correo)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
+                            Mail::to($correo->email)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
                         }
                     }
                     break;

@@ -23,10 +23,11 @@ class MailController extends Controller
             $dest_copia        = $request->dest_copia;
             $dest_copia_oculta = $request->dest_copia_oculta;
             $urls              = $request->url_adjunto;
+            $local             = $request->local;
             $files             = [];
             if (!empty($urls)){
                 foreach ($urls as $url){
-                    $file    = $this->saveFile($url);
+                    $file    = $this->saveFile($url, $local);
                     if ($file != false)
                         $files[] = $file;
                 }
@@ -43,11 +44,15 @@ class MailController extends Controller
         }
     }
 
-    public function saveFile($url){
+    public function saveFile($url, $local){
         try{
-            $array = explode("/",$url);
+            if ($local == true)
+                $link = str_replace('/var/www/html/incore/','http://localhost/incore/',$url);
+            else
+                $link =  str_replace('/var/www/html/incore/','http://indeplo.com/incore/',$url);
+            $array = explode("/",$link);
             $file  = end($array);
-            Storage::disk('public')->put($file, file_get_contents($url));
+            Storage::disk('public')->put($file, file_get_contents($link));
             return Storage::disk('public')->path($file);
         }catch (\Exception $e){
             return false;

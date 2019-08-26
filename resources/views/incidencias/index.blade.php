@@ -17,6 +17,12 @@
                                 {{__('Exportar a Excel')}}
                             </button>
                         @endcan
+
+                        <a class="btn btn-primary pull-right text-white" href="/files/Manuales/Manual_Crear_Incidencias.pdf" >
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            {{__('Manual')}}
+                        </a>
+
                     </div>
                     <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-inline" style="padding-top: 10px;border-bottom: 1px solid lightgrey;margin-bottom: 10px;">

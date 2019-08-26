@@ -37,7 +37,9 @@ class AuthIncidenciaController extends Controller
     }
 
     public function index(){
-        return view('incidencias.validaciones.directivo');
+        $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', date('Y-m-d'))
+            ->where('fecha_fin','>=', $this->date)->first();
+        return view('incidencias.validaciones.directivo',['periodo'=>$periodo]);
     }
 
     public function getIncidencias(){

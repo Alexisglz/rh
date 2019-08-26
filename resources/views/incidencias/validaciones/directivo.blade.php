@@ -7,8 +7,10 @@
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title text-center">
-                            <i class="fa fa-check"></i>
-                            {{__('Validar Incidencias')}}
+                            <div>
+                                {{__('Validar Incidencias')}}<i class="fa fa-check"></i><br>
+                                {{__($periodo->periodo_nombre)}}<br>
+                            </div>
                             <div class="pull-right">
                                 <button class="btn btn-success" onclick="save()">{{__('Guardar')}}</button>
                             </div>

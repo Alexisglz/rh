@@ -259,6 +259,7 @@ Route::group(["prefix" => "pass", "middleware" => []], function() {
 });
 
 Route::get('/files/{path}/{folder}/{file}', 'FileController@export')->name('file.export');
+Route::get('/files/{path}/{file}', 'FileController@getManual')->name('file.get_manual');
 
 Route::get('/ExcelUsuarios', 'ExcelController@ExcelUsuarios');
 

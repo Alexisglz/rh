@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use File;
 use Illuminate\Http\Request;
+use Storage;
 
 class FileController extends Controller
 {
@@ -26,5 +27,19 @@ class FileController extends Controller
         else{
             return back();
         }
+    }
+
+    public function getManual(Request $request){
+
+        //dd($request->path);
+        $folder = $request->path;
+        $file   = $request->file;
+        $url    = sprintf('%s/%s', $folder, $file);
+        $exists = Storage::disk('public')->exists($url);
+        if ($exists)
+        {
+            return Storage::disk('public')->download($url);
+        }
+
     }
 }

@@ -45,7 +45,7 @@ class IncidenciasAutorizar extends Mailable
     public function build()
     {
         return $this
-            ->subject(__('Validar Incidencias'))
+            ->subject(__('Validar Incidencias #PRUEBA'))
             ->markdown('emails.auth_inc')
             ->with('url', $this->url)
             ->with('date', $this->date)

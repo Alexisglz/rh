@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
-class EnviarCorreosDir implements ShouldQueue
+class EnviarCorreosDir
 {
     /**
      * @var false|string

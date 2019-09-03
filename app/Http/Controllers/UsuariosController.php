@@ -147,9 +147,10 @@ class UsuariosController extends Controller
                 $user->password  = md5($request->password);
                 $user->password2 = bcrypt($request->password);
             }
-            if ($request->reset_pass == true){
+            if ($request->reset_pass == 1){
                 $user->pwdcgd = 0;
             }
+
             $user->save();
             if ($cambiar == true){
                 UsuarioPermiso::where('id_usuario','=',$user->id_usuario)->delete();

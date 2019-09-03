@@ -212,7 +212,11 @@ function validateFormEdit() {
         var rol         = $("#rol").val();
         var id_user     = $("#user_id").val();
         var password    = $("#password").val();
-        var reset_pass  = $('#reset_pass').prop('checked');
+        var reset_pass  = $('#reset_pass').prop('checked') == true ? 1 : 0;
+
+
+        console.log(reset_pass);
+
 
         var data = {
             _token: CSRF_TOKEN,

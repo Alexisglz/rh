@@ -344,19 +344,18 @@ function EjecutarLote() {
             }
             nombrelote = inputValue;
             arregloids2 = [];
-            let datas = [];
+            let ids = [];
             for (i in rows_selected){
                 var item = rows_selected[i];
-                datas = validaArreglo(item.id, item.capital_id, item.emp_id, item.monto, item.id_tipo, item.fecha_inicio,item.duracion);
+                ids.push(item.id);
             }
-            if (datas.length == 0) {
+            if (ids.length == 0) {
                 console.log('no hay datos seleccionados');
             } else {
                 let dataWSDL = {
                     _token: CSRF_TOKEN,
-                    usuario: 'rhindeplo1',
-                    password: 'Password05',
-                    incidencia: datas,
+                    lote:nombrelote,
+                    ids: ids
                 };
 
                 console.log(dataWSDL);

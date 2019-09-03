@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\GlobalModel;
 use App\Incidencias;
 use App\incidencias_lote;
+use App\Models\VistaIncidenciasPeriodo;
 use App\User;
 use Artisaninweb\SoapWrapper\SoapWrapper;
 use DB;
@@ -17,11 +18,13 @@ class EnvioIncidenciasController extends Controller
         'grupo' => ['required']
     ];
 
-    protected $soapWrapper;
+    protected $soapWrapper,$user,$password;
 
     public function __construct(SoapWrapper $soapWrapper)
     {
         $this->soapWrapper = $soapWrapper;
+        $this->user     = config('app.soap_user');
+        $this->password = config('app.soap_password');
     }
 
     public function index()
@@ -34,6 +37,48 @@ class EnvioIncidenciasController extends Controller
     {
         $this->authorize('access',[User::class, 'enviar_lote']);    
         $info = array();
+        $params = [
+            'usuario' => $this->user,
+            'password' => $this->password,
+        ];
+        $ids = $request->ids;
+        $nombre = $request->lote;
+        if (empty($ids)){
+            return response()->json([
+                'ok' => false,
+                'data' => 'No se seleccionaron incidencias'
+            ]);
+        }
+        $i_format = [];
+        foreach ($ids as $id){
+            $vista_i = VistaIncidenciasPeriodo::find($id);
+            $fecha = $vista_i->fecha_inicio==null?"":date("d/m/Y", strtotime($vista_i->fecha_inicio));
+            $plantilla = [
+                'id'        => $vista_i->id,
+                'concepto'  => $vista_i->id_tipo,
+                'empleado'  => $vista_i->emp_id,
+                'importe'   => $vista_i->monto==null?"":$vista_i->monto,
+                'turno'     => '',
+                'fecha'     => $fecha,
+                'vt1'       => $vista_i->duracion==null?"":$vista_i->duracion,
+                'vt2'       => '',
+                'vt3'       => '',
+                'vt4'       => '',
+                'zona'      => '29',
+                'area'      => '',
+                'centro'    => '',
+                'linea'     => '',
+                'factor'    => '',
+                'puesto'    => '',
+                'gral_cpto' => '',
+                'cia'       => '677',
+                'proceso'   => '065',
+                'lote'      => $nombre,
+            ];
+            $i_format[] = $plantilla;
+        }
+        $params['incidencia'] = $i_format;
+        //dd($params);
         try {
             $options = array(
                 'cache_wsdl' => 0,
@@ -47,7 +92,7 @@ class EnvioIncidenciasController extends Controller
                 )));
             $data = $request->toArray();
             $client = new \SoapClient("https://ws.humaneland.net/wsIncidencias/ProcesarIncidencias?wsdl", $options);
-            $response = $client->__soapCall("Procesaincidencias", array($data));
+            $response = $client->__soapCall("Procesaincidencias", array($params));
             foreach ($response as $clave => $valor) {
                 foreach ($valor as $instancia01 => $val) {
                     array_push($info, $val);
@@ -55,22 +100,22 @@ class EnvioIncidenciasController extends Controller
             }
 
             $array = [];
-
-            if ($info[2] == 0) {
+            //dd($info);
+            if (isset($info[2]) && $info[2] == 0) {
                 $array = [
                     'ok' => false,
                     'data' => $info[0]
                 ];
                 return response()->json($array);
             } else {
-                $time = strtotime($info[1]);
+                /*$time = strtotime($info[1]);
                 $newformat = date('Y-m-d', $time);
                 $nameLote = $data['incidencia'][0]['lote'];
                 $idLote = $this::insertalote($nameLote, $newformat, 'Enviado', $info[2],$info[3]);
                 foreach ($data['incidencia'] as $t) {
                     $id_tagg = $t['id'];
                     $this::UpdateIncidenciaLote($idLote, $id_tagg);
-                }
+                }*/
                 $array = [
                     'ok' => true,
                     'data' => $info[0]

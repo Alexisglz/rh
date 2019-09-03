@@ -131,12 +131,21 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row" hidden>
                     <label for="id_empleado" class="col-md-4 col-form-label text-md-right">{{ __('ID empleado') }}</label>
                     <div class="col-md-6">
                         <input id="id_empleado" type="text" class="form-control" name="id_empleado" required>
                     </div>
                 </div>
+
+
+                <div class="form-group row">
+                    <label for="nombre_empleado" class="col-md-4 col-form-label text-md-right">{{ __('Nombre empleado') }}</label>
+                    <div class="col-md-6">
+                        <input id="empleado" type="text" class="form-control upper" name="empleado" required>
+                    </div>
+                </div>
+
 
                 <div class="form-group row">
                     <label for="Rol" class="col-md-4 col-form-label text-md-right">Rol</label>
@@ -164,4 +173,14 @@
         </div>
     </div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $("#empleado" ).autocomplete({
+            source: "/incidencias/get_empleados",
+            minLength: 2,
+            select: function(event, ui) {
+                $('#empleado').val(ui.item.value);
+                $('#id_empleado').val(ui.item.id);
+            }
+        });
+    </script>
 @endsection

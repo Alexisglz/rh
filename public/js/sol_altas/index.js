@@ -148,6 +148,8 @@ var table      = $('#altas-table').DataTable({
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
+                if (row.id_rechazo != null)
+                    return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
                 if (row.status_cita == "EMPLEADO CREADO"){
                     return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }

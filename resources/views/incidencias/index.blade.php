@@ -39,7 +39,7 @@
                                 <option value="DEDUCCION">{{__('DEDUCCION')}}</option>
                             </select>
                         </div>
-                        <div class="form-group mb-3 col-sm-3">
+                        <div class="form-group mb-2 col-sm-3">
                             <select id="search_periodo" name="search_periodo" class="form-control col-sm-12" title="Filtrar incidencias por periodo">
                                 <option value="">{{__('PERIODO')}}</option>
                                 @foreach($periodos as $periodo)

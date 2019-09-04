@@ -59,6 +59,7 @@
                                 <th data-priority="5">{{__('Fecha inicio')}}</th>
                                 <th data-priority="6">{{__('Duracion (Días)')}}</th>
                                 <th data-priority="7">{{__('Monto')}}</th>
+                                <th data-priority="9">{{__('Periodo')}}</th>
                                 <th>{{__('RO')}}</th>
                                 <th>{{__('Solicitante')}}</th>
                                 <th>{{__('Motivo')}}</th>

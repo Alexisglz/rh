@@ -28,6 +28,7 @@ var table      = $('#incidencias-table').DataTable({
         {data: 'fecha_inicio', name: 'fecha_inicio'},
         {data: 'duracion', name: 'duracion'},
         {data: 'monto', name: 'monto'},
+        {data: 'periodo_nombre', name: 'periodo_nombre'},
         {data: 'pedido', name: 'pedido'},
         {data: 'solicitante', name: 'solicitante'},
         {data: 'motivo', name: 'motivo'},
@@ -70,7 +71,7 @@ var table      = $('#incidencias-table').DataTable({
 
         },
         {
-            "targets": 14,
+            "targets": 15,
             "data": null,
             "render": function (data, type, row) {
                 var del  = '';

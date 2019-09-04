@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\User;
 use App\VistaIncidencias;
+use App\VistaIncidenciasSinLote;
 use DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -59,7 +60,7 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        $models = VistaIncidencias::query();
+        $models    = VistaIncidenciasSinLote::query();
         $usuario   = auth()->user();
         if ($usuario->listarTodo == null){
             if ($usuario->getCoordinador){
@@ -69,10 +70,23 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
             }
         }
         $models->select(
-            'id','id_empleado','empleado','id_incidencia_tipo','nombre','fecha_solicitud',
-            'fecha_inicio', 'fecha_fin','dias','monto','motivo','id_solicitante','solicitante','id_lote',
-            'auth_rh','id_rh_auth','rh','auth_direccion','id_direccion_auth','dir','status_auth','created_at',
-            'updated_at','deleted_at'
+            'id',
+            'emp_id',
+            'empleado',
+            'id_tipo',
+	        'incidencia',
+	        'tipo_incidencia',
+	        'fecha_solicitud',
+	        'fecha_inicio',
+	        'fecha_fin',
+	        'duracion',
+	        'monto',
+	        'motivo',
+            'capital_id',
+            'descripcion_razon',
+            'id_empleado',
+	        'solicitante',
+	        'periodo_nombre'
         );
         switch ($this->area){
             case 'ESP':
@@ -98,12 +112,26 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function headings(): array
     {
-        return [
-            'ID','ID EMPLEADO','NOMBRE EMPLEADO','ID INCIDENCIA','NOMBRE INCIDENCIA','FECHA SOL','FECHA INICIO','FECHA FIN',
-            'DIAS','MONTO','MOTIVO','ID SOLICITANTE','NOMBRE SOLICITANTE','ID LOTE','AUTH RH','ID AUTH RH',
-            'NOMBRE RH','AUTH DIR','ID AUTH DIR','NOMBRE DIR','ESTATUS',
-            'FECHA DE CREACION','FECHA DE MODIFICACION','FECHA DE ELIMINACION'
+        $array = [
+            'ID',
+            'NUMERO EMPLEADO',
+            'EMPLEADO',
+            'ID INCIDENCIA',
+            'INCIDENCIA',
+            'TIPO INCIDENCIA',
+            'FECHA DE SOLICITUD',
+            'FECHA DE INICIO DE INCIDENCIA',
+            'FECHA DE FIN DE INCIDENCIA',
+            'DURACION',
+            'MONTO',
+            'MOTIVO',
+            'ID RAZON SOCIAL',
+            'RAZON SOCIAL',
+            'ID EMPLEADO INCORE',
+            'SOLICITANTE',
+            'PERIODO'
         ];
+        return $array;
     }
     public function registerEvents(): array
     {

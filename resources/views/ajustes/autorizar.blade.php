@@ -46,6 +46,7 @@
                     <th>{{__('TRADICIONAL')}}</th>
                     <th>{{__('ASIMILADO')}}</th>
                     <th>{{__('FECHA INICIO SUELDO')}}</th>
+                    <th>{{__('EVIDENCIA')}}</th>
                     <th>{{__('OBSERVACIONES')}}</th>
                     <th>{{__('FECHA SOLICITUD')}}</th>
                 </tr>
@@ -61,8 +62,8 @@
         var validar = '{{ $validar }}';
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {!! Html::script('js/validador.js') !!}
-    {!! Html::script('js/ajustes/autorizar.js') !!}
+    {!! Html::script('js/validador.js?v='.time()) !!}
+    {!! Html::script('js/ajustes/autorizar.js?v='.time()) !!}
     {!! Form::close() !!}
 
 @endsection

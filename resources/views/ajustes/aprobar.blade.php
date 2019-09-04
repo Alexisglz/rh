@@ -49,6 +49,12 @@
                     <td class="bold">{{__('Fecha de Solicitud:')}}</td>
                     <td>{{$ajuste->fecha}}</td>
                 </tr>
+                @if($ajuste->url != "")
+                <tr>
+                    <td class="bold">{{__('Evidencia')}}</td>
+                    <td><a href="/files/{{$ajuste->url}}" title="Descargar"><i class="fa fa-download" style="color:#007bffcc;font-size:20px"></i></a></td>
+                </tr>
+                @endif
                 @if($ajuste->observaciones != "")
                     <tr>
                         <td class="bold">{{__('Observaciones:')}}</td>

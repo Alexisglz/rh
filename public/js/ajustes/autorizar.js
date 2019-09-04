@@ -27,6 +27,7 @@ var table      = $('#table_ajustes').DataTable({
         {data: 'tradicional', name: 'tradicional', className:'text-center'},
         {data: 'asimilado', name: 'asimilado', className:'text-center'},
         {data: 'fecha_inicio', name: 'fecha_inicio', className:'text-center'},
+        {data: 'url', name: 'url', className:'text-center'},
         {data: 'observaciones', name: 'observaciones', className:'text-center'},
         {data: 'fecha', name: 'fecha', className:'text-center'},
     ],
@@ -67,7 +68,18 @@ var table      = $('#table_ajustes').DataTable({
                 }
                 return view;
             },
-        }
+        },
+        {
+            targets: 7,
+            data: null,
+            className: "text-center",
+            render: function (data, type, row) {
+                if (data != null)
+                    return '<a href="/files/'+data+'" title="Descargar"><i class="fa fa-download" style="color:#007bffcc;font-size:20px"></i></a>';
+                else
+                    return '';
+            }
+        },
     ]
 });
 

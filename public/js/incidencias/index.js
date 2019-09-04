@@ -296,17 +296,8 @@ function DestruirMOdal() {
 }
 
 function ExcelIncidencias() {
-    swal({
-        title: "Incidencias",
-        text: "Desea descargar todas las incidencias?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    }).then((willDelete) => {
-            if (willDelete) {
-                location.href = "/excel/export_incidencias/";
-            }
-        });
+    var periodo = ($('#export_inci').val() != null && $('#export_inci').val() != "") ? $('#export_inci').val():0;
+    location.href = "/excel/export_incidencias/?periodo="+periodo;
 }
 
 new $.fn.dataTable.FixedHeader(table);

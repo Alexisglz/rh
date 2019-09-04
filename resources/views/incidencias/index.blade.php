@@ -13,7 +13,7 @@
                             Incidencias-estatus
                         </h3>
                         @can('access',[\App\User::class,'exportar_incidencias'])
-                            <button id="excel" type="button" onclick="ExcelIncidencias();" class="btn btn-success">
+                            <button id="excel" type="button" class="btn btn-success" data-toggle="modal" data-target="#exp_incidencias">
                                 {{__('Exportar a Excel')}}
                             </button>
                         @endcan
@@ -84,6 +84,7 @@
         </div>
     </div>
     @include('incidencias.modals.editar')
+    @include('incidencias.modals.exportar')
     <script>
         var id_post     = '{{$id}}';
     </script>

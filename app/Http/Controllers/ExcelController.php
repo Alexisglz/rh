@@ -33,7 +33,8 @@ class ExcelController extends Controller
     {
         $area = auth()->user()->getRol->Rol;
         $id   = auth()->user()->id_usuario;
-        return Excel::download(new IncidenciasExport($id, $area), 'Incidencias_'.$this->date.'.xlsx');
+        $periodo = isset($request->periodo) ? $request->periodo:0;
+        return Excel::download(new IncidenciasExport($id, $area, $periodo), 'Incidencias_'.$this->date.'.xlsx');
     }
     
     public function ExportIncidenciasLote(Request $request)

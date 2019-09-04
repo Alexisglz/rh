@@ -21,6 +21,7 @@ var table      = $('#incidencias-table').DataTable({
         {data: 'id', name: 'id'},
         {},
         {data: 'vobo', name: 'vobo'},
+        {data: 'evidencia', name: 'evidencia'},
         {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
         {data: 'tipo_incidencia', name: 'tipo_incidencia'},
@@ -71,7 +72,18 @@ var table      = $('#incidencias-table').DataTable({
 
         },
         {
-            "targets": 15,
+            "targets": 3, // your case first column
+            "data": null,
+            "className": "text-center",
+            "render": function (data, type, row) {
+                if (data != null)
+                    return '<a href="/files/'+data+'" title="Descargar"><i class="fa fa-download" style="color:#007bffcc;font-size:20px"></i></a>';
+                else
+                    return '';
+            }
+        },
+        {
+            "targets": 16,
             "data": null,
             "render": function (data, type, row) {
                 var del  = '';

@@ -73,6 +73,10 @@
                         {!! Form::label('motivo', '*Motivo', []) !!}
                         {!! Form::textarea('motivo', null, ['class'=>'form-control upper','required','rows' => '5']) !!}
                         <br>
+                        {!! Form::label('evidencia', 'Evidencia'); !!}
+                        <br>
+                        {!! Form::file('evidencia') !!}
+                        <br>
 
                         {!! Form::label('fecha_i', 'Fecha de inicio', ['class'=>'lapso']) !!}
                         {!! Form::date('fecha_i', \Carbon\Carbon::now(), ['id'=>'fecha_i','class'=>'lapso form-control','required']) !!}

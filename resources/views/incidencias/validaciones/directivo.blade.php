@@ -28,6 +28,7 @@
                                 <th>Solicitante</th>
                                 <th>Vobo</th>
                                 <th>Venta</th>
+                                <th>Evidencia</th>
                                 <th>RO</th>
                                 <th>Monto</th>
                                 <th>Fecha Inicio Falta</th>

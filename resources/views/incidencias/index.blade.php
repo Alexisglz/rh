@@ -52,6 +52,7 @@
                                 <th data-priority="1">{{__('Id')}}</th>
                                 <th>{{__('Bitacora')}}</th>
                                 <th>{{__('Vobo Jefe')}}</th>
+                                <th>{{__('Evidencia')}}</th>
                                 <th data-priority="2">{{__('Empleado')}}</th>
                                 <th data-priority="3">{{__('Incidencia')}}</th>
                                 <th data-priority="4">{{__('Tipo de incidencia')}}</th>

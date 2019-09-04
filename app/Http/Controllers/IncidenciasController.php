@@ -204,6 +204,11 @@ class IncidenciasController extends Controller
                 $incidencia->vobo = Upload::uploadFile('incidencias/' . $nombre, 'vobo', $incidencia, $nombre);
                 $incidencia->save();
             }
+            if ($request->file('evidencia') != null) {
+                $nombre           = "evidencia_" . $incidencia->id;
+                $incidencia->evidencia = Upload::uploadFile('incidencias/' . $nombre, 'evidencia', $incidencia, $nombre);
+                $incidencia->save();
+            }
 
             $Tipo_bita = 'incidencia';
             $mensaje   = 'Se ha creado una incidencia';

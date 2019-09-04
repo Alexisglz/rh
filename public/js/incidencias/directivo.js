@@ -20,6 +20,7 @@ var table      = $('#table_dir').DataTable({
         {data: 'solicitante', name: 'solicitante'},
         {data: 'vobo', name: 'vobo', className:'vobo_p'},
         {data: 'venta', name: 'venta',className:'venta_p'},
+        {data: 'evidencia', name: 'evidencia',className:'venta_p'},
         {data: 'pedido', name: 'pedido', className:'pedido_p'},
         {data: 'monto', name: 'monto'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
@@ -78,6 +79,17 @@ var table      = $('#table_dir').DataTable({
                     else
                         template = '<strong class="text-success">'+data+'</strong>';
                 }
+                return template;
+            }
+        },
+        {
+            "targets": 8,
+            "data": null,
+            "className": "text-center",
+            render: function (data,type,row) {
+                var template = '';
+                if (data != null)
+                    template += '<a class="btn" href="/files/'+data+'"><i class="fa fa-download"></i></a>';
                 return template;
             }
         },

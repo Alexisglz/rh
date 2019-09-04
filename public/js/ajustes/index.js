@@ -29,6 +29,7 @@ var table      = $('#table_ajustes').DataTable({
         {data: 'asimilado', name: 'asimilado', className:'text-center'},
         {data: 'pedido', name: 'pedido', className:'text-center'},
         {data: 'monto', name: 'monto', className:'text-center'},
+        {data: 'fecha_inicio', name: 'fecha_inicio', className:'text-center'},
         {data: 'observaciones', name: 'observaciones', className:'text-center'},
         {data: 'fecha', name: 'fecha', className:'text-center'},
         {data: null, name:'acciones', className:'text-center acciones_as', orderable: false, searchable: false,}
@@ -84,7 +85,7 @@ var table      = $('#table_ajustes').DataTable({
             }
         },
         {
-            targets: 11,
+            targets: 12,
             data: null,
             className: "text-center",
             render: function (data, type, row) {
@@ -171,6 +172,7 @@ function saveAjuste() {
         tradicional: $('#tradicional').val(),
         asimilado: $('#asimilado').val(),
         observaciones: $('#observaciones').val(),
+        fecha: $('#fecha').val(),
     };
     $.ajax({
         url: '/ajuste/save',

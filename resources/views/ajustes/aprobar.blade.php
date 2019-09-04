@@ -42,6 +42,10 @@
                     <td>{{$ajuste->monto}}</td>
                 </tr>
                 <tr>
+                    <td class="bold">{{__('Fecha inicio de sueldo:')}}</td>
+                    <td>{{$ajuste->fecha_inicio}}</td>
+                </tr>
+                <tr>
                     <td class="bold">{{__('Fecha de Solicitud:')}}</td>
                     <td>{{$ajuste->fecha}}</td>
                 </tr>

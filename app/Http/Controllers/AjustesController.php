@@ -31,6 +31,7 @@ class AjustesController extends Controller
             $ajuste->tradicional   = $request->tradicional;
             $ajuste->asimilado     = $request->asimilado;
             $ajuste->observaciones = $request->observaciones;
+            $ajuste->fecha_inicio  = $request->fecha;
             $ajuste->save();
             $ajuste->url = $this->createFile($ajuste->id, $ajuste->num_empleado);
             $ajuste->save();

@@ -26,6 +26,7 @@ var table      = $('#table_ajustes').DataTable({
         {data: 'num_empleado', name: 'tradicional', className:'text-center'},
         {data: 'tradicional', name: 'tradicional', className:'text-center'},
         {data: 'asimilado', name: 'asimilado', className:'text-center'},
+        {data: 'fecha_inicio', name: 'fecha_inicio', className:'text-center'},
         {data: 'observaciones', name: 'observaciones', className:'text-center'},
         {data: 'fecha', name: 'fecha', className:'text-center'},
     ],

@@ -45,6 +45,7 @@
                     <th>{{__('NUMERO EMP')}}</th>
                     <th>{{__('TRADICIONAL')}}</th>
                     <th>{{__('ASIMILADO')}}</th>
+                    <th>{{__('FECHA INICIO SUELDO')}}</th>
                     <th>{{__('OBSERVACIONES')}}</th>
                     <th>{{__('FECHA SOLICITUD')}}</th>
                 </tr>

@@ -27,6 +27,10 @@
                             <label for="asimilado">Sueldo Asimilado:</label>
                             <input class="form-control" class="validar" name="asimilado" type="number" id="asimilado" value="0">
                         </div>
+                        <div class="form-group col-md-3">
+                            <label for="asimilado">Fecha Inicio de Sueldo</label>
+                            <input class="form-control" class="validar" name="fecha" type="date" id="fecha">
+                        </div>
                         <div class="form-group col-md-12 text-center">
                             <label for="observaciones">Observaciones:</label>
                             <textarea class="form-control" class="validar" name="observaciones" id="observaciones"></textarea>

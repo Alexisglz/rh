@@ -25,7 +25,7 @@ class AjusteSueldo implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        $models  = VistaAjusteSueldo::select('id','nombre','num_empleado','tradicional','asimilado','observaciones','fecha')
+        $models  = VistaAjusteSueldo::select('id','nombre','num_empleado','tradicional','asimilado','fecha_inicio','observaciones','fecha')
             ->whereIn('id',$this->ids)
             ->get();
         return collect($models);
@@ -39,6 +39,7 @@ class AjusteSueldo implements FromCollection, WithHeadings, ShouldAutoSize
             'NUMERO EMPLEADO',
             'TRADICIONAL',
             'ASIMILADO',
+            'FECHA INICIO DE SUELDO',
             'OBSERVACIONES',
             'FECHA DE SOLICITUD'
         ];

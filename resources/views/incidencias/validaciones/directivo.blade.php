@@ -52,7 +52,7 @@
         var inc_s_v     = '<?php echo $inc_s_v ?>';
         var inc_ded     = '<?php echo $inc_ded ?>';
     </script>
-    {!! Html::script('js/incidencias/directivo.js') !!}
+    {!! Html::script('js/incidencias/directivo.js?v='.time()) !!}
     <style>
         .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
         .toggle.ios .toggle-handle { border-radius: 20px; }

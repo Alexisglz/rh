@@ -71,7 +71,8 @@ class IncidenciasController extends Controller
     {
         $id = isset($request->id) ? $request->id : 0;
         $this->authorize('access', [User::class, 'listado_incidencias']);
-        return view('incidencias.index', ['id' => $id]);
+        $periodos = IncidenciaPeriodo::all();
+        return view('incidencias.index', ['id' => $id, 'periodos' => $periodos]);
     }
 
     public function Eliminar(Request $request)

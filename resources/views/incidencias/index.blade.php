@@ -39,6 +39,14 @@
                                 <option value="DEDUCCION">{{__('DEDUCCION')}}</option>
                             </select>
                         </div>
+                        <div class="form-group mb-3 col-sm-3">
+                            <select id="search_periodo" name="search_periodo" class="form-control col-sm-12" title="Filtrar incidencias por periodo">
+                                <option value="">{{__('PERIODO')}}</option>
+                                @foreach($periodos as $periodo)
+                                    <option value="{{$periodo->id}}">{{strtoupper($periodo->periodo_nombre)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-sm">
                             <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
                                 <i class="fa fa-refresh"></i>
@@ -80,7 +88,7 @@
         var id_post     = '{{$id}}';
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {!! Html::script('js/MensajesJS.js') !!}
-    {!! Html::script('js/validador.js') !!}
-    {!! Html::script('js/incidencias/index.js') !!}
+    {!! Html::script('js/MensajesJS.js?v='.time()) !!}
+    {!! Html::script('js/validador.js?v='.time()) !!}
+    {!! Html::script('js/incidencias/index.js?v='.time()) !!}
 @endsection

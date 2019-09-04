@@ -1,6 +1,7 @@
 var CSRF_TOKEN = $('#token').val();
 var solicit    = $("#NombreUsuario").val();
 var s_id       = $('#search_id').val();
+var s_periodo  = $('#search_periodo').val();
 var s_nombre   = null;
 var s_tipo     = null;
 var table      = $('#incidencias-table').DataTable({
@@ -12,9 +13,10 @@ var table      = $('#incidencias-table').DataTable({
         url: '/datatables/get_incidencias/',
         type: 'GET',
         data: function (data) {
-            data.search_id     = s_id;
-            data.search_nombre = s_nombre;
-            data.search_tipo   = s_tipo;
+            data.search_id      = s_id;
+            data.search_nombre  = s_nombre;
+            data.search_tipo    = s_tipo;
+            data.search_periodo = s_periodo;
         }
     },
     columns: [
@@ -300,9 +302,7 @@ function ExcelIncidencias() {
         icon: "warning",
         buttons: true,
         dangerMode: true
-    })
-        .then((willDelete) => {
-
+    }).then((willDelete) => {
             if (willDelete) {
                 location.href = "/excel/export_incidencias/";
             }
@@ -314,6 +314,7 @@ new $.fn.dataTable.FixedHeader(table);
 var search_id     = $('#search_id');
 var search_nombre = $('#search_nombre');
 var search_tipo   = $('#search_tipo');
+var search_peri   = $('#search_periodo');
 
 search_id.on('keyup', function () {
     s_id = $(this).val();
@@ -327,17 +328,23 @@ search_tipo.on('change', function () {
     s_tipo = $(this).val();
     table.draw();
 });
+search_peri.on('change', function () {
+    s_periodo = $(this).val();
+    table.draw();
+});
 
 $('#reset').on('click', function (e) {
     if (id_post != 0)
         window.location = '/incidencias';
-    reset    = 1;
-    s_id     = null;
-    s_nombre = null;
-    s_tipo   = null;
+    reset     = 1;
+    s_id      = null;
+    s_nombre  = null;
+    s_tipo    = null;
+    s_periodo = null;
     search_id.val("");
     search_nombre.val("");
     search_tipo.val("");
+    search_peri.val("");
     table.draw();
     e.preventDefault();
     reset = 0;

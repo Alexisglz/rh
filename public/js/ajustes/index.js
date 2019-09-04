@@ -161,24 +161,37 @@ risk.on('keyup',function () {
     }
 });
 
+$('#save_ajuste').on('hidden.bs.modal', function () {
+    $(':input', this).val('');
+    $('#tradicional').val(0);
+    $('#asimilado').val(0);
+});
+
 function saveAjuste() {
-    var exist = existe('nuevo_ajus',['observaciones']);
+    var exist = existe('nuevo_ajus',['observaciones','evidencia']);
     if (exist == false)
         return false;
-    var data = {
-        _token: CSRF_TOKEN,
-        id: $('#id_emp').val(),
-        ro: $('#id_risk').val(),
-        tradicional: $('#tradicional').val(),
-        asimilado: $('#asimilado').val(),
-        observaciones: $('#observaciones').val(),
-        fecha: $('#fecha').val(),
-    };
+    var DataInsert = new FormData();
+    DataInsert.append('_token', CSRF_TOKEN);
+    DataInsert.append('id', $('#id_emp').val());
+    DataInsert.append('ro', $('#id_risk').val());
+    DataInsert.append('tradicional', $('#tradicional').val());
+    DataInsert.append('asimilado', $('#asimilado').val());
+    DataInsert.append('observaciones', $('#observaciones').val());
+    DataInsert.append('fecha', $('#fecha').val());
+    var evidencia = $('#evidencia');
+    var file = evidencia[0].files[0];
+    if (file != null && file != undefined){
+        DataInsert.append('evidencia',  file);
+    }
     $.ajax({
         url: '/ajuste/save',
         type: 'POST',
         dataType: 'JSON',
-        data:data,
+        data: DataInsert,
+        cache: false,
+        contentType: false,
+        processData: false,
         beforeSend: function () {
             $().loader("show");
         },

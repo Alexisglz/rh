@@ -81,7 +81,7 @@
                 <tr>
                     <th data-priority="1">{{__('ID')}}</th>
                     <th data-priority="2">{{__('ENVIAR')}}</th>
-                    <th data-priority="4">{{__('DOCUMENTO')}}</th>
+                    <th data-priority="4">{{__('EVIDENCIA')}}</th>
                     <th data-priority="3">{{__('EMPLEADO')}}</th>
                     <th>{{__('NUMERO EMP')}}</th>
                     <th data-priority="5">{{__('TRADICIONAL')}}</th>
@@ -113,8 +113,8 @@
         var enviar_ajuste_s   = '{{ $enviar_ajuste_s }}';
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {!! Html::script('js/validador.js') !!}
-    {!! Html::script('js/ajustes/index.js') !!}
+    {!! Html::script('js/validador.js?v='.time()) !!}
+    {!! Html::script('js/ajustes/index.js?v='.time()) !!}
     {!! Form::close() !!}
 
 @endsection

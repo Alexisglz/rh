@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleados;
 use App\Events\SueldosEvents;
+use App\Helpers\Upload;
 use App\Models\AjusteSueldo;
 use App\Models\VistaAjusteSueldo;
 use App\User;
@@ -33,8 +34,12 @@ class AjustesController extends Controller
             $ajuste->observaciones = $request->observaciones;
             $ajuste->fecha_inicio  = $request->fecha;
             $ajuste->save();
-            $ajuste->url = $this->createFile($ajuste->id, $ajuste->num_empleado);
-            $ajuste->save();
+            if ($request->file('evidencia') != null){
+                $dir            = 'ajustes/evidencia_'.$ajuste->id;
+                $nombre         = 'evidencia_ajuste_'.$ajuste->id;
+                $ajuste->url    = Upload::uploadFile($dir,'evidencia', $ajuste, $nombre);
+                $ajuste->save();
+            }
             DB::commit();
             event(new SueldosEvents(null,'auth_ajuste', $ajuste->id));
             return response()->json([

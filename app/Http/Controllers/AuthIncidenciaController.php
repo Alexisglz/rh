@@ -39,7 +39,7 @@ class AuthIncidenciaController extends Controller
 
     public function index(){
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', date('Y-m-d'))
-            ->where('fecha_fin','>=', $this->date)->first();
+            ->where('fecha_envio','>=', $this->date)->first();
         return view('incidencias.validaciones.directivo',['periodo'=>$periodo]);
     }
 
@@ -50,7 +50,7 @@ class AuthIncidenciaController extends Controller
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-            ->where('fecha_fin','>=', $this->date)->first();
+            ->where('fecha_envio','>=', $this->date)->first();
         $incidencias = VistaIncidenciasSinLote::query();
         if($area != 'ADMIN' && $area != 'ESP'){
             if ($inc_s_v == 1)

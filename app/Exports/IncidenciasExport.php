@@ -114,6 +114,7 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
         }
         if ($this->periodo != 0)
             $models->where('id_periodo',$this->periodo);
+        $models->where('estatus','=','POR ENVIAR');
         $models = $models->get();
         return collect($models);
     }

@@ -45,7 +45,7 @@ class IncidenciasNotificar extends Command
     public function handle()
     {
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-            ->where('fecha_fin','>=', $this->date)->first();
+            ->where('fecha_envio','>=', $this->date)->first();
         $deduc = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('tipo_incidencia','DEDUCCION')->whereNull('estatus')->count();
         $s_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])

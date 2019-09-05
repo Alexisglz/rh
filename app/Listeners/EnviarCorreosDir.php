@@ -39,7 +39,7 @@ class EnviarCorreosDir implements ShouldQueue
             $tipo    = $event->tipo;
             $perms   = $event->perms;
             $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-                ->where('fecha_fin','>=', $this->date)->first();
+                ->where('fecha_envio','>=', $this->date)->first();
             $fecha_inicio = $periodo->fecha_inicio;
             $fecha_fin    = $periodo->fecha_fin;
             $fecha_envio  = $periodo->fecha_envio;

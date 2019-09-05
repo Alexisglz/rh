@@ -70,7 +70,7 @@ class IncidenciasLoteExport implements FromCollection, WithHeadings, ShouldAutoS
         }
         $models->select(
             'id','empleado','tipo_incidencia','fecha_solicitud','fecha_inicio','fecha_fin','duracion',
-            'monto','motivo','solicitante','Autorizado_RH','Autorizado_DIR','Autorizado_Capital','id_lote'
+            'monto','motivo','solicitante','Autorizado_RH','Autorizado_DIR','Autorizado_Gerente','id_lote'
         );
         switch ($this->area){
             case 'ESP':
@@ -98,7 +98,7 @@ class IncidenciasLoteExport implements FromCollection, WithHeadings, ShouldAutoS
     {
         return [
             'ID','EMPLEADO','TIPO INCIDENCIA','FECHA SOLICITUD','FECHA INICIO','FECHA FIN','DURACION',
-            'MONTO','MOTIVO','SOLICITANTE','AUTH RH','AUTH DIRECCION','AUTH CAPITAL','LOTE'
+            'MONTO','MOTIVO','SOLICITANTE','AUTH RH','AUTH DIRECCION','AUTH GERENTE','LOTE'
         ];
     }
     public function registerEvents(): array

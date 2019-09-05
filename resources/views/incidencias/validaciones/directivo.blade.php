@@ -32,7 +32,7 @@
                                 <th>RO</th>
                                 <th>Monto</th>
                                 <th>Fecha Inicio Falta</th>
-                                <th>Duración</th>
+                                <th>Duración Dias</th>
                                 <th>Fecha de solicitud</th>
                             </tr>
                             </thead>

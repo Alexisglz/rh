@@ -20,7 +20,7 @@
 
                         <a class="btn btn-primary pull-right text-white" href="/files/Manuales/Manual_Crear_Incidencias.pdf" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                            {{__('Manual')}}
+                            {{__('Manual Incidencias')}}
                         </a>
 
                     </div>

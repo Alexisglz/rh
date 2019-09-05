@@ -12,15 +12,25 @@
             <br>
             <input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 
+            <div class="col-sm mb-5">
+                <a class="btn btn-primary pull-left text-white" href="/files/Manuales/Manual_Ajuste_Sueldo.pdf" >
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                    {{__('Manual Ajuste Sueldo')}}
+                </a>
+            </div>
+
+
             <div class="row mb-3 col-12">
                 @can('access',[\App\User::class,'nuevo_ajuste_s'])
                     <a id="nuevo_ajuste" class="btn btn-primary ml-2 text-white">{{__('Nuevo Ajuste')}}</a>
                 @endcan
+
                 @can('access',[\App\User::class,'enviar_ajuste_s'])
                     <div class="col-sm">
                         <a id="enviar_ajustes" class="btn btn-success ml-2 text-white pull-right">{{__('Enviar')}}</a>
                     </div>
                 @endcan
+
             </div>
 
             @can('access',[\App\User::class,'enviar_ajuste_s'])
@@ -33,6 +43,7 @@
                     </div>
                 </div>
             @endcan
+
 
             @can('access',[\App\User::class,'exportar_solicitudes1'])
                 <form class="form-inline">

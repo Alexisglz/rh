@@ -22,17 +22,23 @@ class IncidenciasEvents
      * @var string
      */
     public $tipo;
+    /**
+     * @var string
+     */
+    public $correo;
 
     /**
      * Create a new event instance.
      *
      * @param Incidencias $incidencia
      * @param string $tipo
+     * @param string $correo
      */
-    public function __construct(Incidencias $incidencia, string $tipo)
+    public function __construct(Incidencias $incidencia, string $tipo, string $correo = '')
     {
         $this->incidencia = $incidencia;
         $this->tipo = $tipo;
+        $this->correo = $correo;
     }
 
     /**

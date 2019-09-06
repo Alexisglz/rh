@@ -5,7 +5,7 @@
         <div class="card-header bg-transparent border-primary">
             <h4 class="card-title text-primary">{{__('Aprobar o Rechazar Incidencia')}}</h4>
         </div>
-        @if($incidencia->estatus == null)
+        @if($incidencia->estatus == 'SOLICITADO')
             <div class="card-body">
                 <form method="post" action="{{route('incidencias.save_aprobar',['id' => $incidencia->id])}}">
                     @csrf

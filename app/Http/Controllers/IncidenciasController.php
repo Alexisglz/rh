@@ -8,15 +8,15 @@ use App\Events\IncidenciasNotificar;
 use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Incidencias;
+use App\Models\DirectorArea;
 use App\Models\IncidenciaPeriodo;
 use App\Models\IncidenciasCatalogo;
+use App\Models\MovimientosProyecto;
 use App\Models\ProyectosIndeplo;
 use App\Models\ProyectosIndeploRecurso;
 use App\Models\VistaEmpleadosActivos;
-use App\Models\VistaIncidenciasPeriodo;
 use App\User;
 use App\VistaIncidencias;
-use DateTime;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -145,6 +145,12 @@ class IncidenciasController extends Controller
             }
             $incidencia      = new Incidencias;
             $empleado        = Empleados::find($request->id_empleado);
+            $proyecto        = MovimientosProyecto::where('empleado_id',$empleado->empleado_id)->whereNull('fecha_fin')->first();
+            $director        = DirectorArea::where('cliente',$proyecto->cliente)->where('servicio',$proyecto->servicio)->first();
+            if (!$director)
+                $correo          = User::find(117);
+            else
+                $correo          = User::find($director->id_usuario);
             $tipo_incidencia = IncidenciasCatalogo::find($request->incidencia);
             switch ($tipo_incidencia->tratamiento) {
                 case 'LAPSO':
@@ -212,6 +218,7 @@ class IncidenciasController extends Controller
             $opcional  = 'SOLICITADO';
             GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$opcional");
             DB::commit();
+            event(new IncidenciasEvents($incidencia,'gerente',$correo->correo));
             /*if ($tipo_incidencia->tipo == "DEDUCCION"){
                 event(new IncidenciasEvents($incidencia,'noti_deduc'));
             }
@@ -404,78 +411,23 @@ class IncidenciasController extends Controller
             $Tipo_bita  = "incidencia";
             $rol        = auth()->user()->getRol->Rol;
             $incidencia = Incidencias::find($request->id);
-            $venta      = VistaIncidencias::find($incidencia->id);
             $accion     = $request->tipo;
-            GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$accion");
-            if ($venta->tipo_incidencia == 'DEDUCCION')
-                $type = 'deduc';
-            else {
-                if ($venta->venta > 0)
-                    $type = 'c_venta';
-                else
-                    $type = 's_venta';
-            }
+            $estatus    = 'POR VALIDAR DIRECCION';
             if ($accion == 'autorizar') {
-                switch ($type) {
-                    case 'deduc':
-                        $incidencia->auth_rh    = $this->date;
-                        $incidencia->id_rh_auth = auth()->user()->id_usuario;
-                        break;
-                    case 's_venta':
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        break;
-                    case 'c_venta':
-                        $incidencia->id_auth_venta = auth()->user()->id_usuario;
-                        $incidencia->auth_venta    = $this->date;
-                        break;
-                    case 'ADMIN':
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
-                        $incidencia->auth_capital      = $this->date;
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->auth_rh           = $this->date;
-                        break;
-                }
+                $incidencia->auth_gerente    = $this->date;
+                $incidencia->id_gerente_auth = auth()->user()->id_usuario;
+                $incidencia->status_auth     = $estatus;
             } else {
-                switch ($type) {
-                    case 'deduc':
-                        $incidencia->auth_rh       = $this->date;
-                        $incidencia->id_rh_auth    = auth()->user()->id_usuario;
-                        $incidencia->status_auth   = 'CANCELAR';
-                        $incidencia->area_cancelar = $rol;
-                        break;
-                    case 's_venta':
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        $incidencia->status_auth       = 'CANCELAR';
-                        $incidencia->area_cancelar     = $rol;
-                        break;
-                    case 'c_venta':
-                        $incidencia->id_auth_venta = auth()->user()->id_usuario;
-                        $incidencia->auth_venta    = $this->date;
-                        $incidencia->status_auth   = 'CANCELAR';
-                        $incidencia->area_cancelar = $rol;
-                        break;
-                    case 'ADMIN':
-                        $incidencia->auth_capital      = $this->date;
-                        $incidencia->auth_rh           = $this->date;
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
-                        $incidencia->status_auth       = 'CANCELAR';
-                        $incidencia->area_cancelar     = $rol;
-                        break;
-                }
+                $estatus                     = 'CANCELAR';
+                $incidencia->auth_rh         = $this->date;
+                $incidencia->id_gerente_auth = auth()->user()->id_usuario;
+                $incidencia->status_auth     = $estatus;
+                $incidencia->area_cancelar   = $rol;
             }
-            if ($incidencia->status_auth != 'CANCELAR')
-                $incidencia->status_auth = 'POR ENVIAR';
             $incidencia->save();
+            $usuario_validar = auth()->user()->nombre.' '.auth()->user()->apellido;
+            GlobalModel::SetBitacoras("incidencia", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$usuario_validar VALIDO", "$estatus");
             DB::commit();
-            if ($accion == 'autorizar')
-                event(new IncidenciasEvents($incidencia, 'autorizar'));
-            else
-                event(new IncidenciasEvents($incidencia, 'cancelar'));
             return redirect()->route('incidencias.aprobar')->with('success', 'Incidencia actualizada correctamente');
         } catch (\Exception $e) {
             DB::rollBack();

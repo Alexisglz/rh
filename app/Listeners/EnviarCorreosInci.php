@@ -134,6 +134,14 @@ class EnviarCorreosInci Implements ShouldQueue
                         Mail::to($email)->send(new AuthCancelInci("RECHAZADA", $msg, $nombre, $incidencia->id));
                     }
                     break;
+                case 'gerente':
+                    if (config('app.env')=="local")
+                        $correos = [$event->correo];
+                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id, $correos));
+                    if (config('app.env')=="production") {
+                        Mail::to($event->correo)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
+                    }
+                    break;
             }
         }catch (Exception $e){
             dd($e);

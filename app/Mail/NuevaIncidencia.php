@@ -13,6 +13,10 @@ class NuevaIncidencia extends Mailable
     protected $tipo;
     protected $emp;
     protected $id;
+    /**
+     * @var null
+     */
+    private $correos;
 
     /**
      * Create a new message instance.
@@ -20,12 +24,14 @@ class NuevaIncidencia extends Mailable
      * @param $tipo
      * @param $emp
      * @param $id
+     * @param null $correos
      */
-    public function __construct($tipo, $emp, $id)
+    public function __construct($tipo, $emp, $id, $correos = null)
     {
-        $this->tipo = $tipo;
-        $this->emp  = $emp;
-        $this->id = $id;
+        $this->tipo    = $tipo;
+        $this->emp     = $emp;
+        $this->id      = $id;
+        $this->correos = $correos;
     }
 
     /**
@@ -40,6 +46,7 @@ class NuevaIncidencia extends Mailable
             ->markdown('emails.nueva_inci')
             ->with('id', $this->id)
             ->with('emp', $this->emp)
+            ->with('correos', $this->correos)
             ->with('tipo', $this->tipo);
     }
 }

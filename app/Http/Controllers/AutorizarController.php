@@ -74,14 +74,6 @@ class AutorizarController extends Controller
         return view('incidencias.finalizadas');
     }
 
-    public function getIncidenciasLote()
-    {
-        $incidencias = DB::table('vista_incidencias_sin_lote')->select()->where('estatus','=','POR ENVIAR')->orWhere('estatus','=','ENVIADO');
-        return DataTables::of($incidencias)
-            ->whitelist(['id', 'empleado', 'tipo_incidencia', 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'duracion, monto', 'motivo', 'solicitante', 'Autorizado_RH', 'Autorizado_DIR', 'Autorizado_Capital'])
-            ->make(true);
-    }
-
     /**
      * @param Request $request
      * @return mixed

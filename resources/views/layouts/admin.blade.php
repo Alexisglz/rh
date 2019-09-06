@@ -308,6 +308,14 @@ to get the desired effect
                                 </li>
                                 @endcan
                                 @can('access',[\App\User::class,'listado_autorizar'])
+                                    <li class="nav-item">
+                                        <a href="{!! route('autorizar.index') !!}" class="nav-link">
+                                            <i class="fa fa-check nav-icon iconMenu"></i>
+                                            <p class="labelMenu">{{__('Autorizaciones')}}</p>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('access',[\App\User::class,'listado_autorizar'])
                                 <li class="nav-item">
                                     <a href="{!! route('auth.index') !!}" class="nav-link">
                                         <i class="fa fa-check nav-icon iconMenu"></i>

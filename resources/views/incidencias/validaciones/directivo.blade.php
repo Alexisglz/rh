@@ -26,7 +26,7 @@
                                 <th>Empleado</th>
                                 <th>Proyecto</th>
                                 <th>Solicitante</th>
-                                <th>Vobo</th>
+                                <th>Autorizador</th>
                                 <th>Venta</th>
                                 <th>Evidencia</th>
                                 <th>RO</th>

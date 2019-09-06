@@ -18,7 +18,7 @@ var table      = $('#table_dir').DataTable({
         {data: 'empleado', name: 'empleado'},
         {data: 'proyecto', name: 'proyecto', className:'proyecto_p'},
         {data: 'solicitante', name: 'solicitante'},
-        {data: 'vobo', name: 'vobo', className:'vobo_p'},
+        {data: 'usuario_ger', name: 'usuario_ger', className:'vobo_p'},
         {data: 'venta', name: 'venta',className:'venta_p'},
         {data: 'evidencia', name: 'evidencia',className:'venta_p'},
         {data: 'pedido', name: 'pedido', className:'pedido_p'},
@@ -59,9 +59,7 @@ var table      = $('#table_dir').DataTable({
             "data": null,
             "className": "text-center",
             render: function (data,type,row) {
-                var template = '';
-                if (data != null)
-                    template += '<a class="btn" href="/files/'+data+'"><i class="fa fa-download"></i></a>';
+                var template = '<span class="text-bold text-success">'+data+'</span>';
                 return template;
             }
         },
@@ -163,7 +161,6 @@ function save() {
 
 if(inc_c_v != 1 && inc_s_v != 1){
     table.columns( '.venta_p' ).visible( false );
-    table.columns( '.vobo_p' ).visible( false );
     table.columns( '.pedido_p' ).visible( false );
     table.columns( '.proyecto_p' ).visible( false );
 }

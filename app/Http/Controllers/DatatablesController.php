@@ -408,6 +408,11 @@ class DatatablesController extends Controller
             $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
         else
             $incidencias = [];
+        $director = auth()->user()->getDirectorNoti;
+        if ($director){
+            $director_pd = $director->cliente.'-'.$director->servicio;
+            $incidencias->where('pd_recurso',$director_pd);
+        }
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
                 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])

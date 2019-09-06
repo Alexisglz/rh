@@ -4,8 +4,6 @@ namespace App\Exports;
 
 use App\User;
 use App\VistaIncidencias;
-use App\VistaIncidenciasSinLote;
-use DB;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -66,7 +64,7 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        $models    = VistaIncidenciasSinLote::query();
+        $models    = VistaIncidencias::query();
         $usuario   = auth()->user();
         if ($usuario->listarTodo == null){
             if ($usuario->getCoordinador){

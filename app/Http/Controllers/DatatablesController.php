@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Coordinador;
-use App\Empleados;
 use App\Http\Requests;
-use App\Models\AjusteSueldo;
 use App\Models\CatalogoCoordinadores;
 use App\Models\IncidenciaPeriodo;
 use App\Models\VistaAjusteSueldo;
@@ -16,7 +14,7 @@ use App\Models\VistaSolAltas;
 use App\Models\VistaSolBajas;
 use App\PlanesLineas;
 use App\User;
-use App\VistaIncidenciasSinLote;
+use App\VistaIncidencias;
 use App\WBS;
 use DB;
 use Illuminate\Http\Request;
@@ -283,77 +281,6 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
-    public static function getCatalogoCodigos()
-    {
-        $sol = DB::table('catalogo_codigos')
-            ->select(DB::raw(
-                "id, codigo, concepto, precio, costo, incluye, tipo, diario, pd, diario_gasolina, 
-                        monto_viatico, incluye_viaticos, incluye_equipo, descripcion, horas, caduca"));
-        return DataTables::of($sol)
-            ->make(true);
-    }
-
-    public static function getCatalogoProyectos()
-    {
-        $sol = DB::select(DB::raw("call rh.sp_todos_proyectos();"));
-        return DataTables::of($sol)
-            ->make(true);
-    }
-
-    public static function getCatalogoCoordinador()
-    {
-        $sol = Coordinador::select(DB::raw('id,nombre,apellido,correo'));
-        return DataTables::of($sol)
-            ->make(true);
-    }
-
-    public static function getCatalogoPlanes()
-    {
-        $sol = PlanesLineas::select(DB::raw(
-            'plan_id, plan_codigo, plan_nombre, plan_tipo,plan_descripion, plan_costo, 
-            plan_precio, plan_empresa, plan_proveedor'));
-        return DataTables::of($sol)
-            ->make(true);
-    }
-
-    public static function getEmpleadosCriterio($criterio)
-    {
-        $sol = DB::select(DB::raw("call rh.sp_busca_empleado_criteria('$criterio');"));
-        return DataTables::of($sol)
-            ->make(true);
-    }
-
-    public static function getCatalogoWBS()
-    {
-        $sol = WBS::all();
-        return DataTables::of($sol)
-            ->make(true);
-    }
-
-    public function getDataBajas()
-    {
-        $sol = DB::table('solicitud_baja')->select('id', 'wbs', 'apaterno', 'amaterno', 'fecha_inicio', 'puesto');
-        return DataTables::of($sol)
-            ->addColumn('action', function ($sol) {
-                $btn = "";
-                return $btn;
-            })
-            ->make(true);
-    }
-
-    public function getDataHerramientas()
-    {
-        $sol = DB::table('solicitud_alta')->select('id', 'nombre', 'apaterno', 'amaterno');
-        return DataTables::of($sol)
-            ->addColumn('action', function ($sol) {
-                $btn = "";
-                $btn .= '<a href="#edit-' . $sol->id . '" class="btn btn-xs btn-primary" style="margin-rigth: 5px;margin-left: 5px"><i class="fa fa-pencil-square-o"></i> Editar</a>';
-                $btn .= '<button id="darBajaCliente" onClick="darBajaCliente(' . $sol->id . "," . $auth->user->id . ')" data-toggle="modal" data-target="#myModal" class="btn btn-xs btn-danger" style="margin-rigth: 5px;margin-left: 5px"><i class="fa fa-trash-o"></i>Baja</button>';
-                return $btn;
-            })
-            ->make(true);
-    }
-
     public function getDataUsuarios()
     {
         $p_noti  = auth()->user()->can('access',[\App\User::class,'notificaciones_usuarios'])? 1:0;
@@ -380,7 +307,7 @@ class DatatablesController extends Controller
     public function getIncidencias(Request $request){
         $usuario     = auth()->user();
         $area        = $usuario->getRol->Rol;
-        $incidencias = VistaIncidenciasSinLote::query();
+        $incidencias = VistaIncidencias::query();
         if ($usuario->listarTodo == null) {
             if ($usuario->getCoordinador) {
                 $this->recursivoCoordinadores($usuario->id_usuario);
@@ -430,7 +357,7 @@ class DatatablesController extends Controller
     {
         $usuario = auth()->user();
         $area    = $usuario->getRol->Rol;
-        $incidencias = VistaIncidenciasSinLote::query();
+        $incidencias = VistaIncidencias::query();
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_fin','>=', $this->date)->first();
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
@@ -523,7 +450,7 @@ class DatatablesController extends Controller
     {
         $usuario = auth()->user();
         $area    = $usuario->getRol->Rol;
-        $incidencias = VistaIncidenciasSinLote::query();
+        $incidencias = VistaIncidencias::query();
         $incidencias
             ->whereIn('estatus',['ENVIADO','CANCELAR'])->select();
         if ($usuario->listarTodo == null) {

@@ -6,7 +6,7 @@ use App\Events\IncidenciasEvents;
 use App\GlobalModel;
 use App\Incidencias;
 use App\Models\IncidenciaPeriodo;
-use App\VistaIncidenciasSinLote;
+use App\VistaIncidencias;
 use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -51,7 +51,7 @@ class AuthIncidenciaController extends Controller
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_envio','>=', $this->date)->first();
-        $incidencias = VistaIncidenciasSinLote::query();
+        $incidencias = VistaIncidencias::query();
         if($area != 'ADMIN' && $area != 'ESP'){
             if ($inc_s_v == 1)
                 $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
@@ -76,7 +76,7 @@ class AuthIncidenciaController extends Controller
             $role        = auth()->user()->getRol->Rol;
             foreach ($incidencias as $incidencia){
                 $model = Incidencias::find($incidencia[0]);
-                $view = VistaIncidenciasSinLote::find($incidencia[0]);
+                $view = VistaIncidencias::find($incidencia[0]);
                 $accion = '';
                 if ($incidencia[1] == "true"){
                     $accion = 'autorizar';

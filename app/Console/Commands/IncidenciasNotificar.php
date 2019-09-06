@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\IncidenciaPeriodo;
-use App\VistaIncidenciasSinLote;
+use App\VistaIncidencias;
 use Illuminate\Console\Command;
 
 class IncidenciasNotificar extends Command
@@ -46,11 +46,11 @@ class IncidenciasNotificar extends Command
     {
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_envio','>=', $this->date)->first();
-        $deduc = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
+        $deduc = VistaIncidencias::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('tipo_incidencia','DEDUCCION')->whereNull('estatus')->count();
-        $s_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
+        $s_venta = VistaIncidencias::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('venta','<=',0)->where('tipo_incidencia', '!=','DEDUCCION')->whereNull('estatus')->count();
-        $c_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
+        $c_venta = VistaIncidencias::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->whereNull('estatus')->count();
         $fin_periodo = date('Y-m-d', strtotime($periodo->fecha_envio. ' - 1 days'));
         $data = [];

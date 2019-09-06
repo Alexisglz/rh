@@ -143,10 +143,6 @@ risk.on('keyup',function () {
 			select: function(event, ui) {
 				$('#id_risk').val(ui.item.id);
 				$('#venta').val(ui.item.monto_venta);
-				if (ui.item.monto_venta == 0)
-					$('#div_vobo').fadeIn();
-				else
-					$('#div_vobo').fadeOut();
 			}
 		});
 	}

@@ -6,6 +6,8 @@ var s_emp      = null;
 var table      = $('#incidencias-table').DataTable({
     processing: true,
     serverSide: true,
+    responsive: true,
+    pageLength: 100,
     order: [[0, "desc"]],
     ajax: {
         url: '/datatables/get_incidencias_auth',
@@ -19,16 +21,16 @@ var table      = $('#incidencias-table').DataTable({
     columns: [
         {data: 'id', name: 'id'},
         {data:null, name:'info',orderable: false, searchable: false},
-        {data:null, name:'bitacira',orderable: false, searchable: false},
-        {data:'vobo', name:'vobo',orderable: false, searchable: false},
+        {data:null, name:'bitacora',orderable: false, searchable: false},
         {data: 'Autorizado_RH', name: 'Autorizado RH',orderable: false, searchable: false, className:'auth_ded'},
-        {data: 'Autorizado_DIR', name: 'Autorizado DIR',orderable: false, searchable: false, className:'auth_cv_v'},
-        {data:null, name:'Autorizado SV',orderable: false, searchable: false, className:'auth_sv_v'},
         {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
         {data: 'solicitante', name: 'solicitante'},
-        {},
+        {data:null, name:'venta',orderable: false, searchable: false},
         {data: 'pedido', name: 'pedido'},
+        {data: 'monto', name: 'monto'},
+        {data: 'fecha_inicio', name: 'fecha_inicio'},
+        {data: 'duracion', name: 'duracion'},
         {data: 'fecha_solicitud', name: 'fecha_solicitud'},
     ],
     language: {
@@ -60,19 +62,7 @@ var table      = $('#incidencias-table').DataTable({
             "defaultContent": "<button data-tipo='Bitacora' class='bitacora btn btn-xs btn-info iconBitacora'><i class='fa fa-book nav-icon'></i></button>",
         },
         {
-            "targets": 3,
-            "data": null,
-            "className": "text-center",
-            "render": function (data, type, row) {
-                var view = '';
-                if (data != null){
-                    view = '<a href="/files/'+data+'" title="Descargar"><i class="fa fa-download" style="color:#007bffcc;font-size:17px"></i></a>';
-                }
-                return view;
-            }
-        },
-        {
-            "targets": 4, // your case first column
+            "targets": 3, // your case first column
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -83,9 +73,9 @@ var table      = $('#incidencias-table').DataTable({
                     return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
-                    if (row.tipo_incidencia == "DEDUCCION" && inc_ded == 1){
-                        view += "<button class='auth_rh btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
-                        view += "<button class='cancel_rh btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
+                    if (inc_ded == 1){
+                        view += "<button class='auth btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
+                        view += "<button class='cancel btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
                     }
                     else
                         view = '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
@@ -94,53 +84,7 @@ var table      = $('#incidencias-table').DataTable({
             },
         },
         {
-            "targets": 5, // your case first column
-            "data": null,
-            "render": function (data, type, row) {
-                var view = '';
-                if (row.estatus == 'CANCELAR') {
-                    return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
-                }
-                if (row.estatus == 'POR ENVIAR' || row.estatus == 'ENVIADO') {
-                    return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
-                }
-                else {
-                    if (row.venta > 0 && inc_c_v == 1){
-                        view += "<button class='auth_cv btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
-                        view += "<button class='cancel_cv btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
-                    }
-                    else
-                        view = '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
-                }
-                return view;
-            },
-        },
-        {
-            "targets": 6,
-            "data": null,
-            "className": "text-center",
-            "render": function (data, type, row) {
-                /*var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-                var lastDay = new Date(y, m + 1, 0);*/
-                var view = "";
-                if (row.estatus == 'CANCELAR') {
-                    return '<i class="fas fa-close" style="color:red;font-size:20px"></i>';
-                }
-                if (row.estatus == 'POR ENVIAR' || row.estatus == 'ENVIADO') {
-                    return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
-                } else {
-                    if (row.venta == 0 && row.tipo_incidencia == "PERCEPCION" && inc_s_v == 1){
-                        view += "<button class='auth_sv btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
-                        view += "<button class='cancel_sv btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
-                    }
-                    else
-                        view = '<i class="fas fa-ban" style="color:orange;font-size:20px"></i>';
-                    return view;
-                }
-            },
-        },
-        {
-            "targets": 10,
+            "targets": 7,
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
@@ -166,34 +110,14 @@ $('#incidencias-table tbody').on('click', '.info', function () {
     data = table.row($(this).parent()).data();
 });
 
-$('#incidencias-table tbody').on('click', '.auth_rh', function () {
+$('#incidencias-table tbody').on('click', '.auth', function () {
     data = table.row($(this).parent()).data();
     alertAccion(data, 'deduc', 'autorizar');
 });
 
-$('#incidencias-table tbody').on('click', '.cancel_rh', function () {
+$('#incidencias-table tbody').on('click', '.cancel', function () {
     data = table.row($(this).parent()).data();
     alertAccion(data, 'deduc', 'cancelar');
-});
-
-$('#incidencias-table tbody').on('click', '.auth_cv', function () {
-    data = table.row($(this).parent()).data();
-    alertAccion(data, 'c_venta', 'autorizar');
-});
-
-$('#incidencias-table tbody').on('click', '.cancel_cv', function () {
-    data = table.row($(this).parent()).data();
-    alertAccion(data, 'c_venta', 'cancelar');
-});
-
-$('#incidencias-table tbody').on('click', '.auth_sv', function () {
-    data = table.row($(this).parent()).data();
-    alertAccion(data, 's_venta', 'autorizar');
-});
-
-$('#incidencias-table tbody').on('click', '.cancel_sv', function () {
-    data = table.row($(this).parent()).data();
-    alertAccion(data, 's_venta', 'cancelar');
 });
 
 function alertAccion(data, tipo, accion){
@@ -247,68 +171,6 @@ $('#incidencias-table tbody').on('click', '.bitacora', function () {
     MostrarBitacora(data)
 });
 
-function openModalAutorizarIncidencia(opciones) {
-    var opc = "";
-
-    if (opciones == 0) {
-        opc = "AUTORIZAR";
-    } else {
-        opc = "CANCELAR";
-    }
-
-    $('#incidencias-table tbody').on('click', '.auth', function () {
-        data = table.row($(this).parent()).data();
-        Swal.fire({
-            title: "¿DESEA MODIFICAR EL ESTATUS DE ESTA INCIDENCIA A: " + opc + "?",
-            text: "",
-            type: "warning",
-            showCancelButton: true
-        }).then((willDelete) => {
-                if (willDelete.value == true) {
-                    var id_user = $("#IdUser").val();
-                    var datosRe = {
-                        _token: CSRF_TOKEN,
-                        id: data['id'],
-                        user: id_user,
-                        mensaje: "SE A ACTUALIZADO EL ESTATUS DE  LA INCIDECIA CON: " + opc + " PARA ESTE USUARIO",
-                        Tipo_bitacora: "incidencia",
-                        recurso: data['empleado'],
-                        opcion: opc
-                    };
-                    $.ajax({
-                        url: '/autorizar/auth_incidencia',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: datosRe,
-                        beforeSend: function () {
-                            $().loader("show");
-                        },
-                        complete: function () {
-                            $().loader("hide");
-                        },
-                        success: function (data) {
-                            if (data.ok == true)
-                                Swal.fire({
-                                    title: "Incidencia Actualizada Correctamente",
-                                    text: "",
-                                    type: "success"
-                                });
-                            else
-                                Swal.fire({
-                                    title: "Ocurrio un error",
-                                    text: "",
-                                    type: "error"
-                                });
-                            table.ajax.reload();
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            });
-    });
-}
-
 $('#Modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var tipo = button.data('tipo');
@@ -339,7 +201,6 @@ $('#Modal').on('show.bs.modal', function (event) {
             var tr     = document.createElement("tr");
             var nombre = document.createElement("td");
             var dato   = document.createElement("td");
-            nombre.innerHTML = k;
             if (k == 'vobo'){
                 var value = data[k];
                 if (value != null){
@@ -348,8 +209,11 @@ $('#Modal').on('show.bs.modal', function (event) {
                 else
                     dato.innerHTML = '';
             }
-            else
+            else{
                 dato.innerHTML = data[k];
+            }
+            var str = k.toUpperCase();
+            nombre.innerHTML = str.replace("_"," ");
             tr.append(nombre);
             tr.append(dato);
             tabla.append(tr);

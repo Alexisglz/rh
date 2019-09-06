@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\VistaIncidencias
+ * App\VistaIncidenciasLote
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\VistaIncidencias newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\VistaIncidencias newQuery()
@@ -15,4 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 class VistaIncidencias extends Model
 {
     protected $table = 'vista_incidencias';
+
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
 }

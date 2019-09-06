@@ -65,7 +65,6 @@
                             {!! Form::label('risk', '*Risk Order:', []) !!}
                             {!! Form::text('risk', null, ['class'=>'form-control','id'=>'risk','autocomplete' => 'off']) !!}
                             {!! Form::hidden('id_risk', null, ['id'=>'id_risk']) !!}
-                            {!! Form::hidden('venta', null, ['id'=>'venta']) !!}
                         </div>
 
                         {!! Form::hidden('tratamiento', null, ['class'=>'tratement']) !!}
@@ -97,13 +96,6 @@
                         <!--{!! Form::label('horas', 'Horas', ['class'=>'horas']) !!}
                         {!! Form::number('horas', null, ['id'=>'horas','class'=>'horas form-control','required','min'=>0]) !!}-->
                         <br>
-
-                        <div id="div_vobo" style="display: none;">
-                            <h5 style="color: red">{{__('La RO seleccionada tiene un monto de venta de 0 se necesita una autorización.')}}</h5>
-                            {!! Form::label('vobo', 'Vo.Bo.'); !!}
-                            <br>
-                            {!! Form::file('vobo') !!}
-                        </div>
 
                         <br>
                     </div>

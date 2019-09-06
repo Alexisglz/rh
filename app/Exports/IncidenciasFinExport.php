@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\VistaIncidenciasSinLote;
+use App\VistaIncidencias;
 use DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -45,7 +45,7 @@ class IncidenciasFinExport implements FromCollection, WithHeadings, ShouldAutoSi
      */
     public function headings(): array
     {
-        $columns = new VistaIncidenciasSinLote();
+        $columns = new VistaIncidencias();
         $columns = $columns->getTableColumns();
         $headings = [];
         foreach ($columns as $column){

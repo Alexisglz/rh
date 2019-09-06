@@ -32,7 +32,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card-body table-responsive">
+                    <div class="card-body table-responsive" style="max-height: 80vh;overflow: auto;">
                         <table class="table table-active" style="font-size:12px;text-align: center; width: 100%;"
                                id="incidencias-table">
                             <thead>
@@ -40,15 +40,15 @@
                                 <th>Id</th>
                                 <th>Info</th>
                                 <th>Bitacora</th>
-                                <th>Vobo</th>
-                                <th>Autorizar DEDUC.</th>
-                                <th>Autorizar C/V</th>
-                                <th>Autorizar S/V</th>
+                                <th>Autorizar</th>
                                 <th>Empleado</th>
                                 <th>Incidencia</th>
                                 <th>Solicitante</th>
                                 <th>Venta</th>
                                 <th>RO</th>
+                                <th>Monto</th>
+                                <th>Fecha Inicio Falta</th>
+                                <th>Duración Dias</th>
                                 <th>Fecha de solicitud</th>
                             </tr>
                             </thead>
@@ -85,9 +85,9 @@
     </style>
     @php
         $auth_cancel = auth()->user()->can('access',[\App\User::class,'aut_cancel_incidencia'])? 1:0;
-        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
-        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
-        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        $inc_c_v     = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
+        $inc_s_v     = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
+        $inc_ded     = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
     @endphp
     <script>
         var auth_cancel = '<?php echo $auth_cancel ?>';
@@ -105,5 +105,5 @@
             font-size: 16px;
         }
     </style>
-    {!! Html::script('js/incidencias/autorizar.js') !!}
+    {!! Html::script('js/incidencias/autorizar.js?v='.time()) !!}
 @endsection

@@ -11,8 +11,6 @@ use App\Exports\IncidenciasLoteExport;
 use App\Exports\UsersExport;
 use App\Incidencias;
 use App\Solicitudes;
-use App\VistaIncidenciasSinLote;
-use DB;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 

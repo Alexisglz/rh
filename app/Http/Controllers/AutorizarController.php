@@ -7,14 +7,10 @@ use App\GlobalModel;
 use App\Helpers\Upload;
 use App\Incidencias;
 use App\Models\CatalogoCoordinadores;
-use App\Models\IncidenciaPeriodo;
 use App\Models\IncidenciasCatalogo;
-use App\Models\VistaIncidenciasPeriodo;
 use App\User;
-use App\VistaIncidenciasSinLote;
 use DB;
 use Illuminate\Http\Request;
-use Storage;
 use Yajra\Datatables\Datatables;
 
 class AutorizarController extends Controller

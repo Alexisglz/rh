@@ -15,7 +15,7 @@ use App\Models\ProyectosIndeploRecurso;
 use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaIncidenciasPeriodo;
 use App\User;
-use App\VistaIncidenciasSinLote;
+use App\VistaIncidencias;
 use DateTime;
 use DB;
 use Exception;
@@ -196,17 +196,13 @@ class IncidenciasController extends Controller
             $incidencia->area_solicitante   = $user->getRol->Rol;
             $incidencia->motivo             = $request->motivo;
             $incidencia->id_periodo         = $periodo->id;
+            $incidencia->status_auth        = "SOLICITADO";
             if ($request->id_risk != "" && $request->id_risk != null)
                 $incidencia->id_proyecto = $request->id_risk;
             $incidencia->save();
 
-            if ($request->file('vobo') != null) {
-                $nombre           = "vobo_jefe_" . $incidencia->id;
-                $incidencia->vobo = Upload::uploadFile('incidencias/' . $nombre, 'vobo', $incidencia, $nombre);
-                $incidencia->save();
-            }
             if ($request->file('evidencia') != null) {
-                $nombre           = "evidencia_" . $incidencia->id;
+                $nombre                = "evidencia_" . $incidencia->id;
                 $incidencia->evidencia = Upload::uploadFile('incidencias/' . $nombre, 'evidencia', $incidencia, $nombre);
                 $incidencia->save();
             }
@@ -393,7 +389,7 @@ class IncidenciasController extends Controller
     {
         if (!isset($request->id))
             return redirect()->route('autorizar.index');
-        $incidencia = VistaIncidenciasSinLote::find($request->id);
+        $incidencia = VistaIncidencias::find($request->id);
         return view('incidencias.aprobar', [
             'incidencia' => $incidencia
         ]);
@@ -408,7 +404,7 @@ class IncidenciasController extends Controller
             $Tipo_bita  = "incidencia";
             $rol        = auth()->user()->getRol->Rol;
             $incidencia = Incidencias::find($request->id);
-            $venta      = VistaIncidenciasSinLote::find($incidencia->id);
+            $venta      = VistaIncidencias::find($incidencia->id);
             $accion     = $request->tipo;
             GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$accion");
             if ($venta->tipo_incidencia == 'DEDUCCION')
@@ -517,11 +513,11 @@ class IncidenciasController extends Controller
     {
         $periodo = IncidenciaPeriodo::where('fecha_inicio', '<=', $this->date)
             ->where('fecha_fin', '>=', $this->date)->first();
-        $deduc = VistaIncidenciasSinLote::whereBetween('fecha_solicitud', [$periodo->fecha_inicio, $periodo->fecha_fin])
+        $deduc = VistaIncidencias::whereBetween('fecha_solicitud', [$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('tipo_incidencia', 'DEDUCCION')->whereNull('estatus')->count();
-        $s_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud', [$periodo->fecha_inicio, $periodo->fecha_fin])
+        $s_venta = VistaIncidencias::whereBetween('fecha_solicitud', [$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('venta', '<=', 0)->where('tipo_incidencia', '!=', 'DEDUCCION')->whereNull('estatus')->count();
-        $c_venta = VistaIncidenciasSinLote::whereBetween('fecha_solicitud', [$periodo->fecha_inicio, $periodo->fecha_fin])
+        $c_venta = VistaIncidencias::whereBetween('fecha_solicitud', [$periodo->fecha_inicio, $periodo->fecha_fin])
             ->where('venta', '>', 0)->where('tipo_incidencia', '!=', 'DEDUCCION')->whereNull('estatus')->count();
         $fin_periodo = date('Y-m-d', strtotime($periodo->fecha_envio . ' - 1 days'));
         $data = [];

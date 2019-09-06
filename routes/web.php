@@ -122,6 +122,7 @@ Route::group(["prefix" => "datatables", "middleware" => ["auth"]], function() {
     Route::get('/get_data_usuarios', 'DatatablesController@getDataUsuarios')->name('datatables.get_data_usuarios');
     Route::get('/get_incidencias', 'DatatablesController@getIncidencias')->name('datatables.get_incidencias');
     Route::get('/get_incidencias_auth', 'DatatablesController@getIncidenciasAuth')->name('datatables.get_incidencias_auth');
+    Route::get('/get_incidencias_gerente', 'DatatablesController@getIncidenciasGerente')->name('datatables.get_incidencias_gerente');
     Route::get('/get_incidencias_finalizadas', 'DatatablesController@getIncidenciasFinalizadas')->name('autorizar.get_incidencias_finalizadas');
     Route::get('/get_incidencias_periodo', 'DatatablesController@getIncidenciasPeriodo')->name('autorizar.get_incidencias_periodo');
     Route::get('/get_data_ajustes', 'DatatablesController@getDataAjustes')->name('autorizar.get_data_ajustes');

@@ -10,7 +10,7 @@ var table      = $('#incidencias-table').DataTable({
     pageLength: 100,
     order: [[0, "desc"]],
     ajax: {
-        url: '/datatables/get_incidencias_auth',
+        url: '/datatables/get_incidencias_gerente',
         type: 'GET',
         data: function (data) {
             data.reset = reset;
@@ -21,7 +21,7 @@ var table      = $('#incidencias-table').DataTable({
     columns: [
         {data: 'id', name: 'id'},
         {data:null, name:'info',orderable: false, searchable: false},
-        {data:null, name:'bitacora',orderable: false, searchable: false},
+        //{data:null, name:'bitacora',orderable: false, searchable: false},
         {data: 'Autorizado_RH', name: 'Autorizado RH',orderable: false, searchable: false, className:'auth_ded'},
         {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
@@ -55,14 +55,14 @@ var table      = $('#incidencias-table').DataTable({
             "className": "text-center",
             "defaultContent": "<button data-tipo='Informacion' class='info btn btn-xs btn-success iconInfo' data-toggle='modal' data-target='#Modal'><i class='fa fa-info nav-icon'></i></button>",
         },
-        {
+        /*{
             "targets": 2,
             "data": null,
             "className": "text-center",
             "defaultContent": "<button data-tipo='Bitacora' class='bitacora btn btn-xs btn-info iconBitacora'><i class='fa fa-book nav-icon'></i></button>",
-        },
+        },*/
         {
-            "targets": 3, // your case first column
+            "targets": 2, // your case first column
             "data": null,
             "render": function (data, type, row) {
                 var view = '';
@@ -84,7 +84,7 @@ var table      = $('#incidencias-table').DataTable({
             },
         },
         {
-            "targets": 7,
+            "targets": 6,
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
@@ -112,15 +112,15 @@ $('#incidencias-table tbody').on('click', '.info', function () {
 
 $('#incidencias-table tbody').on('click', '.auth', function () {
     data = table.row($(this).parent()).data();
-    alertAccion(data, 'deduc', 'autorizar');
+    alertAccion(data, 'autorizar');
 });
 
 $('#incidencias-table tbody').on('click', '.cancel', function () {
     data = table.row($(this).parent()).data();
-    alertAccion(data, 'deduc', 'cancelar');
+    alertAccion(data, 'cancelar');
 });
 
-function alertAccion(data, tipo, accion){
+function alertAccion(data, accion){
     Swal.fire({
         title: "¿DESEA AUTORIZAR ESTA INCIDENCIA?",
         text: "",
@@ -131,8 +131,6 @@ function alertAccion(data, tipo, accion){
             var datosRe = {
                 _token: CSRF_TOKEN,
                 id: data.id,
-                recurso: data['empleado'],
-                tipo: tipo,
                 accion: accion
             };
             $.ajax({

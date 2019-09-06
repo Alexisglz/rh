@@ -39,7 +39,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Info</th>
-                                <th>Bitacora</th>
+                                <!--th>Bitacora</th-->
                                 <th>Autorizar</th>
                                 <th>Empleado</th>
                                 <th>Incidencia</th>

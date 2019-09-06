@@ -60,7 +60,7 @@ class AuthIncidenciaController extends Controller
             if ($inc_ded == 1)
                 $incidencias->orWhere('tipo_incidencia','=','DEDUCCION');
         }
-        $incidencias->whereNull('estatus');
+        $incidencias->where('estatus','POR VALIDAR DIRECCION');
         if($periodo)
             $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])->get();
         else

@@ -208,8 +208,8 @@ class IncidenciasController extends Controller
             }
 
             $Tipo_bita = 'incidencia';
-            $mensaje   = 'Se ha creado una incidencia';
-            $opcional  = 'Creacion de incidencia';
+            $mensaje   = 'SE HA CREADO UNA INCIDENCIA';
+            $opcional  = 'SOLICITADO';
             GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$opcional");
             DB::commit();
             /*if ($tipo_incidencia->tipo == "DEDUCCION"){

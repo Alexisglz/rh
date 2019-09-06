@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Coordinador;
-use App\Http\Requests;
 use App\Models\CatalogoCoordinadores;
 use App\Models\IncidenciaPeriodo;
 use App\Models\VistaAjusteSueldo;
@@ -12,10 +10,8 @@ use App\Models\VistaEmpleadosActivos;
 use App\Models\VistaIncidenciasPeriodo;
 use App\Models\VistaSolAltas;
 use App\Models\VistaSolBajas;
-use App\PlanesLineas;
 use App\User;
 use App\VistaIncidencias;
-use App\WBS;
 use DB;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -172,6 +168,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataEmpleados(Request $request)
     {
         $usuario = auth()->user();
@@ -210,6 +211,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getBajasNom(Request $request)
     {
         $usuario     = auth()->user();
@@ -245,6 +251,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getCitasFirma(Request $request)
     {
         $citas   = VistaCitasFirma::query();
@@ -281,6 +292,10 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataUsuarios()
     {
         $p_noti  = auth()->user()->can('access',[\App\User::class,'notificaciones_usuarios'])? 1:0;
@@ -304,6 +319,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getIncidencias(Request $request){
         $usuario     = auth()->user();
         $area        = $usuario->getRol->Rol;
@@ -342,6 +362,52 @@ class DatatablesController extends Controller
             if($request->search_periodo)
                 $incidencias->where('id_periodo','=',$request->search_periodo);
         }
+        return DataTables::of($incidencias)
+            ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
+                'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
+            ->make(true);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getIncidenciasGerente(Request $request)
+    {
+        $usuario     = auth()->user();
+        $area        = $usuario->getRol->Rol;
+        $incidencias = VistaIncidencias::query();
+        $periodo     = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+                        ->where('fecha_fin','>=', $this->date)->first();
+        $incidencias->where('estatus','SOLICITADO');
+        switch ($area){
+            case 'ESP':
+            case 'ADMIN':
+                break;
+            case 'RH':
+            case 'DIR':
+            case 'ENTR':
+                $incidencias
+                    ->where('area_solicitante','<>','Esp')
+                    ->select();
+                break;
+            default:
+                $incidencias
+                    ->where('id_solicitante','=',auth()->user()->id_usuario)
+                    ->select();
+                break;
+        }
+        if($request->reset == 0){
+            if($request->id != null)
+                $incidencias->where('id','=',$request->id);
+            if($request->emp != null)
+                $incidencias->where('empleado','LIKE','%'.$request->emp.'%');
+        }
+        if($periodo)
+            $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
+        else
+            $incidencias = [];
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
                 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
@@ -406,6 +472,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getIncidenciasPeriodo(Request $request){
         $usuario = auth()->user();
         $area    = $usuario->getRol->Rol;
@@ -446,6 +517,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getIncidenciasFinalizadas(Request $request)
     {
         $usuario = auth()->user();
@@ -498,6 +574,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataAjustes(Request $request){
         $ajustes = VistaAjusteSueldo::query();
         if ($request->reset == 0){
@@ -517,6 +598,11 @@ class DatatablesController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getValiAjustes(Request $request){
         $ajustes = VistaAjusteSueldo::query();
         $ajustes->where('estatus','=','solicitado');

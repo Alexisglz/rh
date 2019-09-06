@@ -63,8 +63,7 @@ class AutorizarController extends Controller
     {
         $id = isset($request->id) ? $request->id:0;
         $this->authorize('access',[User::class, 'listado_autorizar']);
-        $vistaName = 'incidencias.autorizar';
-        return view($vistaName,[
+        return view('incidencias.autorizar',[
             'id' => $id
         ]);
     }
@@ -124,70 +123,24 @@ class AutorizarController extends Controller
         $this->authorize('access',[User::class, 'aut_cancel_incidencia']);
         try{
             DB::begintransaction();
-            $mensaje    = "";
-            $Tipo_bita  = "incidencia";
             $rol        = auth()->user()->getRol->Rol;
             $incidencia = Incidencias::find($request->id);
-            $tipo       = IncidenciasCatalogo::find($incidencia->id_incidencia_tipo);
-            $type       = $request->tipo;
             $accion     = $request->accion;
-            GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$accion");
+            $estatus    = 'POR VALIDAR DIRECCION';
             if ($accion == 'autorizar') {
-                switch ($type){
-                    case 'deduc':
-                        $incidencia->auth_rh           = $this->date;
-                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
-                        break;
-                    case 's_venta':
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        break;
-                    case 'c_venta':
-                        $incidencia->id_auth_venta     = auth()->user()->id_usuario;
-                        $incidencia->auth_venta        = $this->date;
-                        break;
-                    case 'ADMIN':
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
-                        $incidencia->auth_capital      = $this->date;
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->auth_rh           = $this->date;
-                        break;
-                }
+                $incidencia->auth_gerente    = $this->date;
+                $incidencia->id_gerente_auth = auth()->user()->id_usuario;
+                $incidencia->status_auth     = $estatus;
             } else {
-                switch ($type){
-                    case 'deduc':
-                        $incidencia->auth_rh       = $this->date;
-                        $incidencia->id_rh_auth    = auth()->user()->id_usuario;
-                        $incidencia->status_auth   = 'CANCELAR';
-                        $incidencia->area_cancelar = $rol;
-                        break;
-                    case 's_venta':
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        $incidencia->status_auth       = 'CANCELAR';
-                        $incidencia->area_cancelar     = $rol;
-                        break;
-                    case 'c_venta':
-                        $incidencia->id_auth_venta     = auth()->user()->id_usuario;
-                        $incidencia->auth_venta        = $this->date;
-                        $incidencia->status_auth       = 'CANCELAR';
-                        $incidencia->area_cancelar     = $rol;
-                        break;
-                    case 'ADMIN':
-                        $incidencia->auth_capital      = $this->date;
-                        $incidencia->auth_rh           = $this->date;
-                        $incidencia->auth_direccion    = $this->date;
-                        $incidencia->id_direccion_auth = auth()->user()->id_usuario;
-                        $incidencia->id_rh_auth        = auth()->user()->id_usuario;
-                        $incidencia->status_auth       = 'CANCELAR';
-                        $incidencia->area_cancelar     = $rol;
-                        break;
-                }
+                $estatus                     = 'CANCELAR';
+                $incidencia->auth_rh         = $this->date;
+                $incidencia->id_gerente_auth = auth()->user()->id_usuario;
+                $incidencia->status_auth     = $estatus;
+                $incidencia->area_cancelar   = $rol;
             }
-            if($incidencia->status_auth != 'CANCELAR')
-                $incidencia->status_auth = 'POR ENVIAR';
             $incidencia->save();
+            $usuario_validar = auth()->user()->nombre.' '.auth()->user()->apellido;
+            GlobalModel::SetBitacoras("incidencia", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$usuario_validar VALIDO", "$estatus");
             DB::commit();
             if($accion == 'autorizar')
                 event(new IncidenciasEvents($incidencia, 'autorizar'));

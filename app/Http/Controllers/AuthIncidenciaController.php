@@ -56,13 +56,15 @@ class AuthIncidenciaController extends Controller
         $incidencias = VistaIncidencias::query();
         if($area != 'ADMIN' && $area != 'ESP'){
             if ($inc_s_v == 1)
-                $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION');
+                $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
             if ($inc_c_v == 1)
-                $incidencias->orWhere('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION');
+                $incidencias->orWhere('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
             if ($inc_ded == 1)
-                $incidencias->orWhere('tipo_incidencia','=','DEDUCCION');
+                $incidencias->orWhere('tipo_incidencia','=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
         }
-        $incidencias->where('estatus','POR VALIDAR DIRECCION');
+        else{
+            $incidencias->where('estatus','POR VALIDAR DIRECCION');
+        }
         if($periodo)
             $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])->get();
         else

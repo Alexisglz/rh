@@ -380,34 +380,17 @@ class DatatablesController extends Controller
         $incidencias = VistaIncidencias::query();
         $periodo     = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
                         ->where('fecha_fin','>=', $this->date)->first();
-        if ($usuario->listarTodo == null) {
+        if ($area != 'ADMIN') {
             $director = auth()->user()->getDirectorInc;
             if ($director) {
                 foreach ($director AS $item) {
-                    $director_pd = $item->cliente . '-' . $item->servicio;
+                    $director_pd = $item->cliente.'-'.$item->servicio;
                     $incidencias->orWhere('pd_recurso', $director_pd)->where('estatus', 'SOLICITADO');
                 }
             }
         }
         else{
             $incidencias->where('estatus', 'SOLICITADO');
-        }
-        switch ($area){
-            case 'ESP':
-            case 'ADMIN':
-                break;
-            case 'RH':
-            case 'DIR':
-            case 'ENTR':
-                $incidencias
-                    ->where('area_solicitante','<>','Esp')
-                    ->select();
-                break;
-            default:
-                $incidencias
-                    ->where('id_solicitante','=',auth()->user()->id_usuario)
-                    ->select();
-                break;
         }
         if($request->reset == 0){
             if($request->id != null)

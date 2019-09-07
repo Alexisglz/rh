@@ -138,7 +138,7 @@ class EnviarCorreosInci Implements ShouldQueue
                     if (config('app.env')=="local")
                         Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id, $event->correos));
                     if (config('app.env')=="production") {
-                        foreach ($correos as $correo){
+                        foreach ($event->correos as $correo){
                             Mail::to($correo)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
                         }
                     }

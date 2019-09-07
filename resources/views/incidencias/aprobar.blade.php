@@ -59,6 +59,12 @@
                     <td class="bold">{{__('Solicitante:')}}</td>
                     <td>{{$incidencia->solicitante}}</td>
                 </tr>
+                @if($incidencia->evidencia != null)
+                <tr>
+                    <td class="bold">{{__('Evidencia:')}}</td>
+                    <td><a class="btn" href="/files/{{$incidencia->evidencia}}"><i class="fa fa-download"></i></a></td>
+                </tr>
+                @endif
                 @if($incidencia->pedido != null)
                 <tr>
                     <td class="bold">{{__('Risk Order:')}}</td>

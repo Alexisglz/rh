@@ -44,6 +44,7 @@
                                 <th>Empleado</th>
                                 <th>Incidencia</th>
                                 <th>Solicitante</th>
+                                <th>Evidencia</th>
                                 <th>Venta</th>
                                 <th>RO</th>
                                 <th>Monto</th>

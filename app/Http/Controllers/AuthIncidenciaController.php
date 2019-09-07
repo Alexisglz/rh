@@ -121,7 +121,7 @@ class AuthIncidenciaController extends Controller
                 if($model->status_auth != 'CANCELAR')
                     $model->status_auth = 'POR ENVIAR';
                 $model->save();
-                //event(new IncidenciasEvents($model, $accion));
+                event(new IncidenciasEvents($model, $accion));
                 GlobalModel::SetBitacoras("incidencia", $model->id, auth()->user()->id_usuario, $model->id_empleado, "La incidencia paso a ser: $accion", "$accion");
             }
             DB::commit();

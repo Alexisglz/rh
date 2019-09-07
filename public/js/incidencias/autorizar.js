@@ -26,7 +26,8 @@ var table      = $('#incidencias-table').DataTable({
         {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
         {data: 'solicitante', name: 'solicitante'},
-        {data:null, name:'venta',orderable: false, searchable: false},
+        {data: 'evidencia', name:'evidencia',orderable: false, searchable: false},
+        {data: null, name:'venta',orderable: false, searchable: false},
         {data: 'pedido', name: 'pedido'},
         {data: 'monto', name: 'monto'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
@@ -85,6 +86,17 @@ var table      = $('#incidencias-table').DataTable({
         },
         {
             "targets": 6,
+            "data": null,
+            "className": "text-center",
+            render: function (data,type,row) {
+                var template = '';
+                if (data != null)
+                    template += '<a class="btn" href="/files/'+data+'"><i class="fa fa-download"></i></a>';
+                return template;
+            }
+        },
+        {
+            "targets": 7,
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {

@@ -23,6 +23,7 @@ var table      = $('#incidencias-table').DataTable({
         {data: 'id', name: 'id'},
         {},
         {data: 'vobo', name: 'vobo'},
+        {data: 'id_lote', name: 'id_lote'},
         {data: 'evidencia', name: 'evidencia'},
         {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
@@ -35,7 +36,6 @@ var table      = $('#incidencias-table').DataTable({
         {data: 'pedido', name: 'pedido'},
         {data: 'solicitante', name: 'solicitante'},
         {data: 'motivo', name: 'motivo'},
-        {data: 'id_lote', name: 'id_lote'},
         {data: null, name: 'acciones'}
     ],
     language: {
@@ -62,19 +62,50 @@ var table      = $('#incidencias-table').DataTable({
 
         },
         {
-            "targets": 2, // your case first column
+            "targets": 2,
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {
-                if (data != null)
-                    return '<a href="/files/'+data+'" title="Descargar"><i class="fa fa-download" style="color:#007bffcc;font-size:20px"></i></a>';
-                else
-                    return '';
+                var view = '';
+                if (row.estatus == 'CANCELAR')
+                    view = '<i class="fa fa-close text-danger" style="font-size:20px"></i>';
+                else {
+                    if (row.id_gerente_auth != null)
+                        view = '<i class="fa fa-check-circle text-success" style="font-size:20px"></i>';
+                }
+                return view;
+            }
+        },
+        {
+            "targets": 3,
+            "data": null,
+            "className": "text-center",
+            "render": function (data, type, row) {
+                var view = '';
+                if (row.estatus == 'CANCELAR')
+                    view = '<i class="fa fa-close text-danger" style="font-size:20px"></i>';
+                else {
+                    if (row.tipo_incidencia == "DEDUCCION"){
+                        if (row.id_rh_auth != null)
+                            view = '<i class="fa fa-check-circle text-success" style="font-size:20px"></i>';
+                    }
+                    else {
+                        if (row.venta > 0){
+                            if (row.id_auth_venta != null)
+                                view = '<i class="fa fa-check-circle text-success" style="font-size:20px"></i>';
+                        }
+                        else {
+                            if (row.id_direccion_auth != null)
+                                view = '<i class="fa fa-check-circle text-success" style="font-size:20px"></i>';
+                        }
+                    }
+                }
+                return view;
             }
 
         },
         {
-            "targets": 3, // your case first column
+            "targets": 4, // your case first column
             "data": null,
             "className": "text-center",
             "render": function (data, type, row) {

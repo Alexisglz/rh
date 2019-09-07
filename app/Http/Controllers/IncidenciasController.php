@@ -149,7 +149,7 @@ class IncidenciasController extends Controller
             $director   = DirectorArea::where('cliente',$proyecto->cliente)->where('servicio',$proyecto->servicio)->get();
             $correos    = [];
             if (!$director){
-                $correo    = User::find(117);
+                $correo    = User::find(750);
                 $correos[] = $correo->correo;
             }
             else{

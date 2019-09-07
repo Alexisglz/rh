@@ -51,16 +51,22 @@ class AuthIncidenciaController extends Controller
         $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
         $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        $todas   = auth()->user()->can('access',[\App\User::class,'todas_incidencias'])? 1:0;
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_envio','>=', $this->date)->first();
         $incidencias = VistaIncidencias::query();
         if($area != 'ADMIN' && $area != 'ESP'){
-            if ($inc_s_v == 1)
-                $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
-            if ($inc_c_v == 1)
-                $incidencias->orWhere('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
-            if ($inc_ded == 1)
-                $incidencias->orWhere('tipo_incidencia','=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
+            if ($todas == 1){
+                $incidencias->where('estatus','POR VALIDAR DIRECCION');
+            }
+            else{
+                if ($inc_s_v == 1)
+                    $incidencias->orWhere('venta','=',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
+                if ($inc_c_v == 1)
+                    $incidencias->orWhere('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
+                if ($inc_ded == 1)
+                    $incidencias->orWhere('tipo_incidencia','=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION');
+            }
         }
         else{
             $incidencias->where('estatus','POR VALIDAR DIRECCION');

@@ -50,8 +50,23 @@ var table      = $('#table_dir').DataTable({
             "className": "text-center",
             render: function (data, type, row) {
                 var template = '';
-                template = '<input id="'+row.id+'" type="checkbox" class="toggle_1" data-toggle="toggle" data-on="<i class=\'fa fa-check\'></i>" ' +
-                    'data-off="<i class=\'fa fa-close\'></i>" data-onstyle ="success" data-offstyle="danger" data-size="small" checked="checked">';
+                if (row.tipo_incidencia == "DEDUCCION"){
+                    if (inc_ded == 1)
+                        template = '<input id="'+row.id+'" type="checkbox" class="toggle_1" data-toggle="toggle" data-on="<i class=\'fa fa-check\'></i>" ' +
+                            'data-off="<i class=\'fa fa-close\'></i>" data-onstyle ="success" data-offstyle="danger" data-size="small" checked="checked">';
+                }
+                else {
+                    if (row.venta > 0){
+                        if (inc_c_v == 1)
+                            template = '<input id="'+row.id+'" type="checkbox" class="toggle_1" data-toggle="toggle" data-on="<i class=\'fa fa-check\'></i>" ' +
+                            'data-off="<i class=\'fa fa-close\'></i>" data-onstyle ="success" data-offstyle="danger" data-size="small" checked="checked">';
+                    }
+                    else {
+                        if (inc_s_v == 1)
+                            template = '<input id="'+row.id+'" type="checkbox" class="toggle_1" data-toggle="toggle" data-on="<i class=\'fa fa-check\'></i>" ' +
+                            'data-off="<i class=\'fa fa-close\'></i>" data-onstyle ="success" data-offstyle="danger" data-size="small" checked="checked">';
+                    }
+                }
                 return template;
             }
         },

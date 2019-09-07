@@ -24,9 +24,9 @@ class NuevaIncidencia extends Mailable
      * @param $tipo
      * @param $emp
      * @param $id
-     * @param null $correos
+     * @param array $correos
      */
-    public function __construct($tipo, $emp, $id, $correos = null)
+    public function __construct($tipo, $emp, $id, $correos = [])
     {
         $this->tipo    = $tipo;
         $this->emp     = $emp;

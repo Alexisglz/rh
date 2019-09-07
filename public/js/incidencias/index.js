@@ -90,7 +90,7 @@ var table      = $('#incidencias-table').DataTable({
             "render": function (data, type, row) {
                 var del  = '';
                 var edit = '';
-                if (row.estatus != null){
+                if (row.estatus != 'SOLICITADO'){
                     edit = /*editar_ajustes_s*/ 1 == 1 ? '<button title="Editar Incidencia" disabled="disabled" class="btn btn-sm btn-primary text-white"><i class="fa fa-edit fa-sm"></i></button>':'';
                     del  = /*eliminar_ajuste_s*/ 1 == 1 ? '<button title="Eliminar Incidencia" disabled="disabled" class="btn btn-sm btn-danger text-white"><i class="fa fa-close"></i></button>':'';
                 }

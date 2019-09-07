@@ -136,10 +136,11 @@ class EnviarCorreosInci Implements ShouldQueue
                     break;
                 case 'gerente':
                     if (config('app.env')=="local")
-                        $correos = [$event->correo];
-                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id, $correos));
+                        Mail::to($email)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id, $event->correos));
                     if (config('app.env')=="production") {
-                        Mail::to($event->correo)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
+                        foreach ($correos as $correo){
+                            Mail::to($correo)->send(new NuevaIncidencia($inc_tipo, $nombre, $incidencia->id));
+                        }
                     }
                     break;
             }

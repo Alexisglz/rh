@@ -143,19 +143,26 @@ class IncidenciasController extends Controller
                 $errors = $validator->messages()->all();
                 return back()->with('error', $errors);
             }
-            $incidencia      = new Incidencias;
-            $empleado        = Empleados::find($request->id_empleado);
-            $proyecto        = MovimientosProyecto::where('empleado_id',$empleado->empleado_id)->whereNull('fecha_fin')->first();
-            $director        = DirectorArea::where('cliente',$proyecto->cliente)->where('servicio',$proyecto->servicio)->first();
-            if (!$director)
-                $correo          = User::find(117);
-            else
-                $correo          = User::find($director->id_usuario);
+            $incidencia = new Incidencias;
+            $empleado   = Empleados::find($request->id_empleado);
+            $proyecto   = MovimientosProyecto::where('empleado_id',$empleado->empleado_id)->whereNull('fecha_fin')->first();
+            $director   = DirectorArea::where('cliente',$proyecto->cliente)->where('servicio',$proyecto->servicio)->get();
+            $correos    = [];
+            if (!$director){
+                $correo    = User::find(117);
+                $correos[] = $correo->correo;
+            }
+            else{
+                foreach ($director as $item){
+                    $user_dir = User::find($item->id_usuario);
+                    $correos[] = $user_dir->correo;
+                }
+            }
             $tipo_incidencia = IncidenciasCatalogo::find($request->incidencia);
             switch ($tipo_incidencia->tratamiento) {
                 case 'LAPSO':
                     $incidencia->fecha_inicio = $request->fecha_i;
-                    $incidencia->dias = $request->dias;
+                    $incidencia->dias         = $request->dias;
                     break;
                 case 'MONTO':
                     /*if ($request->tipo_monto == 'horas'){
@@ -218,7 +225,7 @@ class IncidenciasController extends Controller
             $opcional  = 'SOLICITADO';
             GlobalModel::SetBitacoras("$Tipo_bita", $incidencia->id, auth()->user()->id_usuario, $incidencia->id_empleado, "$mensaje", "$opcional");
             DB::commit();
-            event(new IncidenciasEvents($incidencia,'gerente',$correo->correo));
+            event(new IncidenciasEvents($incidencia,'gerente',$correos));
             /*if ($tipo_incidencia->tipo == "DEDUCCION"){
                 event(new IncidenciasEvents($incidencia,'noti_deduc'));
             }
@@ -234,6 +241,7 @@ class IncidenciasController extends Controller
             return redirect('incidencias')->with('mensaje', 'Incidencia solicitada');
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e);
             return back()->with(['error' => $e]);
         }
     }

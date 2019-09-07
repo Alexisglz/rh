@@ -70,7 +70,16 @@ class AuthIncidenciaController extends Controller
         else
             $incidencias = [];
         $sql = $this->getRealQuery($incidencias);
-        return DataTables::of($incidencias)->with(['sql' => $sql])->make(true);
+        return DataTables::of($incidencias)
+            ->addColumn('margen', function (VistaIncidencias $incidencias){
+                $costo_actual   = $incidencias->costo_viaticos+$incidencias->costo_nomina+$incidencias->costo_herramienta;
+                $valor_proyecto = $incidencias->venta;
+                $delta          = $valor_proyecto-$costo_actual;
+                $margen         = ($valor_proyecto!=0)?($delta/$valor_proyecto)*100:0;
+                $formatted      = number_format($margen, 2, '.', ',');
+                return $formatted;
+            })
+            ->with(['sql' => $sql])->make(true);
     }
 
     public function validarMasivo(Request $request){

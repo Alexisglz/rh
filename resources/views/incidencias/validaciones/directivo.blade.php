@@ -30,6 +30,7 @@
                                 <th>Venta</th>
                                 <th>Evidencia</th>
                                 <th>RO</th>
+                                <th>Margen</th>
                                 <th>Monto</th>
                                 <th>Fecha Inicio Falta</th>
                                 <th>Duración Dias</th>

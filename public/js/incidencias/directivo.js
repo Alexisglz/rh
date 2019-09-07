@@ -22,6 +22,7 @@ var table      = $('#table_dir').DataTable({
         {data: 'venta', name: 'venta',className:'venta_p'},
         {data: 'evidencia', name: 'evidencia',className:'venta_p'},
         {data: 'pedido', name: 'pedido', className:'pedido_p'},
+        {data: 'margen', name: 'margen', className:'margen_p'},
         {data: 'monto', name: 'monto'},
         {data: 'fecha_inicio', name: 'fecha_inicio'},
         {data: 'duracion', name: 'duracion'},
@@ -88,6 +89,15 @@ var table      = $('#table_dir').DataTable({
                 var template = '';
                 if (data != null)
                     template += '<a class="btn" href="/files/'+data+'"><i class="fa fa-download"></i></a>';
+                return template;
+            }
+        },
+        {
+            "targets": 10,
+            "data": null,
+            "className": "text-center",
+            render: function (data,type,row) {
+                var template = '<span class="text-primary">'+data+'%</span>';
                 return template;
             }
         },
@@ -163,4 +173,5 @@ if(inc_c_v != 1 && inc_s_v != 1){
     table.columns( '.venta_p' ).visible( false );
     table.columns( '.pedido_p' ).visible( false );
     table.columns( '.proyecto_p' ).visible( false );
+    table.columns( '.margen_p' ).visible( false );
 }

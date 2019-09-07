@@ -75,6 +75,10 @@ class User extends Authenticatable
         return $this->hasOne(DirectorArea::class,'id_usuario','id_usuario');
     }
 
+    public function getDirectorInc(){
+        return $this->hasMany(DirectorArea::class,'id_usuario','id_usuario');
+    }
+
     public function getCoordPD(){
         return $this->hasMany(CoordinadorPD::class, 'usuario_id','id_usuario');
     }

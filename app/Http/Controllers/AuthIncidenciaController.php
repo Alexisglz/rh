@@ -6,6 +6,7 @@ use App\Events\IncidenciasEvents;
 use App\GlobalModel;
 use App\Incidencias;
 use App\Models\IncidenciaPeriodo;
+use App\User;
 use App\VistaIncidencias;
 use DB;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class AuthIncidenciaController extends Controller
     }
 
     public function index(){
+        $this->authorize('access',[User::class, 'listado_autorizar']);
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', date('Y-m-d'))
             ->where('fecha_envio','>=', $this->date)->first();
         return view('incidencias.validaciones.directivo',['periodo'=>$periodo]);

@@ -380,7 +380,18 @@ class DatatablesController extends Controller
         $incidencias = VistaIncidencias::query();
         $periodo     = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
                         ->where('fecha_fin','>=', $this->date)->first();
-        $incidencias->where('estatus','SOLICITADO');
+        if ($usuario->listarTodo == null) {
+            $director = auth()->user()->getDirectorInc;
+            if ($director) {
+                foreach ($director AS $item) {
+                    $director_pd = $item->cliente . '-' . $item->servicio;
+                    $incidencias->orWhere('pd_recurso', $director_pd)->where('estatus', 'SOLICITADO');
+                }
+            }
+        }
+        else{
+            $incidencias->where('estatus', 'SOLICITADO');
+        }
         switch ($area){
             case 'ESP':
             case 'ADMIN':
@@ -405,14 +416,9 @@ class DatatablesController extends Controller
                 $incidencias->where('empleado','LIKE','%'.$request->emp.'%');
         }
         if($periodo)
-            $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin]);
+            $incidencias->where('id_periodo',$periodo->id);
         else
             $incidencias = [];
-        $director = auth()->user()->getDirectorNoti;
-        if ($director){
-            $director_pd = $director->cliente.'-'.$director->servicio;
-            $incidencias->where('pd_recurso',$director_pd);
-        }
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',
                 'fecha_solicitud', 'fecha_inicio', 'fecha_fin', 'id_lote','descargado','emp_id'])
@@ -426,14 +432,14 @@ class DatatablesController extends Controller
      */
     public function getIncidenciasAuth(Request $request)
     {
-        $usuario = auth()->user();
-        $area    = $usuario->getRol->Rol;
+        $usuario     = auth()->user();
+        $area        = $usuario->getRol->Rol;
         $incidencias = VistaIncidencias::query();
-        $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-            ->where('fecha_fin','>=', $this->date)->first();
-        $inc_c_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
-        $inc_s_v = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
-        $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
+        $periodo     = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
+                        ->where('fecha_fin','>=', $this->date)->first();
+        $inc_c_v     = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_c_v'])? 1:0;
+        $inc_s_v     = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_s_v'])? 1:0;
+        $inc_ded     = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
         if($area == 'ADMIN' || $area == 'ESP'){
         }
         else{

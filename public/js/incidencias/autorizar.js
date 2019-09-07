@@ -22,7 +22,7 @@ var table      = $('#incidencias-table').DataTable({
         {data: 'id', name: 'id'},
         {data:null, name:'info',orderable: false, searchable: false},
         //{data:null, name:'bitacora',orderable: false, searchable: false},
-        {data: 'Autorizado_RH', name: 'Autorizado RH',orderable: false, searchable: false, className:'auth_ded'},
+        {data: null, name: 'Autorizado',orderable: false, searchable: false, className:'auth_inc'},
         {data: 'empleado', name: 'empleado'},
         {data: 'incidencia', name: 'incidencia'},
         {data: 'solicitante', name: 'solicitante'},
@@ -73,7 +73,7 @@ var table      = $('#incidencias-table').DataTable({
                     return '<i class="fas fa-check-circle" style="color:limegreen;font-size:20px"></i>';
                 }
                 else {
-                    if (inc_ded == 1){
+                    if (auth_cancel == 1){
                         view += "<button class='auth btn btn-xs btn-success iconAutorizar'><i class='fa fa-thumbs-up nav-icon'></i></button>";
                         view += "<button class='cancel btn btn-xs btn-danger btnDeshautorizar'><i class='fa fa-thumbs-down nav-icon'></i></button>";
                     }
@@ -276,12 +276,8 @@ $('#Modal').on('hidden.bs.modal', function (event) {
     pie.children('.btn2').remove();
 });
 
-if (inc_ded != 1)
-    table.columns( '.auth_ded' ).visible( false );
-if (inc_c_v != 1)
-    table.columns( '.auth_cv_v' ).visible( false );
-if (inc_s_v != 1)
-    table.columns( '.auth_sv_v' ).visible( false );
+if (auth_cancel != 1)
+    table.columns( '.auth_inc' ).visible( false );
 
 var search_id  = $('#search_id');
 var search_emp = $('#search_emp');

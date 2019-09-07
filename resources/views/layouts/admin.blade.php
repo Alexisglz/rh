@@ -307,11 +307,11 @@ to get the desired effect
                                     </a>
                                 </li>
                                 @endcan
-                                @can('access',[\App\User::class,'listado_autorizar'])
+                                @can('access',[\App\User::class,'listado_validar_inci'])
                                     <li class="nav-item">
                                         <a href="{!! route('autorizar.index') !!}" class="nav-link">
                                             <i class="fa fa-check nav-icon iconMenu"></i>
-                                            <p class="labelMenu">{{__('Autorizaciones')}}</p>
+                                            <p class="labelMenu">{{__('Validar')}}</p>
                                         </a>
                                     </li>
                                 @endcan

@@ -62,7 +62,7 @@ class AutorizarController extends Controller
     public function index(Request $request)
     {
         $id = isset($request->id) ? $request->id:0;
-        $this->authorize('access',[User::class, 'listado_autorizar']);
+        $this->authorize('access',[User::class, 'listado_validar_inci']);
         return view('incidencias.autorizar',[
             'id' => $id
         ]);

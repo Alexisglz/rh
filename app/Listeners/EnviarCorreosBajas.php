@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Empleados;
 use App\Events\BajasEvents;
 use App\Mail\BajaGerencial;
+use App\Mail\CancelBaja;
 use App\Mail\ConfirmarHerraBaja;
 use App\Mail\NuevaBaja;
 use App\Models\VistaEmpleadosActivos;
@@ -84,7 +85,17 @@ class EnviarCorreosBajas implements ShouldQueue
                 }
                 break;
             case 'baja_gerencial':
-
+                break;
+            case 'cancel_baja':
+                $empleado_nombre = $empleado->empleado_nombre.' '.$empleado->empleado_apaterno.' '.$empleado->empleado_amaterno;
+                if (config('app.env')=="local"){
+                    Mail::to($email)->send(new CancelBaja($empleado_nombre,$event->correos));
+                }
+                if (config('app.env')=="production") {
+                    foreach ($event->correos as $correo){
+                        Mail::to($correo)->send(new CancelBaja($empleado_nombre));
+                    }
+                }
                 break;
         }
     }

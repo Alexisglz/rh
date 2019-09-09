@@ -17,17 +17,23 @@ class BajasEvents
      */
     public $solicitud;
     public $tipo;
+    /**
+     * @var array
+     */
+    public $correos;
 
     /**
      * Create a new event instance.
      *
      * @param SolBajaNomina $solicitud
      * @param $tipo
+     * @param array $correos
      */
-    public function __construct(SolBajaNomina $solicitud, $tipo)
+    public function __construct(SolBajaNomina $solicitud, $tipo, $correos = [])
     {
         $this->solicitud = $solicitud;
-        $this->tipo     = $tipo;
+        $this->tipo      = $tipo;
+        $this->correos   = $correos;
     }
 
     /**

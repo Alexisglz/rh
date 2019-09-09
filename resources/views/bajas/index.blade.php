@@ -253,39 +253,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="modal fade" id="ModalBitacora" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLongTitle">BITACORA DE SOLICITUD DE BAJA</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card-body">
-                      <table class="table table-active" style="font-size:12px" id="BITACORAS">
-                          <thead>
-                              <tr>
-                                  <th>CLAVE</th>
-                                  <th>USUARIO</th>
-                                  <th>EMPLEADO</th>
-                                  <th>DETALLES</th>
-                                  <th>FECHA</th>
-                                  <th>HORA</th>
-                                  <th>AUTORIZACION</th>
-                              </tr>
-                          </thead>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
-                  </div>
-                </div>
-              </div>
-            </div> -->
             <div class="modal fade" id="myModzal" role="dialog">
             <!--  {!! Form::open(['id'=>'form_edit_empleado','route'=>'usuarios.store','method'=>'POST','files'=>true,'enctype'=>"multipart/form-data"]) !!} -->
                 <div class="modal-dialog modal-md">
@@ -395,5 +362,5 @@
             });
         })
     </script>
-    {!! Html::script('js/empl_bajas/index.js') !!}
+    {!! Html::script('js/empl_bajas/index.js?v='.time()) !!}
 @endsection

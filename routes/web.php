@@ -65,7 +65,7 @@ Route::group(["prefix" => "autorizar", "middleware" => ["auth"]], function() {
 Route::group(["prefix" => "bajas", "middleware" => ["auth"]], function() {
     Route::get('/', 'BajasController@index')->name('bajas.index');
     Route::get('/get_data_bajas', 'BajasController@getDataBajas')->name('bajas.get_data_bajas');
-    Route::post('/eliminar_solicitud/{id}', 'BajasController@EliminarSolicitud')->name('bajas.eliminar_solicitud');
+    Route::post('/eliminar_solicitud', 'BajasController@EliminarSolicitud')->name('bajas.eliminar_solicitud');
     Route::post('/baja_def_nom', 'BajasController@bajaDefNom')->name('bajas.baja_def_nom');
     Route::get('/get_bitacora_baja', 'BajasController@getBitacoraBaja')->name('bajas.get_bitacora_baja');
     Route::get('/autorizar_solicitud', 'BajasController@AutorizarSolicitud')->name('bajas.autorizar_solicitud');

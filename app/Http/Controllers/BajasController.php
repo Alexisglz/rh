@@ -19,8 +19,8 @@ use App\SolBajaNomina;
 use App\solicitudbaja;
 use App\User;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
-use Storage;
 
 
 class BajasController extends Controller
@@ -40,17 +40,37 @@ class BajasController extends Controller
         ]);
     }
 
-    public function EliminarSolicitud($id)
+    public function EliminarSolicitud(Request $request)
     {
-        $bajas = new SolBajaNomina;;
-        $bajas_temp = $bajas::find($id);
-        $comentarios = BajaComentarios::where('id_baja', '=', $bajas_temp->id)->delete();
-        $bajas_temp->delete();
-        $data = array(
-            'success' => 'success'
-        );
-        //Devolvemos el array pasado a JSON como objeto
-        return json_encode($data, JSON_FORCE_OBJECT);
+        try{
+            DB::beginTransaction();
+            $baja       = SolBajaNomina::find($request->id);
+            $solicitante = User::find($baja->solicitante);
+            $correos = [];
+            if ($solicitante){
+                $correos[] = $solicitante->correo;
+            }
+            $rh = User::where('id_area',1)->where('estatus','ACTIVO')->get();
+            if ($rh){
+                foreach ($rh as $item){
+                    $correos[] = $item->correo;
+                }
+            }
+            BajaComentarios::where('id_baja', '=', $baja->id)->delete();
+            event(new BajasEvents($baja, 'cancel_baja',$correos));
+            $baja->delete();
+            DB::commit();
+            return response()->json([
+                'ok' => true,
+                'data' => 'success'
+            ]);
+        }catch (Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
+                'data' => $e->getMessage()
+            ]);
+        }
     }
 
 

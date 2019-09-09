@@ -528,26 +528,42 @@ function EliminarSolicitud(id) {
         cancelButtonText: 'No'
     }).then((result) => {
         if (result.value) {
-            $.post("/bajas/eliminar_solicitud/" + id, {
+            $.ajax({
+                url: '/bajas/eliminar_solicitud',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
                     _token: CSRF_TOKEN,
+                    id:id
                 },
-                function (data) {
-                    const toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                    toast({
-                        type: 'success',
-                        title: 'Solicitud eliminada con exito'
-                    }).then((value) => {
-                        location.href = "/bajas"
-                    })
-
-
-                }
-            )
+                beforeSend: function () {
+                    $().loader("show");
+                },
+                complete: function () {
+                    $().loader("hide");
+                },
+                success: function (data) {
+                    if (data.ok){
+                        const toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        toast({
+                            type: 'success',
+                            title: 'Solicitud eliminada con exito'
+                        }).then((value) => {
+                            table.ajax.reload();
+                        })
+                    }
+                    else {
+                        swal("Ocurrio un error", {
+                            icon: "error",
+                        })
+                    }
+                },
+            });
         }
     });
 }

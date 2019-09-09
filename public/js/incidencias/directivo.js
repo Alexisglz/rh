@@ -75,7 +75,15 @@ var table      = $('#table_dir').DataTable({
             "data": null,
             "className": "text-center",
             render: function (data,type,row) {
-                var template = '<span class="text-bold text-success">'+data+'</span>';
+                var template = '';
+                if (data != null){
+                    template = '<span class="text-bold text-success">'+data+'</span>';
+                }
+                else {
+                    if (row.vobo != null){
+                        template = '<a class="btn" href="/files/'+row.vobo+'"><i class="fa fa-download"></i></a>';
+                    }
+                }
                 return template;
             }
         },

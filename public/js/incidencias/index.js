@@ -328,7 +328,9 @@ function DestruirMOdal() {
 
 function ExcelIncidencias() {
     var periodo = ($('#export_inci').val() != null && $('#export_inci').val() != "") ? $('#export_inci').val():0;
-    location.href = "/excel/export_incidencias/?periodo="+periodo;
+    var estatus = ($('#estatus_inci').val() != null && $('#estatus_inci').val() != "") ? $('#estatus_inci').val():'TODAS';
+    var url = "/excel/export_incidencias/?periodo="+periodo+"&estatus="+estatus;
+    location.href =url;
 }
 
 new $.fn.dataTable.FixedHeader(table);

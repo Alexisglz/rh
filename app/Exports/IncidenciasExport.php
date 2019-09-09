@@ -20,18 +20,24 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
      * @var int
      */
     public $periodo;
+    /**
+     * @var int
+     */
+    public $estatus;
 
     /**
      * IncidenciasExport constructor.
      * @param $id
      * @param $area
      * @param int $periodo
+     * @param string $estatus
      */
-    public function __construct($id, $area, $periodo = 0)
+    public function __construct($id, $area, $periodo = 0, $estatus = 'TODAS')
     {
         $this->id   = $id;
         $this->area = $area;
         $this->periodo = $periodo;
+        $this->estatus = $estatus;
     }
 
     /** Funcion recursiva para obtener el arbol de empleados
@@ -112,7 +118,8 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
         }
         if ($this->periodo != 0)
             $models->where('id_periodo',$this->periodo);
-        $models->where('estatus','=','POR ENVIAR');
+        if ($this->estatus != 'TODAS')
+            $models->where('estatus','=',$this->estatus);
         $models = $models->get();
         return collect($models);
     }

@@ -45,36 +45,13 @@ class EnviarCorreos implements ShouldQueue
             switch ($tipo){
                 case 'notificar_dir':
                     $message  = 'Se ha registrado una solicitud de alta con el id: '.$solicitud->id;
-                    $correos = [];
-
-                    $option = 'por_director';
-                    if ($solicitud->servicio == 'TKBS' || $solicitud->servicio == 'POLZ' || $solicitud->servicio == 'SERV'){
-                        $margen = $solicitud->margen;
-                        if ($margen < 20){
-                            $option = 'menor_20';
-                        }
-                        else
-                            $option = 'mayor_20';
-                    }
-
-                    if ($option == 'menor_20'){
-                        $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
-                    }
-                    if ($option == 'mayor_20'){
-                        $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
-                        if (count($models) == 0){
-                            $option = 'sin_director';
-                            $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
-                        }
-                    }
-                    if ($option == 'por_director'){
-                        $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
-                        if (count($models) == 0){
-                            $option = 'sin_director';
-                            $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
-                        }
-                    }
-                    if (count($correos) > 0){
+                    $correos  = [];
+                    $option   = 'por_director';
+                    $puestos_gerentes    = ['33','36','228','229','230','231','232','233','234','235','236','237','238','239',
+                        '34','44','47','48','51','205','206','207','208','209','210','211','212','213','214','386','569'
+                    ];// ID catalogo puesto Gerentes
+                    if (in_array($solicitud->puesto,$puestos_gerentes)){
+                        $correos = User::whereIn('id_usuario', [19])->groupBy('id_usuario')->get();
                         if (config('app.env')=="local")
                             Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $correos->toArray()));
                         if (config('app.env')=="production") {
@@ -84,12 +61,49 @@ class EnviarCorreos implements ShouldQueue
                         }
                     }
                     else{
-                        if (config('app.env')=="local")
-                            Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $models->toArray()));
-                        if (config('app.env')=="production") {
-                            foreach ($models  as $model){
-                                $usuario = User::find($model->id_usuario);
-                                Mail::to($usuario->correo)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
+                        if ($solicitud->servicio == 'TKBS' || $solicitud->servicio == 'POLZ' || $solicitud->servicio == 'SERV'){
+                            $margen = $solicitud->margen;
+                            if ($margen < 20){
+                                $option = 'menor_20';
+                            }
+                            else
+                                $option = 'mayor_20';
+                        }
+
+                        if ($option == 'menor_20'){
+                            $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
+                        }
+                        if ($option == 'mayor_20'){
+                            $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
+                            if (count($models) == 0){
+                                $option = 'sin_director';
+                                $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
+                            }
+                        }
+                        if ($option == 'por_director'){
+                            $models = DirectorArea::where(DB::raw("CONCAT_WS('-',cliente,servicio)"),'=',$solicitud->cliente.'-'.$solicitud->servicio)->get();
+                            if (count($models) == 0){
+                                $option = 'sin_director';
+                                $correos = User::whereIn('id_usuario', [117])->groupBy('id_usuario')->get();
+                            }
+                        }
+                        if (count($correos) > 0){
+                            if (config('app.env')=="local")
+                                Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $correos->toArray()));
+                            if (config('app.env')=="production") {
+                                foreach ($correos as $correo){
+                                    Mail::to($correo->correo)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
+                                }
+                            }
+                        }
+                        else{
+                            if (config('app.env')=="local")
+                                Mail::to($email)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id, $models->toArray()));
+                            if (config('app.env')=="production") {
+                                foreach ($models  as $model){
+                                    $usuario = User::find($model->id_usuario);
+                                    Mail::to($usuario->correo)->bcc($oculto)->send(new SolicitudAlta($message, $nombre, $solicitud->id));
+                                }
                             }
                         }
                     }

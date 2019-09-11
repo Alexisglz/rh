@@ -764,8 +764,8 @@ class EmpleadosController extends Controller
         $herramientas = DB::table('solicitud_alta AS sa')
             ->select(DB::raw('sa.auto,sa.celular,sa.plan_linea,sa.computadora,sa.desc_computadora,sa.software,sa.desc_software,
             sa.tipo_correo,sa.bam,sa.botas,sa.playera,sa.herramientas_detalles,cpl1.plan_nombre AS linea_nombre,cpl2.plan_nombre AS bam_nombre'))
-            ->leftJoin('catalogo_planes_lineas AS cpl1','sa.plan_linea','=','cpl1.plan_id')
-            ->leftJoin('catalogo_planes_lineas AS cpl2','sa.plan_linea_bam','=','cpl1.plan_id')
+            ->leftJoin('incore.catalogo_planes_lineas AS cpl1','sa.plan_linea','=','cpl1.plan_id')
+            ->leftJoin('incore.catalogo_planes_lineas AS cpl2','sa.plan_linea_bam','=','cpl1.plan_id')
             ->where('sa.id','=',$request->id)
             ->first();
         return response()->json([

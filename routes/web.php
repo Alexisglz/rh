@@ -172,6 +172,7 @@ Route::group(["prefix" => "envio_incidencias", "middleware" => ["auth"]], functi
 
 Route::group(["prefix" => "excel", "middleware" => ["auth"]], function() {
     Route::get('/export_incidencias', 'ExcelController@exportIncidencias')->name('excel.export_incidencias');
+    Route::get('/export_ajustes', 'ExcelController@exportAjustes')->name('excel.export_ajustes');
     Route::get('/export_incidencias_lote', 'ExcelController@ExportIncidenciasLote')->name('excel.export_incidencias_lote');
     Route::get('/get_incidencia', 'ExcelController@getIncidencia')->name('excel.get_incidencia');
     Route::get('/export_altas/{inicio}/{fin}', 'ExcelController@ExportAltas')->name('excel.export_altas');

@@ -372,6 +372,14 @@ $('#enviar_ajustes').on('click', function () {
     });
 });
 
+function ExcelAjustes() {
+    var inicio  = ($('#exp_inicio').val() != null && $('#exp_inicio').val() != "") ? $('#exp_inicio').val():'';
+    var fin     = ($('#exp_fin').val() != null && $('#exp_fin').val() != "") ? $('#exp_fin').val():'';
+    var estatus = ($('#exp_estatus').val() != null && $('#exp_estatus').val() != "") ? $('#exp_estatus').val():'TODAS';
+    var url = "/excel/export_ajustes/?inicio="+inicio+"&fin="+fin+"&estatus="+estatus;
+    location.href =url;
+}
+
 var search_id     = $('#search_id');
 var search_nombre = $('#search_emp');
 var search_est    = $('#search_est');

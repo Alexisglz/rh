@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empleados;
+use App\Exports\AjusteSueldoGeneral;
 use App\Exports\AltasExport;
 use App\Exports\EmpleadosExport;
 use App\Exports\IncidenciasExport;
@@ -89,5 +90,13 @@ class ExcelController extends Controller
     public function ExcelUsuarios()
     {
         return Excel::download(new UsersExport(), 'Usuarios_'.$this->date.'.xlsx');
+    }
+
+    public function exportAjustes(Request $request)
+    {
+        $estatus = isset($request->estatus) ? $request->estatus:'TODAS';
+        $inicio  = isset($request->inicio) ? $request->inicio:'';
+        $fin     = isset($request->fin) ? $request->fin:'';
+        return Excel::download(new AjusteSueldoGeneral($inicio,$fin,$estatus), 'Ajustes_Sueldos_'.$this->date.'.xlsx');
     }
 }

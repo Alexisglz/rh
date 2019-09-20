@@ -44,22 +44,6 @@
                 </div>
             @endcan
 
-
-            @can('access',[\App\User::class,'exportar_solicitudes1'])
-                <form class="form-inline">
-                    <div class="form-group mb-2">
-                        <label for="FInicio" class="sr-only">{{__('Fecha Inicio')}}</label>
-                        <input type="date" class="form-control" id="FInicio">
-                    </div>
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="FFIn" class="sr-only">{{__('Fecha Fin')}}</label>
-                        <input type="date" class="form-control" id="FFIn">
-                    </div>
-                    <button id="excel" type="button" onclick="ExcelAltas();"
-                            class="btn btn-success">{{__('Exportar')}}</button>
-                </form>
-            @endcan
-
             <div class="form-inline" style="border-top: 1px solid #dfdfdf; padding-top: 10px;">
                 <div class="form-group col-sm-1">
                     <input id="search_id" name="search_id" class="form-control col-sm-12" placeholder="ID" title="Buscar por ID">
@@ -82,6 +66,31 @@
                     </a>
                 </div>
             </div>
+            @can('access',[\App\User::class,'exportar_solicitudes'])
+                <div class="mt-2 form-inline" style="border-top: 1px solid #dfdfdf;padding-top: 10px;">
+                    <div class="form-group col-sm-2">
+                        <label for="exp_inicio" class="sr-only">{{__('Fecha Inicio')}}</label>
+                        <input type="date" class="form-control col-sm-12" id="exp_inicio">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="exp_fin" class="sr-only">{{__('Fecha Fin')}}</label>
+                        <input type="date" class="form-control col-sm-12" id="exp_fin">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <select id="exp_estatus" name="exp_estatus" class="form-control col-sm-12" placeholder="Estatus" title="Buscar por estatus">
+                            <option value="">{{__('Todos')}}</option>
+                            <option value="solicitado">{{__('Solicitado')}}</option>
+                            <option value="autorizado">{{__('Autorizados')}}</option>
+                            <option value="rechazado">{{__('Cancelados')}}</option>
+                            <option value="enviado">{{__('Enviados')}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <button id="excel" type="button" onclick="ExcelAjustes();"
+                                class="btn btn-success pull-right">{{__('Exportar')}}</button>
+                    </div>
+                </div>
+            @endcan
 
         </div>
         <div class="card-body">

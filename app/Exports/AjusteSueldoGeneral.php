@@ -45,9 +45,9 @@ class AjusteSueldoGeneral implements FromCollection,WithHeadings,ShouldAutoSize
         $models  = VistaAjusteSueldo::query();
         $models->select('id','nombre','num_empleado','tradicional','asimilado','pedido','fecha_inicio','observaciones','fecha');
         if ($this->inicio != '' && $this->fin != '')
-            $models->whereBetween('fecha',[$this->inicio.' 23:59:59',$this->fin.' 23:59:59']);
+            $models->whereBetween('fecha',[$this->inicio.' 00:00:00',$this->fin.' 23:59:59']);
         if ($this->inicio != '' && $this->fin == '')
-            $models->where('fecha','>=', $this->inicio.' 23:59:59');
+            $models->where('fecha','>=', $this->inicio.' 00:00:00');
         if ($this->inicio == '' && $this->fin != '')
             $models->where('fecha','<=', $this->fin.' 23:59:59');
         if ($this->estatus != "TODAS")

@@ -52,7 +52,9 @@ class EnvioIncidenciasController extends Controller
         $i_format = [];
         foreach ($ids as $id){
             $vista_i = VistaIncidenciasPeriodo::find($id);
-            $fecha = $vista_i->fecha_inicio==null?"":date("d/m/Y", strtotime($vista_i->fecha_inicio));
+            $fecha = $vista_i->fecha_inicio==null?"":date("dmy", strtotime($vista_i->fecha_inicio));
+            //$date = date_create($vista_i->fecha_inicio);
+            //$date2 = date_format($date,"dmy");
             $plantilla = [
                 'id'        => $vista_i->id,
                 'concepto'  => $vista_i->id_tipo,

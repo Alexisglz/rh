@@ -2,6 +2,7 @@ var CSRF_TOKEN = $('#token').val();
 var solicit    = $("#NombreUsuario").val();
 var s_id       = $('#search_id').val();
 var s_periodo  = $('#search_periodo').val();
+var s_estatus  = $('#search_estatus').val();
 var s_nombre   = null;
 var s_tipo     = null;
 var table      = $('#incidencias-table').DataTable({
@@ -17,6 +18,7 @@ var table      = $('#incidencias-table').DataTable({
             data.search_nombre  = s_nombre;
             data.search_tipo    = s_tipo;
             data.search_periodo = s_periodo;
+            data.search_estatus = s_estatus;
         }
     },
     columns: [
@@ -339,6 +341,7 @@ var search_id     = $('#search_id');
 var search_nombre = $('#search_nombre');
 var search_tipo   = $('#search_tipo');
 var search_peri   = $('#search_periodo');
+var search_est    = $('#search_estatus');
 
 search_id.on('keyup', function () {
     s_id = $(this).val();
@@ -357,6 +360,11 @@ search_peri.on('change', function () {
     table.draw();
 });
 
+search_est.on('change', function () {
+    s_estatus = $(this).val();
+    table.draw();
+});
+
 $('#reset').on('click', function (e) {
     if (id_post != 0)
         window.location = '/incidencias';
@@ -365,10 +373,12 @@ $('#reset').on('click', function (e) {
     s_nombre  = null;
     s_tipo    = null;
     s_periodo = null;
+    s_estatus = null;
     search_id.val("");
     search_nombre.val("");
     search_tipo.val("");
     search_peri.val("");
+    search_est.val("");
     table.draw();
     e.preventDefault();
     reset = 0;

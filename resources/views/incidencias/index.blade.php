@@ -47,6 +47,16 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group mb-2 col-sm-2">
+                            <select id="search_estatus" name="search_estatus" class="form-control col-sm-12">
+                                <option value="">{{__('TODOS')}}</option>
+                                <option value="SOLICITADO">{{__('SOLICITADO')}}</option>
+                                <option value="POR VALIDAR DIRECCION">{{__('AUTORIZADO POR DIRECTOR DE AREA')}}</option>
+                                <option value="POR ENVIAR">{{__('AUTORIZADO POR DIRECCION')}}</option>
+                                <option value="ENVIADO">{{__('LOTE PROCESADO')}}</option>
+                                <option value="CANCELAR">{{__('CANCELADO')}}</option>
+                            </select>
+                        </div>
                         <div class="col-sm">
                             <a id="reset" class="btn btn-primary btn-md pull-right" title="Reiniciar Filtros" style="color: white">
                                 <i class="fa fa-refresh"></i>

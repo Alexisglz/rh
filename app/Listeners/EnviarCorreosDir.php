@@ -90,7 +90,7 @@ class EnviarCorreosDir implements ShouldQueue
                             $correos[] = $usuario->correo;
                     }
                     if (config('app.env')=="local")
-                        Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_direc,$correos,$periodo->periodo_nombre));
+                        Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_coord,$correos,$periodo->periodo_nombre));
                     if (config('app.env')=="production") {
                         foreach ($correos  as $correo){
                             Mail::to($correo)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_coord,$correos,$periodo->periodo_nombre));

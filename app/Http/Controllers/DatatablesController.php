@@ -361,6 +361,8 @@ class DatatablesController extends Controller
                 $incidencias->where('tipo_incidencia','=',$request->search_tipo);
             if($request->search_periodo)
                 $incidencias->where('id_periodo','=',$request->search_periodo);
+            if($request->search_estatus)
+                $incidencias->where('estatus','=',$request->search_estatus);
         }
         return DataTables::of($incidencias)
             ->whitelist(['empleado', 'solicitante', 'tipo_incidencia', 'id',

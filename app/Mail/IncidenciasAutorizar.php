@@ -50,12 +50,22 @@ class IncidenciasAutorizar extends Mailable
      */
     public function build()
     {
-        return $this
+        $response = $this
             ->subject(__('Validar Incidencias'))
             ->markdown('emails.auth_inc')
             ->with('url', $this->url)
             ->with('date', $this->date)
             ->with('periodo', $this->periodo)
             ->with('users', $this->users);
+        if ($this->url == '/incidencias'){
+            $response = $this
+                ->subject(__('Fecha Limite Incidencias'))
+                ->markdown('emails.inc_noti_coords')
+                ->with('url', $this->url)
+                ->with('date', $this->date)
+                ->with('periodo', $this->periodo)
+                ->with('users', $this->users);
+        }
+        return $response;
     }
 }

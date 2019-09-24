@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\IncidenciasNotificar;
 use App\Mail\IncidenciasAutorizar;
+use App\Models\CatalogoCoordinadores;
 use App\Models\DirectorArea;
 use App\Models\IncidenciaPeriodo;
 use App\User;
@@ -45,7 +46,7 @@ class EnviarCorreosDir implements ShouldQueue
                 ->where('fecha_envio','>=', $this->date)->first();
             $fecha_direc  = $periodo->limite_directivo;
             $fecha_jav    = $periodo->limite_direccion;
-            $fecha_envio  = $periodo->fecha_envio;
+            $fecha_coord  = $periodo->fecha_fin;
             $email        = config('app.mail_dev');
             $oculto       = config('app.mail_dev');
             switch ($tipo){
@@ -75,6 +76,24 @@ class EnviarCorreosDir implements ShouldQueue
                     if (config('app.env')=="production") {
                         foreach ($correos  as $correo){
                             Mail::to($correo)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_direc,$correos,$periodo->periodo_nombre));
+                        }
+                    }
+                    break;
+                case 'coord':
+                    $coordinadores = CatalogoCoordinadores::where('user_id','<>',0)->where('estatus',1)
+                        ->where('correo','<>',1)
+                        ->get();
+                    $correos = [];
+                    foreach ($coordinadores as $coordinador){
+                        $usuario = User::where('id_usuario',$coordinador->user_id)->first();
+                        if (isset($usuario->correo))
+                            $correos[] = $usuario->correo;
+                    }
+                    if (config('app.env')=="local")
+                        Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_direc,$correos,$periodo->periodo_nombre));
+                    if (config('app.env')=="production") {
+                        foreach ($correos  as $correo){
+                            Mail::to($correo)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_coord,$correos,$periodo->periodo_nombre));
                         }
                     }
                     break;

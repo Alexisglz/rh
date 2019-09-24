@@ -46,6 +46,7 @@ class IncidenciasNotificar extends Command
     {
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_envio','>=', $this->date)->first();
+        $coordina  = date('Y-m-d', strtotime($periodo->fecha_fin));
         $director  = date('Y-m-d', strtotime($periodo->limite_direccion));
         $directivo = date('Y-m-d', strtotime($periodo->limite_directivo));
         if ($director == $this->date){
@@ -68,6 +69,10 @@ class IncidenciasNotificar extends Command
         if ($directivo == $this->date){
             event(new \App\Events\IncidenciasNotificar('dir',[],'/autorizar'));
             echo "Se envio a directivo";
+        }
+        if ($coordina == $this->date){
+            event(new \App\Events\IncidenciasNotificar('coord',[],'/incidencias'));
+            echo "Se envio a coordinador";
         }
         else echo "No es el dia";
     }

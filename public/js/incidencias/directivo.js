@@ -4,7 +4,8 @@ var table      = $('#table_dir').DataTable({
     processing: true,
     serverSide: true,
     responsive: true,
-    pageLength: 100,
+    lengthMenu: [[10, 25, 50,100,150, -1], [10, 25, 50, 100, 150, "All"]],
+    pageLength: 150,
     order: [[0, "desc"]],
     ajax: {
         url: '/auth/get_inci',

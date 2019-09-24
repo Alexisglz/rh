@@ -9,7 +9,7 @@
                         <h3 class="card-title text-center">
                             <div>
                                 {{__('Validar Incidencias')}}<i class="fa fa-check"></i><br>
-                                {{__($periodo->periodo_nombre)}}<br>
+                                {{__(isset($periodo->periodo_nombre) ? $periodo->periodo_nombre : '')}}<br>
                             </div>
                             <div class="pull-right">
                                 <button class="btn btn-success" onclick="save()">{{__('Guardar')}}</button>

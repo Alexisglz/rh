@@ -46,23 +46,28 @@ class IncidenciasNotificar extends Command
     {
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
             ->where('fecha_envio','>=', $this->date)->first();
-        $deduc = VistaIncidencias::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
-            ->where('tipo_incidencia','DEDUCCION')->whereNull('estatus')->count();
-        $s_venta = VistaIncidencias::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
-            ->where('venta','<=',0)->where('tipo_incidencia', '!=','DEDUCCION')->whereNull('estatus')->count();
-        $c_venta = VistaIncidencias::whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])
-            ->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->whereNull('estatus')->count();
-        $fin_periodo = date('Y-m-d', strtotime($periodo->fecha_envio. ' - 1 days'));
-        $data = [];
-        if ($deduc > 0)
-            $data[] = 'aut_cancel_inci_dec';
-        if ($s_venta > 0)
-            $data[] = 'aut_cancel_inci_s_v';
-        if ($c_venta > 0)
-            $data[] = 'aut_cancel_inci_c_v';
-        if ($fin_periodo == $this->date){
-            event(new \App\Events\IncidenciasNotificar('auth',$data));
-            echo "Se envio";
+        $director  = date('Y-m-d', strtotime($periodo->limite_direccion));
+        $directivo = date('Y-m-d', strtotime($periodo->limite_directivo));
+        if ($director == $this->date){
+            $deduc = VistaIncidencias::where('id_periodo',$periodo->id)
+                ->where('tipo_incidencia','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION')->count();
+            $s_venta = VistaIncidencias::where('id_periodo',$periodo->id)
+                ->where('venta','<=',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION')->count();
+            $c_venta = VistaIncidencias::where('id_periodo',$periodo->id)
+                ->where('venta','>',0)->where('tipo_incidencia', '!=','DEDUCCION')->where('estatus','POR VALIDAR DIRECCION')->count();
+            $data = [];
+            if ($deduc > 0)
+                $data[] = 'aut_cancel_inci_dec';
+            if ($s_venta > 0)
+                $data[] = 'aut_cancel_inci_s_v';
+            if ($c_venta > 0)
+                $data[] = 'aut_cancel_inci_c_v';
+            event(new \App\Events\IncidenciasNotificar('auth',$data,'/auth'));
+            echo "Se envio a director";
+        }
+        if ($directivo == $this->date){
+            event(new \App\Events\IncidenciasNotificar('dir',[],'/autorizar'));
+            echo "Se envio a directivo";
         }
         else echo "No es el dia";
     }

@@ -18,17 +18,23 @@ class IncidenciasNotificar
      * @var array
      */
     public $perms;
+    /**
+     * @var string
+     */
+    public $opc;
 
     /**
      * Create a new event instance.
      *
      * @param $tipo
      * @param array $perms
+     * @param string $opc
      */
-    public function __construct($tipo, array $perms = [])
+    public function __construct($tipo, array $perms = [], string $opc = '/auth')
     {
         $this->tipo  = $tipo;
         $this->perms = $perms;
+        $this->opc   = $opc;
     }
 
     /**

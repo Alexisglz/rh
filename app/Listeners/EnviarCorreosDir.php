@@ -4,7 +4,9 @@ namespace App\Listeners;
 
 use App\Events\IncidenciasNotificar;
 use App\Mail\IncidenciasAutorizar;
+use App\Models\DirectorArea;
 use App\Models\IncidenciaPeriodo;
+use App\User;
 use DB;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,10 +40,11 @@ class EnviarCorreosDir implements ShouldQueue
         try{
             $tipo    = $event->tipo;
             $perms   = $event->perms;
+            $url     = $event->opc;
             $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
                 ->where('fecha_envio','>=', $this->date)->first();
-            $fecha_inicio = $periodo->fecha_inicio;
-            $fecha_fin    = $periodo->fecha_fin;
+            $fecha_direc  = $periodo->limite_directivo;
+            $fecha_jav    = $periodo->limite_direccion;
             $fecha_envio  = $periodo->fecha_envio;
             $email        = config('app.mail_dev');
             $oculto       = config('app.mail_dev');
@@ -52,14 +55,28 @@ class EnviarCorreosDir implements ShouldQueue
                         ->groupBy('id_usuario')
                         ->get();
                     if (config('app.env')=="local")
-                        Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
+                        Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_jav,$correos->toArray(),$periodo->periodo_nombre));
                     if (config('app.env')=="production") {
                         foreach ($correos  as $correo){
-                            Mail::to($correo->email)->bcc($oculto)->send(new IncidenciasAutorizar('/auth',$fecha_envio,$correos->toArray(),$periodo->periodo_nombre));
+                            Mail::to($correo->email)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_jav,$correos->toArray(),$periodo->periodo_nombre));
                         }
                     }
                     break;
-                case 'envio':
+                case 'dir':
+                    $directivos = DirectorArea::query()->groupBy('id_usuario')->get();
+                    $correos = [];
+                    foreach ($directivos as $directivo){
+                        $usuario = User::where('id_usuario',$directivo->id_usuario)->first();
+                        if (isset($usuario->correo))
+                            $correos[] = $usuario->correo;
+                    }
+                    if (config('app.env')=="local")
+                        Mail::to($email)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_direc,$correos,$periodo->periodo_nombre));
+                    if (config('app.env')=="production") {
+                        foreach ($correos  as $correo){
+                            Mail::to($correo)->bcc($oculto)->send(new IncidenciasAutorizar($url,$fecha_direc,$correos,$periodo->periodo_nombre));
+                        }
+                    }
                     break;
             }
         }catch (\Exception $e){

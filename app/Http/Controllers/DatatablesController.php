@@ -379,7 +379,7 @@ class DatatablesController extends Controller
         $area        = $usuario->getRol->Rol;
         $incidencias = VistaIncidencias::query();
         $periodo     = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-                        ->where('fecha_fin','>=', $this->date)->first();
+                        ->where('limite_directivo','>=', $this->date)->first();
         if ($area != 'ADMIN') {
             $director = auth()->user()->getDirectorInc;
             if ($director) {

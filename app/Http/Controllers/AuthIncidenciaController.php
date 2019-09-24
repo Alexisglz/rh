@@ -53,7 +53,7 @@ class AuthIncidenciaController extends Controller
         $inc_ded = auth()->user()->can('access',[\App\User::class,'aut_cancel_inci_dec'])? 1:0;
         $todas   = auth()->user()->can('access',[\App\User::class,'todas_incidencias'])? 1:0;
         $periodo = IncidenciaPeriodo::where('fecha_inicio','<=', $this->date)
-            ->where('fecha_envio','>=', $this->date)->first();
+            ->where('limite_direccion','>=', $this->date)->first();
         $incidencias = VistaIncidencias::query();
         if($area != 'ADMIN' && $area != 'ESP'){
             if ($todas == 1){
@@ -72,10 +72,9 @@ class AuthIncidenciaController extends Controller
             $incidencias->where('estatus','POR VALIDAR DIRECCION');
         }
         if($periodo)
-            $incidencias->whereBetween('fecha_solicitud',[$periodo->fecha_inicio, $periodo->fecha_fin])->get();
+            $incidencias->where('id_periodo',$periodo->id);
         else
             $incidencias = [];
-        $sql = $this->getRealQuery($incidencias);
         return DataTables::of($incidencias)
             ->addColumn('margen', function (VistaIncidencias $incidencias){
                 $costo_actual   = $incidencias->costo_viaticos+$incidencias->costo_nomina+$incidencias->costo_herramienta;
@@ -84,8 +83,7 @@ class AuthIncidenciaController extends Controller
                 $margen         = ($valor_proyecto!=0)?($delta/$valor_proyecto)*100:0;
                 $formatted      = number_format($margen, 2, '.', ',');
                 return $formatted;
-            })
-            ->with(['sql' => $sql])->make(true);
+            })->make(true);
     }
 
     public function validarMasivo(Request $request){

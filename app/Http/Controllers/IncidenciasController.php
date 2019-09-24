@@ -82,12 +82,12 @@ class IncidenciasController extends Controller
 
     public function create()
     {
-        $fechas_incidencias = IncidenciaPeriodo::all();
-        $periodo = IncidenciaPeriodo::where('fecha_inicio', '<=', $this->date)
-            ->where('fecha_fin', '>=', $this->date)->first();
         $this->authorize('access', [User::class, 'crear_incidencias']);
-        $tipos = IncidenciasCatalogo::where('estatus', '=', 'ACTIVO')
-            ->get();
+        $fechas_incidencias = IncidenciaPeriodo::all();
+        $periodo            = IncidenciaPeriodo::where('fecha_inicio', '<=', $this->date)
+                              ->where('fecha_fin', '>=', $this->date)->first();
+        $tipos              = IncidenciasCatalogo::where('estatus', '=', 'ACTIVO')
+                              ->get();
         return view('incidencias.create', ['tipos' => $tipos, 'periodo' => $periodo, 'fechas_incidencias' => $fechas_incidencias]);
     }
 

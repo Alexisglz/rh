@@ -90,7 +90,7 @@ class NuevoEmpleado
                     /* Agregar al catalogo de coordinadores nokia indeplo*/
                     $coord_nok_ind                         = new CatCoordNokiaInd();
                     $coord_nok_ind->coordinador_nokia_id   = $coordinador->id;
-                    $coord_nok_ind->coordinador_indeplo_id = 5;
+                    $coord_nok_ind->coordinador_indeplo_id = $coordinador->id;
                     $coord_nok_ind->save();
                 }
                 else{
@@ -99,7 +99,7 @@ class NuevoEmpleado
                         /* Agregar al catalogo de coordinadores nokia indeplo*/
                         $coord_nok_ind                         = new CatCoordNokiaInd();
                         $coord_nok_ind->coordinador_nokia_id   = $request->coordinador;
-                        $coord_nok_ind->coordinador_indeplo_id = 5;
+                        $coord_nok_ind->coordinador_indeplo_id = $request->coordinador;
                         $coord_nok_ind->save();
                     }
                 }

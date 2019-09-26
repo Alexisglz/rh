@@ -269,7 +269,7 @@ class IncidenciasController extends Controller
                 $empleados->whereIn(DB::raw("CONCAT(cliente,'-',servicio)"), $pd->toArray());
             }
             $empleados->select(DB::raw("concat_ws(' ',empleado_nombre, empleado_apaterno, empleado_amaterno) AS Nombre, id as id"));
-            $empleados->where(DB::raw("CONCAT(empleado_nombre,empleado_apaterno,empleado_amaterno)"), 'LIKE', '%' . $busqueda . '%');
+            $empleados->where(DB::raw("CONCAT(empleado_nombre,empleado_apaterno,empleado_amaterno)"), 'LIKE', "%".$busqueda."%");
             $empleados->whereNull('empleado_fecha_baja');
             $emps = $empleados->get();
             $data = array();
@@ -333,10 +333,36 @@ class IncidenciasController extends Controller
     public function getRisk(Request $request)
     {
         try {
-            $data          = [];
-            $usuario       = auth()->user();
-            $empleado      = Empleados::find($request->id);
-            $rec_proyectos = ProyectosIndeploRecurso::where('empleado_id', $empleado->empleado_id)
+            $data      = [];
+            $usuario   = auth()->user();
+            $empleado  = Empleados::find($request->id);
+            $id        = $empleado->empleado_id;
+            $busqueda  = $request->term;
+            $mes       = date("m", strtotime("-1 months"));
+            $anio      = date("Y", strtotime("-1 months"));
+            $sql       = "SELECT * FROM (
+                    SELECT pi.*,t.empleado_id 
+                    FROM incore.proyectos_indeplo pi JOIN incore.timesheet t ON t.pedido_id = pi.id
+                    WHERE pi.fecha_termino IS NULL 
+                    UNION
+                    SELECT pi.*,pir.empleado_id 
+                    FROM incore.proyectos_indeplo pi JOIN incore.proyectos_indeplo_recursos pir ON pir.proyecto_id = pi.id
+                    JOIN incore.empleados e ON e.empleado_id = pir.empleado_id
+                    WHERE pi.fecha_termino IS NULL 
+            ) proyectos WHERE
+            empleado_id = '$id' AND MONTH ( fecha_fin ) >= '$mes' AND YEAR(fecha_fin) >= '$anio'
+                          AND (pedido LIKE '%$busqueda%' OR id LIKE '%$busqueda%' OR proyecto_nombre LIKE '%$busqueda%') 
+                          GROUP BY id ";
+            $ros =  DB::select(DB::raw($sql));
+            if (count($ros)>0){
+                foreach ($ros as $ro){
+                    $text = $ro->id.' '.$ro->pedido . ' ' . $ro->proyecto_nombre . ' ' . $ro->sitio;
+                    $data[] = ['value' => $text, 'id' => $ro->id, 'monto_venta' => $ro->monto_venta];
+                }
+                if (!empty($data))
+                    return response()->json($data);
+            }
+            /*$rec_proyectos = ProyectosIndeploRecurso::where('empleado_id', $empleado->empleado_id)
                 ->orderByDesc('id')->get();
             if ($rec_proyectos) {//Buscar si el usuario esta relacionado a una RO
                 foreach ($rec_proyectos as $rec_proyecto) {
@@ -357,10 +383,10 @@ class IncidenciasController extends Controller
                 }
                 if (!empty($data))
                     return response()->json($data);
-            }
+            }*/
             if ($empleado->getWBS != null) { //Buscar la RO de administrativos con el wbs al que se le solicita la incidencia
                 $proy_rec = ProyectosIndeplo::where('proyecto_nombre', 'LIKE', '%' . $empleado->getWBS->wbs . '%')
-                    ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '>=', date('m'))
+                    ->whereNull('fecha_termino')->where(DB::raw('MONTH(fecha_fin)'), '>=', $mes)
                     ->get();
                 if (count($proy_rec) > 0) {
                     foreach ($proy_rec as $pros) {

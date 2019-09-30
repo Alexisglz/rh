@@ -866,7 +866,6 @@ class EmpleadosController extends Controller
             ]);
         }catch (\Exception $e){
             $conn->rollBack();
-            dd($e);
             return response()->json([
                 'ok' => false,
                 'data' => "Error"

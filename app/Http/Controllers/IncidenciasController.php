@@ -241,7 +241,6 @@ class IncidenciasController extends Controller
             return redirect('incidencias')->with('mensaje', 'Incidencia solicitada');
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
             return back()->with(['error' => $e]);
         }
     }
@@ -322,7 +321,6 @@ class IncidenciasController extends Controller
                 'data' => $catalogo
             ]);
         } catch (\Exception $e) {
-            dd($e);
             return response()->json([
                 'ok' => false,
                 'data' => []

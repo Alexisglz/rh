@@ -98,7 +98,6 @@ class SueldosCommand extends Command
                         ];
                     }catch (\Exception $e){
                         $conn->rollBack();
-                        dd($e);
                     }
                 }
             }

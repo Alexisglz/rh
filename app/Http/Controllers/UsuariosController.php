@@ -92,7 +92,6 @@ class UsuariosController extends Controller
             return redirect()->route('usuarios.index');
         }catch (\Exception $e){
             $conn->rollBack();
-            dd($e);
             return redirect()->route('usuarios.index')->with($e);
         }
     }

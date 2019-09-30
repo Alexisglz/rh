@@ -44,7 +44,6 @@ class NewPasswordController extends Controller
                 return redirect('/login')->with('success','Contraseña Actualizada Correctamente');
         }catch (\Exception $e){
             $conn->rollBack();
-            dd($e);
             return back()->with('error',$e->getMessage());
         }
     }

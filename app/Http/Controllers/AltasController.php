@@ -441,7 +441,6 @@ class AltasController extends Controller
             return redirect()->route('altas.index');
         }catch (\Exception $e){
             DB::rollBack();
-            dd($e);
             return $e;
         }
     }
@@ -791,7 +790,6 @@ class AltasController extends Controller
             DB::commit();
         }catch (\Exception $e){
             DB::rollBack();
-            dd($e);
         }
         return redirect()->route('altas.index');
     }

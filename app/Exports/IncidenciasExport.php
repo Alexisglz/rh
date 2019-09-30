@@ -113,6 +113,7 @@ class IncidenciasExport implements FromCollection, WithHeadings, ShouldAutoSize
                 $models->where('solicitante','<>','Especial');
                 break;
             default:
+                $models->where('solicitante','<>','Especial');
                 //$models->where('id_solicitante','=',auth()->user()->id_usuario);
                 break;
         }

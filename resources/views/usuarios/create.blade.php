@@ -150,7 +150,11 @@
                 <div class="form-group row">
                     <label for="Rol" class="col-md-4 col-form-label text-md-right">Rol</label>
                     <div class="col-md-6">
-                        {!! Form::select('Rol',$areas,null,['class'=>'form-control req_nok','id'=>'Rol','style'=>'width: 100%;']) !!}
+                        <select id="area" type="text" class="form-control" name="area" required>
+                            @foreach($areas as $area)
+                                <option value="{{$area->id}}">{{$area->Descripcion}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 

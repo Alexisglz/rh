@@ -10,12 +10,14 @@ namespace App\Http\Controllers;
 use App\Area;
 use App\CatalogoRoles;
 use App\GlobalModel;
+use App\Models\UserMaster;
 use App\Models\UsuarioNotificacion;
 use App\Models\UsuariosTickets;
 use App\Notificacion;
 use App\Permiso;
 use App\User;
 use App\UsuarioPermiso;
+use App\UsuarioRol;
 use DB;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserInterface;
@@ -54,7 +56,11 @@ class UsuariosController extends Controller
     public function create()
     {
         $this->authorize('access',[User::class, 'crear_usuarios']);
-        $areas = CatalogoRoles::getRoles();
+        $master = UserMaster::where('id_user',auth()->user()->id_usuario)->first();
+        $areas = UsuarioRol::query();
+        if (!$master)
+            $areas->where('Rol','<>','ESP');
+        $areas = $areas->get();
         return view('usuarios.create', [
             'areas' => $areas
         ]);

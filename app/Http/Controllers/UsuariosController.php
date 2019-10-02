@@ -354,9 +354,7 @@ class UsuariosController extends Controller
                     $permisos = [];
                     break;
                 case 'PM':
-                    $permisos = [
-                        'listado_solicitudes','listado_empleados','listado_incidencias','crear_incidencias'
-                    ];
+                    $permisos = [];
                     break;
                 case 'STI':
                     $permisos = [

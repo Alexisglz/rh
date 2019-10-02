@@ -671,7 +671,7 @@ function autoComplete(id, link) {
     });
 }
 
-$("#sueldo_venta,#sueldo_imss,#sueldo_variable").keyup(function () {
+$("#sueldo_venta,#sueldo_imss,#sueldo_variable").on('keyup click change paste',function () {
     costoVenta();
 });
 $("#riesgo").change(function () {

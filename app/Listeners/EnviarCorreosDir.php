@@ -81,7 +81,6 @@ class EnviarCorreosDir implements ShouldQueue
                     break;
                 case 'coord':
                     $coordinadores = CatalogoCoordinadores::where('user_id','<>',0)->where('estatus',1)
-                        ->where('correo','<>',1)
                         ->get();
                     $correos = [];
                     foreach ($coordinadores as $coordinador){

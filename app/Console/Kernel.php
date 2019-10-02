@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
         /*//Cron para cancelar incidencias vencidas
         $schedule->command('incidencias:cancelar')->cron('00 03 * * *');*/
         // Cron para notificar la validacion de incidencias
-        /*$schedule->command('incidencias:notificar')->cron('10 00 * * *');*/
+        $schedule->command('incidencias:notificar')->cron('10 00 * * *');
         // Cron para actualizar los sueldos en base a la API
         $schedule->command('sueldos:actualizar')->cron('30 01 * * *');
         $schedule->command('bajas:automatica')->cron('30 23 * * *');
